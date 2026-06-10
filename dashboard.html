@@ -942,7 +942,7 @@ function renderPicksModal(data) {
           <div style="font-family:'Space Mono',monospace;font-size:18px;font-weight:700;color:${scoreColor}">${c.score}</div>
           <div style="font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em">signals</div>
         </div>
-        <button onclick="closePicksModal();loadTicker('${c.ticker}')" style="background:var(--blue);color:#fff;border:none;border-radius:7px;padding:8px 14px;font-size:12px;font-weight:500;cursor:pointer;font-family:'Space Grotesk',sans-serif;white-space:nowrap">Analyze →</button>
+        <button onclick="closePicksModal();loadTicker('${c.ticker}')" style="background:${i < 5 ? 'var(--gold)' : 'var(--blue)'};color:${i < 5 ? '#000' : '#fff'};border:none;border-radius:7px;padding:8px 14px;font-size:12px;font-weight:500;cursor:pointer;font-family:'Space Grotesk',sans-serif;white-space:nowrap">${i < 5 ? 'View Report →' : 'Run Analysis →'}</button>
       </div>
     </div>`;
   });
