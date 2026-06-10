@@ -181,31 +181,23 @@ gtag('config','G-W2VWCNQC6T');
 
   <!-- Header -->
   <div class="dash-header">
-    <div class="dash-title" id="dashTitle">Today's picks</div>
-    <div class="dash-sub" id="dashSub">AI-screened candidates from thousands of stocks — updated every morning before market open.</div>
+    <div class="dash-title">Your dashboard</div>
+    <div class="dash-sub">Enter up to <span id="maxTickers">1</span> ticker to analyze. Reports are emailed to you within minutes.</div>
   </div>
 
-  <!-- Tab nav -->
-  <div class="tab-nav">
-    <button class="tab-btn active" id="tab-screener" onclick="switchTab('screener')">📈 Today's Picks</button>
-    <button class="tab-btn" id="tab-analyzer" onclick="switchTab('analyzer')">🔍 Analyzer</button>
-    <button class="tab-btn" id="tab-history" onclick="switchTab('history')">📋 History</button>
-  </div>
 
-  <span id="maxTickers" style="display:none">1</span>
-  <!-- SCREENER TAB -->
-  <div id="panel-screener">
-    <div class="screener-date">Screened on <span id="screenerDate">—</span> · <span id="screenerCount">—</span> candidates from thousands of stocks</div>
-    <div id="screenerContainer">
-      <div class="screener-loading">
-        <div class="loading-spinner" style="margin:0 auto 12px"></div>
-        Loading today's picks…
+
+  <!-- Today's Picks CTA -->
+  <div id="picksCard" onclick="openPicksModal()" style="background:linear-gradient(135deg,rgba(232,169,48,0.08),rgba(79,142,247,0.06));border:1px solid rgba(232,169,48,0.2);border-radius:12px;padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;justify-content:space-between;gap:20px;cursor:pointer;transition:border-color .2s" onmouseover="this.style.borderColor='rgba(232,169,48,0.4)'" onmouseout="this.style.borderColor='rgba(232,169,48,0.2)'">
+    <div style="display:flex;align-items:center;gap:16px">
+      <div style="width:40px;height:40px;border-radius:10px;background:rgba(232,169,48,0.12);border:1px solid rgba(232,169,48,0.2);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">📈</div>
+      <div>
+        <div style="font-size:15px;font-weight:600;color:var(--t1);margin-bottom:3px">Today's top picks — AI-screened from thousands of stocks</div>
+        <div style="font-size:12px;color:var(--t2);font-weight:300">Our screener identified <span id="picksCount" style="color:var(--gold);font-weight:500">10 candidates</span> this morning. One-click analysis on any pick.</div>
       </div>
     </div>
+    <div style="background:var(--gold);color:#000;border:none;border-radius:8px;padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Space Grotesk',sans-serif;white-space:nowrap;flex-shrink:0">See today's picks →</div>
   </div>
-
-  <!-- ANALYZER TAB -->
-  <div id="panel-analyzer" style="display:none">
 
   <!-- Usage bar -->
   <div class="usage-card">
@@ -265,11 +257,8 @@ gtag('config','G-W2VWCNQC6T');
     <div class="loading-agents" id="agentList"></div>
   </div>
 
-  </div><!-- /panel-analyzer -->
-
-  <!-- HISTORY TAB -->
-  <div id="panel-history" style="display:none">
-  <div class="history-section" style="margin-top:0">
+  <!-- Report history -->
+  <div class="history-section">
     <div class="section-label" style="margin-top:0">Report history</div>
     <div id="historyContainer">
       <div class="history-empty">
@@ -278,9 +267,6 @@ gtag('config','G-W2VWCNQC6T');
       </div>
     </div>
   </div>
-
-  </div><!-- /history-section -->
-  </div><!-- /panel-history -->
 
   <!-- Soft upgrade nudge (free users only) -->
   <div class="upgrade-banner" id="upgradeBanner" style="background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:20px 24px;margin-top:32px;display:flex;align-items:center;justify-content:space-between;gap:20px">
@@ -983,4 +969,112 @@ document.addEventListener('DOMContentLoaded',function(){
   </div>
 </div>
 
+
+<!-- Today's Picks Modal -->
+<div id="picksModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);z-index:200;overflow-y:auto;padding:40px 20px">
+  <div style="max-width:720px;margin:0 auto;background:var(--s1);border:1px solid var(--b2);border-radius:16px;padding:32px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+      <div style="font-family:'Space Mono',monospace;font-size:18px;font-weight:700;color:var(--t1)">Today's Picks</div>
+      <button onclick="closePicksModal()" style="background:none;border:none;color:var(--t3);font-size:20px;cursor:pointer;line-height:1">✕</button>
+    </div>
+    <div style="font-size:13px;color:var(--t3);margin-bottom:24px;font-family:'Space Mono',monospace" id="picksModalDate">—</div>
+    <div id="picksModalContainer">
+      <div style="text-align:center;padding:32px;color:var(--t3)">
+        <div class="loading-spinner" style="margin:0 auto 12px"></div>
+        Loading picks…
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const SIG_LABELS = {
+  rsi_recovery:'RSI Recovery', macd_crossover:'MACD Cross',
+  sma50_breakout:'SMA50 Break', bb_squeeze_breakout:'BB Squeeze',
+  volume_surge:'Vol Surge', earnings_revision:'EPS Revision',
+  revenue_accel:'Rev Accel', low_peg:'Low PEG', short_squeeze:'Short Squeeze'
+};
+
+let picksData = null;
+
+async function openPicksModal() {
+  document.getElementById('picksModal').style.display = 'block';
+  document.body.style.overflow = 'hidden';
+  if (picksData) { renderPicksModal(picksData); return; }
+  const email = localStorage.getItem('hp_email') || '';
+  try {
+    const res = await fetch(BACKEND + '/api/screener/results?email=' + encodeURIComponent(email));
+    picksData = await res.json();
+    renderPicksModal(picksData);
+  } catch(e) {
+    document.getElementById('picksModalContainer').innerHTML =
+      '<div style="text-align:center;padding:32px;color:var(--t3)">Could not load picks. Try again later.</div>';
+  }
+}
+
+function closePicksModal() {
+  document.getElementById('picksModal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function renderPicksModal(data) {
+  const container = document.getElementById('picksModalContainer');
+  const dateEl = document.getElementById('picksModalDate');
+
+  if (!data.date) {
+    container.innerHTML = '<div style="text-align:center;padding:32px;color:var(--t3)">No picks yet today. Check back before market open.</div>';
+    return;
+  }
+
+  dateEl.textContent = new Date(data.date + 'T12:00:00').toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'});
+  const total = data.candidates.length + (data.locked || 0);
+  document.getElementById('picksCount').textContent = total + ' candidate' + (total !== 1 ? 's' : '');
+
+  let html = '';
+  data.candidates.forEach((c, i) => {
+    const fired = Object.entries(c.signals).filter(([,v])=>v)
+      .map(([k])=>`<span style="font-size:10px;font-family:'Space Mono',monospace;padding:3px 8px;border-radius:4px;background:rgba(79,142,247,0.08);color:var(--blue);border:1px solid rgba(79,142,247,0.15)">${SIG_LABELS[k]||k}</span>`).join('');
+    const scoreColor = c.score >= 5 ? 'var(--green)' : c.score >= 3 ? 'var(--gold)' : 'var(--t2)';
+    html += `<div style="background:var(--s2);border:1px solid var(--b1);border-radius:10px;padding:16px 20px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:12px">
+      <div style="display:flex;align-items:center;gap:14px;flex:1">
+        <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--t3);min-width:18px">#${i+1}</div>
+        <div style="font-family:'Space Mono',monospace;font-size:16px;font-weight:700;color:var(--t1);min-width:68px">${c.ticker}</div>
+        <div style="flex:1">
+          <div style="font-size:13px;color:var(--t2);margin-bottom:4px">${c.name||''}</div>
+          <div style="display:flex;gap:5px;flex-wrap:wrap">${fired}</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;flex-shrink:0">
+        <div style="font-family:'Space Mono',monospace;font-size:13px;color:var(--t2)">$${c.price?c.price.toFixed(2):'—'}</div>
+        <div style="text-align:center">
+          <div style="font-family:'Space Mono',monospace;font-size:18px;font-weight:700;color:${scoreColor}">${c.score}</div>
+          <div style="font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em">signals</div>
+        </div>
+        <button onclick="closePicksModal();loadTicker('${c.ticker}')" style="background:var(--blue);color:#fff;border:none;border-radius:7px;padding:8px 14px;font-size:12px;font-weight:500;cursor:pointer;font-family:'Space Grotesk',sans-serif;white-space:nowrap">Analyze →</button>
+      </div>
+    </div>`;
+  });
+
+  if (data.locked > 0) {
+    html += `<div style="background:linear-gradient(135deg,rgba(232,169,48,0.06),rgba(79,142,247,0.04));border:1px solid rgba(232,169,48,0.15);border-radius:10px;padding:28px;text-align:center;margin-top:8px">
+      <div style="font-family:'Space Mono',monospace;font-size:24px;font-weight:700;color:var(--t1);margin-bottom:6px">+${data.locked} more picks</div>
+      <div style="font-size:13px;color:var(--t2);margin-bottom:20px">Upgrade to unlock today's full list — plus auto-analysis every morning before market open.</div>
+      <button onclick="closePicksModal();openUpgradeModal('screener')" style="background:var(--gold);color:#000;border:none;border-radius:8px;padding:12px 28px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Space Grotesk',sans-serif">Unlock all picks →</button>
+    </div>`;
+  }
+
+  container.innerHTML = html;
+}
+
+function loadTicker(ticker) {
+  const t1 = document.getElementById('t1');
+  if (t1) { t1.value = ticker; t1.focus(); }
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// Close modal on backdrop click
+document.getElementById('picksModal').addEventListener('click', function(e) {
+  if (e.target === this) closePicksModal();
+});
+</script>
 </body>
