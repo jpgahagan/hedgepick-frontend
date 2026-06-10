@@ -127,7 +127,7 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;display:flex;align-items:cen
 .history-item:hover{border-color:var(--b2)}
 .hi-left{display:flex;align-items:center;gap:12px}
 .hi-ticker{font-family:'Space Mono',monospace;font-size:15px;font-weight:700;color:var(--t1)}
-.hi-date{font-size:12px;color:var(--t3)}
+.hi-date{font-size:12px;color:var(--t2)}
 .hi-signal{font-family:'Space Mono',monospace;font-size:12px;font-weight:700;padding:3px 10px;border-radius:4px}
 .sig-buy{background:rgba(34,197,94,.1);color:var(--green)}
 .sig-sell{background:rgba(248,113,113,.1);color:var(--red)}
@@ -615,7 +615,7 @@ function renderHistory(history) {
       <div style="display:flex;align-items:center;gap:16px">
         <span class="hi-signal ${sigClass}">${sigLabel}</span>
         ${isPending
-          ? '<span style="font-size:12px;color:var(--t3)">Report emailing...</span>'
+          ? '<span style="font-size:12px;color:var(--t2)">Report emailing...</span>'
           : (h.pdf_url
               ? `<a href="${h.pdf_url}" target="_blank" rel="noopener" class="hi-download">Download PDF</a>`
               : '<span style="font-size:12px;color:var(--t3)">PDF unavailable</span>')
