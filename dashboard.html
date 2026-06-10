@@ -890,7 +890,7 @@ async function openPicksModal() {
   document.getElementById('picksModal').style.display = 'block';
   document.body.style.overflow = 'hidden';
   if (picksData) { renderPicksModal(picksData); return; }
-  const email = localStorage.getItem('hp_email') || '';
+  const email = (window.PLAN && PLAN.email) ? PLAN.email : (localStorage.getItem('hp_email') || '');
   try {
     const res = await fetch(BACKEND + '/api/screener/results?email=' + encodeURIComponent(email));
     picksData = await res.json();
@@ -957,8 +957,13 @@ function renderPicksModal(data) {
 
 function loadTicker(ticker) {
   const t1 = document.getElementById('t1');
-  if (t1) { t1.value = ticker; t1.focus(); }
-  window.scrollTo({top: 0, behavior: 'smooth'});
+  if (t1) {
+    t1.value = ticker;
+    // Auto-submit analysis directly
+    if (typeof submitAnalysis === 'function') {
+      submitAnalysis();
+    }
+  }
 }
 
 // Close modal on backdrop click
