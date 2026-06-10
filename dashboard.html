@@ -376,6 +376,7 @@ async function initDashboard() {
 
   PLAN.tier = userData.tier || 'free';
   PLAN.email = userData.email || '';
+  if(PLAN.email) localStorage.setItem('hp_email', PLAN.email);
   PLAN.max = userData.daily_limit || (PLAN.tier === 'free' ? 1 : 5);
   PLAN.used = userData.analyses_today || 0;
 
