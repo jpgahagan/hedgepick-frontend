@@ -24,7 +24,7 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;display:flex;align-items:cen
 .plan-free{background:rgba(255,255,255,0.06);color:var(--t3)}
 .plan-pro{background:rgba(79,142,247,0.12);color:var(--blue);border:1px solid rgba(79,142,247,0.2)}
 .plan-life{background:rgba(232,169,48,0.1);color:var(--gold);border:1px solid rgba(232,169,48,0.2)}
-.nav-email{font-size:12px;color:var(--t3)}
+.nav-email{font-size:12px;color:var(--t2)}
 .logout{font-size:12px;color:var(--t3);background:none;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:color .2s}
 .logout:hover{color:var(--t1)}
 
@@ -39,7 +39,7 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;display:flex;align-items:cen
 /* USAGE BAR */
 .usage-card{background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:20px 24px;margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;gap:24px}
 .usage-left{}
-.usage-label{font-size:11px;font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:.1em;color:var(--t3);margin-bottom:8px}
+.usage-label{font-size:11px;font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:.1em;color:var(--t2);margin-bottom:8px}
 .usage-bar-wrap{width:280px;height:4px;background:var(--b1);border-radius:2px;overflow:hidden}
 .usage-bar-fill{height:100%;border-radius:2px;background:var(--blue);transition:width .4s ease}
 .usage-count{font-size:13px;color:var(--t2);margin-top:6px}
@@ -51,23 +51,23 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;display:flex;align-items:cen
 .section-label{font-size:11px;font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:.12em;color:var(--blue);margin-bottom:16px}
 .ticker-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
 .ticker-wrap{position:relative}
-.ticker-num{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-family:'Space Mono',monospace;font-size:11px;color:var(--t3);pointer-events:none}
+.ticker-num{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-family:'Space Mono',monospace;font-size:11px;color:var(--t2);pointer-events:none}
 .ticker-in{width:100%;background:var(--s1);border:1px solid var(--b2);border-radius:8px;padding:14px 14px 14px 40px;color:var(--t1);font-size:14px;font-family:'Space Mono',monospace;letter-spacing:.06em;text-transform:uppercase;outline:none;transition:border .2s}
-.ticker-in::placeholder{color:var(--t3);font-size:12px;letter-spacing:.04em;text-transform:none;font-family:'Space Grotesk',sans-serif}
+.ticker-in::placeholder{color:var(--t2);font-size:12px;letter-spacing:.04em;text-transform:none;font-family:'Space Grotesk',sans-serif}
 .ticker-in:focus{border-color:rgba(79,142,247,.5)}
 .ticker-in:disabled{opacity:.35;cursor:not-allowed}
 .autocomplete-list{position:absolute;top:100%;left:0;right:0;background:var(--s2);border:1px solid var(--b2);border-radius:8px;margin-top:4px;z-index:50;overflow:hidden;display:none}
 .ac-item{padding:10px 14px;font-size:13px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:background .15s}
 .ac-item:hover{background:rgba(255,255,255,0.04)}
 .ac-sym{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;color:var(--t1);min-width:60px}
-.ac-name{font-size:12px;color:var(--t3)}
+.ac-name{font-size:12px;color:var(--t2)}
 
 /* SUBMIT */
 .submit-row{display:flex;gap:12px;align-items:center}
 .analyze-btn{background:var(--t1);color:var(--bg);border:none;border-radius:8px;padding:14px 32px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:all .2s;letter-spacing:.01em}
 .analyze-btn:hover{opacity:.88;transform:translateY(-1px)}
 .analyze-btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
-.submit-note{font-size:12px;color:var(--t3)}
+.submit-note{font-size:12px;color:var(--t2)}
 
 /* LOADING STATE */
 .loading-card{display:none;background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:32px;text-align:center;margin-top:24px}
@@ -76,7 +76,7 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;display:flex;align-items:cen
 .loading-title{font-size:15px;font-weight:500;color:var(--t1);margin-bottom:8px}
 .loading-sub{font-size:13px;color:var(--t2);font-weight:400}
 .loading-agents{display:flex;flex-direction:column;gap:6px;margin-top:20px;text-align:left;max-width:320px;margin-left:auto;margin-right:auto}
-.agent-line{font-size:12px;color:var(--t3);display:flex;align-items:center;gap:8px;font-family:'Space Mono',monospace}
+.agent-line{font-size:12px;color:var(--t2);display:flex;align-items:center;gap:8px;font-family:'Space Mono',monospace}
 .agent-line.active{color:var(--blue)}
 .agent-line.done{color:var(--green)}
 .a-dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0}
@@ -90,22 +90,22 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;display:flex;align-items:cen
 .tab-btn:hover:not(.active){color:var(--t2)}
 
 /* SCREENER TAB */
-.screener-date{font-size:12px;color:var(--t3);font-family:'Space Mono',monospace;margin-bottom:24px}
+.screener-date{font-size:12px;color:var(--t2);font-family:'Space Mono',monospace;margin-bottom:24px}
 .screener-date span{color:var(--t2)}
 .pick-card{background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:20px 24px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:16px;transition:border-color .2s}
 .pick-card:hover{border-color:var(--b2)}
 .pick-left{display:flex;align-items:center;gap:16px;flex:1}
-.pick-rank{font-family:'Space Mono',monospace;font-size:11px;color:var(--t3);min-width:20px}
+.pick-rank{font-family:'Space Mono',monospace;font-size:11px;color:var(--t2);min-width:20px}
 .pick-ticker{font-family:'Space Mono',monospace;font-size:18px;font-weight:700;color:var(--t1);min-width:72px}
 .pick-meta{flex:1}
 .pick-name{font-size:13px;color:var(--t2);margin-bottom:4px}
-.pick-sector{font-size:11px;color:var(--t3)}
+.pick-sector{font-size:11px;color:var(--t2)}
 .pick-signals{display:flex;gap:6px;flex-wrap:wrap}
 .sig-badge{font-size:10px;font-family:'Space Mono',monospace;padding:3px 8px;border-radius:4px;background:rgba(79,142,247,0.08);color:var(--blue);border:1px solid rgba(79,142,247,0.15);white-space:nowrap}
 .pick-right{display:flex;align-items:center;gap:12px;flex-shrink:0}
 .pick-score{display:flex;flex-direction:column;align-items:center;gap:2px}
 .score-num{font-family:'Space Mono',monospace;font-size:20px;font-weight:700;color:var(--gold)}
-.score-label{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.08em}
+.score-label{font-size:10px;color:var(--t2);text-transform:uppercase;letter-spacing:.08em}
 .pick-analyze-btn{background:var(--blue);color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:12px;font-weight:500;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:opacity .2s;white-space:nowrap}
 .pick-analyze-btn:hover{opacity:.85}
 .pick-price{font-family:'Space Mono',monospace;font-size:13px;color:var(--t2);min-width:64px;text-align:right}
@@ -117,11 +117,11 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;display:flex;align-items:cen
 .locked-cta{background:var(--gold);color:#000;border:none;border-radius:8px;padding:12px 28px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:opacity .2s}
 .locked-cta:hover{opacity:.88}
 .screener-empty{background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:48px;text-align:center}
-.screener-loading{text-align:center;padding:48px;color:var(--t3);font-size:14px}
+.screener-loading{text-align:center;padding:48px;color:var(--t2);font-size:14px}
 
 .history-empty{background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:40px;text-align:center}
 .history-empty-title{font-size:15px;font-weight:500;color:var(--t2);margin-bottom:8px}
-.history-empty-sub{font-size:13px;color:var(--t3);font-weight:300}
+.history-empty-sub{font-size:13px;color:var(--t2);font-weight:300}
 .history-list{display:flex;flex-direction:column;gap:8px}
 .history-item{background:var(--s1);border:1px solid var(--b1);border-radius:10px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;transition:border-color .2s}
 .history-item:hover{border-color:var(--b2)}
@@ -444,7 +444,7 @@ async function tickerAutocomplete(input, listId) {
   if(!val || val.length < 1) { list.style.display='none'; return; }
 
   // Show loading indicator while waiting for live results
-  list.innerHTML = '<div class="ac-item" style="color:var(--t3);font-size:12px;padding:8px 12px">Searching...</div>';
+  list.innerHTML = '<div class="ac-item" style="color:var(--t2);font-size:12px;padding:8px 12px">Searching...</div>';
   list.style.display = 'block';
 
   // Debounce live search by 300ms
@@ -618,7 +618,7 @@ function renderHistory(history) {
           ? '<span style="font-size:12px;color:var(--t2)">Report emailing...</span>'
           : (h.pdf_url
               ? `<a href="${h.pdf_url}" target="_blank" rel="noopener" class="hi-download">Download PDF</a>`
-              : '<span style="font-size:12px;color:var(--t3)">PDF unavailable</span>')
+              : '<span style="font-size:12px;color:var(--t2)">PDF unavailable</span>')
         }
       </div>
     </div>`;
@@ -869,9 +869,9 @@ document.addEventListener('DOMContentLoaded',function(){
       <div style="font-family:'Space Mono',monospace;font-size:18px;font-weight:700;color:var(--t1)">Today's Picks</div>
       <button onclick="closePicksModal()" style="background:none;border:none;color:var(--t3);font-size:20px;cursor:pointer;line-height:1">✕</button>
     </div>
-    <div style="font-size:13px;color:var(--t3);margin-bottom:24px;font-family:'Space Mono',monospace" id="picksModalDate">—</div>
+    <div style="font-size:13px;color:var(--t2);margin-bottom:24px;font-family:'Space Mono',monospace" id="picksModalDate">—</div>
     <div id="picksModalContainer">
-      <div style="text-align:center;padding:32px;color:var(--t3)">
+      <div style="text-align:center;padding:32px;color:var(--t2)">
         <div class="loading-spinner" style="margin:0 auto 12px"></div>
         Loading picks…
       </div>
@@ -900,7 +900,7 @@ async function openPicksModal() {
     renderPicksModal(picksData);
   } catch(e) {
     document.getElementById('picksModalContainer').innerHTML =
-      '<div style="text-align:center;padding:32px;color:var(--t3)">Could not load picks. Try again later.</div>';
+      '<div style="text-align:center;padding:32px;color:var(--t2)">Could not load picks. Try again later.</div>';
   }
 }
 
@@ -914,7 +914,7 @@ function renderPicksModal(data) {
   const dateEl = document.getElementById('picksModalDate');
 
   if (!data.date) {
-    container.innerHTML = '<div style="text-align:center;padding:32px;color:var(--t3)">No picks yet today. Check back before market open.</div>';
+    container.innerHTML = '<div style="text-align:center;padding:32px;color:var(--t2)">No picks yet today. Check back before market open.</div>';
     return;
   }
 
@@ -929,7 +929,7 @@ function renderPicksModal(data) {
     const scoreColor = c.score >= 5 ? 'var(--green)' : c.score >= 3 ? 'var(--gold)' : 'var(--t2)';
     html += `<div style="background:var(--s2);border:1px solid var(--b1);border-radius:10px;padding:16px 20px;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;gap:12px">
       <div style="display:flex;align-items:center;gap:14px;flex:1">
-        <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--t3);min-width:18px">#${i+1}</div>
+        <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--t2);min-width:18px">#${i+1}</div>
         <div style="font-family:'Space Mono',monospace;font-size:16px;font-weight:700;color:var(--t1);min-width:68px">${c.ticker}</div>
         <div style="flex:1">
           <div style="font-size:13px;color:var(--t2);margin-bottom:4px">${c.name||''}</div>
@@ -940,7 +940,7 @@ function renderPicksModal(data) {
         <div style="font-family:'Space Mono',monospace;font-size:13px;color:var(--t2)">$${c.price?c.price.toFixed(2):'—'}</div>
         <div style="text-align:center">
           <div style="font-family:'Space Mono',monospace;font-size:18px;font-weight:700;color:${scoreColor}">${c.score}</div>
-          <div style="font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.06em">signals</div>
+          <div style="font-size:10px;color:var(--t2);text-transform:uppercase;letter-spacing:.06em">signals</div>
         </div>
         <button onclick="closePicksModal();loadTicker('${c.ticker}')" style="background:${i < 5 ? 'var(--gold)' : 'var(--blue)'};color:${i < 5 ? '#000' : '#fff'};border:none;border-radius:7px;padding:8px 14px;font-size:12px;font-weight:500;cursor:pointer;font-family:'Space Grotesk',sans-serif;white-space:nowrap">${i < 5 ? 'View Report →' : 'Run Analysis →'}</button>
       </div>
