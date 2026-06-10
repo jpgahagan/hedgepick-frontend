@@ -392,20 +392,9 @@ async function tickerAutocomplete(input, listId) {
   const list = document.getElementById(listId);
   if(!val || val.length < 1) { list.style.display='none'; return; }
 
-  // First show matches from local list instantly
-  const local = TICKERS.filter(t =>
-    t.s.startsWith(val.toUpperCase()) || t.n.toUpperCase().includes(val.toUpperCase())
-  ).slice(0,6);
-
-  if(local.length) {
-    list.innerHTML = local.map(t =>
-      `<div class="ac-item" onclick="selectTicker('${t.s}','${listId}',this)">
-        <span class="ac-sym">${t.s}</span>
-        <span class="ac-name">${t.n}</span>
-      </div>`
-    ).join('');
-    list.style.display = 'block';
-  }
+  // Show loading indicator while waiting for live results
+  list.innerHTML = '<div class="ac-item" style="color:var(--t3);font-size:12px;padding:8px 12px">Searching...</div>';
+  list.style.display = 'block';
 
   // Debounce live search by 300ms
   clearTimeout(_acTimers[listId]);
