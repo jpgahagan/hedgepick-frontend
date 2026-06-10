@@ -338,6 +338,15 @@ footer{padding:32px 48px;border-top:1px solid var(--b1);display:flex;justify-con
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W2VWCNQC6T"></script>
 <script>
+// If already logged in, redirect to dashboard
+(function() {
+  const email = localStorage.getItem('hp_email');
+  const session = new URLSearchParams(window.location.search).get('session');
+  if (email && !session) {
+    window.location.href = '/dashboard';
+  }
+})();
+
 window.dataLayer=window.dataLayer||[];
 function gtag(){dataLayer.push(arguments);}
 gtag('js',new Date());
