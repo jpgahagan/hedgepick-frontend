@@ -403,12 +403,12 @@ async function tickerAutocomplete(input, listId) {
       const url = `https://web-production-45241.up.railway.app/api/ticker-search?q=${encodeURIComponent(val)}`;
       const resp = await fetch(url);
       const data = await resp.json();
-      const quotes = (data.quotes || []).filter(q => q.symbol && q.shortname && q.quoteType === 'EQUITY').slice(0,6);
-      if(!quotes.length) return;
+      const quotes = (data.quotes || []).filter(q => q.symbol && q.name).slice(0,6);
+      if(!quotes.length) { list.style.display='none'; return; }
       list.innerHTML = quotes.map(q =>
         `<div class="ac-item" onclick="selectTicker('${q.symbol}','${listId}',this)">
           <span class="ac-sym">${q.symbol}</span>
-          <span class="ac-name">${q.shortname || q.longname || ''}</span>
+          <span class="ac-name">${q.name || ''}</span>
         </div>`
       ).join('');
       list.style.display = 'block';
