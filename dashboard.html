@@ -286,113 +286,6 @@ gtag('config','G-W2VWCNQC6T');
 // ── Backend URL ──────────────────────────────────────────────
 const BACKEND = 'https://web-production-45241.up.railway.app';
 
-// ── Tab switching ──────────────────────────────────────────────────────────
-const TAB_TITLES = {
-  screener: ["Today's picks", "AI-screened candidates from thousands of stocks — updated every morning before market open."],
-  analyzer: ["Analyzer", "Enter up to {n} ticker{s} to analyze. Reports are emailed to you within minutes."],
-  history:  ["Report history", "Your past analyses — click any report to view or download."]
-};
-
-function switchTab(tab) {
-  ['screener','analyzer','history'].forEach(t => {
-    document.getElementById('panel-' + t).style.display = t === tab ? '' : 'none';
-    document.getElementById('tab-' + t).classList.toggle('active', t === tab);
-  });
-  const max = parseInt(document.getElementById('maxTickers').textContent) || 1;
-  const [title, sub] = TAB_TITLES[tab];
-  document.getElementById('dashTitle').textContent = title;
-  document.getElementById('dashSub').innerHTML = tab === 'analyzer'
-    ? sub.replace('{n}', max).replace('{s}', max > 1 ? 's' : '')
-    : sub;
-  if (tab === 'screener') loadScreener();
-}
-
-// ── Screener ───────────────────────────────────────────────────────────────
-const SIG_LABELS = {
-  rsi_recovery:        'RSI Recovery',
-  macd_crossover:      'MACD Cross',
-  sma50_breakout:      'SMA50 Break',
-  bb_squeeze_breakout: 'BB Squeeze',
-  volume_surge:        'Vol Surge',
-  earnings_revision:   'EPS Revision',
-  revenue_accel:       'Rev Accel',
-  low_peg:             'Low PEG',
-  short_squeeze:       'Short Squeeze'
-};
-
-let screenerLoaded = false;
-
-async function loadScreener() {
-  if (screenerLoaded) return;
-  const email = localStorage.getItem('hp_email') || '';
-  try {
-    const res = await fetch(BACKEND + '/api/screener/results?email=' + encodeURIComponent(email));
-    const data = await res.json();
-    renderScreener(data);
-    screenerLoaded = true;
-  } catch(e) {
-    document.getElementById('screenerContainer').innerHTML =
-      '<div class="screener-empty"><div class="history-empty-title">Could not load picks</div><div class="history-empty-sub">Try refreshing the page.</div></div>';
-  }
-}
-
-function renderScreener(data) {
-  const container = document.getElementById('screenerContainer');
-  const dateEl    = document.getElementById('screenerDate');
-  const countEl   = document.getElementById('screenerCount');
-
-  if (!data.date) {
-    container.innerHTML = '<div class="screener-empty"><div class="history-empty-title">No picks today yet</div><div class="history-empty-sub">The screener runs every morning at 5am ET. Check back before market open.</div></div>';
-    return;
-  }
-
-  dateEl.textContent  = new Date(data.date + 'T12:00:00').toLocaleDateString('en-US', {weekday:'long', month:'long', day:'numeric'});
-  const total = data.candidates.length + (data.locked || 0);
-  countEl.textContent = total + ' candidate' + (total !== 1 ? 's' : '');
-
-  let html = '';
-  data.candidates.forEach((c, i) => {
-    const fired = Object.entries(c.signals).filter(([,v]) => v).map(([k]) =>
-      `<span class="sig-badge">${SIG_LABELS[k] || k}</span>`).join('');
-    const scoreColor = c.score >= 5 ? 'var(--green)' : c.score >= 3 ? 'var(--gold)' : 'var(--t2)';
-    html += `
-    <div class="pick-card">
-      <div class="pick-left">
-        <div class="pick-rank">#${i+1}</div>
-        <div class="pick-ticker">${c.ticker}</div>
-        <div class="pick-meta">
-          <div class="pick-name">${c.name || ''}</div>
-          <div class="pick-sector">${c.sector || ''}</div>
-          <div class="pick-signals" style="margin-top:6px">${fired}</div>
-        </div>
-      </div>
-      <div class="pick-right">
-        <div class="pick-price">$${c.price ? c.price.toFixed(2) : '—'}</div>
-        <div class="pick-score">
-          <div class="score-num" style="color:${scoreColor}">${c.score}</div>
-          <div class="score-label">signals</div>
-        </div>
-        <button class="pick-analyze-btn" onclick="analyzeFromScreener('${c.ticker}')">Analyze →</button>
-      </div>
-    </div>`;
-  });
-
-  if (data.locked > 0) {
-    html += `
-    <div class="locked-overlay">
-      <div class="locked-count">+${data.locked} more picks</div>
-      <div class="locked-label">Upgrade to unlock today's full list — plus auto-analysis every morning.</div>
-      <button class="locked-cta" onclick="openUpgradeModal('screener')">Unlock all picks →</button>
-    </div>`;
-  }
-
-  container.innerHTML = html;
-}
-
-function analyzeFromScreener(ticker) {
-  switchTab('analyzer');
-  const t1 = document.getElementById('t1');
-  if (t1) { t1.value = ticker; t1.dispatchEvent(new Event('input')); }
 }
 
 
@@ -513,7 +406,6 @@ async function initDashboard() {
   }
 
   updateUsage(PLAN.used);
-  loadScreener();
   loadHistory();
 
   // If user arrived with a pending ticker (from the landing-page sign-in flow), auto-start that analysis
