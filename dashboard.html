@@ -74,7 +74,7 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;display:flex;align-items:cen
 .loading-spinner{width:32px;height:32px;border:2px solid var(--b2);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto 16px}
 @keyframes spin{to{transform:rotate(360deg)}}
 .loading-title{font-size:15px;font-weight:500;color:var(--t1);margin-bottom:8px}
-.loading-sub{font-size:13px;color:var(--t3);font-weight:300}
+.loading-sub{font-size:13px;color:var(--t2);font-weight:400}
 .loading-agents{display:flex;flex-direction:column;gap:6px;margin-top:20px;text-align:left;max-width:320px;margin-left:auto;margin-right:auto}
 .agent-line{font-size:12px;color:var(--t3);display:flex;align-items:center;gap:8px;font-family:'Space Mono',monospace}
 .agent-line.active{color:var(--blue)}
@@ -242,7 +242,7 @@ gtag('config','G-W2VWCNQC6T');
 
   <div class="submit-row">
     <button class="analyze-btn" id="analyzeBtn" onclick="submitAnalysis()">Generate report →</button>
-    <span class="submit-note" id="submitNote" style="display:none">Reports are emailed within 5 minutes &mdash; you can close this window</span>
+    <span class="submit-note" id="submitNote" style="display:none;color:var(--t2);font-size:13px">Reports are emailed within 5 minutes &mdash; you can close this window</span>
   </div>
 
   <!-- Loading state -->
