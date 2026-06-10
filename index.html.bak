@@ -1,0 +1,1132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HedgePick — AI Stock Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#050608;
+  --s1:#0C0D10;
+  --s2:#111318;
+  --b1:rgba(255,255,255,0.09);
+  --b2:rgba(255,255,255,0.14);
+  --t1:#ECEAE4;
+  --t2:rgba(236,234,228,0.72);
+  --t3:rgba(236,234,228,0.45);
+  --blue:#4F8EF7;
+  --blue-d:rgba(79,142,247,0.1);
+  --gold:#E8A930;
+  --gold-d:rgba(232,169,48,0.08);
+  --green:#22C55E;
+  --red:#F87171;
+  --amber:#FBBF24;
+  --r:8px;
+  --r2:12px;
+  --r3:16px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--t1);overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.6}
+
+/* PROGRESS BAR */
+#prog{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--gold));width:0%;z-index:999;transition:width .1s linear}
+
+/* PRICING HOVER */
+.pc{transition:box-shadow .2s}
+.pc:hover{box-shadow:0 0 0 1px var(--b2),0 8px 32px rgba(0,0,0,.3)}
+.pc.feat:hover{box-shadow:0 0 0 1px rgba(79,142,247,.3),0 8px 32px rgba(79,142,247,.08)}
+
+/* EMAIL CAPTURE */
+.email-sec{padding:80px 48px;border-top:1px solid var(--b1);background:var(--s1);text-align:center}
+.email-inner{max-width:480px;margin:0 auto}
+.email-row{display:flex;gap:8px;margin:28px 0 12px}
+.e-in{flex:1;background:var(--bg);border:1px solid var(--b2);border-radius:8px;padding:12px 16px;color:var(--t1);font-size:14px;font-family:'Space Grotesk',sans-serif;outline:none;transition:border .2s}
+.e-in::placeholder{color:var(--t3)}
+.e-in:focus{border-color:rgba(79,142,247,.4)}
+.e-btn{background:var(--blue);color:#fff;border:none;border-radius:8px;padding:12px 22px;font-weight:600;font-size:13px;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:opacity .2s;white-space:nowrap}
+.e-btn:hover{opacity:.85}
+.e-note{font-size:11px;color:var(--t3)}
+.e-success{display:none;font-size:14px;color:var(--green);margin-top:16px;font-weight:500}
+.e-count{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--t3);margin-bottom:16px}
+
+/* FAQ */
+.faq-sec{padding:80px 48px;border-top:1px solid var(--b1)}
+.faq-inner{max-width:680px;margin:0 auto}
+.faq-list{margin-top:40px;display:flex;flex-direction:column;gap:1px;background:var(--b1);border:1px solid var(--b1);border-radius:var(--r3);overflow:hidden}
+.faq-item{background:var(--bg)}
+.faq-q{width:100%;padding:20px 24px;background:none;border:none;color:var(--t1);font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:500;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;transition:background .2s;letter-spacing:.01em}
+.faq-q:hover{background:var(--s1)}
+.faq-icon{width:18px;height:18px;border-radius:50%;border:1px solid var(--b2);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--t3);transition:transform .25s,background .2s,color .2s;font-size:14px;font-weight:300;line-height:1}
+.faq-item.open .faq-icon{background:var(--blue-d);border-color:rgba(79,142,247,.3);color:var(--blue);transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.faq-item.open .faq-a{max-height:200px}
+.faq-a-inner{padding:0 24px 20px;font-size:13px;color:var(--t2);line-height:1.75;font-weight:300}
+
+/* BACK TO TOP */
+#btt{position:fixed;bottom:28px;right:140px;z-index:300;width:40px;height:40px;border-radius:50%;background:var(--s2);border:1px solid var(--b2);display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s,transform .2s;color:var(--t2);font-size:16px}
+#btt:hover{background:var(--s1);color:var(--t1);transform:translateY(-2px)}
+#btt.show{opacity:1;pointer-events:auto}
+
+
+/* DOT GRID */
+.hero-dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.055) 1px,transparent 1px);background-size:28px 28px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 0%,transparent 100%);-webkit-mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 0%,transparent 100%);pointer-events:none}
+
+/* SOCIAL PROOF BAR */
+.proof-bar{display:flex;align-items:center;justify-content:center;gap:40px;padding:28px 48px;border-top:1px solid var(--b1);border-bottom:1px solid var(--b1);background:var(--s1)}
+.pb-item{text-align:center}
+.pb-val{font-family:'Space Mono',monospace;font-size:20px;font-weight:700;color:var(--t1)}
+.pb-lbl{font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:.1em;margin-top:3px}
+.pb-div{width:1px;height:32px;background:var(--b1)}
+
+/* TAPE */
+.tape{height:34px;background:var(--s1);border-bottom:1px solid var(--b1);overflow:hidden;display:flex;align-items:center}
+.tape-inner{display:flex;animation:slide 32s linear infinite;white-space:nowrap}
+.tape-item{display:inline-flex;align-items:center;gap:8px;padding:0 28px;border-right:1px solid var(--b1);font-size:11px;font-family:'Space Mono',monospace;letter-spacing:0.04em}
+.tape-sym{color:var(--t1);font-weight:700}
+.t-b{color:var(--green)}
+.t-s{color:var(--red)}
+.t-h{color:var(--amber)}
+@keyframes slide{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* NAV */
+nav{position:fixed;top:34px;left:0;right:0;z-index:200;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(5,6,8,0.92);backdrop-filter:blur(32px);border-bottom:1px solid var(--b1)}
+.logo-mark{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-icon{width:28px;height:28px;position:relative;flex-shrink:0}
+.logo-icon svg{width:28px;height:28px}
+.logo-wordmark{font-family:'Space Mono',monospace;font-size:14px;font-weight:700;letter-spacing:0.04em;color:var(--t1)}
+.logo-wordmark em{color:var(--blue);font-style:normal}
+.nav-links{display:flex;align-items:center;gap:32px}
+.nav-a{font-size:13px;color:var(--t2);text-decoration:none;transition:color .2s;letter-spacing:0.01em}
+.nav-a:hover{color:var(--t1)}
+.nav-cta{font-size:13px;font-weight:500;color:var(--bg);background:var(--t1);padding:7px 18px;border-radius:6px;text-decoration:none;transition:opacity .2s;letter-spacing:0.01em}
+.nav-cta:hover{opacity:.85}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:120px 48px 80px;text-align:center;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(79,142,247,0.06) 0%,transparent 70%)}
+.hero-bg2{position:absolute;inset:0;background:radial-gradient(ellipse 40% 40% at 75% 60%,rgba(232,169,48,0.04) 0%,transparent 60%)}
+.hero-inner{max-width:780px;position:relative;z-index:2}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-family:'Space Mono',monospace;letter-spacing:0.12em;color:var(--blue);border:1px solid rgba(79,142,247,0.2);padding:5px 14px;border-radius:100px;background:var(--blue-d);margin-bottom:36px;text-transform:uppercase}
+.chip-dot{width:4px;height:4px;background:var(--blue);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
+.hero h1{font-size:clamp(44px,6vw,82px);font-weight:600;line-height:1.04;letter-spacing:-0.04em;color:var(--t1);margin-bottom:24px}
+.hero h1 .hl{color:var(--gold)}
+.hero-sub{font-size:17px;color:var(--t2);line-height:1.72;max-width:540px;margin:0 auto 40px;font-weight:300}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-p{background:var(--t1);color:var(--bg);padding:13px 28px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:all .2s;letter-spacing:0.01em}
+.btn-p:hover{opacity:.88;transform:translateY(-1px)}
+.btn-g{background:transparent;color:var(--t2);padding:13px 24px;border-radius:8px;font-size:14px;font-weight:400;text-decoration:none;transition:color .2s}
+.btn-g:hover{color:var(--t1)}
+.hero-nums{display:flex;gap:64px;justify-content:center;margin-top:72px;padding-top:48px;border-top:1px solid var(--b1)}
+.h-num{text-align:center}
+.h-val{font-family:'Space Mono',monospace;font-size:32px;font-weight:700;color:var(--t1);display:block}
+.h-lbl{font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;display:block}
+
+/* CARD DEMO */
+.demo-wrap{padding:80px 48px;border-top:1px solid var(--b1)}
+.demo-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+.demo-left{}
+.eye{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.14em;color:var(--blue);text-transform:uppercase;margin-bottom:14px;display:block}
+.demo-h{font-size:clamp(28px,3vw,40px);font-weight:600;letter-spacing:-0.03em;line-height:1.12;margin-bottom:16px}
+.demo-p{font-size:14px;color:var(--t2);line-height:1.7;font-weight:300}
+.demo-right{}
+.dc{background:var(--s1);border:1px solid var(--b2);border-radius:var(--r3);overflow:hidden}
+.dc-top{padding:16px 20px;border-bottom:1px solid var(--b1);display:flex;justify-content:space-between;align-items:center}
+.dc-sym{font-family:'Space Mono',monospace;font-size:16px;font-weight:700;color:var(--t1)}
+.dc-co{font-size:12px;color:var(--t3);margin-top:2px}
+.dc-live{font-size:11px;color:var(--green);display:flex;align-items:center;gap:5px}
+.ld{width:5px;height:5px;background:var(--green);border-radius:50%;animation:pulse 1.5s infinite}
+.dc-rows{}
+.dc-row{padding:11px 20px;border-bottom:1px solid var(--b1);display:grid;grid-template-columns:1fr 72px 56px;align-items:center;gap:12px;opacity:0;transform:translateX(-6px);transition:opacity .4s,transform .4s}
+.dc-row.in{opacity:1;transform:translateX(0)}
+.dc-rl{font-size:12px;color:var(--t2)}
+.dc-rs{font-size:11px;font-weight:600;font-family:'Space Mono',monospace;padding:3px 8px;border-radius:4px;text-align:center}
+.rs-b{background:rgba(34,197,94,.1);color:var(--green)}
+.rs-s{background:rgba(248,113,113,.1);color:var(--red)}
+.rs-h{background:rgba(255,255,255,.06);color:var(--t3)}
+.dc-bar{height:2px;background:var(--b1);border-radius:1px;overflow:hidden}
+.dc-fill{height:100%;border-radius:1px;width:0%;transition:width .9s ease}
+.dc-bot{padding:16px 20px;background:rgba(34,197,94,.03);border-top:1px solid rgba(34,197,94,.1);display:flex;justify-content:space-between;align-items:center;opacity:0;transition:opacity .5s}
+.dc-bot.in{opacity:1}
+.dc-v{font-family:'Space Mono',monospace;font-size:22px;font-weight:700;color:var(--green)}
+.dc-vs{font-size:11px;color:var(--t3);margin-top:3px;line-height:1.4;max-width:170px}
+.dc-pct{font-family:'Space Mono',monospace;font-size:20px;color:var(--t1);text-align:right}
+.dc-pl{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
+
+/* VS SECTION */
+.vs-sec{padding:80px 48px;border-top:1px solid var(--b1);background:var(--s1)}
+.vs-inner{max-width:840px;margin:0 auto;text-align:center}
+.vs-grid{display:grid;grid-template-columns:1fr 60px 1fr;align-items:center;gap:20px;margin:48px 0 40px}
+.vs-card{padding:32px;border-radius:var(--r3);text-align:center}
+.vs-card.bad{background:rgba(248,113,113,.05);border:1px solid rgba(248,113,113,.1)}
+.vs-card.good{background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.1)}
+.vs-price{font-family:'Space Mono',monospace;font-size:42px;font-weight:700;line-height:1}
+.vs-card.bad .vs-price{color:var(--red)}
+.vs-card.good .vs-price{color:var(--green)}
+.vs-name{font-size:12px;color:var(--t3);margin-top:8px;letter-spacing:.04em}
+.vs-div{font-size:18px;color:var(--t3);font-weight:300;text-align:center}
+.vs-tag{font-size:14px;color:var(--t2);font-weight:300}
+
+/* DIFF */
+.diff-sec{padding:80px 48px;border-top:1px solid var(--b1)}
+.diff-inner{max-width:840px;margin:0 auto}
+.diff-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--b1);border-radius:var(--r3);overflow:hidden;border:1px solid var(--b1);margin-top:40px}
+.diff-col{padding:32px;background:var(--bg)}
+.diff-col-h{font-size:11px;font-family:'Space Mono',monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:24px;display:block}
+.diff-col-h.bad{color:rgba(248,113,113,.6)}
+.diff-col-h.good{color:var(--green)}
+.di{display:flex;gap:10px;margin-bottom:16px;align-items:flex-start}
+.di-icon{font-size:12px;margin-top:2px;flex-shrink:0}
+.di-text{font-size:13px;color:var(--t2);line-height:1.55}
+.di-text b{color:var(--t1);font-weight:500}
+
+/* HOW */
+.how-sec{padding:80px 48px;border-top:1px solid var(--b1);background:var(--s1)}
+.how-inner{max-width:900px;margin:0 auto}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--b1);border-radius:var(--r3);overflow:hidden;border:1px solid var(--b1);margin-top:40px}
+.step{padding:32px;background:var(--bg);position:relative;overflow:hidden}
+.step::before{content:attr(data-n);position:absolute;right:16px;top:8px;font-family:'Space Mono',monospace;font-size:64px;font-weight:700;color:rgba(255,255,255,.04);line-height:1}
+.sn{font-family:'Space Mono',monospace;font-size:10px;color:var(--blue);letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px;display:block}
+.st{font-size:16px;font-weight:600;color:var(--t1);margin-bottom:8px;letter-spacing:-.02em}
+.sd{font-size:13px;color:var(--t2);line-height:1.65;font-weight:300}
+
+/* DEBATE */
+.debate-sec{padding:80px 48px;border-top:1px solid var(--b1)}
+.debate-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:5fr 4fr;gap:40px;align-items:start}
+.debate-card{background:var(--s1);border:1px solid var(--b2);border-radius:var(--r3);overflow:hidden}
+.deb-h{padding:14px 20px;border-bottom:1px solid var(--b1);font-family:'Space Mono',monospace;font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.1em}
+.deb-row{padding:14px 20px;border-bottom:1px solid var(--b1);display:flex;gap:12px;align-items:flex-start}
+.deb-row:last-child{border-bottom:none}
+.deb-av{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+.deb-name{font-size:10px;font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:.08em;color:var(--t3);margin-bottom:4px}
+.deb-text{font-size:12px;color:var(--t2);line-height:1.6}
+.agents-list{display:flex;flex-direction:column;gap:8px}
+.ag{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--s1);border:1px solid var(--b1);border-radius:var(--r)}
+.ag-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.ag-name{font-size:13px;font-weight:500;color:var(--t1)}
+.ag-desc{font-size:11px;color:var(--t3)}
+
+/* INPUT */
+.input-sec{padding:80px 48px;border-top:1px solid var(--b1);background:var(--s1);text-align:center}
+.input-inner{max-width:480px;margin:0 auto}
+.input-row{display:flex;gap:8px;margin:32px 0 12px}
+.t-in{flex:1;background:var(--bg);border:1px solid var(--b2);border-radius:8px;padding:12px 16px;color:var(--t1);font-size:14px;font-family:'Space Mono',monospace;letter-spacing:.06em;text-transform:uppercase;outline:none;transition:border .2s}
+.t-in::placeholder{color:var(--t3);font-size:12px}
+.t-in:focus{border-color:rgba(79,142,247,.4)}
+.go{background:var(--t1);color:var(--bg);border:none;border-radius:8px;padding:12px 22px;font-weight:600;font-size:13px;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:opacity .2s;white-space:nowrap}
+.go:hover{opacity:.85}
+.i-res{display:none;margin-top:12px;padding:16px;background:var(--bg);border:1px solid var(--b2);border-radius:10px;text-align:left}
+.disc{font-size:11px;color:var(--t3);line-height:1.6;margin-top:20px}
+
+/* PRICING */
+.price-sec{padding:80px 48px;border-top:1px solid var(--b1)}
+.price-inner{max-width:840px;margin:0 auto}
+.pc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--b1);border:1px solid var(--b1);border-radius:var(--r3);overflow:hidden;margin-top:40px}
+.pc{padding:28px;background:var(--bg)}
+.pc.feat{background:var(--s2)}
+.pc-badge{display:inline-block;font-size:9px;font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);background:var(--gold-d);border:1px solid rgba(232,169,48,.2);padding:3px 10px;border-radius:100px;margin-bottom:10px}
+.pc-tier{font-size:10px;font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:.12em;color:var(--t3);margin-bottom:16px;display:block}
+.pc-price{font-family:'Space Mono',monospace;font-size:40px;font-weight:700;color:var(--t1);line-height:1;margin-bottom:4px}
+.pc-per{font-size:12px;color:var(--t3);margin-bottom:20px;font-weight:300}
+.pc-desc{font-size:12px;color:var(--t2);line-height:1.6;margin-bottom:24px}
+.pc-feats{list-style:none;margin-bottom:24px}
+.pc-feats li{font-size:12px;color:var(--t2);padding:7px 0;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--b1)}
+.pc-feats li:last-child{border-bottom:none}
+.pc-feats li.on{color:rgba(236,234,228,.7)}
+.ck{color:var(--green);font-size:10px}
+.cx{color:rgba(255,255,255,.1);font-size:10px}
+.pc-btn{width:100%;padding:11px;border-radius:7px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--b2);background:transparent;color:var(--t1);font-family:'Space Grotesk',sans-serif;transition:all .2s;letter-spacing:.01em}
+.pc-btn:hover{background:var(--s2)}
+.pc-btn.prim{background:var(--t1);color:var(--bg);border-color:var(--t1)}
+.pc-btn.prim:hover{opacity:.86}
+
+/* FOOTER */
+footer{padding:32px 48px;border-top:1px solid var(--b1);display:flex;justify-content:space-between;align-items:center;gap:24px}
+.fl{display:flex;flex-direction:column;gap:4px}
+.fl-logo{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;color:var(--t1)}
+.fl-logo em{color:var(--blue);font-style:normal}
+.fl-line{height:1px;width:72px;background:linear-gradient(90deg,var(--blue),var(--gold))}
+.f-nav{display:flex;gap:24px}
+.f-nav a{font-size:12px;color:var(--t3);text-decoration:none;transition:color .2s}
+.f-nav a:hover{color:var(--t1)}
+.f-d{font-size:11px;color:rgba(236,234,228,0.45);max-width:280px;line-height:1.5;text-align:right}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.rv.in{opacity:1;transform:translateY(0)}
+.rv2{opacity:0;transform:translateY(20px);transition:opacity .6s ease .1s,transform .6s ease .1s}
+.rv2.in{opacity:1;transform:translateY(0)}
+
+/* HAMBURGER */
+.ham{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none}
+.ham span{display:block;width:20px;height:1.5px;background:var(--t1);border-radius:2px;transition:all .25s}
+.ham.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.ham.open span:nth-child(2){opacity:0}
+.ham.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;top:90px;left:0;right:0;background:rgba(5,6,8,0.98);backdrop-filter:blur(32px);border-bottom:1px solid var(--b1);padding:20px 20px 28px;z-index:199;flex-direction:column;gap:0}
+.mobile-menu.open{display:flex}
+.mm-a{font-size:15px;color:var(--t2);text-decoration:none;padding:14px 0;border-bottom:1px solid var(--b1);display:block;transition:color .2s}
+.mm-a:hover{color:var(--t1)}
+.mm-cta{margin-top:16px;background:var(--t1);color:var(--bg);padding:13px 20px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;text-align:center;display:block}
+
+@media(max-width:800px){
+  /* NAV */
+  nav{padding:0 20px}
+  .nav-links{display:none}
+  .ham{display:flex}
+
+  /* HERO */
+  .hero{padding:96px 20px 60px;text-align:center}
+  .hero h1{font-size:clamp(36px,9vw,52px)}
+  .hero-sub{font-size:15px;margin-bottom:28px}
+  .hero-btns{justify-content:center}
+  .hero-nums{gap:20px;flex-wrap:wrap;justify-content:center;margin-top:48px;padding-top:32px}
+  .h-val{font-size:24px}
+
+  /* ALL SECTIONS */
+  .demo-wrap,.vs-sec,.diff-sec,.how-sec,.debate-sec,.input-sec,.price-sec,.email-sec,.faq-sec{padding:56px 20px}
+
+  /* GRIDS → SINGLE COL */
+  .demo-inner,.vs-grid,.diff-grid,.steps,.debate-inner,.pc-grid{grid-template-columns:1fr}
+  .diff-grid,.steps,.pc-grid{gap:1px}
+  .vs-grid{gap:12px}
+  .vs-div{display:none}
+
+  /* PROOF BAR */
+  .proof-bar{gap:20px;flex-wrap:wrap;padding:24px 20px}
+
+  /* INPUT ROW */
+  .input-row,.email-row{flex-direction:column;gap:8px}
+  .t-in,.e-in{width:100%}
+  .go,.e-btn{width:100%;text-align:center}
+
+  /* FAQ */
+  .faq-q{font-size:13px;padding:16px 18px}
+  .faq-a-inner{padding:0 18px 16px;font-size:12px}
+
+  /* FLOATING BTNS */
+  #float-cta{bottom:20px;right:20px;font-size:12px;padding:10px 18px}
+  #btt{bottom:20px;right:auto;left:20px}
+
+  /* FOOTER */
+  footer{flex-direction:column;text-align:center;padding:24px 20px;gap:16px}
+  .f-d{text-align:center;max-width:100%}
+  .f-nav{justify-content:center;flex-wrap:wrap;gap:16px}
+
+  /* VS SECTION */
+  .vs-price{font-size:32px}
+  .vs-card{padding:24px}
+
+  /* DEBATE */
+  .deb-text{font-size:11px}
+
+  /* TAPE */
+  .tape{height:28px}
+  .tape-item{padding:0 16px;font-size:10px}
+}
+
+@media(max-width:400px){
+  .hero h1{font-size:32px}
+  .hero-nums{gap:16px}
+  .h-val{font-size:20px}
+  .h-lbl{font-size:10px}
+  .pc-price{font-size:32px}
+}
+</style>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W2VWCNQC6T"></script>
+<script>
+window.dataLayer=window.dataLayer||[];
+function gtag(){dataLayer.push(arguments);}
+gtag('js',new Date());
+gtag('config','G-W2VWCNQC6T');
+</script>
+</head>
+<body>
+
+<!-- TAPE -->
+<div id="prog"></div>
+
+<!-- TICKER TAPE -->
+<div class="tape">
+  <div class="tape-inner" id="tape"></div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo-mark">
+    <div class="logo-icon">
+      <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="28" height="28" rx="6" fill="#0C0D10"/>
+        <rect x="1" y="1" width="26" height="26" rx="5" stroke="rgba(79,142,247,0.3)" stroke-width="1"/>
+        <path d="M6 20L11 13L15 16.5L19 10L22 13" stroke="#4F8EF7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="22" cy="13" r="2" fill="#E8A930"/>
+        <circle cx="6" cy="20" r="1.5" fill="rgba(79,142,247,0.4)"/>
+      </svg>
+    </div>
+    <div class="logo-wordmark">HEDGE<em>PICK</em></div>
+  </a>
+  <button class="ham" id="ham" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
+  <div class="nav-links">
+    <a href="#how" class="nav-a">How it works</a>
+    <a href="#agents" class="nav-a">System</a>
+    <a href="#pricing" class="nav-a">Pricing</a>
+    <a href="/dashboard" class="nav-link" style="color:rgba(236,234,228,0.7)">Sign in</a>
+    <a href="#" class="nav-cta" onclick="event.preventDefault();openPricingModal()">Get started</a>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mmenu">
+  <a href="#demo" class="mm-a" onclick="closeMenu()">How it works</a>
+  <a href="#agents" class="mm-a" onclick="closeMenu()">System</a>
+  <a href="#faq" class="mm-a" onclick="closeMenu()">FAQ</a>
+  <a href="/dashboard" class="mm-a" onclick="closeMenu()">Sign in</a>
+  <a href="https://buy.stripe.com/28E8wRakJaulbaH4Er4AU01" class="mm-cta" onclick="closeMenu()">Get started free →</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-dots"></div>
+  <div class="hero-bg2"></div>
+  <div class="hero-inner rv">
+    <div class="chip"><div class="chip-dot"></div>Adversarial Multi-Agent Analysis</div>
+    <h1>Hedge fund intelligence.<br>For <span class="hl">every investor.</span></h1>
+    <p class="hero-sub">Enter any ticker. Nine AI agents analyze, debate, and deliver a verdict — BUY, SELL, or HOLD.<br>The same rigor used by institutional hedge funds.<br>Free to start.</p>
+    <div class="hero-btns">
+      <a href="https://buy.stripe.com/28E8wRakJaulbaH4Er4AU01" class="btn-p">Try it free →</a>
+      <a href="#demo" class="btn-g">See it in action</a>
+    </div>
+    <div class="hero-nums">
+      <div class="h-num"><span class="h-val" data-t="9" data-s="">0</span><span class="h-lbl">Specialized Agents</span></div>
+      <div class="h-num"><span class="h-val" data-t="83" data-s="%" data-p="">0%</span><span class="h-lbl">SELL signal accuracy</span></div>
+      <div class="h-num"><span class="h-val" data-t="49" data-s="" data-pre="$">$0</span><span class="h-lbl">Lifetime access</span></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- LIVE DEMO CARD -->
+<section class="demo-wrap" id="demo">
+  <div class="demo-inner">
+    <div class="demo-left rv">
+      <span class="eye">Live analysis</span>
+      <h2 class="demo-h">Watch the agents work.</h2>
+      <p class="demo-p">Every analysis runs in sequence — fundamentals, sentiment, news, technicals, bull/bear debate, risk review, final verdict. Nothing is hidden.</p>
+    </div>
+    <div class="demo-right rv2">
+      <div class="dc" id="dc">
+        <div class="dc-top">
+          <div><div class="dc-sym">NVDA</div><div class="dc-co">Nvidia Corporation</div></div>
+          <div class="dc-live"><div class="ld"></div>Analyzing</div>
+        </div>
+        <div class="dc-rows">
+          <div class="dc-row" data-c="88"><div class="dc-rl">Fundamentals</div><div class="dc-rs rs-b">BUY</div><div class="dc-bar"><div class="dc-fill" style="background:var(--green)"></div></div></div>
+          <div class="dc-row" data-c="72"><div class="dc-rl">Sentiment</div><div class="dc-rs rs-b">BUY</div><div class="dc-bar"><div class="dc-fill" style="background:var(--green)"></div></div></div>
+          <div class="dc-row" data-c="46"><div class="dc-rl">News</div><div class="dc-rs rs-h">HOLD</div><div class="dc-bar"><div class="dc-fill" style="background:var(--amber)"></div></div></div>
+          <div class="dc-row" data-c="83"><div class="dc-rl">Technical</div><div class="dc-rs rs-b">BUY</div><div class="dc-bar"><div class="dc-fill" style="background:var(--green)"></div></div></div>
+          <div class="dc-row" data-c="94"><div class="dc-rl">Bull researcher</div><div class="dc-rs rs-b">STRONG BUY</div><div class="dc-bar"><div class="dc-fill" style="background:var(--green)"></div></div></div>
+          <div class="dc-row" data-c="34"><div class="dc-rl">Bear researcher</div><div class="dc-rs rs-h">NEUTRAL</div><div class="dc-bar"><div class="dc-fill" style="background:var(--amber)"></div></div></div>
+          <div class="dc-row" data-c="79"><div class="dc-rl">Risk manager</div><div class="dc-rs rs-b">APPROVED</div><div class="dc-bar"><div class="dc-fill" style="background:var(--green)"></div></div></div>
+        </div>
+        <div class="dc-bot" id="dcv">
+          <div><div class="dc-v">BUY</div><div class="dc-vs">6/7 agents bullish. Bear case noted but insufficient to override momentum.</div></div>
+          <div><div class="dc-pct">87%</div><div class="dc-pl">Confidence</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ANIMATED DEMO SECTION -->
+<section style="padding:80px 48px;border-top:1px solid rgba(255,255,255,0.07);background:#0C0D10;overflow:hidden">
+  <div style="max-width:900px;margin:0 auto">
+
+    <div style="text-align:center;margin-bottom:48px">
+      <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#4F8EF7;margin-bottom:12px">Watch it work</div>
+      <h2 style="font-family:'Space Mono',monospace;font-size:clamp(24px,3vw,38px);font-weight:700;color:#ECEAE4;letter-spacing:-.03em;margin-bottom:12px">9 agents. One verdict.</h2>
+      <p style="font-size:14px;color:rgba(236,234,228,0.5);font-weight:300;max-width:480px;margin:0 auto">Enter a ticker. Watch the agents analyze, debate, and reach a conclusion — in real time.</p>
+    </div>
+
+    <!-- Animated terminal window -->
+    <div style="background:#080910;border:1px solid rgba(255,255,255,0.1);border-radius:16px;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,0.5)">
+
+      <!-- Window chrome -->
+      <div style="padding:14px 20px;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;align-items:center;gap:8px;background:#0C0D10">
+        <div style="width:10px;height:10px;border-radius:50%;background:#FF5F57"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#FFBD2E"></div>
+        <div style="width:10px;height:10px;border-radius:50%;background:#28CA41"></div>
+        <div style="flex:1;text-align:center;font-family:'Space Mono',monospace;font-size:11px;color:rgba(236,234,228,0.3)">HedgePick Analysis</div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <div style="width:6px;height:6px;background:#22C55E;border-radius:50%;animation:livepulse 1.5s infinite"></div>
+          <span style="font-family:'Space Mono',monospace;font-size:10px;color:#22C55E">LIVE</span>
+        </div>
+      </div>
+
+      <!-- Ticker input display -->
+      <div style="padding:24px 28px;border-bottom:1px solid rgba(255,255,255,0.05)">
+        <div style="display:flex;align-items:center;gap:16px">
+          <div style="font-family:'Space Mono',monospace;font-size:11px;color:rgba(236,234,228,0.3);text-transform:uppercase;letter-spacing:.1em">Analyzing</div>
+          <div style="font-family:'Space Mono',monospace;font-size:24px;font-weight:700;color:#ECEAE4" id="demoTicker">NVDA</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.4)" id="demoCompany">Nvidia Corporation</div>
+          <div style="margin-left:auto;font-family:'Space Mono',monospace;font-size:11px;color:#4F8EF7" id="demoDate">May 22, 2026</div>
+        </div>
+      </div>
+
+      <!-- Agent rows -->
+      <div id="demoAgents" style="padding:8px 0">
+        <div class="demo-agent-row" id="da0" style="padding:10px 28px;display:flex;align-items:center;gap:16px;opacity:0;transition:opacity .4s">
+          <div style="width:8px;height:8px;border-radius:50%;background:#4F8EF7;flex-shrink:0"></div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.5);width:160px;font-family:'Space Mono',monospace;font-size:11px">Fundamentals analyst</div>
+          <div style="flex:1;height:2px;background:rgba(255,255,255,0.04);border-radius:1px;overflow:hidden"><div class="demo-progress" style="height:100%;background:#4F8EF7;width:0%;transition:width 1.2s ease;border-radius:1px"></div></div>
+          <div class="demo-signal" style="font-family:'Space Mono',monospace;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;opacity:0;transition:opacity .3s;background:rgba(34,197,94,0.1);color:#22C55E;min-width:50px;text-align:center">BUY</div>
+        </div>
+        <div class="demo-agent-row" id="da1" style="padding:10px 28px;display:flex;align-items:center;gap:16px;opacity:0;transition:opacity .4s">
+          <div style="width:8px;height:8px;border-radius:50%;background:#4F8EF7;flex-shrink:0"></div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.5);width:160px;font-family:'Space Mono',monospace;font-size:11px">Sentiment analyst</div>
+          <div style="flex:1;height:2px;background:rgba(255,255,255,0.04);border-radius:1px;overflow:hidden"><div class="demo-progress" style="height:100%;background:#4F8EF7;width:0%;transition:width 1.2s ease;border-radius:1px"></div></div>
+          <div class="demo-signal" style="font-family:'Space Mono',monospace;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;opacity:0;transition:opacity .3s;background:rgba(34,197,94,0.1);color:#22C55E;min-width:50px;text-align:center">BUY</div>
+        </div>
+        <div class="demo-agent-row" id="da2" style="padding:10px 28px;display:flex;align-items:center;gap:16px;opacity:0;transition:opacity .4s">
+          <div style="width:8px;height:8px;border-radius:50%;background:#FBBF24;flex-shrink:0"></div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.5);width:160px;font-family:'Space Mono',monospace;font-size:11px">News analyst</div>
+          <div style="flex:1;height:2px;background:rgba(255,255,255,0.04);border-radius:1px;overflow:hidden"><div class="demo-progress" style="height:100%;background:#FBBF24;width:0%;transition:width 1.2s ease;border-radius:1px"></div></div>
+          <div class="demo-signal" style="font-family:'Space Mono',monospace;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;opacity:0;transition:opacity .3s;background:rgba(251,191,36,0.1);color:#FBBF24;min-width:50px;text-align:center">HOLD</div>
+        </div>
+        <div class="demo-agent-row" id="da3" style="padding:10px 28px;display:flex;align-items:center;gap:16px;opacity:0;transition:opacity .4s">
+          <div style="width:8px;height:8px;border-radius:50%;background:#4F8EF7;flex-shrink:0"></div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.5);width:160px;font-family:'Space Mono',monospace;font-size:11px">Technical analyst</div>
+          <div style="flex:1;height:2px;background:rgba(255,255,255,0.04);border-radius:1px;overflow:hidden"><div class="demo-progress" style="height:100%;background:#4F8EF7;width:0%;transition:width 1.2s ease;border-radius:1px"></div></div>
+          <div class="demo-signal" style="font-family:'Space Mono',monospace;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;opacity:0;transition:opacity .3s;background:rgba(34,197,94,0.1);color:#22C55E;min-width:50px;text-align:center">BUY</div>
+        </div>
+        <div class="demo-agent-row" id="da4" style="padding:10px 28px;display:flex;align-items:center;gap:16px;opacity:0;transition:opacity .4s;background:rgba(34,197,94,0.03)">
+          <div style="width:8px;height:8px;border-radius:50%;background:#22C55E;flex-shrink:0"></div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.5);width:160px;font-family:'Space Mono',monospace;font-size:11px">Bull researcher</div>
+          <div style="flex:1;height:2px;background:rgba(255,255,255,0.04);border-radius:1px;overflow:hidden"><div class="demo-progress" style="height:100%;background:#22C55E;width:0%;transition:width 1.2s ease;border-radius:1px"></div></div>
+          <div class="demo-signal" style="font-family:'Space Mono',monospace;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;opacity:0;transition:opacity .3s;background:rgba(34,197,94,0.1);color:#22C55E;min-width:50px;text-align:center">STRONG</div>
+        </div>
+        <div class="demo-agent-row" id="da5" style="padding:10px 28px;display:flex;align-items:center;gap:16px;opacity:0;transition:opacity .4s;background:rgba(248,113,113,0.02)">
+          <div style="width:8px;height:8px;border-radius:50%;background:#F87171;flex-shrink:0"></div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.5);width:160px;font-family:'Space Mono',monospace;font-size:11px">Bear researcher</div>
+          <div style="flex:1;height:2px;background:rgba(255,255,255,0.04);border-radius:1px;overflow:hidden"><div class="demo-progress" style="height:100%;background:#F87171;width:0%;transition:width 1s ease;border-radius:1px"></div></div>
+          <div class="demo-signal" style="font-family:'Space Mono',monospace;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;opacity:0;transition:opacity .3s;background:rgba(251,191,36,0.1);color:#FBBF24;min-width:50px;text-align:center">NEUTRAL</div>
+        </div>
+        <div class="demo-agent-row" id="da6" style="padding:10px 28px;display:flex;align-items:center;gap:16px;opacity:0;transition:opacity .4s">
+          <div style="width:8px;height:8px;border-radius:50%;background:#E8A930;flex-shrink:0"></div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.5);width:160px;font-family:'Space Mono',monospace;font-size:11px">Trader agent</div>
+          <div style="flex:1;height:2px;background:rgba(255,255,255,0.04);border-radius:1px;overflow:hidden"><div class="demo-progress" style="height:100%;background:#E8A930;width:0%;transition:width 1.2s ease;border-radius:1px"></div></div>
+          <div class="demo-signal" style="font-family:'Space Mono',monospace;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;opacity:0;transition:opacity .3s;background:rgba(34,197,94,0.1);color:#22C55E;min-width:50px;text-align:center">BUY</div>
+        </div>
+        <div class="demo-agent-row" id="da7" style="padding:10px 28px;display:flex;align-items:center;gap:16px;opacity:0;transition:opacity .4s">
+          <div style="width:8px;height:8px;border-radius:50%;background:#E8A930;flex-shrink:0"></div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.5);width:160px;font-family:'Space Mono',monospace;font-size:11px">Risk manager</div>
+          <div style="flex:1;height:2px;background:rgba(255,255,255,0.04);border-radius:1px;overflow:hidden"><div class="demo-progress" style="height:100%;background:#E8A930;width:0%;transition:width 1.2s ease;border-radius:1px"></div></div>
+          <div class="demo-signal" style="font-family:'Space Mono',monospace;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;opacity:0;transition:opacity .3s;background:rgba(34,197,94,0.1);color:#22C55E;min-width:50px;text-align:center">APPROVED</div>
+        </div>
+        <div class="demo-agent-row" id="da8" style="padding:10px 28px;display:flex;align-items:center;gap:16px;opacity:0;transition:opacity .4s">
+          <div style="width:8px;height:8px;border-radius:50%;background:#A855F7;flex-shrink:0"></div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.5);width:160px;font-family:'Space Mono',monospace;font-size:11px">Portfolio manager</div>
+          <div style="flex:1;height:2px;background:rgba(255,255,255,0.04);border-radius:1px;overflow:hidden"><div class="demo-progress" style="height:100%;background:#A855F7;width:0%;transition:width 1.2s ease;border-radius:1px"></div></div>
+          <div class="demo-signal" style="font-family:'Space Mono',monospace;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;opacity:0;transition:opacity .3s;background:rgba(34,197,94,0.1);color:#22C55E;min-width:50px;text-align:center">GO</div>
+        </div>
+      </div>
+
+      <!-- Final verdict -->
+      <div id="demoVerdict" style="padding:24px 28px;border-top:1px solid rgba(34,197,94,0.15);background:rgba(34,197,94,0.03);display:flex;align-items:center;justify-content:space-between;opacity:0;transition:opacity .6s">
+        <div>
+          <div style="font-family:'Space Mono',monospace;font-size:28px;font-weight:700;color:#22C55E;margin-bottom:4px">BUY</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.45);max-width:320px;line-height:1.5">6 of 7 agents bullish. Bear case acknowledged but insufficient to override fundamentals momentum. Entry approved.</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-family:'Space Mono',monospace;font-size:28px;font-weight:700;color:#ECEAE4">87%</div>
+          <div style="font-size:10px;color:rgba(236,234,228,0.3);text-transform:uppercase;letter-spacing:.1em;margin-top:2px">Confidence</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Replay + CTA -->
+    <div style="display:flex;align-items:center;justify-content:center;gap:20px;margin-top:28px">
+      <button onclick="startDemo()" style="background:transparent;border:1px solid rgba(255,255,255,0.1);border-radius:7px;padding:8px 18px;font-size:12px;color:rgba(236,234,228,0.5);cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:all .2s">&#9654; Replay</button>
+      <a href="#" onclick="event.preventDefault();openPricingModal()" style="background:#ECEAE4;color:#050608;padding:10px 24px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none;font-family:'Space Grotesk',sans-serif;transition:opacity .2s">Try it on your tickers &rarr;</a>
+    </div>
+
+  </div>
+</section>
+
+<style>
+@keyframes livepulse{0%,100%{opacity:1}50%{opacity:.3}}
+</style>
+
+<script>
+var demoRunning = false;
+var demoTimer = null;
+
+var demoData = [
+  {ticker:'NVDA', company:'Nvidia Corporation'},
+  {ticker:'AAPL', company:'Apple Inc.'},
+  {ticker:'IONQ', company:'IonQ Inc.'},
+];
+var demoIdx = 0;
+
+function startDemo() {
+  if(demoRunning) return;
+  demoRunning = true;
+
+  // Reset all agents
+  for(var i=0;i<9;i++){
+    var row = document.getElementById('da'+i);
+    if(row){
+      row.style.opacity='0';
+      var prog = row.querySelector('.demo-progress');
+      var sig = row.querySelector('.demo-signal');
+      if(prog) prog.style.width='0%';
+      if(sig) sig.style.opacity='0';
+    }
+  }
+  var verdict = document.getElementById('demoVerdict');
+  if(verdict) verdict.style.opacity='0';
+
+  // Set ticker
+  var d = demoData[demoIdx % demoData.length];
+  demoIdx++;
+  var tickerEl = document.getElementById('demoTicker');
+  var compEl = document.getElementById('demoCompany');
+  if(tickerEl) tickerEl.textContent = d.ticker;
+  if(compEl) compEl.textContent = d.company;
+
+  // Animate agents one by one
+  var delays = [200,600,1100,1700,2400,3200,4100,5000,5900];
+  var progWidths = [88,72,45,83,95,32,78,82,90];
+
+  for(var j=0;j<9;j++){
+    (function(idx, delay, prog){
+      setTimeout(function(){
+        var row = document.getElementById('da'+idx);
+        if(!row) return;
+        row.style.opacity='1';
+        setTimeout(function(){
+          var pBar = row.querySelector('.demo-progress');
+          if(pBar) pBar.style.width = prog+'%';
+          setTimeout(function(){
+            var sig = row.querySelector('.demo-signal');
+            if(sig) sig.style.opacity='1';
+          }, 900);
+        }, 200);
+      }, delay);
+    })(j, delays[j], progWidths[j]);
+  }
+
+  // Show verdict
+  setTimeout(function(){
+    var v = document.getElementById('demoVerdict');
+    if(v) v.style.opacity='1';
+    demoRunning = false;
+    // Auto restart with next ticker after 4s
+    demoTimer = setTimeout(function(){ startDemo(); }, 4000);
+  }, 7200);
+}
+
+// Start when section scrolls into view
+var demoObs = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      setTimeout(startDemo, 400);
+      demoObs.unobserve(e.target);
+    }
+  });
+}, {threshold:0.3});
+
+var demoSection = document.querySelector('#demoAgents');
+if(demoSection) demoObs.observe(demoSection);
+</script>
+
+<!-- VS BLOOMBERG -->
+<section class="vs-sec rv">
+  <div class="vs-inner">
+    <span class="eye">The math</span>
+    <h2 style="font-size:clamp(26px,3vw,40px);font-weight:600;letter-spacing:-.03em;margin-bottom:12px">One is for Goldman Sachs.</h2>
+    <p style="font-size:14px;color:var(--t2);font-weight:300">One is for you.</p>
+    <div class="vs-grid">
+      <div class="vs-card bad">
+        <div class="vs-price">$24,000</div>
+        <div class="vs-name">Bloomberg Terminal · per year</div>
+      </div>
+      <div class="vs-div">vs</div>
+      <div class="vs-card good">
+        <div class="vs-price">$49</div>
+        <div class="vs-name">HedgePick Lifetime · one-time</div>
+      </div>
+    </div>
+    <p class="vs-tag">Institutional-grade analysis. Zero institutional pricing.</p>
+  </div>
+</section>
+
+<!-- DIFF -->
+<section class="diff-sec">
+  <div class="diff-inner">
+    <span class="eye rv">Why HedgePick</span>
+    <h2 class="rv" style="font-size:clamp(26px,3vw,40px);font-weight:600;letter-spacing:-.03em;margin-bottom:8px">Not another signal generator.</h2>
+    <p class="rv" style="font-size:14px;color:var(--t2);font-weight:300;max-width:480px">Other tools give you a score. We show you the debate — every agent's reasoning, the bull/bear confrontation, the full risk assessment.</p>
+    <div class="diff-grid rv">
+      <div class="diff-col">
+        <span class="diff-col-h bad">Other tools</span>
+        <div class="di"><span class="di-icon" style="color:var(--red)">✗</span><div class="di-text"><b>Black box signals</b> — a score with no reasoning behind it</div></div>
+        <div class="di"><span class="di-icon" style="color:var(--red)">✗</span><div class="di-text"><b>Single model</b> — one AI's opinion, no adversarial challenge</div></div>
+        <div class="di"><span class="di-icon" style="color:var(--red)">✗</span><div class="di-text"><b>Curated universe only</b> — their picks, not your tickers</div></div>
+        <div class="di"><span class="di-icon" style="color:var(--red)">✗</span><div class="di-text"><b>Monthly subscriptions</b> — $40/month, forever</div></div>
+      </div>
+      <div class="diff-col">
+        <span class="diff-col-h good">HedgePick</span>
+        <div class="di"><span class="di-icon" style="color:var(--green)">✓</span><div class="di-text"><b>Full reasoning</b> — every agent's analysis, transparent</div></div>
+        <div class="di"><span class="di-icon" style="color:var(--green)">✓</span><div class="di-text"><b>Adversarial debate</b> — bull vs bear before any verdict</div></div>
+        <div class="di"><span class="di-icon" style="color:var(--green)">✓</span><div class="di-text"><b>Any ticker, on demand</b> — analyze whatever you want</div></div>
+        <div class="di"><span class="di-icon" style="color:var(--green)">✓</span><div class="di-text"><b>Pay once</b> — $19 for 30 days or $49 lifetime</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-sec" id="how">
+  <div class="how-inner">
+    <span class="eye rv">How it works</span>
+    <h2 class="rv" style="font-size:clamp(26px,3vw,40px);font-weight:600;letter-spacing:-.03em;margin-bottom:8px">Three steps to a verdict.</h2>
+    <p class="rv" style="font-size:14px;color:var(--t2);font-weight:300;max-width:440px;margin-bottom:0">No charts. No jargon. Enter a ticker and let the system do the work.</p>
+    <div class="steps rv">
+      <div class="step" data-n="01"><span class="sn">01</span><div class="st">Enter any ticker</div><div class="sd">Type any US equity — quantum names, blue chips, growth stocks. Free users get one per day.</div></div>
+      <div class="step" data-n="02"><span class="sn">02</span><div class="st">9 agents analyze and debate</div><div class="sd">Fundamentals, sentiment, news, technicals, bull, bear, risk manager, portfolio manager — adversarial by design.</div></div>
+      <div class="step" data-n="03"><span class="sn">03</span><div class="st">Clear verdict</div><div class="sd">BUY, SELL, or HOLD with confidence score, full reasoning, stop loss levels, and position sizing.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DEBATE -->
+<section class="debate-sec" id="agents">
+  <div class="debate-inner">
+    <div class="rv">
+      <span class="eye">The debate</span>
+      <h2 style="font-size:clamp(24px,2.8vw,38px);font-weight:600;letter-spacing:-.03em;margin-bottom:12px">Agents that argue<br>before they agree.</h2>
+      <p style="font-size:13px;color:var(--t2);line-height:1.7;font-weight:300;margin-bottom:24px;max-width:380px">No other tool runs a structured bull/bear confrontation before producing a recommendation. That adversarial architecture is our edge.</p>
+      <div class="debate-card">
+        <div class="deb-h">Debate transcript — NVDA · May 2026</div>
+        <div class="deb-row">
+          <div class="deb-av" style="background:rgba(34,197,94,.1);color:var(--green)">🐂</div>
+          <div><div class="deb-name">Bull researcher</div><div class="deb-text">GB300 ramp driving datacenter capex acceleration. Forward P/E justified by 78% gross margins and near-monopoly on AI training infrastructure.</div></div>
+        </div>
+        <div class="deb-row">
+          <div class="deb-av" style="background:rgba(248,113,113,.1);color:var(--red)">🐻</div>
+          <div><div class="deb-name">Bear researcher</div><div class="deb-text">Export restrictions on H20 chips create material revenue risk. China was 17% of FY24 revenue. Valuation assumes flawless execution.</div></div>
+        </div>
+        <div class="deb-row">
+          <div class="deb-av" style="background:rgba(251,191,36,.1);color:var(--amber)">⚖</div>
+          <div><div class="deb-name">Risk manager</div><div class="deb-text">Bull case prevails. Entry approved. Stop loss 15% at $193. Position: 1–1.5% of portfolio given earnings proximity.</div></div>
+        </div>
+        <div class="deb-row">
+          <div class="deb-av" style="background:rgba(79,142,247,.1);color:var(--blue)">🏦</div>
+          <div><div class="deb-name">Portfolio manager</div><div class="deb-text">Final verdict: BUY. Confidence 87%. Risk/reward asymmetric to the upside.</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="rv2">
+      <span class="eye">All 9 agents</span>
+      <div class="agents-list" style="margin-top:16px">
+        <div class="ag"><div class="ag-dot" style="background:var(--blue)"></div><div><div class="ag-name">Fundamentals analyst</div><div class="ag-desc">Revenue, valuation, balance sheet</div></div></div>
+        <div class="ag"><div class="ag-dot" style="background:var(--blue)"></div><div><div class="ag-name">Sentiment analyst</div><div class="ag-desc">Social momentum, retail positioning</div></div></div>
+        <div class="ag"><div class="ag-dot" style="background:var(--blue)"></div><div><div class="ag-name">News analyst</div><div class="ag-desc">Macro events, regulatory landscape</div></div></div>
+        <div class="ag"><div class="ag-dot" style="background:var(--blue)"></div><div><div class="ag-name">Technical analyst</div><div class="ag-desc">MACD, RSI, chart patterns</div></div></div>
+        <div class="ag"><div class="ag-dot" style="background:var(--green)"></div><div><div class="ag-name">Bull researcher</div><div class="ag-desc">Strongest case for buying</div></div></div>
+        <div class="ag"><div class="ag-dot" style="background:var(--red)"></div><div><div class="ag-name">Bear researcher</div><div class="ag-desc">Challenges every bull assumption</div></div></div>
+        <div class="ag"><div class="ag-dot" style="background:var(--gold)"></div><div><div class="ag-name">Trader agent</div><div class="ag-desc">Synthesizes the debate</div></div></div>
+        <div class="ag"><div class="ag-dot" style="background:var(--amber)"></div><div><div class="ag-name">Risk manager</div><div class="ag-desc">Stop loss, position sizing</div></div></div>
+        <div class="ag"><div class="ag-dot" style="background:#A855F7"></div><div><div class="ag-name">Portfolio manager</div><div class="ag-desc">Final go / no-go</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INPUT -->
+<section class="input-sec rv">
+  <div class="input-inner">
+    <span class="eye">Try it now</span>
+    <h2 style="font-size:clamp(24px,3vw,38px);font-weight:600;letter-spacing:-.03em;margin-bottom:10px">Enter a ticker.</h2>
+    <p style="font-size:13px;color:var(--t2);font-weight:300">Free users get one analysis per day. No credit card required.</p>
+    <div class="input-row">
+      <input class="t-in" type="text" placeholder="NVDA, AAPL, IONQ — press Enter" maxlength="8" id="tin">
+      <button class="go" onclick="go()">Analyze →</button>
+    </div>
+    <div class="i-res" id="ires">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+        <span id="is" style="font-family:'Space Mono',monospace;font-size:15px;font-weight:700;color:var(--t1)"></span>
+        <span id="iv" style="font-size:11px;font-weight:700;font-family:'Space Mono',monospace;padding:3px 9px;border-radius:4px"></span>
+      </div>
+      <p id="it" style="font-size:12px;color:var(--t2);line-height:1.65;margin-bottom:10px"></p>
+      <div style="font-size:12px;color:var(--blue);cursor:pointer" onclick="openPricingModal()">Upgrade for the full debate transcript, stop loss, and position sizing →</div>
+    </div>
+    <p class="disc">Not financial advice. For educational and informational purposes only. Always conduct your own research.</p>
+  </div>
+</section>
+
+
+<!-- FAQ -->
+<section class="faq-sec rv" id="faq">
+  <div class="faq-inner">
+    <span class="eye">FAQ</span>
+    <h2 style="font-size:clamp(24px,3vw,38px);font-weight:600;letter-spacing:-.03em;margin-bottom:8px">Common questions.</h2>
+    <p style="font-size:13px;color:var(--t2);font-weight:300">Everything you need to know before getting started.</p>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-q" onclick="faq(this)">Is this financial advice?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">No. HedgePick is an educational and informational tool. Our AI agents analyze publicly available data and produce research-style output. Nothing on HedgePick constitutes financial, investment, or trading advice. Always conduct your own due diligence and consult a licensed advisor before making any investment decisions.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="faq(this)">How accurate is the system?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Our blind backtesting study across 18 data points — 6 tickers × 3 independent historical windows — showed 61% directional accuracy. SELL signals were accurate 83% of the time. This is above-chance performance validated on data the system had never seen. Past performance does not guarantee future results.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="faq(this)">What tickers can I analyze?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Any US-listed equity. We've tested extensively on quantum computing, AI infrastructure, energy, defense, large-cap tech, and blue chips. If it trades on a major US exchange, the agents can analyze it. International ADRs and ETFs are not currently supported.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="faq(this)">How is this different from ChatGPT or other AI tools?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">ChatGPT is a general-purpose assistant. HedgePick runs 9 specialized agents in a structured adversarial pipeline — bull vs bear debate, dedicated risk management, portfolio manager oversight. It's purpose-built for stock analysis, not adapted from a chatbot. The adversarial architecture is what produces rigorous, multi-perspective output instead of a single model's opinion.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="faq(this)">What does the Lifetime plan actually include?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">One payment of $49 gives you permanent access to 5 ticker analyses per day, full 9-agent reasoning, the complete bull/bear debate transcript, stop loss and take profit levels, and position sizing guidance — plus all future updates. No renewal, no subscription, no surprises.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="price-sec rv" id="pricing">
+  <div class="price-inner" style="padding-top:12px">
+    <span class="eye">Pricing</span>
+    <h2 style="font-size:clamp(26px,3vw,40px);font-weight:600;letter-spacing:-.03em;margin-bottom:8px">No subscriptions.</h2>
+    <p style="font-size:14px;color:var(--t2);font-weight:300">Pay once. Or start free — no card needed.</p>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:40px">
+
+      <!-- Free -->
+      <div style="background:var(--s1);border:1px solid var(--b1);border-radius:14px;padding:28px;display:flex;flex-direction:column">
+        <div style="font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--t3);margin-bottom:14px">Free</div>
+        <div style="font-family:'Space Mono',monospace;font-size:40px;font-weight:700;color:var(--t1);line-height:1;margin-bottom:4px">$0</div>
+        <div style="font-size:12px;color:var(--t3);margin-bottom:20px">forever</div>
+        <p style="font-size:13px;color:var(--t2);font-weight:300;margin-bottom:20px;line-height:1.55">One analysis per day. See the verdict, not the debate.</p>
+        <div style="flex:1;margin-bottom:20px">
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> 1 ticker per day</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> BUY / SELL / HOLD signal</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> No credit card</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.25);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="font-size:10px">&#8212;</span> Full agent reasoning</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.25);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="font-size:10px">&#8212;</span> Debate transcript</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.25);padding:7px 0;display:flex;gap:8px;align-items:center"><span style="font-size:10px">&#8212;</span> Stop loss levels</div>
+        </div>
+        <a href="https://buy.stripe.com/28E8wRakJaulbaH4Er4AU01" style="display:block;text-align:center;padding:12px;border-radius:8px;font-size:13px;font-weight:500;color:var(--t1);border:1px solid var(--b2);background:transparent;text-decoration:none;font-family:'Space Grotesk',sans-serif">Start free</a>
+      </div>
+
+      <!-- Pro -->
+      <div style="background:var(--s2);border:1px solid var(--b2);border-radius:14px;padding:28px;display:flex;flex-direction:column">
+        <div style="font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--t3);margin-bottom:14px">Pro &middot; 30 days</div>
+        <div style="font-family:'Space Mono',monospace;font-size:40px;font-weight:700;color:var(--t1);line-height:1;margin-bottom:4px">$19</div>
+        <div style="font-size:12px;color:var(--t3);margin-bottom:20px">one-time &middot; no renewal</div>
+        <p style="font-size:13px;color:var(--t2);font-weight:300;margin-bottom:20px;line-height:1.55">Full access for 30 days. No renewal, zero recurring charges.</p>
+        <div style="flex:1;margin-bottom:20px">
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> 5 tickers per day</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Full 9-agent reasoning</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Debate transcript</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Stop loss &amp; take profit</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Position sizing</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> 30-day access</div>
+        </div>
+        <a href="https://buy.stripe.com/5kQ00l78xcCtgv1b2P4AU00" style="display:block;text-align:center;padding:12px;border-radius:8px;font-size:13px;font-weight:600;color:var(--bg);background:var(--t1);border:none;text-decoration:none;font-family:'Space Grotesk',sans-serif">Get 30-day access →</a>
+      </div>
+
+      <!-- Lifetime -->
+      <div style="background:linear-gradient(135deg,rgba(232,169,48,0.07),rgba(79,142,247,0.04));border:1px solid rgba(232,169,48,0.28);border-radius:14px;padding:28px;display:flex;flex-direction:column;position:relative">
+        <div style="position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:#E8A930;color:#050608;font-family:'Space Mono',monospace;font-size:9px;font-weight:700;padding:3px 12px;border-radius:100px;white-space:nowrap;letter-spacing:.08em">MOST POPULAR</div>
+        <div style="font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#E8A930;margin-bottom:14px">Lifetime</div>
+        <div style="font-family:'Space Mono',monospace;font-size:40px;font-weight:700;color:var(--t1);line-height:1;margin-bottom:4px">$49</div>
+        <div style="font-size:12px;color:var(--t3);margin-bottom:20px">once &middot; yours forever</div>
+        <p style="font-size:13px;color:var(--t2);font-weight:300;margin-bottom:20px;line-height:1.55">Everything, forever. Pay once and never think about it again.</p>
+        <div style="flex:1;margin-bottom:20px">
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> 5 tickers per day</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Full 9-agent reasoning</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Debate transcript</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Stop loss &amp; take profit</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Position sizing</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Lifetime &middot; all updates</div>
+        </div>
+        <a href="https://buy.stripe.com/7sY00l0K945X4Mjb2P4AU02" style="display:block;text-align:center;padding:12px;border-radius:8px;font-size:13px;font-weight:600;color:#050608;background:#E8A930;border:none;text-decoration:none;font-family:'Space Grotesk',sans-serif">Get lifetime access →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="fl">
+    <div class="fl-logo">HEDGE<em>PICK</em></div>
+    <div class="fl-line"></div>
+  </div>
+  <div class="f-nav">
+    <a href="/privacy">Privacy</a>
+    <a href="/terms">Terms</a>
+    <a href="/terms#disclaimer">Disclaimer</a>
+    <a href="mailto:joseph@hedgepick.com">Contact</a>
+  </div>
+  <p class="f-d">Not financial advice. For informational and educational purposes only. Past performance does not guarantee future results.</p>
+</footer>
+
+<script>
+// TAPE
+const td=[
+  {s:'NVDA',v:'BUY',c:'t-b'},{s:'AAPL',v:'SELL',c:'t-s'},{s:'IONQ',v:'HOLD',c:'t-h'},
+  {s:'MSFT',v:'BUY',c:'t-b'},{s:'TSLA',v:'HOLD',c:'t-h'},{s:'RGTI',v:'SELL',c:'t-s'},
+  {s:'AMZN',v:'BUY',c:'t-b'},{s:'META',v:'BUY',c:'t-b'},{s:'QBTS',v:'SELL',c:'t-s'},
+  {s:'IBM',v:'HOLD',c:'t-h'},{s:'ARQQ',v:'SELL',c:'t-s'},{s:'GOOGL',v:'BUY',c:'t-b'},
+  {s:'CEG',v:'HOLD',c:'t-h'},{s:'IESC',v:'BUY',c:'t-b'},{s:'QUBT',v:'SELL',c:'t-s'},
+  {s:'VRT',v:'HOLD',c:'t-h'},{s:'XOM',v:'BUY',c:'t-b'},{s:'MU',v:'HOLD',c:'t-h'},
+];
+const track=document.getElementById('tape');
+[...td,...td].forEach(t=>{
+  const el=document.createElement('div');
+  el.className='tape-item';
+  el.innerHTML=`<span class="tape-sym">${t.s}</span><span class="${t.c}">${t.v}</span>`;
+  track.appendChild(el);
+});
+
+// REVEAL
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target)}})},{threshold:.08});
+document.querySelectorAll('.rv,.rv2').forEach(r=>obs.observe(r));
+
+// COUNTERS
+const cobs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.querySelectorAll('.h-val').forEach(el=>{const t=+el.dataset.t,pre=el.dataset.pre||'',s=el.dataset.s||'';let c=0;const step=Math.ceil(t/36),iv=setInterval(()=>{c=Math.min(c+step,t);el.textContent=pre+c+s;if(c>=t)clearInterval(iv)},25)});cobs.unobserve(x.target)}})},{threshold:.3});
+document.querySelectorAll('.hero-nums').forEach(n=>cobs.observe(n));
+
+// CARD ANIMATION
+function runCard(){
+  const rows=document.querySelectorAll('.dc-row');
+  const v=document.getElementById('dcv');
+  rows.forEach((r,i)=>{
+    setTimeout(()=>{
+      r.classList.add('in');
+      setTimeout(()=>{r.querySelector('.dc-fill').style.width=r.dataset.c+'%'},80);
+    },300+i*260);
+  });
+  setTimeout(()=>v.classList.add('in'),300+rows.length*260+200);
+}
+const crd=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){runCard();crd.unobserve(x.target)}})},{threshold:.15});
+const dc=document.getElementById('dc');
+if(dc)crd.observe(dc);
+
+// INPUT
+const pv={
+  NVDA:{v:'BUY',c:'var(--green)',b:'rgba(34,197,94,.08)',t:'Strong consensus — 6 of 7 agents bullish. GB300 ramp driving datacenter capex. Bear case acknowledged but insufficient to override momentum.'},
+  AAPL:{v:'SELL',c:'var(--red)',b:'rgba(248,113,113,.08)',t:'Services growth decelerating. China headwinds flagged. Bear researcher won the debate 5-2. Risk manager recommends exit.'},
+  IONQ:{v:'HOLD',c:'var(--amber)',b:'rgba(251,191,36,.08)',t:'Technology validated but commercialization timeline uncertain. Agents split 4-3. Insufficient conviction for entry or exit.'},
+  TSLA:{v:'HOLD',c:'var(--amber)',b:'rgba(251,191,36,.08)',t:'Mixed signals. Fundamentals bullish on energy storage; bear flagged brand sentiment deterioration and margin compression. Debate inconclusive.'},
+  AMZN:{v:'BUY',c:'var(--green)',b:'rgba(34,197,94,.08)',t:'AWS growth reaccelerating. Advertising emerging as high-margin driver. 5 of 7 agents bullish. Risk manager approved entry.'},
+};
+async function go(){
+  const ticker = document.getElementById('tin').value.trim().toUpperCase();
+  if(!ticker) return;
+
+  // Ask user for their email
+  const email = prompt("Enter your email to receive the analysis report:");
+  if(!email || !email.includes('@')) {
+    alert("A valid email is required to send you the report.");
+    return;
+  }
+
+  const r = document.getElementById('ires');
+  const isEl = document.getElementById('is');
+  const ivEl = document.getElementById('iv');
+  const itEl = document.getElementById('it');
+
+  // Show loading state
+  isEl.textContent = ticker;
+  ivEl.textContent = 'ANALYZING';
+  ivEl.style.background = 'rgba(79,142,247,0.08)';
+  ivEl.style.color = 'var(--blue)';
+  itEl.textContent = 'Your analysis is starting. 9 agents are now reviewing ' + ticker + '. This takes about 5 minutes. We will email the PDF report to ' + email + ' when it is ready.';
+  r.style.display = 'block';
+  r.scrollIntoView({behavior:'smooth', block:'nearest'});
+
+  // Call the real backend
+  try {
+    const response = await fetch('https://web-production-45241.up.railway.app/api/analyze', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({email: email, tickers: [ticker]})
+    });
+
+    const data = await response.json();
+
+    if(!response.ok) {
+      ivEl.textContent = 'ERROR';
+      ivEl.style.background = 'rgba(248,113,113,0.08)';
+      ivEl.style.color = 'var(--red)';
+      itEl.textContent = data.error || 'Something went wrong. Please try again.';
+      return;
+    }
+
+    // Success — keep showing the analyzing state with a confirmation
+    itEl.textContent = 'Analysis started for ' + ticker + '. We will email the report to ' + email + ' in about ' + (data.estimated_minutes || 5) + ' minutes. You can close this page.';
+
+  } catch(err) {
+    ivEl.textContent = 'ERROR';
+    ivEl.style.background = 'rgba(248,113,113,0.08)';
+    ivEl.style.color = 'var(--red)';
+    itEl.textContent = 'Could not reach the analysis server. Please try again in a moment.';
+  }
+}
+document.getElementById('tin').addEventListener('keydown',e=>{if(e.key==='Enter')go()});
+
+// Hide floating CTA when hero button is visible
+const heroBtn=document.querySelector('.hero-btns .btn-p');
+const floatBtn=document.getElementById('float-cta');
+const floatObs=new IntersectionObserver(e=>{
+  floatBtn.style.opacity=e[0].isIntersecting?'0':'1';
+  floatBtn.style.pointerEvents=e[0].isIntersecting?'none':'auto';
+},{threshold:0.5});
+if(heroBtn)floatObs.observe(heroBtn);
+
+// PROGRESS BAR
+const prog=document.getElementById('prog');
+window.addEventListener('scroll',()=>{
+  const h=document.body.scrollHeight-window.innerHeight;
+  prog.style.width=(window.scrollY/h*100)+'%';
+  // BACK TO TOP
+  document.getElementById('btt').classList.toggle('show',window.scrollY>600);
+  // NAV ACTIVE
+  const sections=['demo','diff','how','agents','pricing'];
+  let cur='';
+  sections.forEach(id=>{const el=document.getElementById(id);if(el&&window.scrollY>=el.offsetTop-120)cur=id});
+  document.querySelectorAll('.nav-a').forEach(a=>{
+    a.classList.toggle('active',a.getAttribute('href')==='#'+cur);
+  });
+},{passive:true});
+
+// FAQ
+function faq(btn){
+  const item=btn.parentElement;
+  const isOpen=item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+  if(!isOpen)item.classList.add('open');
+}
+
+// EMAIL SUB
+function esub(){
+  const v=document.getElementById('ein').value.trim();
+  if(!v||!v.includes('@'))return;
+  document.getElementById('ein').value='';
+  document.querySelector('.email-row').style.display='none';
+  document.querySelector('.e-note').style.display='none';
+  document.getElementById('esuc').style.display='block';
+}
+document.getElementById('ein')&&document.getElementById('ein').addEventListener('keydown',e=>{if(e.key==='Enter')esub()});
+
+// MOBILE MENU
+function toggleMenu(){
+  const h=document.getElementById('ham');
+  const m=document.getElementById('mmenu');
+  h.classList.toggle('open');
+  m.classList.toggle('open');
+}
+function closeMenu(){
+  document.getElementById('ham').classList.remove('open');
+  document.getElementById('mmenu').classList.remove('open');
+}
+</script>
+
+<!-- BACK TO TOP -->
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
+
+<!-- FLOATING CTA -->
+<a href="https://buy.stripe.com/28E8wRakJaulbaH4Er4AU01" id="float-cta" style="position:fixed;bottom:28px;right:28px;z-index:300;background:var(--t1);color:var(--bg);padding:12px 22px;border-radius:100px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;text-decoration:none;box-shadow:0 4px 24px rgba(0,0,0,0.4);transition:opacity .3s,transform .2s;letter-spacing:.01em;display:flex;align-items:center;gap:6px">
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 9L7 5L11 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  Try it free
+</a>
+
+
+<!-- PRICING MODAL -->
+<div id="pricingModal" onclick="if(event.target===this){closePricingModal()}" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:1000;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(16px)">
+  <div style="background:#0F1012;border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:44px 40px;max-width:640px;width:100%;position:relative">
+
+    <button onclick="closePricingModal()" style="position:absolute;top:16px;right:16px;background:rgba(255,255,255,0.06);border:none;color:rgba(236,234,228,0.5);width:28px;height:28px;border-radius:50%;font-size:16px;cursor:pointer;line-height:1">&times;</button>
+
+    <div style="text-align:center;margin-bottom:32px">
+      <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#4F8EF7;margin-bottom:10px">Choose your plan</div>
+      <h2 style="font-family:'Space Mono',monospace;font-size:22px;font-weight:700;color:#ECEAE4;margin-bottom:8px">No subscriptions. No fatigue.</h2>
+      <p style="font-size:13px;color:rgba(236,234,228,0.5);font-weight:300">Pay once. Or start free &mdash; no card needed.</p>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px">
+
+      <!-- Free -->
+      <div style="background:#111318;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:22px 18px">
+        <div style="font-family:'Space Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:rgba(236,234,228,0.35);margin-bottom:10px">Free</div>
+        <div style="font-family:'Space Mono',monospace;font-size:28px;font-weight:700;color:#ECEAE4;line-height:1;margin-bottom:3px">$0</div>
+        <div style="font-size:10px;color:rgba(236,234,228,0.3);margin-bottom:16px">forever</div>
+        <div style="margin-bottom:16px">
+          <div style="font-size:11px;color:rgba(236,234,228,0.6);padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;gap:6px;align-items:center"><span style="color:#22C55E;font-size:9px">&#10003;</span>1 analysis/day</div>
+          <div style="font-size:11px;color:rgba(236,234,228,0.6);padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;gap:6px;align-items:center"><span style="color:#22C55E;font-size:9px">&#10003;</span>BUY/SELL/HOLD signal</div>
+          <div style="font-size:11px;color:rgba(236,234,228,0.6);padding:5px 0;display:flex;gap:6px;align-items:center"><span style="color:#22C55E;font-size:9px">&#10003;</span>No card needed</div>
+        </div>
+        <a href="https://buy.stripe.com/28E8wRakJaulbaH4Er4AU01" style="display:block;text-align:center;padding:10px;border-radius:7px;font-size:12px;font-weight:500;color:#ECEAE4;border:1px solid rgba(255,255,255,0.1);background:transparent;text-decoration:none;font-family:'Space Grotesk',sans-serif">Start free</a>
+      </div>
+
+      <!-- Pro -->
+      <div style="background:#111318;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:22px 18px">
+        <div style="font-family:'Space Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:rgba(236,234,228,0.35);margin-bottom:10px">Pro &middot; 30 days</div>
+        <div style="font-family:'Space Mono',monospace;font-size:28px;font-weight:700;color:#ECEAE4;line-height:1;margin-bottom:3px">$19</div>
+        <div style="font-size:10px;color:rgba(236,234,228,0.3);margin-bottom:16px">one-time &middot; no renewal</div>
+        <div style="margin-bottom:16px">
+          <div style="font-size:11px;color:rgba(236,234,228,0.6);padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;gap:6px;align-items:center"><span style="color:#22C55E;font-size:9px">&#10003;</span>5 analyses/day</div>
+          <div style="font-size:11px;color:rgba(236,234,228,0.6);padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;gap:6px;align-items:center"><span style="color:#22C55E;font-size:9px">&#10003;</span>Full agent reasoning</div>
+          <div style="font-size:11px;color:rgba(236,234,228,0.6);padding:5px 0;display:flex;gap:6px;align-items:center"><span style="color:#22C55E;font-size:9px">&#10003;</span>Stop loss &amp; sizing</div>
+        </div>
+        <a href="https://buy.stripe.com/5kQ00l78xcCtgv1b2P4AU00" style="display:block;text-align:center;padding:10px;border-radius:7px;font-size:12px;font-weight:500;color:#ECEAE4;border:1px solid rgba(255,255,255,0.1);background:transparent;text-decoration:none;font-family:'Space Grotesk',sans-serif">Get 30-day access</a>
+      </div>
+
+      <!-- Lifetime -->
+      <div style="background:linear-gradient(135deg,rgba(232,169,48,0.07),rgba(79,142,247,0.04));border:1px solid rgba(232,169,48,0.28);border-radius:14px;padding:22px 18px;position:relative">
+        <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:#E8A930;color:#050608;font-family:'Space Mono',monospace;font-size:8px;font-weight:700;padding:2px 10px;border-radius:100px;white-space:nowrap;letter-spacing:.08em">MOST POPULAR</div>
+        <div style="font-family:'Space Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:#E8A930;margin-bottom:10px">Lifetime</div>
+        <div style="font-family:'Space Mono',monospace;font-size:28px;font-weight:700;color:#ECEAE4;line-height:1;margin-bottom:3px">$49</div>
+        <div style="font-size:10px;color:rgba(236,234,228,0.3);margin-bottom:16px">once &middot; yours forever</div>
+        <div style="margin-bottom:16px">
+          <div style="font-size:11px;color:rgba(236,234,228,0.6);padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;gap:6px;align-items:center"><span style="color:#22C55E;font-size:9px">&#10003;</span>5 analyses/day</div>
+          <div style="font-size:11px;color:rgba(236,234,228,0.6);padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;gap:6px;align-items:center"><span style="color:#22C55E;font-size:9px">&#10003;</span>Full agent reasoning</div>
+          <div style="font-size:11px;color:rgba(236,234,228,0.6);padding:5px 0;display:flex;gap:6px;align-items:center"><span style="color:#22C55E;font-size:9px">&#10003;</span>Lifetime &middot; all updates</div>
+        </div>
+        <a href="https://buy.stripe.com/7sY00l0K945X4Mjb2P4AU02" style="display:block;text-align:center;padding:10px;border-radius:7px;font-size:12px;font-weight:600;color:#050608;background:#E8A930;border:none;text-decoration:none;font-family:'Space Grotesk',sans-serif">Get lifetime access &rarr;</a>
+      </div>
+
+    </div>
+
+    <div style="text-align:center;font-size:11px;color:rgba(236,234,228,0.25)">
+      30-day money-back guarantee &middot; No questions asked &mdash; <a href="/terms" style="color:#4F8EF7;text-decoration:none">Terms</a> &middot; <a href="/privacy" style="color:#4F8EF7;text-decoration:none">Privacy</a>
+    </div>
+
+  </div>
+</div>
+
+<script>
+function openPricingModal(){
+  document.getElementById('pricingModal').style.display='flex';
+  document.body.style.overflow='hidden';
+}
+function closePricingModal(){
+  document.getElementById('pricingModal').style.display='none';
+  document.body.style.overflow='';
+}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closePricingModal();});
+</script>
+
+</body>
+</html>
