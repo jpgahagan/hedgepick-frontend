@@ -83,6 +83,42 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;display:flex;align-items:cen
 
 /* HISTORY */
 .history-section{margin-top:40px}
+/* TABS */
+.tab-nav{display:flex;gap:4px;margin-bottom:32px;background:var(--s1);border:1px solid var(--b1);border-radius:10px;padding:4px}
+.tab-btn{flex:1;padding:9px 16px;border:none;border-radius:7px;font-size:13px;font-weight:500;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:all .2s;color:var(--t3);background:transparent}
+.tab-btn.active{background:var(--s2);color:var(--t1);box-shadow:0 1px 4px rgba(0,0,0,0.3)}
+.tab-btn:hover:not(.active){color:var(--t2)}
+
+/* SCREENER TAB */
+.screener-date{font-size:12px;color:var(--t3);font-family:'Space Mono',monospace;margin-bottom:24px}
+.screener-date span{color:var(--t2)}
+.pick-card{background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:20px 24px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:16px;transition:border-color .2s}
+.pick-card:hover{border-color:var(--b2)}
+.pick-left{display:flex;align-items:center;gap:16px;flex:1}
+.pick-rank{font-family:'Space Mono',monospace;font-size:11px;color:var(--t3);min-width:20px}
+.pick-ticker{font-family:'Space Mono',monospace;font-size:18px;font-weight:700;color:var(--t1);min-width:72px}
+.pick-meta{flex:1}
+.pick-name{font-size:13px;color:var(--t2);margin-bottom:4px}
+.pick-sector{font-size:11px;color:var(--t3)}
+.pick-signals{display:flex;gap:6px;flex-wrap:wrap}
+.sig-badge{font-size:10px;font-family:'Space Mono',monospace;padding:3px 8px;border-radius:4px;background:rgba(79,142,247,0.08);color:var(--blue);border:1px solid rgba(79,142,247,0.15);white-space:nowrap}
+.pick-right{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.pick-score{display:flex;flex-direction:column;align-items:center;gap:2px}
+.score-num{font-family:'Space Mono',monospace;font-size:20px;font-weight:700;color:var(--gold)}
+.score-label{font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.08em}
+.pick-analyze-btn{background:var(--blue);color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:12px;font-weight:500;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:opacity .2s;white-space:nowrap}
+.pick-analyze-btn:hover{opacity:.85}
+.pick-price{font-family:'Space Mono',monospace;font-size:13px;color:var(--t2);min-width:64px;text-align:right}
+
+/* LOCKED STATE */
+.locked-overlay{background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:32px;text-align:center;margin-top:8px}
+.locked-count{font-size:28px;font-weight:700;color:var(--t1);font-family:'Space Mono',monospace;margin-bottom:6px}
+.locked-label{font-size:14px;color:var(--t2);margin-bottom:20px}
+.locked-cta{background:var(--gold);color:#000;border:none;border-radius:8px;padding:12px 28px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:opacity .2s}
+.locked-cta:hover{opacity:.88}
+.screener-empty{background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:48px;text-align:center}
+.screener-loading{text-align:center;padding:48px;color:var(--t3);font-size:14px}
+
 .history-empty{background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:40px;text-align:center}
 .history-empty-title{font-size:15px;font-weight:500;color:var(--t2);margin-bottom:8px}
 .history-empty-sub{font-size:13px;color:var(--t3);font-weight:300}
@@ -145,9 +181,30 @@ gtag('config','G-W2VWCNQC6T');
 
   <!-- Header -->
   <div class="dash-header">
-    <div class="dash-title">Your dashboard</div>
-    <div class="dash-sub">Enter up to <span id="maxTickers">1</span> ticker to analyze. Reports are emailed to you within minutes.</div>
+    <div class="dash-title" id="dashTitle">Today's picks</div>
+    <div class="dash-sub" id="dashSub">AI-screened candidates from thousands of stocks — updated every morning before market open.</div>
   </div>
+
+  <!-- Tab nav -->
+  <div class="tab-nav">
+    <button class="tab-btn active" id="tab-screener" onclick="switchTab('screener')">📈 Today's Picks</button>
+    <button class="tab-btn" id="tab-analyzer" onclick="switchTab('analyzer')">🔍 Analyzer</button>
+    <button class="tab-btn" id="tab-history" onclick="switchTab('history')">📋 History</button>
+  </div>
+
+  <!-- SCREENER TAB -->
+  <div id="panel-screener">
+    <div class="screener-date">Screened on <span id="screenerDate">—</span> · <span id="screenerCount">—</span> candidates from thousands of stocks</div>
+    <div id="screenerContainer">
+      <div class="screener-loading">
+        <div class="loading-spinner" style="margin:0 auto 12px"></div>
+        Loading today's picks…
+      </div>
+    </div>
+  </div>
+
+  <!-- ANALYZER TAB -->
+  <div id="panel-analyzer" style="display:none">
 
   <!-- Usage bar -->
   <div class="usage-card">
@@ -207,8 +264,11 @@ gtag('config','G-W2VWCNQC6T');
     <div class="loading-agents" id="agentList"></div>
   </div>
 
-  <!-- Report history -->
-  <div class="history-section">
+  </div><!-- /panel-analyzer -->
+
+  <!-- HISTORY TAB -->
+  <div id="panel-history" style="display:none">
+  <div class="history-section" style="margin-top:0">
     <div class="section-label" style="margin-top:0">Report history</div>
     <div id="historyContainer">
       <div class="history-empty">
@@ -217,6 +277,9 @@ gtag('config','G-W2VWCNQC6T');
       </div>
     </div>
   </div>
+
+  </div><!-- /history-section -->
+  </div><!-- /panel-history -->
 
   <!-- Soft upgrade nudge (free users only) -->
   <div class="upgrade-banner" id="upgradeBanner" style="background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:20px 24px;margin-top:32px;display:flex;align-items:center;justify-content:space-between;gap:20px">
@@ -353,6 +416,7 @@ async function initDashboard() {
   }
 
   updateUsage(PLAN.used);
+  loadScreener();
   loadHistory();
 
   // If user arrived with a pending ticker (from the landing-page sign-in flow), auto-start that analysis
