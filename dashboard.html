@@ -242,7 +242,7 @@ gtag('config','G-W2VWCNQC6T');
 
   <div class="submit-row">
     <button class="analyze-btn" id="analyzeBtn" onclick="submitAnalysis()">Generate report →</button>
-    <span class="submit-note" id="submitNote">Reports are emailed within 5 minutes &mdash; you can close this window</span>
+    <span class="submit-note" id="submitNote" style="display:none">Reports are emailed within 5 minutes &mdash; you can close this window</span>
   </div>
 
   <!-- Loading state -->
@@ -508,7 +508,9 @@ function submitAnalysis() {
   var le = document.getElementById('loadingEmail');
   if(le) le.textContent = PLAN.email || 'your inbox';
   document.getElementById('analyzeBtn').disabled = true;
-  document.getElementById('submitNote').textContent = 'Analysis running...';
+  const sn = document.getElementById('submitNote');
+  sn.style.display='inline';
+  sn.textContent = 'Analysis running...';
 
   // Animate agents
   const agents = [
