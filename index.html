@@ -338,14 +338,31 @@ footer{padding:32px 48px;border-top:1px solid var(--b1);display:flex;justify-con
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W2VWCNQC6T"></script>
 <script>
-// If already logged in, redirect to dashboard
+
+// ── Auth state detection ──────────────────────────────────────
 (function() {
   const email = localStorage.getItem('hp_email');
-  const session = new URLSearchParams(window.location.search).get('session');
-  if (email && !session) {
-    window.location.href = '/dashboard';
+  if (email) {
+    document.addEventListener('DOMContentLoaded', function() {
+      const loggedOut = document.getElementById('nav-loggedout');
+      const loggedIn  = document.getElementById('nav-loggedin');
+      if (loggedOut) loggedOut.style.display = 'none';
+      if (loggedIn)  loggedIn.style.display = 'flex';
+
+      // Show dashboard CTA in hero
+      const heroCta = document.getElementById('hero-dashboard-cta');
+      if (heroCta) heroCta.style.display = 'inline-flex';
+      const heroSignup = document.getElementById('hero-signup-cta');
+      if (heroSignup) heroSignup.style.display = 'none';
+    });
   }
 })();
+
+function doSignOut() {
+  localStorage.removeItem('hp_email');
+  window.location.reload();
+}
+
 
 window.dataLayer=window.dataLayer||[];
 function gtag(){dataLayer.push(arguments);}
@@ -378,12 +395,20 @@ gtag('config','G-W2VWCNQC6T');
     <div class="logo-wordmark">HEDGE<em>PICK</em></div>
   </a>
   <button class="ham" id="ham" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
-  <div class="nav-links">
+  <div class="nav-links" id="mainNav">
     <a href="#how" class="nav-a">How it works</a>
     <a href="#agents" class="nav-a">System</a>
     <a href="#pricing" class="nav-a">Pricing</a>
-    <a href="#" class="nav-link" style="color:rgba(236,234,228,0.7)" onclick="showSignIn();return false;">Sign in</a>
-    <a href="#" class="nav-cta" onclick="event.preventDefault();openPricingModal()">Get started</a>
+    <!-- Logged-out state -->
+    <span id="nav-loggedout">
+      <a href="#" class="nav-link" style="color:rgba(236,234,228,0.7);margin-right:8px" onclick="showSignIn();return false;">Sign in</a>
+      <a href="#" class="nav-cta" onclick="event.preventDefault();openPricingModal()">Get started</a>
+    </span>
+    <!-- Logged-in state (hidden by default) -->
+    <span id="nav-loggedin" style="display:none;align-items:center;gap:16px">
+      <a href="/dashboard" class="nav-a" style="color:var(--gold);font-weight:500">Dashboard</a>
+      <a href="#" class="nav-a" onclick="event.preventDefault();doSignOut()" style="color:var(--t2)">Sign out</a>
+    </span>
   </div>
 </nav>
 
@@ -406,7 +431,8 @@ gtag('config','G-W2VWCNQC6T');
     <h1>Hedge fund intelligence.<br>For <span class="hl">every investor.</span></h1>
     <p class="hero-sub">Enter any ticker. Nine AI agents analyze, debate, and deliver a verdict — BUY, SELL, or HOLD.<br>The same rigor used by institutional hedge funds.<br>Free to start.</p>
     <div class="hero-btns">
-      <a href="https://buy.stripe.com/28E8wRakJaulbaH4Er4AU01" class="btn-p">Try it free →</a>
+      <a href="/dashboard" id="hero-dashboard-cta" style="display:none;background:var(--gold);color:#000;padding:13px 28px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;font-family:'Space Grotesk',sans-serif;transition:opacity .2s;align-items:center;gap:8px" onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">Go to your dashboard →</a>
+      <a href="https://buy.stripe.com/28E8wRakJaulbaH4Er4AU01" id="hero-signup-cta" class="btn-p">Try it free →</a>
       <a href="#demo" class="btn-g">See it in action</a>
     </div>
     <div class="hero-nums">
