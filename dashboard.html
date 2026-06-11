@@ -410,6 +410,14 @@ async function initDashboard() {
   updateUsage(PLAN.used);
   loadHistory();
 
+  // Handle ?ticker= param from email deep-link
+  const urlTicker = new URLSearchParams(window.location.search).get('ticker');
+  if (urlTicker) {
+    setTimeout(async () => {
+      await loadTicker(urlTicker.toUpperCase());
+    }, 1000);
+  }
+
   // If user arrived with a pending ticker (from the landing-page sign-in flow), auto-start that analysis
   const pendingTicker = localStorage.getItem('hp_pending_ticker');
   if(pendingTicker) {
