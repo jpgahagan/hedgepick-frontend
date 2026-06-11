@@ -152,6 +152,11 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;display:flex;align-items:cen
   .usage-card{flex-direction:column;align-items:flex-start}
   .upgrade-banner{flex-direction:column}
 }
+
+  /* Email opt toggle */
+  #emailOptToggle:checked + span { background: var(--gold) !important; border-color: var(--gold) !important; }
+  #emailOptToggle:checked + span::before { transform: translateX(20px); }
+  #emailOptSlider::before { content:''; position:absolute; width:18px; height:18px; left:2px; top:2px; background:#fff; border-radius:50%; transition:.2s; }
 </style>
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W2VWCNQC6T"></script>
@@ -391,6 +396,9 @@ async function initDashboard() {
 
   // Update UI
   document.getElementById('userEmail').textContent = PLAN.email;
+  PLAN.email_picks_opt_in = userData.email_picks_opt_in !== false;
+  document.getElementById('settingsSection').style.display = '';
+  loadEmailPrefs();
   document.getElementById('usageMax').textContent = PLAN.max;
   document.getElementById('maxTickers').textContent = PLAN.max;
 
@@ -994,9 +1002,62 @@ async function loadTicker(ticker, date) {
   }
 }
 
+
+// ── Email prefs ─────────────────────────────────────────────────
+async function loadEmailPrefs() {
+  // already loaded with user data — just render
+  renderEmailPrefs(PLAN.email_picks_opt_in !== false);
+}
+
+function renderEmailPrefs(optIn) {
+  const toggle = document.getElementById('emailOptToggle');
+  const label = document.getElementById('emailOptLabel');
+  if (!toggle) return;
+  toggle.checked = optIn;
+  label.textContent = optIn ? 'Daily picks email on' : 'Daily picks email off';
+}
+
+async function toggleEmailOpt(val) {
+  const label = document.getElementById('emailOptLabel');
+  label.textContent = 'Saving...';
+  try {
+    const token = localStorage.getItem('hp_token') || new URLSearchParams(location.search).get('token');
+    const res = await fetch(BACKEND + '/api/user/email-prefs', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json', 'Authorization': 'Bearer ' + token},
+      body: JSON.stringify({email_picks_opt_in: val})
+    });
+    const data = await res.json();
+    PLAN.email_picks_opt_in = data.email_picks_opt_in;
+    renderEmailPrefs(data.email_picks_opt_in);
+  } catch(e) {
+    label.textContent = 'Error — try again';
+  }
+}
+
 // Close modal on backdrop click
 document.getElementById('picksModal').addEventListener('click', function(e) {
   if (e.target === this) closePicksModal();
 });
+
+    <!-- Settings -->
+    <div class="history-section" id="settingsSection" style="margin-top:48px;display:none">
+      <div class="section-label">Settings</div>
+      <div style="background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:24px 28px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+        <div>
+          <div style="font-size:14px;font-weight:500;color:var(--t1);margin-bottom:4px">Daily picks email</div>
+          <div style="font-size:13px;color:var(--t2);font-weight:300">Receive today's top screener picks each morning before market open.</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;flex-shrink:0">
+          <span id="emailOptLabel" style="font-size:13px;color:var(--t2);font-family:'Space Mono',monospace"></span>
+          <label style="position:relative;display:inline-block;width:44px;height:24px;flex-shrink:0">
+            <input type="checkbox" id="emailOptToggle" style="opacity:0;width:0;height:0;position:absolute"
+              onchange="toggleEmailOpt(this.checked)">
+            <span onclick="document.getElementById('emailOptToggle').click()" style="position:absolute;cursor:pointer;inset:0;background:var(--b1);border-radius:24px;transition:.2s;border:1px solid var(--b1)" id="emailOptSlider"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
 </script>
 </body>
