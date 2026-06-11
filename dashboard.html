@@ -213,6 +213,22 @@ gtag('config','G-W2VWCNQC6T');
     <div style="background:var(--gold);color:#000;border:none;border-radius:8px;padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Space Grotesk',sans-serif;white-space:nowrap;flex-shrink:0">See today's picks →</div>
   </div>
 
+
+  <!-- Settings -->
+  <div id="settingsSection" style="display:none;background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:18px 24px;margin-bottom:20px;align-items:center;justify-content:space-between;gap:24px">
+    <div>
+      <div style="font-size:13px;font-weight:500;color:var(--t1);margin-bottom:2px">Daily picks email</div>
+      <div style="font-size:12px;color:var(--t2);font-weight:300">Receive today's top screener picks each morning before market open.</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+      <span id="emailOptLabel" style="font-size:12px;color:var(--t2);font-family:'Space Mono',monospace"></span>
+      <label style="position:relative;display:inline-block;width:44px;height:24px;flex-shrink:0">
+        <input type="checkbox" id="emailOptToggle" style="opacity:0;width:0;height:0;position:absolute" onchange="toggleEmailOpt(this.checked)">
+        <span onclick="document.getElementById('emailOptToggle').click()" style="position:absolute;cursor:pointer;inset:0;background:var(--b1);border-radius:24px;transition:.2s;border:1px solid var(--b1)" id="emailOptSlider"></span>
+      </label>
+    </div>
+  </div>
+
   <!-- Usage bar -->
   <div class="usage-card">
     <div class="usage-left">
@@ -397,7 +413,7 @@ async function initDashboard() {
   // Update UI
   document.getElementById('userEmail').textContent = PLAN.email;
   PLAN.email_picks_opt_in = userData.email_picks_opt_in !== false;
-  document.getElementById('settingsSection').style.display = '';
+  document.getElementById('settingsSection').style.display = 'flex';
   loadEmailPrefs();
   document.getElementById('usageMax').textContent = PLAN.max;
   document.getElementById('maxTickers').textContent = PLAN.max;
@@ -1041,22 +1057,4 @@ document.getElementById('picksModal').addEventListener('click', function(e) {
 });
 
 </script>
-    <!-- Settings -->
-    <div class="history-section" id="settingsSection" style="margin-top:48px;display:none">
-      <div class="section-label">Settings</div>
-      <div style="background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:24px 28px;display:flex;align-items:center;justify-content:space-between;gap:24px">
-        <div>
-          <div style="font-size:14px;font-weight:500;color:var(--t1);margin-bottom:4px">Daily picks email</div>
-          <div style="font-size:13px;color:var(--t2);font-weight:300">Receive today's top screener picks each morning before market open.</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:12px;flex-shrink:0">
-          <span id="emailOptLabel" style="font-size:13px;color:var(--t2);font-family:'Space Mono',monospace"></span>
-          <label style="position:relative;display:inline-block;width:44px;height:24px;flex-shrink:0">
-            <input type="checkbox" id="emailOptToggle" style="opacity:0;width:0;height:0;position:absolute"
-              onchange="toggleEmailOpt(this.checked)">
-            <span onclick="document.getElementById('emailOptToggle').click()" style="position:absolute;cursor:pointer;inset:0;background:var(--b1);border-radius:24px;transition:.2s;border:1px solid var(--b1)" id="emailOptSlider"></span>
-          </label>
-        </div>
-      </div>
-    </div>
 </body>
