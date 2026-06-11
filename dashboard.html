@@ -946,7 +946,7 @@ function renderPicksModal(data) {
           <div style="font-family:'Space Mono',monospace;font-size:18px;font-weight:700;color:${scoreColor}">${c.score}</div>
           <div style="font-size:10px;color:var(--t2);text-transform:uppercase;letter-spacing:.06em">signals</div>
         </div>
-        <button onclick="closePicksModal();loadTicker('${c.ticker}')" style="background:${i < 5 ? 'var(--gold)' : 'var(--blue)'};color:${i < 5 ? '#000' : '#fff'};border:none;border-radius:7px;padding:8px 14px;font-size:12px;font-weight:500;cursor:pointer;font-family:'Space Grotesk',sans-serif;white-space:nowrap">${i < 5 ? 'View Report →' : 'Run Analysis →'}</button>
+        <button onclick="closePicksModal();loadTicker('${c.ticker}','${data.date}')" style="background:${i < 5 ? 'var(--gold)' : 'var(--blue)'};color:${i < 5 ? '#000' : '#fff'};border:none;border-radius:7px;padding:8px 14px;font-size:12px;font-weight:500;cursor:pointer;font-family:'Space Grotesk',sans-serif;white-space:nowrap">${i < 5 ? 'View Report →' : 'Run Analysis →'}</button>
       </div>
     </div>`;
   });
@@ -962,11 +962,19 @@ function renderPicksModal(data) {
   container.innerHTML = html;
 }
 
-function loadTicker(ticker) {
+async function loadTicker(ticker, date) {
+  try {
+    const dateParam = date || new Date().toISOString().split('T')[0];
+    const res = await fetch(BACKEND + '/api/screener/report?ticker=' + ticker + '&date=' + dateParam);
+    const data = await res.json();
+    if (data.pdf_url) {
+      window.open(data.pdf_url, '_blank');
+      return;
+    }
+  } catch(e) {}
   const t1 = document.getElementById('t1');
   if (t1) {
     t1.value = ticker;
-    // Auto-submit analysis directly
     if (typeof submitAnalysis === 'function') {
       submitAnalysis();
     }
