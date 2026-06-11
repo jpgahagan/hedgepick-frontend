@@ -223,7 +223,7 @@ gtag('config','G-W2VWCNQC6T');
     <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
       <span id="emailOptLabel" style="font-size:12px;color:var(--t2);font-family:'Space Mono',monospace"></span>
       <label for="emailOptToggle" style="position:relative;display:inline-block;width:44px;height:24px;flex-shrink:0;cursor:pointer">
-        <input type="checkbox" id="emailOptToggle" style="opacity:0;width:0;height:0;position:absolute" onchange="toggleEmailOpt(this.checked)">
+        <input type="checkbox" id="emailOptToggle" style="opacity:0;width:0;height:0;position:absolute">
         <span style="position:absolute;cursor:pointer;inset:0;background:var(--b1);border-radius:24px;transition:.2s;border:1px solid var(--b1)" id="emailOptSlider"></span>
       </label>
     </div>
@@ -1020,16 +1020,28 @@ async function loadTicker(ticker, date) {
 
 
 // ── Email prefs ─────────────────────────────────────────────────
+function getAuthToken() {
+  return localStorage.getItem('hp_token') || new URLSearchParams(location.search).get('token') || '';
+}
+
 async function loadEmailPrefs() {
   try {
-    const token = localStorage.getItem('hp_token') || new URLSearchParams(location.search).get('token');
     const res = await fetch(BACKEND + '/api/user', {
-      headers: {'Authorization': 'Bearer ' + token}
+      headers: {'Authorization': 'Bearer ' + getAuthToken()}
     });
     const data = await res.json();
-    PLAN.email_picks_opt_in = data.email_picks_opt_in !== false;
-  } catch(e) {}
-  renderEmailPrefs(PLAN.email_picks_opt_in !== false);
+    PLAN.email_picks_opt_in = (data.email_picks_opt_in !== false && data.email_picks_opt_in !== null);
+  } catch(e) {
+    PLAN.email_picks_opt_in = true;
+  }
+  const toggle = document.getElementById('emailOptToggle');
+  const label = document.getElementById('emailOptLabel');
+  if (!toggle) return;
+  // Temporarily remove onchange to avoid triggering save during init
+  toggle.onchange = null;
+  toggle.checked = PLAN.email_picks_opt_in;
+  toggle.onchange = function() { toggleEmailOpt(this.checked); };
+  label.textContent = PLAN.email_picks_opt_in ? 'On' : 'Off';
 }
 
 function renderEmailPrefs(optIn) {
@@ -1037,24 +1049,27 @@ function renderEmailPrefs(optIn) {
   const label = document.getElementById('emailOptLabel');
   if (!toggle) return;
   toggle.checked = optIn;
-  label.textContent = optIn ? 'Daily picks email on' : 'Daily picks email off';
+  label.textContent = optIn ? 'On' : 'Off';
 }
 
 async function toggleEmailOpt(val) {
   const label = document.getElementById('emailOptLabel');
   label.textContent = 'Saving...';
   try {
-    const token = localStorage.getItem('hp_token') || new URLSearchParams(location.search).get('token');
     const res = await fetch(BACKEND + '/api/user/email-prefs', {
       method: 'POST',
-      headers: {'Content-Type':'application/json', 'Authorization': 'Bearer ' + token},
+      headers: {'Content-Type':'application/json', 'Authorization': 'Bearer ' + getAuthToken()},
       body: JSON.stringify({email_picks_opt_in: val})
     });
     const data = await res.json();
-    PLAN.email_picks_opt_in = data.email_picks_opt_in;
-    renderEmailPrefs(data.email_picks_opt_in);
+    if (data.ok) {
+      PLAN.email_picks_opt_in = val;
+      label.textContent = val ? 'On' : 'Off';
+    } else {
+      label.textContent = 'Error';
+    }
   } catch(e) {
-    label.textContent = 'Error — try again';
+    label.textContent = 'Error';
   }
 }
 
