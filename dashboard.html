@@ -717,7 +717,7 @@ async function submitSignIn(){
   var email=document.getElementById('gateEmail').value.trim().toLowerCase();
   if(!email||!email.includes('@')){alert('Please enter a valid email address.');return;}
   var btn=document.querySelector('#signinGate button');
-  if(btn){btn.textContent='Signing in...';btn.disabled=true;}
+  if(btn){btn.textContent='Sending link...';btn.disabled=true;}
   try {
     var resp=await fetch(BACKEND+'/api/magic-link-direct',{
       method:'POST',
@@ -725,8 +725,9 @@ async function submitSignIn(){
       body:JSON.stringify({email:email})
     });
     var data=await resp.json();
-    if(resp.ok && data.redirect_url){
-      window.location.href=data.redirect_url;
+    if(resp.ok && data.message){
+      var gf=document.getElementById('gateForm');
+      if(gf){gf.innerHTML='<h2 style="font-size:20px;font-weight:600;color:#ECEAE4;margin-bottom:12px;letter-spacing:-.02em">Check your email</h2><p style="font-size:13px;color:rgba(236,234,228,0.6);font-weight:300;line-height:1.6">'+data.message+'</p>';}
     } else {
       alert(data.error||'Could not sign in. Please check your email and try again.');
       if(btn){btn.textContent='Continue →';btn.disabled=false;}
@@ -813,7 +814,7 @@ document.addEventListener('DOMContentLoaded',function(){
     <div style="width:60px;height:1.5px;background:linear-gradient(90deg,#4F8EF7,#E8A930);margin:8px auto 32px"></div>
     <div id="gateForm">
       <h2 style="font-size:20px;font-weight:600;color:#ECEAE4;margin-bottom:8px;letter-spacing:-.02em" id="gateHeading">Sign in to HedgePick</h2>
-      <p style="font-size:13px;color:rgba(236,234,228,0.5);margin-bottom:28px;font-weight:300;line-height:1.6">Enter your email to access your dashboard. No password needed.</p>
+      <p style="font-size:13px;color:rgba(236,234,228,0.5);margin-bottom:28px;font-weight:300;line-height:1.6">Enter your email and we'll send you a one-time sign-in link. No password needed.</p>
       <input id="gateEmail" type="email" placeholder="your@email.com" style="width:100%;background:#050608;border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:13px 16px;color:#ECEAE4;font-size:14px;font-family:'Space Grotesk',sans-serif;outline:none;margin-bottom:12px;text-align:center" onkeydown="if(event.key==='Enter')submitSignIn()">
       <button onclick="submitSignIn()" style="width:100%;background:#ECEAE4;color:#050608;border:none;border-radius:8px;padding:13px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Space Grotesk',sans-serif;margin-bottom:16px">Continue &rarr;</button>
       <div style="font-size:11px;color:rgba(236,234,228,0.25)">New here? <a href="https://buy.stripe.com/28E8wRakJaulbaH4Er4AU01" style="color:#4F8EF7;text-decoration:none">Start for free</a></div>
@@ -831,7 +832,7 @@ document.addEventListener('DOMContentLoaded',function(){
     <div style="width:60px;height:1.5px;background:linear-gradient(90deg,#4F8EF7,#E8A930);margin:8px auto 32px"></div>
     <div id="gateForm">
       <h2 style="font-size:20px;font-weight:600;color:#ECEAE4;margin-bottom:8px;letter-spacing:-.02em" id="gateHeading">Sign in to HedgePick</h2>
-      <p style="font-size:13px;color:rgba(236,234,228,0.5);margin-bottom:28px;font-weight:300;line-height:1.6">Enter your email to access your dashboard. No password needed.</p>
+      <p style="font-size:13px;color:rgba(236,234,228,0.5);margin-bottom:28px;font-weight:300;line-height:1.6">Enter your email and we'll send you a one-time sign-in link. No password needed.</p>
       <input id="gateEmail" type="email" placeholder="your@email.com" style="width:100%;background:#050608;border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:13px 16px;color:#ECEAE4;font-size:14px;font-family:'Space Grotesk',sans-serif;outline:none;margin-bottom:12px;text-align:center" onkeydown="if(event.key==='Enter')submitSignIn()">
       <button onclick="submitSignIn()" style="width:100%;background:#ECEAE4;color:#050608;border:none;border-radius:8px;padding:13px;font-size:14px;font-weight:600;cursor:pointer;font-family:'Space Grotesk',sans-serif;margin-bottom:16px">Continue &rarr;</button>
       <div style="font-size:11px;color:rgba(236,234,228,0.25)">New here? <a href="https://buy.stripe.com/28E8wRakJaulbaH4Er4AU01" style="color:#4F8EF7;text-decoration:none">Start for free</a></div>

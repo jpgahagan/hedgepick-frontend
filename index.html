@@ -1258,7 +1258,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')closePricing
       onkeydown="if(event.key==='Enter')sendSignIn()">
     <button onclick="sendSignIn()"
       style="width:100%;padding:12px;border-radius:8px;background:#4F8EF7;color:#fff;font-size:14px;font-weight:600;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif;">
-      Log in →
+      Email me a sign-in link →
     </button>
     <p id="signinMsg" style="color:#6B7280;font-size:12px;margin:12px 0 0;text-align:center;"></p>
   </div>
@@ -1286,7 +1286,7 @@ async function sendSignIn() {
     document.getElementById('signinMsg').textContent = 'Please enter a valid email.';
     return;
   }
-  document.getElementById('signinMsg').textContent = 'Logging in...';
+  document.getElementById('signinMsg').textContent = 'Sending your sign-in link...';
   localStorage.removeItem('hp_session');
   try {
     const resp = await fetch('https://web-production-45241.up.railway.app/api/magic-link-direct', {
@@ -1295,8 +1295,9 @@ async function sendSignIn() {
       body: JSON.stringify({email})
     });
     const data = await resp.json();
-    if(resp.ok && data.redirect_url) {
-      window.location.href = data.redirect_url;
+    if(resp.ok && data.message) {
+      document.getElementById('signinMsg').style.color = '#22C55E';
+      document.getElementById('signinMsg').textContent = data.message;
     } else {
       document.getElementById('signinMsg').style.color = '#F87171';
       document.getElementById('signinMsg').textContent = data.error || 'Could not log in.';
