@@ -365,6 +365,8 @@ const PLAN = {
   tier: 'free', // free | pro | lifetime
   used: 0,
   max: 1,
+  tickerMax: 1,
+  period: 'day',
   email: 'user@example.com'
 };
 
@@ -409,6 +411,9 @@ async function initDashboard() {
   if(PLAN.email) localStorage.setItem('hp_email', PLAN.email);
   PLAN.max = userData.daily_limit || (PLAN.tier === 'free' ? 1 : 5);
   PLAN.used = userData.analyses_today || 0;
+  PLAN.period = userData.limit_period || 'day';
+  PLAN.tickerMax = PLAN.tier === 'free' ? 1 : PLAN.max;
+  applyPeriodLabels();
 
   // Update UI
   document.getElementById('userEmail').textContent = PLAN.email;
@@ -416,14 +421,14 @@ async function initDashboard() {
   document.getElementById('settingsSection').style.display = 'flex';
   loadEmailPrefs();
   document.getElementById('usageMax').textContent = PLAN.max;
-  document.getElementById('maxTickers').textContent = PLAN.max;
+  document.getElementById('maxTickers').textContent = PLAN.tickerMax;
 
   const badge = document.getElementById('planBadge');
   if(PLAN.tier === 'pro') { badge.className='plan-badge plan-pro'; badge.textContent='Pro'; }
   else if(PLAN.tier === 'lifetime') { badge.className='plan-badge plan-life'; badge.textContent='Lifetime'; }
 
   // Show extra ticker inputs for paid users
-  for(let i=2; i<=PLAN.max; i++) {
+  for(let i=2; i<=PLAN.tickerMax; i++) {
     const tw = document.getElementById('tw'+i);
     if(tw) tw.style.display='block';
   }
@@ -460,10 +465,26 @@ async function initDashboard() {
   }
 }
 
+// New free accounts get a fixed number of analyses in total (limit_period 'lifetime');
+// older free accounts and paid plans reset daily.
+function applyPeriodLabels() {
+  var lifetime = PLAN.period === 'lifetime';
+  var lbl = document.querySelector('.usage-label');
+  if(lbl) lbl.textContent = lifetime ? 'Free analyses' : 'Daily analyses';
+  var cnt = document.querySelector('.usage-count');
+  if(cnt) cnt.innerHTML = '<span id="usageUsed">' + Math.min(PLAN.used || 0, PLAN.max) + '</span> of <span id="usageMax">' + PLAN.max + '</span> used' + (lifetime ? '' : ' today');
+}
+
+function limitReachedText() {
+  return PLAN.period === 'lifetime'
+    ? 'You have used your free analyses. Upgrade to keep going.'
+    : 'Daily limit reached. Resets at midnight.';
+}
+
 function updateUsage(used) {
   PLAN.used = used;
   document.getElementById('usageUsed').textContent = Math.min(used, PLAN.max);
-  if(PLAN.tier === 'free' && used >= 1 && PLAN.max <= 1) {
+  if(PLAN.tier === 'free' && used >= PLAN.max) {
     document.getElementById('usageNudge').classList.add('show');
   }
   const pct = Math.min((used/PLAN.max)*100, 100);
@@ -471,7 +492,7 @@ function updateUsage(used) {
   if(pct >= 100) {
     document.getElementById('usageBar').style.background = 'var(--amber)';
     document.getElementById('analyzeBtn').disabled = true;
-    document.getElementById('submitNote').textContent = 'Daily limit reached. Resets at midnight.';
+    document.getElementById('submitNote').textContent = limitReachedText();
   }
 }
 
@@ -529,7 +550,7 @@ document.addEventListener('click', e => {
 // ── Submit analysis ──────────────────────────────────────────
 function submitAnalysis() {
   const tickers = [];
-  for(let i=1; i<=PLAN.max; i++) {
+  for(let i=1; i<=PLAN.tickerMax; i++) {
     const val = document.getElementById('t'+i)?.value?.trim().toUpperCase();
     if(val) tickers.push(val);
   }
@@ -540,7 +561,7 @@ function submitAnalysis() {
   }
 
   if(PLAN.used >= PLAN.max) {
-    alert('Daily limit reached. Upgrade to Pro for more analyses.');
+    alert(PLAN.period === 'lifetime' ? 'You have used your free analyses. Upgrade to Pro to keep going.' : 'Daily limit reached. Upgrade to Pro for more analyses.');
     return;
   }
 
@@ -750,6 +771,7 @@ document.addEventListener('DOMContentLoaded',function(){
     if(tier){ 
       PLAN.tier = tier;
       PLAN.max  = tier === 'free' ? 1 : 5;
+      PLAN.tickerMax = tier === 'free' ? 1 : 5;
       var badge = document.getElementById('planBadge');
       if(tier==='pro'){badge.className='plan-badge plan-pro';badge.textContent='Pro';}
       else if(tier==='lifetime'){badge.className='plan-badge plan-life';badge.textContent='Lifetime';}
@@ -778,13 +800,16 @@ document.addEventListener('DOMContentLoaded',function(){
         if(data.tier) {
           PLAN.tier = data.tier;
           PLAN.max  = data.daily_limit || 1;
+          PLAN.period = data.limit_period || 'day';
+          PLAN.tickerMax = data.tier === 'free' ? 1 : PLAN.max;
+          applyPeriodLabels();
           document.getElementById('usageMax').textContent = PLAN.max;
-          document.getElementById('maxTickers').textContent = PLAN.max;
+          document.getElementById('maxTickers').textContent = PLAN.tickerMax;
           var badge = document.getElementById('planBadge');
           if(data.tier==='pro'){badge.className='plan-badge plan-pro';badge.textContent='Pro';}
           else if(data.tier==='lifetime'){badge.className='plan-badge plan-life';badge.textContent='Lifetime';}
           // Show/hide extra ticker inputs
-          for(var i=2; i<=PLAN.max; i++){
+          for(var i=2; i<=PLAN.tickerMax; i++){
             var tw = document.getElementById('tw'+i);
             if(tw) tw.style.display='block';
           }
