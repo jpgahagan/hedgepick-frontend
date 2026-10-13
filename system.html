@@ -184,43 +184,43 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;display:flex;ali
   <div class="section">
     <div class="sec-label">Data sources</div>
     <div class="sec-title">Where does the data come from?</div>
-    <div class="sec-sub">HedgePick pulls from institutional-grade data sources — the same underlying feeds used by professional traders and financial terminals.</div>
+    <div class="sec-sub">HedgePick runs on public, mostly free data — chiefly Yahoo Finance, accessed through the open-source yfinance library. Free data can be delayed, incomplete or occasionally wrong, and every report should be read with that in mind.</div>
     <div class="sources-grid">
       <div class="source-card">
         <div class="source-icon">📈</div>
         <div class="source-name">Yahoo Finance</div>
-        <div class="source-desc">Price history, volume, moving averages, RSI, MACD, Bollinger Bands, and real-time quotes across 20,000+ US-listed equities.</div>
+        <div class="source-desc">Price history, volume, moving averages, RSI, MACD, Bollinger Bands, and recent quotes for US-listed equities.</div>
         <div class="source-tag">Free · Updated daily</div>
       </div>
       <div class="source-card">
         <div class="source-icon">🏛️</div>
         <div class="source-name">SEC EDGAR</div>
         <div class="source-desc">Official company filings including quarterly earnings (10-Q), annual reports (10-K), and insider transaction disclosures (Form 4).</div>
-        <div class="source-tag">Official · Real-time filings</div>
+        <div class="source-tag">Official · Public filings</div>
       </div>
       <div class="source-card">
         <div class="source-icon">📊</div>
         <div class="source-name">Company Financials</div>
         <div class="source-desc">Revenue trends, earnings per share, PEG ratios, balance sheet data, and quarterly growth acceleration pulled directly from reported financials.</div>
-        <div class="source-tag">Verified · Quarterly updated</div>
+        <div class="source-tag">Reported · Quarterly</div>
       </div>
       <div class="source-card">
         <div class="source-icon">🔬</div>
         <div class="source-name">Technical Indicators</div>
-        <div class="source-desc">9 proprietary technical signals computed from raw price/volume data using the TA library — the same indicators used by professional quant desks.</div>
+        <div class="source-desc">Standard technical indicators (RSI, MACD, Bollinger Bands, moving averages) computed from daily price and volume data using the open-source TA library.</div>
         <div class="source-tag">Computed · Daily</div>
       </div>
       <div class="source-card">
         <div class="source-icon">🌐</div>
         <div class="source-name">Financial News</div>
-        <div class="source-desc">Real-time news sentiment analysis across earnings announcements, analyst upgrades, macroeconomic events, and sector developments.</div>
-        <div class="source-tag">AI-analyzed · Real-time</div>
+        <div class="source-desc">News sentiment analysis across earnings announcements, analyst upgrades, macroeconomic events, and sector developments.</div>
+        <div class="source-tag">AI-analyzed · Recent</div>
       </div>
       <div class="source-card">
         <div class="source-icon">🤖</div>
         <div class="source-name">Claude AI (Anthropic)</div>
-        <div class="source-desc">All 9 analytical agents are powered by Claude — Anthropic's frontier AI model, trained on financial literature and capable of nuanced reasoning.</div>
-        <div class="source-tag">Anthropic · claude-3-5-sonnet</div>
+        <div class="source-desc">All 9 analytical agents are powered by Claude, a large language model from Anthropic. Language models can misread data or state things confidently that are wrong — which is why every report shows its reasoning.</div>
+        <div class="source-tag">Anthropic · Claude</div>
       </div>
     </div>
   </div>
@@ -229,7 +229,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;display:flex;ali
   <div class="section">
     <div class="sec-label">Daily Screener</div>
     <div class="sec-title">How candidates are selected</div>
-    <div class="sec-sub">Every morning before market open, HedgePick's screener evaluates 20,000+ US-listed equities across 9 quantitative signals to surface the highest-conviction setups.</div>
+    <div class="sec-sub">HedgePick's screener is built to scan liquid US-listed equities each trading day and rank them on 9 technical and fundamental signals. It's a filter for finding stocks worth a closer look — not a forecast.</div>
 
     <div class="signals-grid" style="margin-top:40px">
       <div class="sig-card">
@@ -255,17 +255,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;display:flex;ali
       <div class="sig-card">
         <div class="sig-cat">Technical</div>
         <div class="sig-name">Volume Surge</div>
-        <div class="sig-desc">Price and volume both accelerating over 5 days vs 20-day baseline — the most reliable precursor to sustained moves.</div>
+        <div class="sig-desc">Price and volume both accelerating over 5 days vs 20-day baseline — a common sign of building interest in a stock.</div>
       </div>
       <div class="sig-card">
         <div class="sig-cat">Fundamental</div>
         <div class="sig-name">Revenue Acceleration</div>
-        <div class="sig-desc">Revenue growth rate accelerating quarter-over-quarter — companies growing faster are repriced by the market.</div>
+        <div class="sig-desc">Revenue growth rate accelerating quarter-over-quarter — a sign the business may be gaining momentum.</div>
       </div>
       <div class="sig-card">
         <div class="sig-cat">Fundamental</div>
         <div class="sig-name">EPS Revision</div>
-        <div class="sig-desc">Analysts revising earnings estimates upward — positive revision cycles tend to persist.</div>
+        <div class="sig-desc">Analysts revising earnings estimates upward — a sign the people who follow the company closely are getting more optimistic.</div>
       </div>
       <div class="sig-card">
         <div class="sig-cat">Fundamental</div>
@@ -282,8 +282,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;display:flex;ali
     <div style="background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:24px;margin-top:24px;display:flex;align-items:center;gap:16px">
       <div style="font-size:28px">⚡</div>
       <div>
-        <div style="font-size:14px;font-weight:500;color:var(--t1);margin-bottom:4px">Minimum threshold: 2 converging signals</div>
-        <div style="font-size:13px;color:var(--t2);font-weight:300">A stock must score at least 2 out of 9 signals to surface as a candidate. The top 10 highest-scoring candidates are presented daily. Scores of 4+ represent the highest conviction setups.</div>
+        <div style="font-size:14px;font-weight:500;color:var(--t1);margin-bottom:4px">How the score works</div>
+        <div style="font-size:13px;color:var(--t2);font-weight:300">Each signal is weighted by our own judgement and combined into one score, and the 10 highest-scoring stocks are shown. The score ranks stocks against each other on these signals. We haven't tested whether higher-scoring stocks go on to perform better, so treat the list as a starting point for research.</div>
       </div>
     </div>
   </div>
@@ -379,12 +379,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;display:flex;ali
   <div class="section">
     <div class="sec-label">Signal accuracy</div>
     <div class="sec-title">How reliable are the signals?</div>
-    <div class="sec-sub">Based on backtesting against historical data. Past signal accuracy does not guarantee future results.</div>
+    <div class="sec-sub">We haven't measured it yet, so we don't publish an accuracy figure. Accuracy percentages that appeared on earlier versions of this site were not backed by a rigorous test, and we've removed them. What we can tell you is exactly how the system works — which is what this page is for.</div>
     <div class="accuracy-row">
       <div class="acc-card">
-        <div class="acc-val" style="color:var(--green)">83%</div>
-        <div class="acc-lbl">SELL signal accuracy</div>
-        <div class="acc-note">When HedgePick issues a SELL, the stock declined within 30 days in 83% of backtested cases</div>
+        <div class="acc-val" style="color:var(--green)">0</div>
+        <div class="acc-lbl">Hidden steps</div>
+        <div class="acc-note">Every report shows each agent's reasoning, the bull and bear cases, and why the final verdict won out</div>
       </div>
       <div class="acc-card">
         <div class="acc-val" style="color:var(--blue)">9</div>
@@ -392,14 +392,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;display:flex;ali
         <div class="acc-note">Each with a distinct analytical mandate — no single model makes all the decisions</div>
       </div>
       <div class="acc-card">
-        <div class="acc-val" style="color:var(--gold)">20K+</div>
-        <div class="acc-lbl">Stocks screened daily</div>
-        <div class="acc-note">Every US-listed equity with meaningful liquidity evaluated every morning before market open</div>
+        <div class="acc-val" style="color:var(--gold)">9</div>
+        <div class="acc-lbl">Screener signals</div>
+        <div class="acc-note">Every signal and what it looks for is listed above — nothing in the score is secret</div>
       </div>
     </div>
 
     <div class="disclaimer">
-      <p><strong>Important disclaimer:</strong> HedgePick is an analytical tool, not a licensed investment advisor. All signals, recommendations, and analysis are for informational purposes only and do not constitute financial advice. Past signal accuracy does not guarantee future results. Always conduct your own research before making investment decisions. Never invest more than you can afford to lose.</p>
+      <p><strong>Important disclaimer:</strong> HedgePick is an analytical tool, not a licensed investment advisor. All signals, recommendations, and analysis are for informational purposes only and do not constitute financial advice. HedgePick does not claim any level of accuracy. Always conduct your own research before making investment decisions. Never invest more than you can afford to lose.</p>
     </div>
   </div>
 

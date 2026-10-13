@@ -66,7 +66,7 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--t1)
 .faq-icon{width:18px;height:18px;border-radius:50%;border:1px solid var(--b2);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--t3);transition:transform .25s,background .2s,color .2s;font-size:14px;font-weight:300;line-height:1}
 .faq-item.open .faq-icon{background:var(--blue-d);border-color:rgba(79,142,247,.3);color:var(--blue);transform:rotate(45deg)}
 .faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease}
-.faq-item.open .faq-a{max-height:200px}
+.faq-item.open .faq-a{max-height:600px}
 .faq-a-inner{padding:0 24px 20px;font-size:13px;color:var(--t2);line-height:1.75;font-weight:300}
 
 /* BACK TO TOP */
@@ -382,6 +382,7 @@ gtag('config','G-W2VWCNQC6T');
 
 <!-- TICKER TAPE -->
 <div class="tape">
+  <div style="flex-shrink:0;padding:0 14px;height:100%;display:flex;align-items:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);border-right:1px solid var(--b1);background:var(--s1);position:relative;z-index:1">Example verdicts</div>
   <div class="tape-inner" id="tape"></div>
 </div>
 
@@ -434,16 +435,16 @@ gtag('config','G-W2VWCNQC6T');
   <div class="hero-inner rv">
     <div class="chip"><div class="chip-dot"></div>Adversarial Multi-Agent Analysis</div>
     <h1>Hedge fund intelligence.<br>For <span class="hl">every investor.</span></h1>
-    <p class="hero-sub">Enter any ticker. Nine AI agents analyze, debate, and deliver a verdict — BUY, SELL, or HOLD.<br>The same rigor used by institutional hedge funds.<br>Free to start.</p>
+    <p class="hero-sub">Enter any ticker. Nine AI agents analyze, debate, and deliver a verdict — BUY, SELL, or HOLD.<br>Every argument shown, so you can judge the reasoning yourself.<br>Free to start.</p>
     <div class="hero-btns">
       <a href="/dashboard" id="hero-dashboard-cta" style="display:none;background:var(--gold);color:#000;padding:13px 28px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;font-family:'Space Grotesk',sans-serif;transition:opacity .2s;align-items:center;gap:8px" onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">Go to your dashboard →</a>
       <a href="https://buy.stripe.com/28E8wRakJaulbaH4Er4AU01" id="hero-signup-cta" class="btn-p">Try it free →</a>
       <a href="#demo" class="btn-g">See it in action</a>
     </div>
     <div class="hero-nums">
-      <div class="h-num"><span class="h-val" data-t="9" data-s="">0</span><span class="h-lbl">Specialized Agents</span></div>
-      <div class="h-num"><span class="h-val" data-t="83" data-s="%" data-p="">0%</span><span class="h-lbl">SELL signal accuracy</span></div>
-      <div class="h-num"><span class="h-val" data-t="149" data-s="" data-pre="$">$0</span><span class="h-lbl">Lifetime access</span></div>
+      <div class="h-num"><span class="h-val">9</span><span class="h-lbl">Specialized agents</span></div>
+      <div class="h-num"><span class="h-val">7</span><span class="h-lbl">Analysis stages</span></div>
+      <div class="h-num"><span class="h-val">Free</span><span class="h-lbl">1 analysis a day</span></div>
     </div>
   </div>
 </section>
@@ -453,7 +454,7 @@ gtag('config','G-W2VWCNQC6T');
 <section class="demo-wrap" id="demo">
   <div class="demo-inner">
     <div class="demo-left rv">
-      <span class="eye">Live analysis</span>
+      <span class="eye">Sample analysis</span>
       <h2 class="demo-h">Watch the agents work.</h2>
       <p class="demo-p">Every analysis runs in sequence — fundamentals, sentiment, news, technicals, bull/bear debate, risk review, final verdict. Nothing is hidden.</p>
     </div>
@@ -503,7 +504,7 @@ gtag('config','G-W2VWCNQC6T');
         <div style="flex:1;text-align:center;font-family:'Space Mono',monospace;font-size:11px;color:rgba(236,234,228,0.3)">HedgePick Analysis</div>
         <div style="display:flex;align-items:center;gap:6px">
           <div style="width:6px;height:6px;background:#22C55E;border-radius:50%;animation:livepulse 1.5s infinite"></div>
-          <span style="font-family:'Space Mono',monospace;font-size:10px;color:#22C55E">LIVE</span>
+          <span style="font-family:'Space Mono',monospace;font-size:10px;color:#22C55E">SAMPLE</span>
         </div>
       </div>
 
@@ -702,7 +703,7 @@ if(demoSection) demoObs.observe(demoSection);
         <div class="vs-name">HedgePick Lifetime · one-time</div>
       </div>
     </div>
-    <p class="vs-tag">Institutional-grade analysis. Zero institutional pricing.</p>
+    <p class="vs-tag">Not a terminal. A second opinion you can read before you trade.</p>
   </div>
 </section>
 
@@ -751,7 +752,7 @@ if(demoSection) demoObs.observe(demoSection);
     <div class="rv">
       <span class="eye">The debate</span>
       <h2 style="font-size:clamp(24px,2.8vw,38px);font-weight:600;letter-spacing:-.03em;margin-bottom:12px">Agents that argue<br>before they agree.</h2>
-      <p style="font-size:13px;color:var(--t2);line-height:1.7;font-weight:300;margin-bottom:24px;max-width:380px">No other tool runs a structured bull/bear confrontation before producing a recommendation. That adversarial architecture is our edge.</p>
+      <p style="font-size:13px;color:var(--t2);line-height:1.7;font-weight:300;margin-bottom:24px;max-width:380px">Most tools hand you a score. HedgePick makes a bull and a bear argue the case first, then shows you the transcript so you can decide who won.</p>
       <div class="debate-card">
         <div class="deb-h">Debate transcript — NVDA · May 2026</div>
         <div class="deb-row">
@@ -825,11 +826,15 @@ if(demoSection) demoObs.observe(demoSection);
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="faq(this)">How accurate is the system?<span class="faq-icon">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Our blind backtesting study across 18 data points — 6 tickers × 3 independent historical windows — showed 61% directional accuracy. SELL signals were accurate 83% of the time. This is above-chance performance validated on data the system had never seen. Past performance does not guarantee future results.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">We don't publish an accuracy figure, because we haven't measured one we can stand behind. Accuracy percentages that appeared on earlier versions of this page were not backed by a rigorous test, and we've removed them. Here's what HedgePick does do: it shows its work. Every report lays out the bull case, the bear case, the risks and the reasoning behind the verdict, so you judge the argument instead of trusting a number. Treat a verdict as a structured second opinion, not a prediction. If we publish a track record in future, it will be dated, complete — misses included — and linked from this page.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" onclick="faq(this)">What does the confidence score mean?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">It's the AI's own rating of how one-sided the evidence looked after the debate — a high score means the bull and bear cases weren't close. It is not a probability that the stock will go up or down, and it hasn't been checked against real outcomes.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="faq(this)">What tickers can I analyze?<span class="faq-icon">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Any US-listed equity. We've tested extensively on quantum computing, AI infrastructure, energy, defense, large-cap tech, and blue chips. If it trades on a major US exchange, the agents can analyze it. International ADRs and ETFs are not currently supported.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Any US-listed equity. We've run it across quantum computing, AI infrastructure, energy, defense, large-cap tech, and blue chips. If it trades on a major US exchange, the agents can analyze it. International ADRs and ETFs are not currently supported.</div></div>
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="faq(this)">How is this different from ChatGPT or other AI tools?<span class="faq-icon">+</span></button>
@@ -961,9 +966,7 @@ const track=document.getElementById('tape');
 const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target)}})},{threshold:.08});
 document.querySelectorAll('.rv,.rv2').forEach(r=>obs.observe(r));
 
-// COUNTERS
-const cobs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.querySelectorAll('.h-val').forEach(el=>{const t=+el.dataset.t,pre=el.dataset.pre||'',s=el.dataset.s||'';let c=0;const step=Math.ceil(t/36),iv=setInterval(()=>{c=Math.min(c+step,t);el.textContent=pre+c+s;if(c>=t)clearInterval(iv)},25)});cobs.unobserve(x.target)}})},{threshold:.3});
-document.querySelectorAll('.hero-nums').forEach(n=>cobs.observe(n));
+// HERO NUMBERS are static text in the HTML — no counter script, so they can never show 0.
 
 // CARD ANIMATION
 function runCard(){
@@ -1085,8 +1088,9 @@ document.getElementById('tin').addEventListener('keydown',e=>{if(e.key==='Enter'
 
 // Hide floating CTA when hero button is visible
 const heroBtn=document.querySelector('.hero-btns .btn-p');
-const floatBtn=document.getElementById('float-cta');
 const floatObs=new IntersectionObserver(e=>{
+  const floatBtn=document.getElementById('float-cta');
+  if(!floatBtn)return;
   floatBtn.style.opacity=e[0].isIntersecting?'0':'1';
   floatBtn.style.pointerEvents=e[0].isIntersecting?'none':'auto';
 },{threshold:0.5});
@@ -1158,8 +1162,8 @@ function closeMenu(){
 
     <div style="text-align:center;margin-bottom:32px">
       <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#4F8EF7;margin-bottom:10px">Choose your plan</div>
-      <h2 style="font-family:'Space Mono',monospace;font-size:22px;font-weight:700;color:#ECEAE4;margin-bottom:8px">No subscriptions. No fatigue.</h2>
-      <p style="font-size:13px;color:rgba(236,234,228,0.5);font-weight:300">Pay once. Or start free &mdash; no card needed.</p>
+      <h2 style="font-family:'Space Mono',monospace;font-size:22px;font-weight:700;color:#ECEAE4;margin-bottom:8px">Start free. Upgrade if it earns it.</h2>
+      <p style="font-size:13px;color:rgba(236,234,228,0.5);font-weight:300">Monthly, 30-day, or one-time &mdash; or start free, no card needed.</p>
     </div>
 
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px">
