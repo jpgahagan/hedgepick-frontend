@@ -756,7 +756,7 @@ if(demoSection) demoObs.observe(demoSection);
     <h2 class="rv" style="font-size:clamp(26px,3vw,40px);font-weight:600;letter-spacing:-.03em;margin-bottom:8px">Three steps to a verdict.</h2>
     <p class="rv" style="font-size:14px;color:var(--t2);font-weight:300;max-width:440px;margin-bottom:0">No charts. No jargon. Enter a ticker and let the system do the work.</p>
     <div class="steps rv">
-      <div class="step" data-n="01"><span class="sn">01</span><div class="st">Enter any ticker</div><div class="sd">Type any US equity — quantum names, blue chips, growth stocks. Free users get one per day.</div></div>
+      <div class="step" data-n="01"><span class="sn">01</span><div class="st">Enter any ticker</div><div class="sd">Type any US stock and, if you like, why you want to buy it. The bear agents go after your reasoning. Free to start.</div></div>
       <div class="step" data-n="02"><span class="sn">02</span><div class="st">9 agents analyze and debate</div><div class="sd">Fundamentals, sentiment, news, technicals, bull, bear, risk manager, portfolio manager — adversarial by design.</div></div>
       <div class="step" data-n="03"><span class="sn">03</span><div class="st">Clear verdict</div><div class="sd">BUY, SELL, or HOLD with confidence score, full reasoning, stop loss levels, and position sizing.</div></div>
     </div>
@@ -1065,7 +1065,7 @@ async function go(){
   ivEl.textContent = 'ANALYZING';
   ivEl.style.background = 'rgba(79,142,247,0.08)';
   ivEl.style.color = 'var(--blue)';
-  itEl.textContent = 'Your analysis is starting. 9 agents are now reviewing ' + ticker + '. This takes about 5 minutes. We will email you the PDF report when it is ready.';
+  itEl.textContent = 'Your analysis is starting. 9 agents are now reviewing ' + ticker + '. This takes about 15 minutes. We will email you the PDF report when it is ready.';
   r.style.display = 'block';
   r.scrollIntoView({behavior:'smooth', block:'nearest'});
 

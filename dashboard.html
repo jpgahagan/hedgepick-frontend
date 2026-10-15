@@ -58,6 +58,13 @@ nav{position:fixed;top:0;left:0;right:0;height:56px;display:flex;align-items:cen
 .section-label{font-size:11px;font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:.12em;color:var(--blue);margin-bottom:16px}
 .ticker-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
 .ticker-wrap{position:relative}
+.thesis-wrap{margin-top:18px}
+.thesis-wrap label{display:block;font-size:13px;font-weight:500;color:var(--t1);margin-bottom:8px;line-height:1.5}
+.thesis-wrap label span{display:block;font-weight:300;color:var(--t2);font-size:12px;margin-top:2px}
+.thesis-wrap textarea{width:100%;background:var(--s2,#111318);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:12px 14px;color:var(--t1);font-family:'Space Grotesk',sans-serif;font-size:14px;line-height:1.5;resize:vertical;min-height:84px}
+.thesis-wrap textarea:focus{outline:none;border-color:#4F8EF7}
+.thesis-wrap textarea::placeholder{font-family:'Space Grotesk',sans-serif;color:rgba(236,234,228,0.35)}
+.thesis-wrap{margin-bottom:18px}
 .ticker-num{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-family:'Space Mono',monospace;font-size:11px;color:var(--t2);pointer-events:none}
 .ticker-in{width:100%;background:var(--s1);border:1px solid var(--b2);border-radius:8px;padding:14px 14px 14px 40px;color:var(--t1);font-size:14px;font-family:'Space Mono',monospace;letter-spacing:.06em;text-transform:uppercase;outline:none;transition:border .2s}
 .ticker-in::placeholder{color:var(--t2);font-size:12px;letter-spacing:.04em;text-transform:none;font-family:'Space Grotesk',sans-serif}
@@ -272,16 +279,21 @@ gtag('config','G-W2VWCNQC6T');
     </div>
   </div>
 
+  <div class="thesis-wrap">
+    <label for="thesisIn">Why are you considering this trade? <span>Optional &mdash; the bear agents will go after your reasoning, and your report opens with a verdict on it.</span></label>
+    <textarea id="thesisIn" maxlength="600" rows="3" placeholder="e.g. Data-center demand is still accelerating, so I expect another earnings beat. I'd buy below $180 and hold through next quarter."></textarea>
+  </div>
+
   <div class="submit-row">
     <button class="analyze-btn" id="analyzeBtn" onclick="submitAnalysis()">Generate report →</button>
-    <span class="submit-note" id="submitNote" style="display:none;color:var(--t2);font-size:13px">Reports are emailed within 5 minutes &mdash; you can close this window</span>
+    <span class="submit-note" id="submitNote" style="display:none;color:var(--t2);font-size:13px">Reports are emailed in about 15 minutes &mdash; you can close this window</span>
   </div>
 
   <!-- Loading state -->
   <div class="loading-card" id="loadingCard">
     <div class="loading-spinner"></div>
     <div class="loading-title">Analysis submitted</div>
-    <div class="loading-sub" style="margin-bottom:16px">Your 9-agent AI analysis is running. This takes <strong>3&ndash;5 minutes</strong> per ticker.</div>
+    <div class="loading-sub" style="margin-bottom:16px">Your 9-agent AI analysis is running. This takes <strong>about 15 minutes</strong> per ticker.</div>
     <div style="background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.15);border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:rgba(236,234,228,0.7);display:flex;align-items:center;gap:10px">
       <span style="color:#22C55E;font-size:16px">&#9993;</span>
       <span>Your report will be emailed to <strong id="loadingEmail">your inbox</strong>. <strong>You can close this window</strong> &mdash; we&rsquo;ll send it when it&rsquo;s ready.</span>
@@ -599,7 +611,7 @@ function submitAnalysis() {
       'Content-Type':'application/json',
       'Authorization': 'Bearer ' + session
     },
-    body: JSON.stringify({tickers})
+    body: JSON.stringify({tickers, thesis: (document.getElementById('thesisIn')?.value || '').trim().slice(0, 600)})
   }).then(r => {
     if(r.status === 401) {
       localStorage.removeItem('hp_session');
