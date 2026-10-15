@@ -3,3 +3,4 @@ Allow: /
 Disallow: /dashboard
 
 Sitemap: https://hedgepick.com/sitemap.xml
+Sitemap: https://hedgepick.com/sitemap-analysis.xml
