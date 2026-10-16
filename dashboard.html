@@ -972,7 +972,7 @@ async function openPicksModal() {
   if (picksData) { renderPicksModal(picksData); return; }
   const email = (window.PLAN && PLAN.email) ? PLAN.email : (localStorage.getItem('hp_email') || '');
   try {
-    const res = await fetch(BACKEND + '/api/screener/results?email=' + encodeURIComponent(email));
+    const res = await fetch(BACKEND + '/api/screener/results', {headers: {'Authorization': 'Bearer ' + (localStorage.getItem('hp_session') || '')}});
     picksData = await res.json();
     renderPicksModal(picksData);
   } catch(e) {
