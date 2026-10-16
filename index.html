@@ -354,6 +354,7 @@ footer{padding:32px 48px;border-top:1px solid var(--b1);display:flex;justify-con
   .h-lbl{font-size:10px}
   .pc-price{font-size:32px}
 }
+@media(max-width:700px){.plan-grid{grid-template-columns:1fr!important}}
 html,body{max-width:100%;overflow-x:hidden;touch-action:pan-y;-webkit-text-size-adjust:100%}
 @media (max-width:640px){input,textarea,select{font-size:16px!important}}
 </style>
@@ -463,7 +464,7 @@ gtag('config','G-W2VWCNQC6T');
     <div class="hero-nums">
       <div class="h-num"><span class="h-val">9</span><span class="h-lbl">Specialized agents</span></div>
       <div class="h-num"><span class="h-val">7</span><span class="h-lbl">Analysis stages</span></div>
-      <div class="h-num"><span class="h-val">Free</span><span class="h-lbl">1 analysis a day</span></div>
+      <div class="h-num"><span class="h-val">Free</span><span class="h-lbl">3 analyses to start</span></div>
     </div>
   </div>
 </section>
@@ -718,8 +719,8 @@ if(demoSection) demoObs.observe(demoSection);
       </div>
       <div class="vs-div">vs</div>
       <div class="vs-card good">
-        <div class="vs-price">$149</div>
-        <div class="vs-name">HedgePick Lifetime · one-time</div>
+        <div class="vs-price">$15</div>
+        <div class="vs-name">HedgePick Pro · per month</div>
       </div>
     </div>
     <p class="vs-tag">Not a terminal. A second opinion you can read before you trade.</p>
@@ -745,7 +746,7 @@ if(demoSection) demoObs.observe(demoSection);
         <div class="di"><span class="di-icon" style="color:var(--green)">✓</span><div class="di-text"><b>Full reasoning</b> — every agent's analysis, transparent</div></div>
         <div class="di"><span class="di-icon" style="color:var(--green)">✓</span><div class="di-text"><b>Adversarial debate</b> — bull vs bear before any verdict</div></div>
         <div class="di"><span class="di-icon" style="color:var(--green)">✓</span><div class="di-text"><b>Any ticker, on demand</b> — analyze whatever you want</div></div>
-        <div class="di"><span class="di-icon" style="color:var(--green)">✓</span><div class="di-text"><b>Flexible pricing</b> — $15/mo, $19 for 30 days, or $149 lifetime</div></div>
+        <div class="di"><span class="di-icon" style="color:var(--green)">✓</span><div class="di-text"><b>Simple pricing</b> — start free, then $15/mo. Cancel anytime</div></div>
       </div>
     </div>
   </div>
@@ -758,7 +759,7 @@ if(demoSection) demoObs.observe(demoSection);
     <h2 class="rv" style="font-size:clamp(26px,3vw,40px);font-weight:600;letter-spacing:-.03em;margin-bottom:8px">Three steps to a verdict.</h2>
     <p class="rv" style="font-size:14px;color:var(--t2);font-weight:300;max-width:440px;margin-bottom:0">No charts. No jargon. Enter a ticker and let the system do the work.</p>
     <div class="steps rv">
-      <div class="step" data-n="01"><span class="sn">01</span><div class="st">Enter any ticker</div><div class="sd">Type any US stock and, if you like, why you want to buy it. The bear agents go after your reasoning. Free to start.</div></div>
+      <div class="step" data-n="01"><span class="sn">01</span><div class="st">Enter any ticker</div><div class="sd">Type any US stock and, if you like, why you want to buy it. The bear agents go after your reasoning. Your first 3 are free.</div></div>
       <div class="step" data-n="02"><span class="sn">02</span><div class="st">9 agents analyze and debate</div><div class="sd">Fundamentals, sentiment, news, technicals, bull, bear, risk manager, portfolio manager — adversarial by design.</div></div>
       <div class="step" data-n="03"><span class="sn">03</span><div class="st">Clear verdict</div><div class="sd">BUY, SELL, or HOLD with confidence score, full reasoning, stop loss levels, and position sizing.</div></div>
     </div>
@@ -814,7 +815,7 @@ if(demoSection) demoObs.observe(demoSection);
   <div class="input-inner">
     <span class="eye">Try it now</span>
     <h2 style="font-size:clamp(24px,3vw,38px);font-weight:600;letter-spacing:-.03em;margin-bottom:10px">Enter a ticker.</h2>
-    <p style="font-size:13px;color:var(--t2);font-weight:300">Free users get one analysis per day. No credit card required.</p>
+    <p style="font-size:13px;color:var(--t2);font-weight:300">Your first 3 analyses are free. No credit card required.</p>
     <div class="input-row">
       <input class="t-in" type="text" placeholder="NVDA, AAPL, IONQ — press Enter" maxlength="8" id="tin">
       <button class="go" onclick="go()">Analyze →</button>
@@ -860,8 +861,8 @@ if(demoSection) demoObs.observe(demoSection);
         <div class="faq-a"><div class="faq-a-inner">ChatGPT is a general-purpose assistant. HedgePick runs 9 specialized agents in a structured adversarial pipeline — bull vs bear debate, dedicated risk management, portfolio manager oversight. It's purpose-built for stock analysis, not adapted from a chatbot. The adversarial architecture is what produces rigorous, multi-perspective output instead of a single model's opinion.</div></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q" onclick="faq(this)">What does the Lifetime plan actually include?<span class="faq-icon">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">One payment of $149 gives you permanent access to 5 ticker analyses per day, full 9-agent reasoning, the complete bull/bear debate transcript, stop loss and take profit levels, and position sizing guidance — plus all future updates. No renewal, no subscription, no surprises.</div></div>
+        <button class="faq-q" onclick="faq(this)">What does Pro include?<span class="faq-icon">+</span></button>
+        <div class="faq-a"><div class="faq-a-inner">Pro is $15 a month: 5 ticker analyses per day, full 9-agent reasoning, the complete bull/bear debate transcript, stop loss and take profit levels, and position sizing guidance. Cancel anytime by emailing joseph@hedgepick.com — no contract, no cancellation fee.</div></div>
       </div>
     </div>
   </div>
@@ -872,18 +873,19 @@ if(demoSection) demoObs.observe(demoSection);
   <div class="price-inner" style="padding-top:12px">
     <span class="eye">Pricing</span>
     <h2 style="font-size:clamp(26px,3vw,40px);font-weight:600;letter-spacing:-.03em;margin-bottom:8px">Simple pricing.</h2>
-    <p style="font-size:14px;color:var(--t2);font-weight:300">Start free. Pay once or monthly. No surprise charges.</p>
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:40px">
+    <p style="font-size:14px;color:var(--t2);font-weight:300">Start free. Upgrade to Pro when it earns a place in your process.</p>
+    <div class="plan-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:40px">
 
       <!-- Free -->
       <div style="background:var(--s1);border:1px solid var(--b1);border-radius:14px;padding:28px;display:flex;flex-direction:column">
         <div style="font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--t2);margin-bottom:14px">Free</div>
         <div style="font-family:'Space Mono',monospace;font-size:40px;font-weight:700;color:var(--t1);line-height:1;margin-bottom:4px">$0</div>
-        <div style="font-size:12px;color:var(--t2);margin-bottom:20px">forever</div>
-        <p style="font-size:13px;color:var(--t2);font-weight:300;margin-bottom:20px;line-height:1.55">One analysis per day. See the verdict, not the debate.</p>
+        <div style="font-size:12px;color:var(--t2);margin-bottom:20px">3 analyses to start</div>
+        <p style="font-size:13px;color:var(--t2);font-weight:300;margin-bottom:20px;line-height:1.55">Three analyses to try it. See the verdict, not the debate.</p>
         <div style="flex:1;margin-bottom:20px">
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> 1 ticker per day</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> 3 free analyses</div>
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> BUY / SELL / HOLD signal</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Thesis stress test</div>
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> No credit card</div>
           <div style="font-size:12px;color:rgba(236,234,228,0.25);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="font-size:10px">&#8212;</span> Full agent reasoning</div>
           <div style="font-size:12px;color:rgba(236,234,228,0.25);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="font-size:10px">&#8212;</span> Debate transcript</div>
@@ -894,58 +896,23 @@ if(demoSection) demoObs.observe(demoSection);
 
       <!-- Monthly -->
       <div style="background:var(--s2);border:1px solid var(--b2);border-radius:14px;padding:28px;display:flex;flex-direction:column;position:relative">
-        <div style="position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:#4F8EF7;color:#fff;font-family:'Space Mono',monospace;font-size:9px;font-weight:700;padding:3px 12px;border-radius:100px;white-space:nowrap;letter-spacing:.08em">MOST POPULAR</div>
-        <div style="font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#4F8EF7;margin-bottom:14px">Monthly</div>
+        <div style="font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#4F8EF7;margin-bottom:14px">Pro</div>
         <div style="font-family:'Space Mono',monospace;font-size:40px;font-weight:700;color:var(--t1);line-height:1;margin-bottom:4px">$15</div>
         <div style="font-size:12px;color:var(--t2);margin-bottom:20px">per month &middot; cancel anytime</div>
         <p style="font-size:13px;color:var(--t2);font-weight:300;margin-bottom:20px;line-height:1.55">Full access, billed monthly. Cancel anytime — no questions asked.</p>
         <div style="flex:1;margin-bottom:20px">
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> 5 tickers per day</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Thesis stress test on every report</div>
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Full 9-agent reasoning</div>
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Debate transcript</div>
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Stop loss &amp; take profit</div>
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Position sizing</div>
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Cancel anytime</div>
         </div>
-        <a href="https://buy.stripe.com/14A5kFakJ31TdiPef14AU03" style="display:block;text-align:center;padding:12px;border-radius:8px;font-size:13px;font-weight:600;color:#fff;background:#4F8EF7;border:none;text-decoration:none;font-family:'Space Grotesk',sans-serif">Get monthly access →</a>
+        <a href="https://buy.stripe.com/14A5kFakJ31TdiPef14AU03" style="display:block;text-align:center;padding:12px;border-radius:8px;font-size:13px;font-weight:600;color:#fff;background:#4F8EF7;border:none;text-decoration:none;font-family:'Space Grotesk',sans-serif">Get Pro — $15/mo →</a>
       </div>
 
-      <!-- Pro -->
-      <div style="background:var(--s2);border:1px solid var(--b2);border-radius:14px;padding:28px;display:flex;flex-direction:column">
-        <div style="font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--t2);margin-bottom:14px">Pro &middot; 30 days</div>
-        <div style="font-family:'Space Mono',monospace;font-size:40px;font-weight:700;color:var(--t1);line-height:1;margin-bottom:4px">$19</div>
-        <div style="font-size:12px;color:var(--t2);margin-bottom:20px">one-time &middot; no renewal</div>
-        <p style="font-size:13px;color:var(--t2);font-weight:300;margin-bottom:20px;line-height:1.55">Full access for 30 days. No renewal, zero recurring charges.</p>
-        <div style="flex:1;margin-bottom:20px">
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> 5 tickers per day</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Full 9-agent reasoning</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Debate transcript</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Stop loss &amp; take profit</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Position sizing</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> 30-day access</div>
-        </div>
-        <a href="https://buy.stripe.com/5kQ00l78xcCtgv1b2P4AU00" style="display:block;text-align:center;padding:12px;border-radius:8px;font-size:13px;font-weight:600;color:var(--bg);background:var(--t1);border:none;text-decoration:none;font-family:'Space Grotesk',sans-serif">Get 30-day access →</a>
-      </div>
-
-      <!-- Lifetime -->
-      <div style="background:linear-gradient(135deg,rgba(232,169,48,0.07),rgba(79,142,247,0.04));border:1px solid rgba(232,169,48,0.28);border-radius:14px;padding:28px;display:flex;flex-direction:column;position:relative">
-        <div style="position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:#E8A930;color:#050608;font-family:'Space Mono',monospace;font-size:9px;font-weight:700;padding:3px 12px;border-radius:100px;white-space:nowrap;letter-spacing:.08em">BEST VALUE</div>
-        <div style="font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#E8A930;margin-bottom:14px">Lifetime</div>
-        <div style="font-family:'Space Mono',monospace;font-size:40px;font-weight:700;color:var(--t1);line-height:1;margin-bottom:4px">$149</div>
-        <div style="font-size:12px;color:var(--t2);margin-bottom:20px">once &middot; yours forever</div>
-        <p style="font-size:13px;color:var(--t2);font-weight:300;margin-bottom:20px;line-height:1.55">Everything, forever. Pay once and never think about it again.</p>
-        <div style="flex:1;margin-bottom:20px">
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> 5 tickers per day</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Full 9-agent reasoning</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Debate transcript</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Stop loss &amp; take profit</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.07);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Position sizing</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Lifetime &middot; all updates</div>
-        </div>
-        <a href="https://buy.stripe.com/6oU14pgJ7fOF7Yv0ob4AU04" style="display:block;text-align:center;padding:12px;border-radius:8px;font-size:13px;font-weight:600;color:#050608;background:#E8A930;border:none;text-decoration:none;font-family:'Space Grotesk',sans-serif">Get lifetime access →</a>
-      </div>
-
-    </div>
+          </div>
   </div>
 </section>
 
@@ -1183,18 +1150,18 @@ function closeMenu(){
     <div style="text-align:center;margin-bottom:32px">
       <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#4F8EF7;margin-bottom:10px">Choose your plan</div>
       <h2 style="font-family:'Space Mono',monospace;font-size:22px;font-weight:700;color:#ECEAE4;margin-bottom:8px">Start free. Upgrade if it earns it.</h2>
-      <p style="font-size:13px;color:rgba(236,234,228,0.5);font-weight:300">Monthly, 30-day, or one-time &mdash; or start free, no card needed.</p>
+      <p style="font-size:13px;color:rgba(236,234,228,0.5);font-weight:300">Pro is $15 a month, cancel anytime &mdash; or start free, no card needed.</p>
     </div>
 
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px">
+    <div class="plan-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:24px">
 
       <!-- Free -->
       <div style="background:#111318;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:22px 18px">
         <div style="font-family:'Space Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:rgba(236,234,228,0.35);margin-bottom:10px">Free</div>
         <div style="font-family:'Space Mono',monospace;font-size:28px;font-weight:700;color:#ECEAE4;line-height:1;margin-bottom:3px">$0</div>
-        <div style="font-size:10px;color:rgba(236,234,228,0.3);margin-bottom:16px">forever</div>
+        <div style="font-size:10px;color:rgba(236,234,228,0.3);margin-bottom:16px">3 analyses to start</div>
         <div style="margin-bottom:16px">
-          <div style="font-size:11px;color:rgba(236,234,228,0.6);padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;gap:6px;align-items:center"><span style="color:#22C55E;font-size:9px">&#10003;</span>1 analysis/day</div>
+          <div style="font-size:11px;color:rgba(236,234,228,0.6);padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;gap:6px;align-items:center"><span style="color:#22C55E;font-size:9px">&#10003;</span>3 free analyses</div>
           <div style="font-size:11px;color:rgba(236,234,228,0.6);padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;gap:6px;align-items:center"><span style="color:#22C55E;font-size:9px">&#10003;</span>BUY/SELL/HOLD signal</div>
           <div style="font-size:11px;color:rgba(236,234,228,0.6);padding:5px 0;display:flex;gap:6px;align-items:center"><span style="color:#22C55E;font-size:9px">&#10003;</span>No card needed</div>
         </div>
@@ -1203,49 +1170,23 @@ function closeMenu(){
 
       <!-- Monthly -->
       <div style="background:var(--s2);border:1px solid var(--b2);border-radius:14px;padding:28px;display:flex;flex-direction:column;position:relative">
-        <div style="position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:#4F8EF7;color:#fff;font-family:'Space Mono',monospace;font-size:9px;font-weight:700;padding:3px 12px;border-radius:100px;white-space:nowrap;letter-spacing:.08em">MOST POPULAR</div>
-        <div style="font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#4F8EF7;margin-bottom:14px">Monthly</div>
+        <div style="font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#4F8EF7;margin-bottom:14px">Pro</div>
         <div style="font-family:'Space Mono',monospace;font-size:40px;font-weight:700;color:var(--t1);line-height:1;margin-bottom:4px">$15</div>
         <div style="font-size:12px;color:var(--t2);margin-bottom:20px">per month &middot; cancel anytime</div>
         <p style="font-size:13px;color:var(--t2);font-weight:300;margin-bottom:20px;line-height:1.55">Full access, billed monthly. Cancel anytime — no questions asked.</p>
         <div style="flex:1;margin-bottom:20px">
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> 5 tickers per day</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Thesis stress test on every report</div>
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Full 9-agent reasoning</div>
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Debate transcript</div>
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Stop loss &amp; take profit</div>
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Position sizing</div>
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Cancel anytime</div>
         </div>
-        <a href="https://buy.stripe.com/14A5kFakJ31TdiPef14AU03" style="display:block;text-align:center;padding:12px;border-radius:8px;font-size:13px;font-weight:600;color:#fff;background:#4F8EF7;border:none;text-decoration:none;font-family:'Space Grotesk',sans-serif">Get monthly access →</a>
+        <a href="https://buy.stripe.com/14A5kFakJ31TdiPef14AU03" style="display:block;text-align:center;padding:12px;border-radius:8px;font-size:13px;font-weight:600;color:#fff;background:#4F8EF7;border:none;text-decoration:none;font-family:'Space Grotesk',sans-serif">Get Pro — $15/mo →</a>
       </div>
 
-      <!-- Pro -->
-      <div style="background:#111318;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:22px 18px">
-        <div style="font-family:'Space Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:rgba(236,234,228,0.35);margin-bottom:10px">Pro &middot; 30 days</div>
-        <div style="font-family:'Space Mono',monospace;font-size:28px;font-weight:700;color:#ECEAE4;line-height:1;margin-bottom:3px">$19</div>
-        <div style="font-size:10px;color:rgba(236,234,228,0.3);margin-bottom:16px">one-time &middot; no renewal</div>
-        <div style="margin-bottom:16px">
-          <div style="font-size:11px;color:rgba(236,234,228,0.6);padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;gap:6px;align-items:center"><span style="color:#22C55E;font-size:9px">&#10003;</span>5 analyses/day</div>
-          <div style="font-size:11px;color:rgba(236,234,228,0.6);padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;gap:6px;align-items:center"><span style="color:#22C55E;font-size:9px">&#10003;</span>Full agent reasoning</div>
-          <div style="font-size:11px;color:rgba(236,234,228,0.6);padding:5px 0;display:flex;gap:6px;align-items:center"><span style="color:#22C55E;font-size:9px">&#10003;</span>Stop loss &amp; sizing</div>
-        </div>
-        <a href="https://buy.stripe.com/5kQ00l78xcCtgv1b2P4AU00" style="display:block;text-align:center;padding:10px;border-radius:7px;font-size:12px;font-weight:500;color:#ECEAE4;border:1px solid rgba(255,255,255,0.1);background:transparent;text-decoration:none;font-family:'Space Grotesk',sans-serif">Get 30-day access</a>
-      </div>
-
-      <!-- Lifetime -->
-      <div style="background:linear-gradient(135deg,rgba(232,169,48,0.07),rgba(79,142,247,0.04));border:1px solid rgba(232,169,48,0.28);border-radius:14px;padding:22px 18px;position:relative">
-        <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:#E8A930;color:#050608;font-family:'Space Mono',monospace;font-size:8px;font-weight:700;padding:2px 10px;border-radius:100px;white-space:nowrap;letter-spacing:.08em">BEST VALUE</div>
-        <div style="font-family:'Space Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:#E8A930;margin-bottom:10px">Lifetime</div>
-        <div style="font-family:'Space Mono',monospace;font-size:28px;font-weight:700;color:#ECEAE4;line-height:1;margin-bottom:3px">$149</div>
-        <div style="font-size:10px;color:rgba(236,234,228,0.3);margin-bottom:16px">once &middot; yours forever</div>
-        <div style="margin-bottom:16px">
-          <div style="font-size:11px;color:rgba(236,234,228,0.6);padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;gap:6px;align-items:center"><span style="color:#22C55E;font-size:9px">&#10003;</span>5 analyses/day</div>
-          <div style="font-size:11px;color:rgba(236,234,228,0.6);padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;gap:6px;align-items:center"><span style="color:#22C55E;font-size:9px">&#10003;</span>Full agent reasoning</div>
-          <div style="font-size:11px;color:rgba(236,234,228,0.6);padding:5px 0;display:flex;gap:6px;align-items:center"><span style="color:#22C55E;font-size:9px">&#10003;</span>Lifetime &middot; all updates</div>
-        </div>
-        <a href="https://buy.stripe.com/6oU14pgJ7fOF7Yv0ob4AU04" style="display:block;text-align:center;padding:10px;border-radius:7px;font-size:12px;font-weight:600;color:#050608;background:#E8A930;border:none;text-decoration:none;font-family:'Space Grotesk',sans-serif">Get lifetime access &rarr;</a>
-      </div>
-
+      
     </div>
 
     <div style="text-align:center;font-size:11px;color:rgba(236,234,228,0.25)">

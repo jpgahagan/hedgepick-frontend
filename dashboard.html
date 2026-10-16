@@ -265,7 +265,7 @@ gtag('config','G-W2VWCNQC6T');
       <div class="usage-label">Daily analyses</div>
       <div class="usage-bar-wrap"><div class="usage-bar-fill" id="usageBar" style="width:0%"></div></div>
       <div class="usage-count"><span id="usageUsed">0</span> of <span id="usageMax">1</span> used today</div>
-      <div class="usage-upgrade-nudge" id="usageNudge" onclick="openUpgradeModal('nudge')">Get 5 analyses/day — from $19 →</div>
+      <div class="usage-upgrade-nudge" id="usageNudge" onclick="openUpgradeModal('nudge')">Get 5 analyses/day — Pro $15/mo →</div>
     </div>
     <button onclick="openUpgradeModal('usage')" class="upgrade-btn" id="upgradeBtn" type="button">Upgrade now →</button>
   </div>
@@ -400,6 +400,8 @@ const PLAN = {
   tier: 'free', // free | pro | lifetime
   used: 0,
   max: 1,
+  tickerMax: 1,
+  period: 'day',
   email: 'user@example.com'
 };
 
@@ -444,6 +446,9 @@ async function initDashboard() {
   if(PLAN.email) localStorage.setItem('hp_email', PLAN.email);
   PLAN.max = userData.daily_limit || (PLAN.tier === 'free' ? 1 : 5);
   PLAN.used = userData.analyses_today || 0;
+  PLAN.period = userData.limit_period || 'day';
+  PLAN.tickerMax = PLAN.tier === 'free' ? 1 : PLAN.max;
+  applyPeriodLabels();
 
   // Update UI
   document.getElementById('userEmail').textContent = PLAN.email;
@@ -451,14 +456,14 @@ async function initDashboard() {
   document.getElementById('settingsSection').style.display = 'flex';
   loadEmailPrefs();
   document.getElementById('usageMax').textContent = PLAN.max;
-  document.getElementById('maxTickers').textContent = PLAN.max;
+  document.getElementById('maxTickers').textContent = PLAN.tickerMax;
 
   const badge = document.getElementById('planBadge');
   if(PLAN.tier === 'pro') { badge.className='plan-badge plan-pro'; badge.textContent='Pro'; }
   else if(PLAN.tier === 'lifetime') { badge.className='plan-badge plan-life'; badge.textContent='Lifetime'; }
 
   // Show extra ticker inputs for paid users
-  for(let i=2; i<=PLAN.max; i++) {
+  for(let i=2; i<=PLAN.tickerMax; i++) {
     const tw = document.getElementById('tw'+i);
     if(tw) tw.style.display='block';
   }
@@ -495,10 +500,26 @@ async function initDashboard() {
   }
 }
 
+// New free accounts get a fixed number of analyses in total (limit_period 'lifetime');
+// older free accounts and paid plans reset daily.
+function applyPeriodLabels() {
+  var lifetime = PLAN.period === 'lifetime';
+  var lbl = document.querySelector('.usage-label');
+  if(lbl) lbl.textContent = lifetime ? 'Free analyses' : 'Daily analyses';
+  var cnt = document.querySelector('.usage-count');
+  if(cnt) cnt.innerHTML = '<span id="usageUsed">' + Math.min(PLAN.used || 0, PLAN.max) + '</span> of <span id="usageMax">' + PLAN.max + '</span> used' + (lifetime ? '' : ' today');
+}
+
+function limitReachedText() {
+  return PLAN.period === 'lifetime'
+    ? 'You have used your free analyses. Upgrade to keep going.'
+    : 'Daily limit reached. Resets at midnight.';
+}
+
 function updateUsage(used) {
   PLAN.used = used;
   document.getElementById('usageUsed').textContent = Math.min(used, PLAN.max);
-  if(PLAN.tier === 'free' && used >= 1 && PLAN.max <= 1) {
+  if(PLAN.tier === 'free' && used >= PLAN.max) {
     document.getElementById('usageNudge').classList.add('show');
   }
   const pct = Math.min((used/PLAN.max)*100, 100);
@@ -506,7 +527,7 @@ function updateUsage(used) {
   if(pct >= 100) {
     document.getElementById('usageBar').style.background = 'var(--amber)';
     document.getElementById('analyzeBtn').disabled = true;
-    document.getElementById('submitNote').textContent = 'Daily limit reached. Resets at midnight.';
+    document.getElementById('submitNote').textContent = limitReachedText();
   }
 }
 
@@ -564,7 +585,7 @@ document.addEventListener('click', e => {
 // ── Submit analysis ──────────────────────────────────────────
 function submitAnalysis() {
   const tickers = [];
-  for(let i=1; i<=PLAN.max; i++) {
+  for(let i=1; i<=PLAN.tickerMax; i++) {
     const val = document.getElementById('t'+i)?.value?.trim().toUpperCase();
     if(val) tickers.push(val);
   }
@@ -575,7 +596,7 @@ function submitAnalysis() {
   }
 
   if(PLAN.used >= PLAN.max) {
-    alert('Daily limit reached. Upgrade to Pro for more analyses.');
+    alert(PLAN.period === 'lifetime' ? 'You have used your free analyses. Upgrade to Pro to keep going.' : 'Daily limit reached. Upgrade to Pro for more analyses.');
     return;
   }
 
@@ -720,7 +741,7 @@ initDashboard();
 // ── UPGRADE MODAL ────────────────────────────────────────────
 const modalMessages = {
   usage:{eyebrow:'Upgrade your plan',title:'See why, deeper.',sub:"Free users see the verdict. Paid users see the full debate — every agent's reasoning, bull/bear confrontation, stop loss levels, and position sizing."},
-  nudge:{eyebrow:'Upgrade your plan',title:'The full picture costs less than you think.',sub:'$49 one-time. No subscription. Lifetime access to everything — 5 analyses per day, full agent reasoning, bull/bear debate, stop loss, position sizing.'}
+  nudge:{eyebrow:'Upgrade your plan',title:'The full picture costs less than you think.',sub:'$15 a month. 5 analyses per day, full agent reasoning, bull/bear debate, stop loss, position sizing. Cancel anytime.'}
 };
 function openUpgradeModal(source){
   var msg=modalMessages[source]||modalMessages.usage;
@@ -785,6 +806,7 @@ document.addEventListener('DOMContentLoaded',function(){
     if(tier){ 
       PLAN.tier = tier;
       PLAN.max  = tier === 'free' ? 1 : 5;
+      PLAN.tickerMax = tier === 'free' ? 1 : 5;
       var badge = document.getElementById('planBadge');
       if(tier==='pro'){badge.className='plan-badge plan-pro';badge.textContent='Pro';}
       else if(tier==='lifetime'){badge.className='plan-badge plan-life';badge.textContent='Lifetime';}
@@ -813,13 +835,16 @@ document.addEventListener('DOMContentLoaded',function(){
         if(data.tier) {
           PLAN.tier = data.tier;
           PLAN.max  = data.daily_limit || 1;
+          PLAN.period = data.limit_period || 'day';
+          PLAN.tickerMax = data.tier === 'free' ? 1 : PLAN.max;
+          applyPeriodLabels();
           document.getElementById('usageMax').textContent = PLAN.max;
-          document.getElementById('maxTickers').textContent = PLAN.max;
+          document.getElementById('maxTickers').textContent = PLAN.tickerMax;
           var badge = document.getElementById('planBadge');
           if(data.tier==='pro'){badge.className='plan-badge plan-pro';badge.textContent='Pro';}
           else if(data.tier==='lifetime'){badge.className='plan-badge plan-life';badge.textContent='Lifetime';}
           // Show/hide extra ticker inputs
-          for(var i=2; i<=PLAN.max; i++){
+          for(var i=2; i<=PLAN.tickerMax; i++){
             var tw = document.getElementById('tw'+i);
             if(tw) tw.style.display='block';
           }
@@ -891,17 +916,17 @@ document.addEventListener('DOMContentLoaded',function(){
     <!-- Trust bar -->
     <div style="background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.15);border-radius:8px;padding:11px 16px;margin-bottom:28px;font-size:12px;color:rgba(236,234,228,0.6);display:flex;align-items:center;gap:10px">
       <span style="color:#22C55E;font-weight:700;font-size:13px">&#10003;</span>
-      One-time payment &mdash; no subscription, no renewal, cancel nothing ever.
+      $15 a month &mdash; cancel anytime, no contract.
     </div>
 
     <!-- Plans -->
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px">
+    <div style="display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:24px;max-width:360px;margin-left:auto;margin-right:auto">
 
       <!-- Pro -->
       <div style="background:#111318;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:24px 20px">
-        <div style="font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:rgba(236,234,228,0.35);margin-bottom:12px">Pro &middot; 30 days</div>
-        <div style="font-family:'Space Mono',monospace;font-size:34px;font-weight:700;color:#ECEAE4;line-height:1;margin-bottom:4px">$19</div>
-        <div style="font-size:11px;color:rgba(236,234,228,0.35);margin-bottom:18px">one-time &middot; no renewal</div>
+        <div style="font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:rgba(236,234,228,0.35);margin-bottom:12px">Pro</div>
+        <div style="font-family:'Space Mono',monospace;font-size:34px;font-weight:700;color:#ECEAE4;line-height:1;margin-bottom:4px">$15</div>
+        <div style="font-size:11px;color:rgba(236,234,228,0.35);margin-bottom:18px">per month &middot; cancel anytime</div>
         <div style="margin-bottom:20px">
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> 5 analyses per day</div>
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Full 9-agent reasoning</div>
@@ -909,23 +934,7 @@ document.addEventListener('DOMContentLoaded',function(){
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Stop loss levels</div>
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Position sizing</div>
         </div>
-        <a href="https://buy.stripe.com/5kQ00l78xcCtgv1b2P4AU00" style="display:block;text-align:center;padding:11px;border-radius:8px;font-size:13px;font-weight:500;color:#ECEAE4;border:1px solid rgba(255,255,255,0.12);background:transparent;text-decoration:none;transition:background .2s;font-family:'Space Grotesk',sans-serif">Get 30-day access</a>
-      </div>
-
-      <!-- Lifetime -->
-      <div style="background:linear-gradient(135deg,rgba(232,169,48,0.07),rgba(79,142,247,0.05));border:1px solid rgba(232,169,48,0.3);border-radius:14px;padding:24px 20px;position:relative">
-        <div style="position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:#E8A930;color:#050608;font-family:'Space Mono',monospace;font-size:9px;font-weight:700;padding:3px 12px;border-radius:100px;white-space:nowrap;letter-spacing:.08em">MOST POPULAR</div>
-        <div style="font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#E8A930;margin-bottom:12px">Lifetime</div>
-        <div style="font-family:'Space Mono',monospace;font-size:34px;font-weight:700;color:#ECEAE4;line-height:1;margin-bottom:4px">$49</div>
-        <div style="font-size:11px;color:rgba(236,234,228,0.35);margin-bottom:18px">once &middot; yours forever</div>
-        <div style="margin-bottom:20px">
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> 5 analyses per day</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Full 9-agent reasoning</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Bull/bear debate</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Stop loss levels</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Lifetime &middot; all updates</div>
-        </div>
-        <a href="https://buy.stripe.com/7sY00l0K945X4Mjb2P4AU02" style="display:block;text-align:center;padding:11px;border-radius:8px;font-size:13px;font-weight:600;color:#050608;background:#E8A930;border:none;text-decoration:none;font-family:'Space Grotesk',sans-serif">Get lifetime access &rarr;</a>
+        <a href="https://buy.stripe.com/14A5kFakJ31TdiPef14AU03" style="display:block;text-align:center;padding:11px;border-radius:8px;font-size:13px;font-weight:500;color:#fff;border:none;background:#4F8EF7;text-decoration:none;transition:background .2s;font-family:'Space Grotesk',sans-serif">Get Pro — $15/mo →</a>
       </div>
 
     </div>
