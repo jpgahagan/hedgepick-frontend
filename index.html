@@ -746,7 +746,7 @@ if(demoSection) demoObs.observe(demoSection);
         <div class="di"><span class="di-icon" style="color:var(--green)">✓</span><div class="di-text"><b>Full reasoning</b> — every agent's analysis, transparent</div></div>
         <div class="di"><span class="di-icon" style="color:var(--green)">✓</span><div class="di-text"><b>Adversarial debate</b> — bull vs bear before any verdict</div></div>
         <div class="di"><span class="di-icon" style="color:var(--green)">✓</span><div class="di-text"><b>Any ticker, on demand</b> — analyze whatever you want</div></div>
-        <div class="di"><span class="di-icon" style="color:var(--green)">✓</span><div class="di-text"><b>Simple pricing</b> — start free, then $15/mo. Cancel anytime</div></div>
+        <div class="di"><span class="di-icon" style="color:var(--green)">✓</span><div class="di-text"><b>Simple pricing</b> — start free, then $15/mo Pro or $49/mo Trader. Cancel anytime</div></div>
       </div>
     </div>
   </div>
@@ -862,7 +862,7 @@ if(demoSection) demoObs.observe(demoSection);
       </div>
       <div class="faq-item">
         <button class="faq-q" onclick="faq(this)">What does Pro include?<span class="faq-icon">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Pro is $15 a month: 5 ticker analyses per day, full 9-agent reasoning, the complete bull/bear debate transcript, stop loss and take profit levels, and position sizing guidance. Cancel anytime by emailing joseph@hedgepick.com — no contract, no cancellation fee.</div></div>
+        <div class="faq-a"><div class="faq-a-inner">Pro is $15 a month: 5 ticker analyses per day, full 9-agent reasoning, the complete bull/bear debate transcript, stop loss and take profit levels, and position sizing guidance. Cancel anytime by emailing joseph@hedgepick.com — no contract, no cancellation fee. Trader is $49 a month and adds position tracking against the S&amp;P 500, price and stop alerts, a weekly AI re-check of your thesis on every holding, and an order ticket that sends trades to your own Alpaca paper trading account after you confirm them.</div></div>
       </div>
     </div>
   </div>
@@ -873,8 +873,8 @@ if(demoSection) demoObs.observe(demoSection);
   <div class="price-inner" style="padding-top:12px">
     <span class="eye">Pricing</span>
     <h2 style="font-size:clamp(26px,3vw,40px);font-weight:600;letter-spacing:-.03em;margin-bottom:8px">Simple pricing.</h2>
-    <p style="font-size:14px;color:var(--t2);font-weight:300">Start free. Upgrade to Pro when it earns a place in your process.</p>
-    <div class="plan-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:40px">
+    <p style="font-size:14px;color:var(--t2);font-weight:300">Start free. Upgrade to Pro when it earns a place in your process, or Trader when you want to act on it.</p>
+    <div class="plan-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:40px">
 
       <!-- Free -->
       <div style="background:var(--s1);border:1px solid var(--b1);border-radius:14px;padding:28px;display:flex;flex-direction:column">
@@ -910,6 +910,23 @@ if(demoSection) demoObs.observe(demoSection);
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Cancel anytime</div>
         </div>
         <a href="https://buy.stripe.com/14A5kFakJ31TdiPef14AU03" style="display:block;text-align:center;padding:12px;border-radius:8px;font-size:13px;font-weight:600;color:#fff;background:#4F8EF7;border:none;text-decoration:none;font-family:'Space Grotesk',sans-serif">Get Pro — $15/mo →</a>
+      </div>
+
+      <!-- Trader -->
+      <div style="background:var(--s2);border:1px solid rgba(79,142,247,0.45);border-radius:14px;padding:28px;display:flex;flex-direction:column;position:relative">
+        <div style="font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#4F8EF7;margin-bottom:14px">Trader</div>
+        <div style="font-family:'Space Mono',monospace;font-size:40px;font-weight:700;color:var(--t1);line-height:1;margin-bottom:4px">$49</div>
+        <div style="font-size:12px;color:var(--t2);margin-bottom:20px">per month &middot; cancel anytime</div>
+        <p style="font-size:13px;color:var(--t2);font-weight:300;margin-bottom:20px;line-height:1.55">For people who act on the analysis. Track it, get alerted, place the order.</p>
+        <div style="flex:1;margin-bottom:20px">
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Everything in Pro</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> 10 tickers per day, first in queue</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Positions with P&amp;L vs the S&amp;P 500</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Price, stop &amp; target alerts by email</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Weekly AI re-check of your thesis</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Order ticket for your Alpaca paper account</div>
+        </div>
+        <a href="https://buy.stripe.com/dRm6oJ9gF31T1A7ef14AU05" style="display:block;text-align:center;padding:12px;border-radius:8px;font-size:13px;font-weight:600;color:#fff;background:#4F8EF7;border:none;text-decoration:none;font-family:'Space Grotesk',sans-serif">Get Trader — $49/mo →</a>
       </div>
 
           </div>
@@ -1150,10 +1167,10 @@ function closeMenu(){
     <div style="text-align:center;margin-bottom:32px">
       <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#4F8EF7;margin-bottom:10px">Choose your plan</div>
       <h2 style="font-family:'Space Mono',monospace;font-size:22px;font-weight:700;color:#ECEAE4;margin-bottom:8px">Start free. Upgrade if it earns it.</h2>
-      <p style="font-size:13px;color:rgba(236,234,228,0.5);font-weight:300">Pro is $15 a month, cancel anytime &mdash; or start free, no card needed.</p>
+      <p style="font-size:13px;color:rgba(236,234,228,0.5);font-weight:300">Pro is $15 and Trader is $49 a month, cancel anytime &mdash; or start free, no card needed.</p>
     </div>
 
-    <div class="plan-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:24px">
+    <div class="plan-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px">
 
       <!-- Free -->
       <div style="background:#111318;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:22px 18px">
@@ -1169,21 +1186,38 @@ function closeMenu(){
       </div>
 
       <!-- Monthly -->
-      <div style="background:var(--s2);border:1px solid var(--b2);border-radius:14px;padding:28px;display:flex;flex-direction:column;position:relative">
+      <div style="background:var(--s2);border:1px solid var(--b2);border-radius:14px;padding:22px 16px;display:flex;flex-direction:column;position:relative">
         <div style="font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#4F8EF7;margin-bottom:14px">Pro</div>
-        <div style="font-family:'Space Mono',monospace;font-size:40px;font-weight:700;color:var(--t1);line-height:1;margin-bottom:4px">$15</div>
+        <div style="font-family:'Space Mono',monospace;font-size:28px;font-weight:700;color:var(--t1);line-height:1;margin-bottom:4px">$15</div>
         <div style="font-size:12px;color:var(--t2);margin-bottom:20px">per month &middot; cancel anytime</div>
         <p style="font-size:13px;color:var(--t2);font-weight:300;margin-bottom:20px;line-height:1.55">Full access, billed monthly. Cancel anytime — no questions asked.</p>
         <div style="flex:1;margin-bottom:20px">
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> 5 tickers per day</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Thesis stress test on every report</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Full 9-agent reasoning</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Debate transcript</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Stop loss &amp; take profit</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Position sizing</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Cancel anytime</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:5px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> 5 tickers per day</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:5px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Thesis stress test on every report</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:5px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Full 9-agent reasoning</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:5px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Debate transcript</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:5px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Stop loss &amp; take profit</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:5px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Position sizing</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:5px 0;display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Cancel anytime</div>
         </div>
         <a href="https://buy.stripe.com/14A5kFakJ31TdiPef14AU03" style="display:block;text-align:center;padding:12px;border-radius:8px;font-size:13px;font-weight:600;color:#fff;background:#4F8EF7;border:none;text-decoration:none;font-family:'Space Grotesk',sans-serif">Get Pro — $15/mo →</a>
+      </div>
+
+      <!-- Trader -->
+      <div style="background:var(--s2);border:1px solid rgba(79,142,247,0.45);border-radius:14px;padding:22px 16px;display:flex;flex-direction:column;position:relative">
+        <div style="font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#4F8EF7;margin-bottom:14px">Trader</div>
+        <div style="font-family:'Space Mono',monospace;font-size:28px;font-weight:700;color:var(--t1);line-height:1;margin-bottom:4px">$49</div>
+        <div style="font-size:12px;color:var(--t2);margin-bottom:20px">per month &middot; cancel anytime</div>
+        <p style="font-size:13px;color:var(--t2);font-weight:300;margin-bottom:20px;line-height:1.55">For people who act on the analysis. Track it, get alerted, place the order.</p>
+        <div style="flex:1;margin-bottom:20px">
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:5px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Everything in Pro</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:5px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> 10 tickers per day, first in queue</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:5px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Positions with P&amp;L vs the S&amp;P 500</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:5px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Price, stop &amp; target alerts by email</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:5px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Weekly AI re-check of your thesis</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:5px 0;display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Order ticket for your Alpaca paper account</div>
+        </div>
+        <a href="https://buy.stripe.com/dRm6oJ9gF31T1A7ef14AU05" style="display:block;text-align:center;padding:12px;border-radius:8px;font-size:13px;font-weight:600;color:#fff;background:#4F8EF7;border:none;text-decoration:none;font-family:'Space Grotesk',sans-serif">Get Trader — $49/mo →</a>
       </div>
 
       
