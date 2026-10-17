@@ -187,6 +187,56 @@ html,body{max-width:100%;overflow-x:hidden;touch-action:pan-y;-webkit-text-size-
   .pk{grid-template-columns:1fr;grid-template-areas:"head" "name" "chips" "btn";padding:14px;row-gap:8px}
   .pk-btn{width:100%;padding:11px;font-size:13px;margin-top:4px}
 }
+
+.up-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px}
+@media(max-width:640px){.up-grid{grid-template-columns:1fr}#upgradeModal>div{padding:28px 18px!important}}
+.tr-wrap{margin:8px 0 28px}
+.tr-card{background:var(--s1,#0C0D10);border:1px solid rgba(255,255,255,0.09);border-radius:12px;padding:18px 20px;margin-bottom:12px}
+.tr-card-h{display:flex;justify-content:space-between;align-items:center;font-weight:600;font-size:14px;margin-bottom:12px;gap:10px}
+.tr-tag{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#FBBF24;border:1px solid rgba(251,191,36,.4);border-radius:999px;padding:2px 8px}
+.tr-sum{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+.tr-sum>div{background:var(--s1,#0C0D10);border:1px solid rgba(255,255,255,0.09);border-radius:10px;padding:12px 14px}
+.tr-sum.in>div{background:transparent}
+.tr-sum span{display:block;font-size:11px;color:var(--t2);text-transform:uppercase;letter-spacing:.05em}
+.tr-sum b{font-family:'Space Mono',monospace;font-size:18px}
+.tr-pos{color:#22C55E!important}.tr-neg{color:#F87171!important}
+.tr-pos-row{display:grid;grid-template-columns:1fr auto auto;gap:14px;align-items:center;padding:12px 0;border-top:1px solid rgba(255,255,255,0.06)}
+.tr-tk{font-family:'Space Mono',monospace;font-weight:700;font-size:15px}
+.tr-v{font-size:10px;padding:2px 6px;border-radius:4px;margin-left:4px;border:1px solid}.tr-v.BUY{color:#22C55E}.tr-v.SELL{color:#F87171}.tr-v.HOLD{color:#FBBF24}
+.tr-meta{font-size:12px;color:var(--t2)}
+.tr-thesis{font-size:12px;color:rgba(236,234,228,.6);margin-top:4px;font-style:italic;max-width:46ch}
+.tr-pos-nums{text-align:right;font-family:'Space Mono',monospace;font-size:13px}.tr-pos-nums small{font-size:11px;margin-left:4px}
+.tr-acts{display:flex;flex-direction:column;gap:6px;align-items:flex-end}.tr-acts.left{flex-direction:row;align-items:center;margin:4px 0 8px}
+.tr-btn{background:#4F8EF7;color:#fff;border:none;border-radius:8px;padding:11px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Space Grotesk',sans-serif;text-decoration:none;display:inline-block}
+.tr-btn.sm{padding:7px 12px;font-size:12px}
+.tr-link{background:none;border:none;color:#4F8EF7;font-size:12px;cursor:pointer;font-family:'Space Grotesk',sans-serif;padding:2px 0}.tr-link.dim{color:var(--t2)}
+.tr-form{margin-bottom:12px}
+.tr-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:10px}
+.tr-form label{display:flex;flex-direction:column;font-size:11px;color:var(--t2);gap:4px}.tr-form label small{font-size:10px}
+.tr-form input,.tr-form select,.tr-form textarea{background:#111318;border:1px solid rgba(255,255,255,0.12);border-radius:7px;padding:9px 10px;color:var(--t1);font-family:'Space Grotesk',sans-serif;font-size:14px;width:100%;box-sizing:border-box}
+.tr-full{margin-bottom:10px}
+.tr-inline{display:flex;gap:8px;flex-wrap:wrap}.tr-inline input,.tr-inline select{flex:1 1 120px;width:auto}
+.tr-al{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid rgba(255,255,255,0.06);font-size:13px;flex-wrap:wrap}.tr-al.done{opacity:.55}.tr-al small{color:var(--t2);margin-left:4px}
+.tr-sub{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--t2);margin:12px 0 2px}
+.tr-empty{font-size:13px;color:var(--t2);padding:6px 0}
+.tr-fine{font-size:11px;color:var(--t2);margin-top:8px;line-height:1.5}
+.tr-p{font-size:13px;color:rgba(236,234,228,.7);line-height:1.6;margin-bottom:10px}
+.tr-check{flex-direction:row!important;align-items:flex-start;gap:8px!important;font-size:12px!important;color:rgba(236,234,228,.75)!important;margin:10px 0}.tr-check input{width:auto!important;margin-top:2px}
+.tr-preview{font-size:13px;color:rgba(236,234,228,.8);background:#111318;border-radius:8px;padding:10px 12px;line-height:1.55}
+.tr-modal{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:300;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(6px)}
+.tr-modal-box{background:#0F1012;border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:20px;max-width:560px;width:100%;max-height:92vh;overflow-y:auto}
+.tr-x{background:none;border:none;color:var(--t2);font-size:16px;cursor:pointer}
+.tr-toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#111318;border:1px solid rgba(79,142,247,.4);color:var(--t1);padding:10px 16px;border-radius:8px;font-size:13px;opacity:0;pointer-events:none;transition:all .25s;z-index:400;max-width:90vw}
+.tr-toast.show{opacity:1;transform:translateX(-50%)}.tr-toast.bad{border-color:rgba(248,113,113,.5)}
+.tr-teaser{background:linear-gradient(135deg,rgba(79,142,247,.08),rgba(34,197,94,.04));border:1px solid rgba(79,142,247,.3);border-radius:12px;padding:22px 24px}
+.tr-eyebrow{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#4F8EF7}
+.tr-h{font-size:18px;font-weight:600;margin:6px 0 10px}
+.tr-list{padding-left:18px;margin:0 0 14px}.tr-list li{font-size:13px;color:rgba(236,234,228,.75);margin-bottom:6px;line-height:1.5}
+@media(max-width:640px){
+  .tr-pos-row{grid-template-columns:1fr auto}.tr-acts{grid-column:1/-1;flex-direction:row;justify-content:flex-start;gap:14px;align-items:center}
+  .tr-sum{grid-template-columns:1fr 1fr 1fr;gap:6px}.tr-sum b{font-size:14px}.tr-sum>div{padding:10px}
+  .tr-card{padding:14px}
+}
 </style>
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W2VWCNQC6T"></script>
@@ -321,6 +371,9 @@ gtag('config','G-W2VWCNQC6T');
     </div>
     <div class="loading-agents" id="agentList"></div>
   </div>
+
+  <!-- Trader plan -->
+  <div id="traderSection" class="tr-wrap"></div>
 
   <!-- Report history -->
   <div class="history-section">
@@ -461,6 +514,9 @@ async function initDashboard() {
   const badge = document.getElementById('planBadge');
   if(PLAN.tier === 'pro') { badge.className='plan-badge plan-pro'; badge.textContent='Pro'; }
   else if(PLAN.tier === 'lifetime') { badge.className='plan-badge plan-life'; badge.textContent='Lifetime'; }
+  else if(PLAN.tier === 'trader') { badge.className='plan-badge plan-life'; badge.textContent='Trader'; }
+  PLAN._loaded = true;
+  if (window.initTrader) initTrader(PLAN.tier);
 
   // Show extra ticker inputs for paid users
   for(let i=2; i<=PLAN.tickerMax; i++) {
@@ -810,6 +866,7 @@ document.addEventListener('DOMContentLoaded',function(){
       var badge = document.getElementById('planBadge');
       if(tier==='pro'){badge.className='plan-badge plan-pro';badge.textContent='Pro';}
       else if(tier==='lifetime'){badge.className='plan-badge plan-life';badge.textContent='Lifetime';}
+      else if(tier==='trader'){badge.className='plan-badge plan-life';badge.textContent='Trader';}
     }
     // Show welcome message for brand new users
     if(fresh==='1'){
@@ -843,6 +900,7 @@ document.addEventListener('DOMContentLoaded',function(){
           var badge = document.getElementById('planBadge');
           if(data.tier==='pro'){badge.className='plan-badge plan-pro';badge.textContent='Pro';}
           else if(data.tier==='lifetime'){badge.className='plan-badge plan-life';badge.textContent='Lifetime';}
+          else if(data.tier==='trader'){badge.className='plan-badge plan-life';badge.textContent='Trader';}
           // Show/hide extra ticker inputs
           for(var i=2; i<=PLAN.tickerMax; i++){
             var tw = document.getElementById('tw'+i);
@@ -903,7 +961,7 @@ document.addEventListener('DOMContentLoaded',function(){
 
 <!-- UPGRADE MODAL - fully inline styled -->
 <div id="upgradeModal" onclick="closeModalOutside(event)" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:1000;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(12px)">
-  <div style="background:#0F1012;border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:40px;max-width:560px;width:100%;position:relative;box-shadow:0 40px 80px rgba(0,0,0,0.6)">
+  <div style="background:#0F1012;border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:40px;max-width:760px;width:100%;position:relative;max-height:92vh;overflow-y:auto;box-shadow:0 40px 80px rgba(0,0,0,0.6)">
 
     <!-- Close -->
     <button onclick="closeUpgradeModal()" style="position:absolute;top:16px;right:16px;background:rgba(255,255,255,0.06);border:none;color:rgba(236,234,228,0.5);width:28px;height:28px;border-radius:50%;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;line-height:1">&times;</button>
@@ -916,11 +974,11 @@ document.addEventListener('DOMContentLoaded',function(){
     <!-- Trust bar -->
     <div style="background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.15);border-radius:8px;padding:11px 16px;margin-bottom:28px;font-size:12px;color:rgba(236,234,228,0.6);display:flex;align-items:center;gap:10px">
       <span style="color:#22C55E;font-weight:700;font-size:13px">&#10003;</span>
-      $15 a month &mdash; cancel anytime, no contract.
+      Pro $15 or Trader $49 a month &mdash; cancel anytime, no contract.
     </div>
 
     <!-- Plans -->
-    <div style="display:grid;grid-template-columns:1fr;gap:14px;margin-bottom:24px;max-width:360px;margin-left:auto;margin-right:auto">
+    <div class="up-grid">
 
       <!-- Pro -->
       <div style="background:#111318;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:24px 20px">
@@ -935,6 +993,21 @@ document.addEventListener('DOMContentLoaded',function(){
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Position sizing</div>
         </div>
         <a href="https://buy.stripe.com/14A5kFakJ31TdiPef14AU03" style="display:block;text-align:center;padding:11px;border-radius:8px;font-size:13px;font-weight:500;color:#fff;border:none;background:#4F8EF7;text-decoration:none;transition:background .2s;font-family:'Space Grotesk',sans-serif">Get Pro — $15/mo →</a>
+      </div>
+
+      <!-- Trader -->
+      <div style="background:#111318;border:1px solid rgba(79,142,247,0.45);border-radius:14px;padding:24px 20px">
+        <div style="font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#4F8EF7;margin-bottom:12px">Trader</div>
+        <div style="font-family:'Space Mono',monospace;font-size:34px;font-weight:700;color:#ECEAE4;line-height:1;margin-bottom:4px">$49</div>
+        <div style="font-size:11px;color:rgba(236,234,228,0.35);margin-bottom:18px">per month &middot; cancel anytime</div>
+        <div style="margin-bottom:20px">
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Everything in Pro, 10 analyses/day</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Positions with P&amp;L vs the S&amp;P</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Price, stop and target alerts</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Weekly AI thesis re-check</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Order ticket for your Alpaca paper account</div>
+        </div>
+        <a id="traderBuy" href="https://buy.stripe.com/dRm6oJ9gF31T1A7ef14AU05" style="display:block;text-align:center;padding:11px;border-radius:8px;font-size:13px;font-weight:600;color:#fff;border:none;background:#4F8EF7;text-decoration:none;font-family:'Space Grotesk',sans-serif">Get Trader &rarr;</a>
       </div>
 
     </div>
@@ -1117,4 +1190,5 @@ document.getElementById('picksModal').addEventListener('click', function(e) {
 });
 
 </script>
+<script src="/trader.js?v=1"></script>
 </body>
