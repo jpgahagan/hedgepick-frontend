@@ -4,3 +4,4 @@
 /analysis                https://web-production-45241.up.railway.app/analysis                200
 /analysis/*              https://web-production-45241.up.railway.app/analysis/:splat         200
 /sitemap-analysis.xml    https://web-production-45241.up.railway.app/sitemap-analysis.xml    200
+/track-record            https://web-production-45241.up.railway.app/track-record            200
