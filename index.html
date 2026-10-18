@@ -444,7 +444,7 @@ gtag('config','G-W2VWCNQC6T');
   <a href="#faq" class="mm-a" onclick="closeMenu()">FAQ</a>
   <a href="/analysis" class="mm-a">Daily analyses</a>
   <a href="#" class="mm-a" onclick="closeMenu();showSignIn();return false;">Sign in</a>
-  <a href="https://buy.stripe.com/28E8wRakJaulbaH4Er4AU01" class="mm-cta" onclick="closeMenu()">Get started free →</a>
+  <a href="#try" class="mm-cta" onclick="closeMenu()">Test a stock free →</a>
 </div>
 
 <!-- HERO -->
@@ -458,9 +458,10 @@ gtag('config','G-W2VWCNQC6T');
     <p class="hero-sub">Enter any ticker. Nine AI analysts build the bull case, tear it apart, and show you both sides of the argument. You make the call.<br>Every argument shown, so you can judge the reasoning yourself.<br>Free to start.</p>
     <div class="hero-btns">
       <a href="/dashboard" id="hero-dashboard-cta" style="display:none;background:var(--gold);color:#000;padding:13px 28px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;font-family:'Space Grotesk',sans-serif;transition:opacity .2s;align-items:center;gap:8px" onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">Go to your dashboard →</a>
-      <a href="https://buy.stripe.com/28E8wRakJaulbaH4Er4AU01" id="hero-signup-cta" class="btn-p">Try it free →</a>
-      <a href="#demo" class="btn-g">See it in action</a>
+      <a href="#try" id="hero-signup-cta" class="btn-p">Test a stock free →</a>
+      <a href="/sample-report-ko.pdf" target="_blank" rel="noopener" class="btn-g">Read a sample PDF report</a>
     </div>
+    <div style="margin-top:14px;font-size:12px;color:var(--t2)">Or browse <a href="/analysis" style="color:var(--blue);text-decoration:none">today's 5 public AI debates →</a></div>
     <div class="hero-nums">
       <div class="h-num"><span class="h-val">9</span><span class="h-lbl">Specialized agents</span></div>
       <div class="h-num"><span class="h-val">7</span><span class="h-lbl">Analysis stages</span></div>
@@ -812,13 +813,18 @@ if(demoSection) demoObs.observe(demoSection);
 
 <!-- INPUT -->
 <section class="input-sec rv" id="try">
-  <div class="input-inner">
-    <span class="eye">Try it now</span>
-    <h2 style="font-size:clamp(24px,3vw,38px);font-weight:600;letter-spacing:-.03em;margin-bottom:10px">Enter a ticker.</h2>
-    <p style="font-size:13px;color:var(--t2);font-weight:300">Your first 3 analyses are free. No credit card required.</p>
-    <div class="input-row">
-      <input class="t-in" type="text" placeholder="NVDA, AAPL, IONQ — press Enter" maxlength="8" id="tin">
+  <div class="input-inner" style="max-width:540px">
+    <span class="eye">Try it now · 3 free analyses</span>
+    <h2 style="font-size:clamp(24px,3vw,38px);font-weight:600;letter-spacing:-.03em;margin-bottom:10px">Stress-test a trade idea.</h2>
+    <p style="font-size:13px;color:var(--t2);font-weight:300">Enter a ticker and, optionally, why you want to buy it. Nine AI agents will research the stock and attack your reasoning. No credit card required.</p>
+    <div class="input-row" style="margin-bottom:10px">
+      <input class="t-in" type="text" placeholder="Ticker (e.g. NVDA, KO, AAPL)" maxlength="8" id="tin">
       <button class="go" onclick="go()">Analyze →</button>
+    </div>
+    <textarea id="tthesis" maxlength="600" rows="2" placeholder="Optional: Why are you considering this trade? (e.g. 'Safe dividend in a recession' or 'Datacenter demand keeps accelerating')" style="width:100%;background:var(--bg);border:1px solid var(--b2);border-radius:8px;padding:10px 14px;color:var(--t1);font-family:'Space Grotesk',sans-serif;font-size:13px;line-height:1.45;resize:vertical;outline:none;margin-bottom:8px;box-sizing:border-box"></textarea>
+    <div id="temailRow" style="display:none;gap:8px;margin:8px 0 10px">
+      <input id="temail" type="email" placeholder="Your email — we'll send your login link & PDF report" style="flex:1;background:var(--bg);border:1px solid rgba(79,142,247,.5);border-radius:8px;padding:11px 14px;color:var(--t1);font-size:13px;font-family:'Space Grotesk',sans-serif;outline:none">
+      <button class="go" onclick="go()">Send link →</button>
     </div>
     <div class="i-res" id="ires">
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
@@ -828,6 +834,7 @@ if(demoSection) demoObs.observe(demoSection);
       <p id="it" style="font-size:12px;color:var(--t2);line-height:1.65;margin-bottom:10px"></p>
       <div style="font-size:12px;color:var(--blue);cursor:pointer" onclick="openPricingModal()">Upgrade for the full debate transcript, stop loss, and position sizing →</div>
     </div>
+    <div style="margin-top:14px;font-size:12px;color:var(--t2)">Want to see what you get first? <a href="/sample-report-ko.pdf" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:none">Open a sample PDF report (KO) →</a></div>
     <p class="disc">Not financial advice. For educational and informational purposes only. Always conduct your own research.</p>
   </div>
 </section>
@@ -891,7 +898,7 @@ if(demoSection) demoObs.observe(demoSection);
           <div style="font-size:12px;color:rgba(236,234,228,0.25);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="font-size:10px">&#8212;</span> Debate transcript</div>
           <div style="font-size:12px;color:rgba(236,234,228,0.25);padding:7px 0;display:flex;gap:8px;align-items:center"><span style="font-size:10px">&#8212;</span> Stop loss levels</div>
         </div>
-        <a href="https://buy.stripe.com/28E8wRakJaulbaH4Er4AU01" style="display:block;text-align:center;padding:12px;border-radius:8px;font-size:13px;font-weight:500;color:var(--t1);border:1px solid var(--b2);background:transparent;text-decoration:none;font-family:'Space Grotesk',sans-serif">Start free</a>
+        <a href="#try" onclick="closePricingModal()" style="display:block;text-align:center;padding:12px;border-radius:8px;font-size:13px;font-weight:500;color:var(--t1);border:1px solid var(--b2);background:transparent;text-decoration:none;font-family:'Space Grotesk',sans-serif">Start free</a>
       </div>
 
       <!-- Monthly -->
@@ -998,7 +1005,8 @@ const pv={
 };
 async function go(){
   const ticker = document.getElementById('tin').value.trim().toUpperCase();
-  if(!ticker) return;
+  const thesis = (document.getElementById('tthesis')?.value || '').trim().slice(0, 600);
+  if(!ticker) { document.getElementById('tin').focus(); return; }
 
   const r = document.getElementById('ires');
   const isEl = document.getElementById('is');
@@ -1008,9 +1016,16 @@ async function go(){
   // Check if user is signed in
   const session = localStorage.getItem('hp_session');
   if(!session) {
-    const email = prompt("Enter your email to sign in. We'll send you a one-time login link to start your analysis:");
+    const emailRow = document.getElementById('temailRow');
+    const emailIn = document.getElementById('temail');
+    if(emailRow && emailRow.style.display === 'none') {
+      emailRow.style.display = 'flex';
+      emailIn.focus();
+      return;
+    }
+    const email = (emailIn ? emailIn.value : '').trim();
     if(!email || !email.includes('@')) {
-      alert("A valid email is required.");
+      if(emailIn) emailIn.focus();
       return;
     }
     isEl.textContent = ticker;
@@ -1021,6 +1036,7 @@ async function go(){
     r.style.display = 'block';
     r.scrollIntoView({behavior:'smooth', block:'nearest'});
     localStorage.setItem('hp_pending_ticker', ticker);
+    if(thesis) localStorage.setItem('hp_pending_thesis', thesis); else localStorage.removeItem('hp_pending_thesis');
     localStorage.removeItem('hp_session');
     try {
       const resp = await fetch('https://web-production-45241.up.railway.app/api/magic-link', {
@@ -1062,7 +1078,7 @@ async function go(){
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + session
       },
-      body: JSON.stringify({tickers: [ticker]})
+      body: JSON.stringify({tickers: [ticker], thesis: thesis})
     });
     const data = await response.json();
     if(response.status === 401) {
@@ -1089,6 +1105,7 @@ async function go(){
   }
 }
 document.getElementById('tin').addEventListener('keydown',e=>{if(e.key==='Enter')go()});
+document.getElementById('temail')?.addEventListener('keydown',e=>{if(e.key==='Enter')go()});
 
 // Hide floating CTA when hero button is visible
 const heroBtn=document.querySelector('.hero-btns .btn-p');
@@ -1152,7 +1169,7 @@ function closeMenu(){
 <button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
 
 <!-- FLOATING CTA -->
-<a href="https://buy.stripe.com/28E8wRakJaulbaH4Er4AU01" id="float-cta" style="position:fixed;bottom:28px;right:28px;z-index:300;background:var(--t1);color:var(--bg);padding:12px 22px;border-radius:100px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;text-decoration:none;box-shadow:0 4px 24px rgba(0,0,0,0.4);transition:opacity .3s,transform .2s;letter-spacing:.01em;display:flex;align-items:center;gap:6px">
+<a href="#try" id="float-cta" style="position:fixed;bottom:28px;right:28px;z-index:300;background:var(--t1);color:var(--bg);padding:12px 22px;border-radius:100px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;text-decoration:none;box-shadow:0 4px 24px rgba(0,0,0,0.4);transition:opacity .3s,transform .2s;letter-spacing:.01em;display:flex;align-items:center;gap:6px">
   <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 9L7 5L11 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
   Try it free
 </a>
@@ -1182,7 +1199,7 @@ function closeMenu(){
           <div style="font-size:11px;color:rgba(236,234,228,0.6);padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;gap:6px;align-items:center"><span style="color:#22C55E;font-size:9px">&#10003;</span>BUY/SELL/HOLD signal</div>
           <div style="font-size:11px;color:rgba(236,234,228,0.6);padding:5px 0;display:flex;gap:6px;align-items:center"><span style="color:#22C55E;font-size:9px">&#10003;</span>No card needed</div>
         </div>
-        <a href="https://buy.stripe.com/28E8wRakJaulbaH4Er4AU01" style="display:block;text-align:center;padding:10px;border-radius:7px;font-size:12px;font-weight:500;color:#ECEAE4;border:1px solid rgba(255,255,255,0.1);background:transparent;text-decoration:none;font-family:'Space Grotesk',sans-serif">Start free</a>
+        <a href="#try" onclick="closePricingModal()" style="display:block;text-align:center;padding:10px;border-radius:7px;font-size:12px;font-weight:500;color:#ECEAE4;border:1px solid rgba(255,255,255,0.1);background:transparent;text-decoration:none;font-family:'Space Grotesk',sans-serif">Start free</a>
       </div>
 
       <!-- Monthly -->
