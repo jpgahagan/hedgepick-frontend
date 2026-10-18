@@ -560,11 +560,11 @@ async function initDashboard() {
     localStorage.removeItem('hp_pending_thesis');
     const thesisInput = document.getElementById('thesisIn');
     if(thesisInput && pendingThesis) thesisInput.value = pendingThesis;
-    const firstInput = document.querySelector('input[id^=\"t\"]');
+    const firstInput = document.getElementById('t1');
     if(firstInput) {
       firstInput.value = pendingTicker;
-      const submitBtn = document.getElementById('submitBtn');
-      if(submitBtn) submitBtn.click();
+      const analyzeBtn = document.getElementById('analyzeBtn');
+      if(analyzeBtn && !analyzeBtn.disabled) analyzeBtn.click();
     }
   }
 }
@@ -665,7 +665,7 @@ function submitAnalysis() {
   }
 
   if(PLAN.used >= PLAN.max) {
-    alert(PLAN.period === 'lifetime' ? 'You have used your free analyses. Upgrade to Pro to keep going.' : 'Daily limit reached. Upgrade to Pro for more analyses.');
+    openUpgradeModal('limit');
     return;
   }
 
@@ -728,6 +728,9 @@ function submitAnalysis() {
       localStorage.removeItem('hp_session');
       window.location.href = '/';
       return;
+    }
+    if(r.status === 429) {
+      openUpgradeModal('limit');
     }
     return r.json();
   }).then(data => {
@@ -810,7 +813,8 @@ initDashboard();
 // ── UPGRADE MODAL ────────────────────────────────────────────
 const modalMessages = {
   usage:{eyebrow:'Upgrade your plan',title:'See why, deeper.',sub:"Free users see the verdict. Paid users see the full debate — every agent's reasoning, bull/bear confrontation, stop loss levels, and position sizing."},
-  nudge:{eyebrow:'Upgrade your plan',title:'The full picture costs less than you think.',sub:'$15 a month. 5 analyses per day, full agent reasoning, bull/bear debate, stop loss, position sizing. Cancel anytime.'}
+  nudge:{eyebrow:'Upgrade your plan',title:'The full picture costs less than you think.',sub:'$15 a month. 5 analyses per day, full agent reasoning, bull/bear debate, stop loss, position sizing. Cancel anytime.'},
+  limit:{eyebrow:'Limit reached',title:'Keep testing your theses.',sub:'Upgrade to Pro ($15/mo, 5 analyses/day) or Trader ($49/mo, 10 analyses/day + live position tracking, alerts, and weekly Monday AI thesis re-checks). Cancel anytime.'}
 };
 function openUpgradeModal(source){
   var msg=modalMessages[source]||modalMessages.usage;
