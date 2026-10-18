@@ -817,6 +817,13 @@ function openUpgradeModal(source){
   document.getElementById('modalEyebrow').textContent=msg.eyebrow;
   document.getElementById('modalTitle').textContent=msg.title;
   document.getElementById('modalSub').textContent=msg.sub;
+  var em=(PLAN.email||localStorage.getItem('hp_email')||'').trim();
+  if(em){
+    var p=document.getElementById('proBuy');
+    var t=document.getElementById('traderBuy');
+    if(p) p.href='https://buy.stripe.com/14A5kFakJ31TdiPef14AU03?prefilled_email='+encodeURIComponent(em);
+    if(t) t.href='https://buy.stripe.com/dRm6oJ9gF31T1A7ef14AU05?prefilled_email='+encodeURIComponent(em);
+  }
   document.getElementById('upgradeModal').style.display='flex';
   document.body.style.overflow='hidden';
 }
@@ -1005,7 +1012,7 @@ document.addEventListener('DOMContentLoaded',function(){
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Stop loss levels</div>
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Position sizing</div>
         </div>
-        <a href="https://buy.stripe.com/14A5kFakJ31TdiPef14AU03" style="display:block;text-align:center;padding:11px;border-radius:8px;font-size:13px;font-weight:500;color:#fff;border:none;background:#4F8EF7;text-decoration:none;transition:background .2s;font-family:'Space Grotesk',sans-serif">Get Pro — $15/mo →</a>
+        <a id="proBuy" href="https://buy.stripe.com/14A5kFakJ31TdiPef14AU03" style="display:block;text-align:center;padding:11px;border-radius:8px;font-size:13px;font-weight:500;color:#fff;border:none;background:#4F8EF7;text-decoration:none;transition:background .2s;font-family:'Space Grotesk',sans-serif">Get Pro — $15/mo →</a>
       </div>
 
       <!-- Trader -->
