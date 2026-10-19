@@ -276,6 +276,11 @@ textarea.inp{resize:vertical;line-height:1.5;margin-top:8px;font-family:var(--sa
 .p-list li.off{color:var(--t3)}
 .p-list li.off svg{color:var(--t3)}
 .plan .btn{width:100%}
+.bill{display:inline-flex;border:1px solid var(--hair-2);border-radius:var(--r2);padding:3px;background:var(--bg-0);margin-bottom:10px}
+.bill button{font-family:var(--mono);font-size:var(--xs);font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:7px 12px;border-radius:var(--r1);color:var(--t3)}
+.bill button span{color:var(--green);font-weight:500;text-transform:none;letter-spacing:0;margin-left:4px}
+.bill button.on{background:var(--bg-3);color:var(--t1)}
+.p-sub{font-family:var(--mono);font-size:11px;color:var(--t3);margin-bottom:10px;min-height:14px}
 .p-note{margin-top:14px;font-family:var(--mono);font-size:var(--xs);color:var(--t3);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .p-note a{color:var(--t2);text-decoration:underline;text-underline-offset:2px}
 
@@ -663,7 +668,7 @@ function doSignOut(){localStorage.removeItem('hp_email');localStorage.removeItem
       <tr><td>Challenges your idea</td><td>No</td><td>Usually agrees with how you asked</td><td class="us">The bear researcher's whole job</td></tr>
       <tr><td>Which stocks</td><td>Their coverage list</td><td>Any, without live data</td><td class="us">Any US-listed stock, using current data</td></tr>
       <tr><td>Risk levels</td><td>Rarely</td><td>Generic</td><td class="us">Stop loss, target and sizing (Pro and Trader)</td></tr>
-      <tr><td>Cost</td><td>Often $40–100+/mo</td><td>Varies</td><td class="us">Free to start, then $15 or $49 a month</td></tr>
+      <tr><td>Cost</td><td>Often $40–100+/mo</td><td>Varies</td><td class="us">Free to start, then $39 or $99 a month (20% less billed yearly)</td></tr>
     </tbody>
   </table>
 </section>
@@ -675,12 +680,14 @@ function doSignOut(){localStorage.removeItem('hp_email');localStorage.removeItem
       <div class="kick">06 / Pricing</div>
       <h2 class="st">Start free. Pay when it earns a place in your process.</h2>
     </div>
-    <p class="sd">Monthly plans, cancel anytime. Paid plans include a 30-day money-back guarantee under our <a href="/terms" style="color:var(--t1);text-decoration:underline;text-underline-offset:2px">terms</a>.</p>
+    <div class="bill" role="group" aria-label="Billing period"><button type="button" class="on" data-bill="m" onclick="setBill('m')">Monthly</button><button type="button" data-bill="a" onclick="setBill('a')">Yearly <span>2 months free</span></button></div>
+    <p class="sd">Cancel anytime. Paid plans include a 30-day money-back guarantee under our <a href="/terms" style="color:var(--t1);text-decoration:underline;text-underline-offset:2px">terms</a>.</p>
   </div>
   <div class="plans">
     <div class="plan">
       <div class="p-top"><span class="p-name">Free</span><span class="p-pill">No card</span></div>
       <div class="p-price"><span class="n">$0</span></div>
+      <div class="p-sub">Free forever</div>
       <p class="p-for">Try it on the stocks you're already thinking about.</p>
       <ul class="p-list">
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>3 analyses</li>
@@ -693,7 +700,8 @@ function doSignOut(){localStorage.removeItem('hp_email');localStorage.removeItem
     </div>
     <div class="plan feat">
       <div class="p-top"><span class="p-name">Pro</span><span class="p-pill b">For researching</span></div>
-      <div class="p-price"><span class="n">$15</span><span class="per">/ month</span></div>
+      <div class="p-price"><span class="n" data-m="$39" data-a="$379">$39</span><span class="per" data-m="/ month" data-a="/ year">/ month</span></div>
+      <div class="p-sub" data-m="or $379 billed yearly" data-a="$31.58 a month, billed yearly">or $379 billed yearly</div>
       <p class="p-for">For investors who want the whole argument before every buy.</p>
       <ul class="p-list">
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>5 analyses per day</li>
@@ -702,11 +710,12 @@ function doSignOut(){localStorage.removeItem('hp_email');localStorage.removeItem
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Stop loss, take profit, position sizing</li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Thesis stress-test on every report</li>
       </ul>
-      <a href="https://buy.stripe.com/14A5kFakJ31TdiPef14AU03" class="btn btn-blue" data-plan="pro">Get Pro, $15/mo</a>
+      <a href="https://buy.stripe.com/9B6cN70K9gSJgv14Er4AU06" class="btn btn-blue" data-plan="pro" data-m="https://buy.stripe.com/9B6cN70K9gSJgv14Er4AU06" data-a="https://buy.stripe.com/aFaeVffF31XPemT0ob4AU07" data-lm="Get Pro, $39/mo" data-la="Get Pro, $379/yr">Get Pro, $39/mo</a>
     </div>
     <div class="plan">
       <div class="p-top"><span class="p-name">Trader</span><span class="p-pill b">For acting</span></div>
-      <div class="p-price"><span class="n">$49</span><span class="per">/ month</span></div>
+      <div class="p-price"><span class="n" data-m="$99" data-a="$949">$99</span><span class="per" data-m="/ month" data-a="/ year">/ month</span></div>
+      <div class="p-sub" data-m="or $949 billed yearly" data-a="$79.08 a month, billed yearly">or $949 billed yearly</div>
       <p class="p-for">For people who act on the research and want to track it.</p>
       <ul class="p-list">
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Everything in Pro</li>
@@ -716,7 +725,7 @@ function doSignOut(){localStorage.removeItem('hp_email');localStorage.removeItem
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Weekly AI re-check of each thesis</li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Order ticket for your Alpaca paper account</li>
       </ul>
-      <a href="https://buy.stripe.com/dRm6oJ9gF31T1A7ef14AU05" class="btn btn-pri" data-plan="trader">Get Trader, $49/mo</a>
+      <a href="https://buy.stripe.com/dRmcN79gF7i9emTfj54AU08" class="btn btn-pri" data-plan="trader" data-m="https://buy.stripe.com/dRmcN79gF7i9emTfj54AU08" data-a="https://buy.stripe.com/eVq14pcsRbyp3If5Iv4AU09" data-lm="Get Trader, $99/mo" data-la="Get Trader, $949/yr">Get Trader, $99/mo</a>
     </div>
   </div>
   <div class="p-note"><span>Secure checkout by Stripe · Cancel anytime by email</span><a href="/terms">Plan terms</a></div>
@@ -737,7 +746,7 @@ function doSignOut(){localStorage.removeItem('hp_email');localStorage.removeItem
       <div class="fi"><button class="fqb" onclick="faq(this)" aria-expanded="false">What does the confidence score mean?<span class="ic">+</span></button><div class="fa"><div>It's the AI's own rating of how one-sided the evidence looked after the debate. A high score means the bull and bear cases weren't close. It is not a probability that the stock will go up or down, and it hasn't been checked against real outcomes.</div></div></div>
       <div class="fi"><button class="fqb" onclick="faq(this)" aria-expanded="false">Which stocks can I analyze?<span class="ic">+</span></button><div class="fa"><div>Any US-listed equity on a major exchange, from mega-caps to small caps. Coverage of ETFs and foreign listings is limited and results may be thinner.</div></div></div>
       <div class="fi"><button class="fqb" onclick="faq(this)" aria-expanded="false">How is this different from asking ChatGPT?<span class="ic">+</span></button><div class="fa"><div>A chatbot gives you one model's answer, and it tends to follow the framing of your question. HedgePick runs specialised analysts on current data, then forces a structured bull-versus-bear debate with a separate risk review before any ruling. It is designed to push back on you.</div></div></div>
-      <div class="fi"><button class="fqb" onclick="faq(this)" aria-expanded="false">What do Pro and Trader include? Can I cancel?<span class="ic">+</span></button><div class="fa"><div>Pro ($15/month): 5 analyses a day, full reasoning, the complete debate transcript, stop loss and take profit levels, and position sizing. Trader ($49/month) adds position tracking against the S&amp;P 500, price and stop alerts, a weekly AI re-check of every thesis you hold, and an order ticket that sends trades to your own Alpaca paper account after you confirm them. Cancel anytime by emailing joseph@hedgepick.com. No contract, no fee.</div></div></div>
+      <div class="fi"><button class="fqb" onclick="faq(this)" aria-expanded="false">What do Pro and Trader include? Can I cancel?<span class="ic">+</span></button><div class="fa"><div>Pro ($39/month, or $379/year): 5 analyses a day, full reasoning, the complete debate transcript, stop loss and take profit levels, and position sizing. Trader ($99/month, or $949/year) adds position tracking against the S&amp;P 500, price and stop alerts, a weekly AI re-check of every thesis you hold, and an order ticket that sends trades to your own Alpaca paper account after you confirm them. Cancel anytime by emailing joseph@hedgepick.com. No contract, no fee.</div></div></div>
     </div>
   </div>
 </section>
@@ -827,18 +836,18 @@ function doSignOut(){localStorage.removeItem('hp_email');localStorage.removeItem
         </div>
         <div class="plan feat" style="padding:20px">
           <div class="p-top"><span class="p-name">Pro</span></div>
-          <div class="p-price"><span class="n" style="font-size:var(--xl)">$15</span><span class="per">/ mo</span></div>
+          <div class="p-price"><span class="n" style="font-size:var(--xl)">$39</span><span class="per">/ mo</span></div>
           <p class="p-for" style="min-height:0">5 a day, full debate, stop loss and sizing.</p>
-          <a href="https://buy.stripe.com/14A5kFakJ31TdiPef14AU03" class="btn btn-blue" data-plan="pro">Get Pro</a>
+          <a href="https://buy.stripe.com/9B6cN70K9gSJgv14Er4AU06" class="btn btn-blue" data-plan="pro">Get Pro</a>
         </div>
         <div class="plan" style="padding:20px">
           <div class="p-top"><span class="p-name">Trader</span></div>
-          <div class="p-price"><span class="n" style="font-size:var(--xl)">$49</span><span class="per">/ mo</span></div>
+          <div class="p-price"><span class="n" style="font-size:var(--xl)">$99</span><span class="per">/ mo</span></div>
           <p class="p-for" style="min-height:0">10 a day, positions vs S&amp;P, alerts, paper orders.</p>
-          <a href="https://buy.stripe.com/dRm6oJ9gF31T1A7ef14AU05" class="btn btn-pri" data-plan="trader">Get Trader</a>
+          <a href="https://buy.stripe.com/dRmcN79gF7i9emTfj54AU08" class="btn btn-pri" data-plan="trader">Get Trader</a>
         </div>
       </div>
-      <div class="p-note"><span>30-day money-back guarantee · Cancel anytime</span><a href="/terms">Terms</a></div>
+      <div class="p-note"><span>Yearly: Pro $379 · Trader $949 (2 months free) · 30-day money-back</span><a href="#pricing" onclick="closePricingModal();setBill('a')">See yearly</a></div>
     </div>
   </div>
 </div>
@@ -968,6 +977,18 @@ document.getElementById('tin').addEventListener('keydown',function(e){if(e.key==
 document.getElementById('temail').addEventListener('keydown',function(e){if(e.key==='Enter')go()});
 
 
+// BILLING TOGGLE
+function setBill(b){
+  document.querySelectorAll('.bill button').forEach(function(x){x.classList.toggle('on',x.dataset.bill===b)});
+  document.querySelectorAll('#pricing [data-m][data-a]').forEach(function(el){
+    if(el.tagName==='A'){
+      var em=localStorage.getItem('hp_email');
+      el.href=el.dataset[b]+(em?'?prefilled_email='+encodeURIComponent(em):'');
+      el.textContent=el.dataset['l'+b];
+    }else{el.textContent=el.dataset[b]}
+  });
+  gtag('event','billing_toggle',{period:b});
+}
 // ASK THE DESK
 var DESK_HIST=[];
 function openDesk(){document.getElementById('desk').classList.add('open');document.getElementById('deskBtn').style.display='none';setTimeout(function(){document.getElementById('deskQ').focus()},60);gtag('event','desk_open')}

@@ -321,7 +321,7 @@ gtag('config','G-W2VWCNQC6T');
       <div class="usage-label">Daily analyses</div>
       <div class="usage-bar-wrap"><div class="usage-bar-fill" id="usageBar" style="width:0%"></div></div>
       <div class="usage-count"><span id="usageUsed">0</span> of <span id="usageMax">1</span> used today</div>
-      <div class="usage-upgrade-nudge" id="usageNudge" onclick="openUpgradeModal('nudge')">Get 5 analyses/day — Pro $15/mo →</div>
+      <div class="usage-upgrade-nudge" id="usageNudge" onclick="openUpgradeModal('nudge')">Get 5 analyses/day — Pro $39/mo →</div>
     </div>
     <button onclick="openUpgradeModal('usage')" class="upgrade-btn" id="upgradeBtn" type="button">Upgrade now →</button>
   </div>
@@ -816,8 +816,8 @@ initDashboard();
 // ── UPGRADE MODAL ────────────────────────────────────────────
 const modalMessages = {
   usage:{eyebrow:'Upgrade your plan',title:'See why, deeper.',sub:"Free users see the verdict. Paid users see the full debate — every agent's reasoning, bull/bear confrontation, stop loss levels, and position sizing."},
-  nudge:{eyebrow:'Upgrade your plan',title:'The full picture costs less than you think.',sub:'$15 a month. 5 analyses per day, full agent reasoning, bull/bear debate, stop loss, position sizing. Cancel anytime.'},
-  limit:{eyebrow:'Limit reached',title:'Keep testing your theses.',sub:'Upgrade to Pro ($15/mo, 5 analyses/day) or Trader ($49/mo, 10 analyses/day + live position tracking, alerts, and weekly Monday AI thesis re-checks). Cancel anytime.'}
+  nudge:{eyebrow:'Upgrade your plan',title:'The full picture costs less than you think.',sub:'$39 a month, or $379 a year. 5 analyses per day, full agent reasoning, bull/bear debate, stop loss, position sizing. Cancel anytime.'},
+  limit:{eyebrow:'Limit reached',title:'Keep testing your theses.',sub:'Upgrade to Pro ($39/mo, 5 analyses/day) or Trader ($99/mo, 10 analyses/day + live position tracking, alerts, and weekly Monday AI thesis re-checks). Cancel anytime.'}
 };
 function openUpgradeModal(source){
   var msg=modalMessages[source]||modalMessages.usage;
@@ -828,8 +828,8 @@ function openUpgradeModal(source){
   if(em){
     var p=document.getElementById('proBuy');
     var t=document.getElementById('traderBuy');
-    if(p) p.href='https://buy.stripe.com/14A5kFakJ31TdiPef14AU03?prefilled_email='+encodeURIComponent(em);
-    if(t) t.href='https://buy.stripe.com/dRm6oJ9gF31T1A7ef14AU05?prefilled_email='+encodeURIComponent(em);
+    if(p) p.href='https://buy.stripe.com/9B6cN70K9gSJgv14Er4AU06?prefilled_email='+encodeURIComponent(em);var pa=document.getElementById('proBuyA');if(pa)pa.href='https://buy.stripe.com/aFaeVffF31XPemT0ob4AU07?prefilled_email='+encodeURIComponent(em);
+    if(t) t.href='https://buy.stripe.com/dRmcN79gF7i9emTfj54AU08?prefilled_email='+encodeURIComponent(em);var ta=document.getElementById('traderBuyA');if(ta)ta.href='https://buy.stripe.com/eVq14pcsRbyp3If5Iv4AU09?prefilled_email='+encodeURIComponent(em);
   }
   document.getElementById('upgradeModal').style.display='flex';
   document.body.style.overflow='hidden';
@@ -1001,7 +1001,7 @@ document.addEventListener('DOMContentLoaded',function(){
     <!-- Trust bar -->
     <div style="background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.15);border-radius:8px;padding:11px 16px;margin-bottom:28px;font-size:12px;color:rgba(236,234,228,0.6);display:flex;align-items:center;gap:10px">
       <span style="color:#22C55E;font-weight:700;font-size:13px">&#10003;</span>
-      Pro $15 or Trader $49 a month &mdash; cancel anytime, no contract.
+      Pro $39 or Trader $99 a month &mdash; or pay yearly and get 2 months free. Cancel anytime.
     </div>
 
     <!-- Plans -->
@@ -1010,7 +1010,7 @@ document.addEventListener('DOMContentLoaded',function(){
       <!-- Pro -->
       <div style="background:#111318;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:24px 20px">
         <div style="font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:rgba(236,234,228,0.35);margin-bottom:12px">Pro</div>
-        <div style="font-family:'Space Mono',monospace;font-size:34px;font-weight:700;color:#ECEAE4;line-height:1;margin-bottom:4px">$15</div>
+        <div style="font-family:'Space Mono',monospace;font-size:34px;font-weight:700;color:#ECEAE4;line-height:1;margin-bottom:4px">$39</div>
         <div style="font-size:11px;color:rgba(236,234,228,0.35);margin-bottom:18px">per month &middot; cancel anytime</div>
         <div style="margin-bottom:20px">
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> 5 analyses per day</div>
@@ -1019,13 +1019,14 @@ document.addEventListener('DOMContentLoaded',function(){
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Stop loss levels</div>
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Position sizing</div>
         </div>
-        <a id="proBuy" href="https://buy.stripe.com/14A5kFakJ31TdiPef14AU03" style="display:block;text-align:center;padding:11px;border-radius:8px;font-size:13px;font-weight:500;color:#fff;border:none;background:#4F8EF7;text-decoration:none;transition:background .2s;font-family:'Space Grotesk',sans-serif">Get Pro — $15/mo →</a>
+        <a id="proBuy" href="https://buy.stripe.com/9B6cN70K9gSJgv14Er4AU06" style="display:block;text-align:center;padding:11px;border-radius:8px;font-size:13px;font-weight:500;color:#fff;border:none;background:#4F8EF7;text-decoration:none;transition:background .2s;font-family:'Space Grotesk',sans-serif">Get Pro — $39/mo →</a>
+        <a id="proBuyA" href="https://buy.stripe.com/aFaeVffF31XPemT0ob4AU07" style="display:block;text-align:center;margin-top:8px;font-size:12px;color:#4F8EF7;text-decoration:none">or $379/year &mdash; 2 months free</a>
       </div>
 
       <!-- Trader -->
       <div style="background:#111318;border:1px solid rgba(79,142,247,0.45);border-radius:14px;padding:24px 20px">
         <div style="font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:#4F8EF7;margin-bottom:12px">Trader</div>
-        <div style="font-family:'Space Mono',monospace;font-size:34px;font-weight:700;color:#ECEAE4;line-height:1;margin-bottom:4px">$49</div>
+        <div style="font-family:'Space Mono',monospace;font-size:34px;font-weight:700;color:#ECEAE4;line-height:1;margin-bottom:4px">$99</div>
         <div style="font-size:11px;color:rgba(236,234,228,0.35);margin-bottom:18px">per month &middot; cancel anytime</div>
         <div style="margin-bottom:20px">
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Everything in Pro, 10 analyses/day</div>
@@ -1034,7 +1035,8 @@ document.addEventListener('DOMContentLoaded',function(){
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Weekly AI thesis re-check</div>
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Order ticket for your Alpaca paper account</div>
         </div>
-        <a id="traderBuy" href="https://buy.stripe.com/dRm6oJ9gF31T1A7ef14AU05" style="display:block;text-align:center;padding:11px;border-radius:8px;font-size:13px;font-weight:600;color:#fff;border:none;background:#4F8EF7;text-decoration:none;font-family:'Space Grotesk',sans-serif">Get Trader &rarr;</a>
+        <a id="traderBuy" href="https://buy.stripe.com/dRmcN79gF7i9emTfj54AU08" style="display:block;text-align:center;padding:11px;border-radius:8px;font-size:13px;font-weight:600;color:#fff;border:none;background:#4F8EF7;text-decoration:none;font-family:'Space Grotesk',sans-serif">Get Trader — $99/mo &rarr;</a>
+        <a id="traderBuyA" href="https://buy.stripe.com/eVq14pcsRbyp3If5Iv4AU09" style="display:block;text-align:center;margin-top:8px;font-size:12px;color:#4F8EF7;text-decoration:none">or $949/year &mdash; 2 months free</a>
       </div>
 
     </div>
