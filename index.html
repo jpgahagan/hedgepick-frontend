@@ -739,6 +739,15 @@ function doSignOut(){localStorage.removeItem('hp_email');localStorage.removeItem
     </div>
     <a href="https://buy.stripe.com/6oU14pdwVcCt0w37QD4AU0a" class="btn btn-ghost" data-plan="pack5" style="border-color:rgba(34,197,94,.45);color:var(--green)">Buy 5-Report Pack, $19 →</a>
   </div>
+  <div style="margin-top:10px;padding:16px 20px;border:1px solid rgba(232,169,48,.35);border-radius:var(--r2);background:linear-gradient(180deg,rgba(232,169,48,.06),rgba(11,13,18,.95));display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap">
+    <div>
+      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--amber);margin-bottom:3px">Founding Cohort · <span id="fdSeatsLeft">20</span> of 20 Seats Remaining</div>
+      <div style="font-size:var(--sm);color:var(--t1);font-weight:600">Founding Trader &amp; Advisor Lifetime Pass — <span style="font-family:var(--mono)">$499</span> one-time <span style="font-size:var(--xs);color:var(--t3);font-weight:400">(vs. $949/yr)</span></div>
+      <div style="font-size:var(--xs);color:var(--t2);margin-top:2px">Lifetime Trader access (10 reports/day, portfolio tracker vs. S&amp;P 500, 5-min alerts, weekly thesis re-checks) + <strong>Custom White-Label PDF Header</strong> for your newsletter, fund, or advisory practice.</div>
+    </div>
+    <a href="https://buy.stripe.com/aFa00lboN6e57Yv9YL4AU0b" class="btn btn-pri" data-plan="founding" style="background:var(--amber);border-color:var(--amber);color:#06070A">Claim Founding Pass, $499 →</a>
+  </div>
+  <script>fetch("https://web-production-45241.up.railway.app/api/founding-seats").then(r=>r.json()).then(d=>{var el=document.getElementById("fdSeatsLeft");if(el&&d&&typeof d.remaining==="number")el.textContent=d.remaining;}).catch(()=>{});</script>
   <div class="p-note"><span>Secure checkout by Stripe · Cancel anytime by email</span><a href="/terms">Plan terms</a></div>
 </section>
 
