@@ -486,13 +486,13 @@ gtag('config','G-W2VWCNQC6T');
           <div class="dc-live"><div class="ld"></div>Analyzing</div>
         </div>
         <div class="dc-rows">
-          <div class="dc-row" data-c="88"><div class="dc-rl">Fundamentals</div><div class="dc-rs rs-b">BUY</div><div class="dc-bar"><div class="dc-fill" style="background:var(--green)"></div></div></div>
-          <div class="dc-row" data-c="72"><div class="dc-rl">Sentiment</div><div class="dc-rs rs-b">BUY</div><div class="dc-bar"><div class="dc-fill" style="background:var(--green)"></div></div></div>
-          <div class="dc-row" data-c="46"><div class="dc-rl">News</div><div class="dc-rs rs-h">HOLD</div><div class="dc-bar"><div class="dc-fill" style="background:var(--amber)"></div></div></div>
-          <div class="dc-row" data-c="83"><div class="dc-rl">Technical</div><div class="dc-rs rs-b">BUY</div><div class="dc-bar"><div class="dc-fill" style="background:var(--green)"></div></div></div>
-          <div class="dc-row" data-c="94"><div class="dc-rl">Bull researcher</div><div class="dc-rs rs-b">STRONG BUY</div><div class="dc-bar"><div class="dc-fill" style="background:var(--green)"></div></div></div>
-          <div class="dc-row" data-c="34"><div class="dc-rl">Bear researcher</div><div class="dc-rs rs-h">NEUTRAL</div><div class="dc-bar"><div class="dc-fill" style="background:var(--amber)"></div></div></div>
-          <div class="dc-row" data-c="79"><div class="dc-rl">Risk manager</div><div class="dc-rs rs-b">APPROVED</div><div class="dc-bar"><div class="dc-fill" style="background:var(--green)"></div></div></div>
+          <div class="dc-row" data-c="88"><div class="dc-rl">Fundamentals</div><div class="dc-rs rs-b">BUY</div><div class="dc-bar"><div class="dc-fill" style="background:var(--green);width:88%"></div></div></div>
+          <div class="dc-row" data-c="72"><div class="dc-rl">Sentiment</div><div class="dc-rs rs-b">BUY</div><div class="dc-bar"><div class="dc-fill" style="background:var(--green);width:72%"></div></div></div>
+          <div class="dc-row" data-c="46"><div class="dc-rl">News</div><div class="dc-rs rs-h">HOLD</div><div class="dc-bar"><div class="dc-fill" style="background:var(--amber);width:46%"></div></div></div>
+          <div class="dc-row" data-c="83"><div class="dc-rl">Technical</div><div class="dc-rs rs-b">BUY</div><div class="dc-bar"><div class="dc-fill" style="background:var(--green);width:83%"></div></div></div>
+          <div class="dc-row" data-c="94"><div class="dc-rl">Bull researcher</div><div class="dc-rs rs-b">STRONG BUY</div><div class="dc-bar"><div class="dc-fill" style="background:var(--green);width:94%"></div></div></div>
+          <div class="dc-row" data-c="34"><div class="dc-rl">Bear researcher</div><div class="dc-rs rs-h">NEUTRAL</div><div class="dc-bar"><div class="dc-fill" style="background:var(--amber);width:34%"></div></div></div>
+          <div class="dc-row" data-c="79"><div class="dc-rl">Risk manager</div><div class="dc-rs rs-b">APPROVED</div><div class="dc-bar"><div class="dc-fill" style="background:var(--green);width:79%"></div></div></div>
         </div>
         <div class="dc-bot" id="dcv">
           <div><div class="dc-v">BUY</div><div class="dc-vs">6/7 agents bullish. Bear case noted but insufficient to override momentum.</div></div>
@@ -690,18 +690,7 @@ function startDemo() {
   }, 7200);
 }
 
-// Start when section scrolls into view
-var demoObs = new IntersectionObserver(function(entries){
-  entries.forEach(function(e){
-    if(e.isIntersecting){
-      setTimeout(startDemo, 400);
-      demoObs.unobserve(e.target);
-    }
-  });
-}, {threshold:0.3});
-
-var demoSection = document.querySelector('#demoAgents');
-if(demoSection) demoObs.observe(demoSection);
+// Terminal shows complete NVDA run immediately; Replay button triggers startDemo() on demand
 </script>
 
 <!-- THESIS STRESS TEST EXCERPT -->
