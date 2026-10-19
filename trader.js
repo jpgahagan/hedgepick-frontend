@@ -1,7 +1,7 @@
 /* HedgePick Trader dashboard panel. Loaded by dashboard.html. */
 (function () {
   const TRADER_TIERS = ['trader', 'lifetime'];
-  const TRADER_LINK = 'https://buy.stripe.com/dRm6oJ9gF31T1A7ef14AU05';
+  const TRADER_LINK = 'https://buy.stripe.com/dRmcN79gF7i9emTfj54AU08';
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   const money = (x, d = 2) => (x == null || isNaN(x) ? '—' : (x < 0 ? '-$' : '$') + Math.abs(x).toLocaleString('en-US', { minimumFractionDigits: d, maximumFractionDigits: d }));
@@ -33,7 +33,7 @@
   function teaser() {
     $('traderSection').innerHTML = `
       <div class="tr-teaser">
-        <div class="tr-eyebrow">Trader &middot; $49/mo</div>
+        <div class="tr-eyebrow">Trader &middot; $99/mo ($949/yr)</div>
         <div class="tr-h">Turn the analysis into a plan you can act on.</div>
         <ul class="tr-list">
           <li><b>Positions</b> with live profit and loss, and how each one is doing against the S&amp;P 500 since you added it</li>
@@ -41,6 +41,7 @@
           <li><b>Weekly thesis re-check</b>: every Monday the AI panel re-tests your reason for owning each position</li>
           <li><b>Order ticket</b>: send market or limit orders with a stop-loss and take-profit to your own Alpaca paper trading account</li>
           <li><b>10 analyses a day</b>, and you go first in the queue</li>
+          <li><b>White-label PDF header</b>: print your own firm, fund, or newsletter name at the top of every 4-page PDF report</li>
         </ul>
         <a class="tr-btn" href="${TRADER_LINK}?prefilled_email=${encodeURIComponent((typeof PLAN !== 'undefined' && PLAN.email) || '')}">Upgrade to Trader &rarr;</a>
         <div class="tr-fine">Cancel anytime. Orders go only to your own brokerage account and only when you confirm them.</div>
@@ -82,6 +83,14 @@
         <div class="tr-card-h"><span>Brokerage &middot; Alpaca paper trading</span><span class="tr-tag">Paper</span></div>
         <div id="trBroker"><div class="tr-empty">Loading&hellip;</div></div>
       </div>
+      <div class="tr-card">
+        <div class="tr-card-h"><span>White-label PDF report header</span><span class="tr-tag">Advisor / Desk</span></div>
+        <p class="tr-p">Print your firm, fund, or newsletter name in the top banner of every 4-page PDF report you generate (leave blank for standard HedgePick branding).</p>
+        <form class="tr-form tr-inline" id="trBrandForm" autocomplete="off">
+          <input name="custom_brand" id="trBrandInput" maxlength="48" placeholder="e.g. Apex Capital Research" style="flex:1;min-width:220px">
+          <button class="tr-btn sm" type="submit">Save header</button>
+        </form>
+      </div>
       <div class="tr-modal" id="trTicket" style="display:none">
         <div class="tr-modal-box">
           <div class="tr-card-h"><span id="trTicketTitle">Order ticket</span><button class="tr-x" type="button" onclick="document.getElementById('trTicket').style.display='none'">&#10005;</button></div>
@@ -121,6 +130,15 @@
       try { await api('/api/trader/alerts', { method: 'POST', body: f }); e.target.reset(); toast('Alert added.'); loadAlerts(); }
       catch (err) { toast(err.message, true); }
     };
+    $('trBrandForm').onsubmit = async (e) => {
+      e.preventDefault();
+      const val = ($('trBrandInput').value || '').trim();
+      try {
+        await api('/api/user/brand', { method: 'POST', body: { custom_brand: val } });
+        toast(val ? ('PDF header set to "' + val + '".') : 'Restored default HedgePick PDF header.');
+      } catch (err) { toast(err.message, true); }
+    };
+    api('/api/user').then((u) => { if ($('trBrandInput') && u.custom_brand) $('trBrandInput').value = u.custom_brand; }).catch(() => {});
     $('trOrderForm').oninput = previewOrder;
     $('trOrderForm').onsubmit = async (e) => {
       e.preventDefault();
