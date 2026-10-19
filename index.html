@@ -1,1201 +1,927 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>HedgePick — AI Bull vs Bear Analysis for Any US Stock</title>
-<meta name="description" content="Enter any US stock ticker. Nine AI analysts build the bull case, tear it apart, and show you both sides of the argument before you trade. Free to start.">
+<title>HedgePick — See the bull and bear case before you buy any US stock</title>
+<meta name="description" content="Type any US stock and why you like it. Nine AI analysts research it, argue both sides, and try to break your reasoning. Plain-English verdict plus the full debate. 3 free analyses, no card.">
 <link rel="canonical" href="https://hedgepick.com/">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="HedgePick">
-<meta property="og:title" content="HedgePick — AI Bull vs Bear Analysis for Any US Stock">
-<meta property="og:description" content="Enter any US stock ticker. Nine AI analysts build the bull case, tear it apart, and show you both sides of the argument before you trade. Free to start.">
+<meta property="og:title" content="HedgePick — See the bull and bear case before you buy">
+<meta property="og:description" content="Nine AI analysts research any US stock, argue both sides, and stress-test your reasoning. 3 free analyses, no card.">
 <meta property="og:url" content="https://hedgepick.com/">
 <meta property="og:image" content="https://hedgepick.com/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="HedgePick — AI Bull vs Bear Analysis for Any US Stock">
-<meta name="twitter:description" content="Enter any US stock ticker. Nine AI analysts build the bull case, tear it apart, and show you both sides of the argument before you trade. Free to start.">
+<meta name="twitter:title" content="HedgePick — See the bull and bear case before you buy">
+<meta name="twitter:description" content="Nine AI analysts research any US stock, argue both sides, and stress-test your reasoning. 3 free analyses, no card.">
 <meta name="twitter:image" content="https://hedgepick.com/og-image.png">
-
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#050608;
-  --s1:#0C0D10;
-  --s2:#111318;
-  --b1:rgba(255,255,255,0.09);
-  --b2:rgba(255,255,255,0.14);
-  --t1:#ECEAE4;
-  --t2:rgba(236,234,228,0.72);
-  --t3:rgba(236,234,228,0.45);
-  --blue:#4F8EF7;
-  --blue-d:rgba(79,142,247,0.1);
-  --gold:#E8A930;
-  --gold-d:rgba(232,169,48,0.08);
-  --green:#22C55E;
-  --red:#F87171;
-  --amber:#FBBF24;
-  --r:8px;
-  --r2:12px;
-  --r3:16px;
+  --bg-0:#08090c;
+  --bg-1:#0d0f13;
+  --bg-2:#12151b;
+  --bg-3:#181c24;
+  --hair:rgba(255,255,255,.07);
+  --hair-2:rgba(255,255,255,.13);
+  --t1:#eef0f4;
+  --t2:#a3aab8;
+  --t3:#6c7483;
+  --blue:#5b93f5;
+  --blue-dim:rgba(91,147,245,.10);
+  --blue-bd:rgba(91,147,245,.30);
+  --gold:#e3a83a;
+  --green:#22c27a;
+  --green-dim:rgba(34,194,122,.10);
+  --green-bd:rgba(34,194,122,.28);
+  --red:#f0606e;
+  --red-dim:rgba(240,96,110,.10);
+  --red-bd:rgba(240,96,110,.28);
+  --amber:#f2b33d;
+  --amber-dim:rgba(242,179,61,.10);
+  --amber-bd:rgba(242,179,61,.28);
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  --xs:clamp(.75rem,.72rem + .15vw,.8125rem);
+  --sm:clamp(.8125rem,.78rem + .2vw,.875rem);
+  --base:clamp(.9375rem,.9rem + .2vw,1rem);
+  --lg:clamp(1.0625rem,1rem + .35vw,1.25rem);
+  --xl:clamp(1.375rem,1.2rem + .75vw,1.75rem);
+  --xxl:clamp(2rem,1.5rem + 2vw,3.1rem);
+  --r1:3px;--r2:4px;--r3:6px;--r4:8px;
 }
-html{scroll-behavior:smooth}
-section{scroll-margin-top:96px}
-body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--t1);overflow-x:hidden;-webkit-font-smoothing:antialiased;line-height:1.6}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;background:var(--bg-0);-webkit-text-size-adjust:100%}
+body{background:var(--bg-0);color:var(--t1);font-family:var(--sans);font-size:var(--base);line-height:1.55;overflow-x:hidden;max-width:100%;touch-action:pan-y;font-variant-numeric:tabular-nums}
+section,[id]{scroll-margin-top:84px}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;background:none;border:none}
+.mono{font-family:var(--mono)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--t1);color:var(--bg-0);padding:8px 12px;border-radius:var(--r2);z-index:999;font-size:var(--sm)}
+.skip:focus{left:8px}
 
-/* PROGRESS BAR */
-#prog{position:fixed;top:0;left:0;height:2px;background:linear-gradient(90deg,var(--blue),var(--gold));width:0%;z-index:999;transition:width .1s linear}
+/* STATUS RIBBON */
+.ribbon{background:var(--bg-1);border-bottom:1px solid var(--hair);font-family:var(--mono);font-size:var(--xs);color:var(--t2)}
+.ribbon-in{max-width:1280px;margin:0 auto;padding:7px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.rk{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.rk .k{color:var(--t3);text-transform:uppercase;letter-spacing:.06em}
+.rk .v{color:var(--t1);font-weight:500}
+.rgrp{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.rsep{color:var(--hair-2)}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block}
 
-/* PRICING HOVER */
-.pc{transition:box-shadow .2s}
-.pc:hover{box-shadow:0 0 0 1px var(--b2),0 8px 32px rgba(0,0,0,.3)}
-.pc.feat:hover{box-shadow:0 0 0 1px rgba(79,142,247,.3),0 8px 32px rgba(79,142,247,.08)}
-
-/* EMAIL CAPTURE */
-.email-sec{padding:80px 48px;border-top:1px solid var(--b1);background:var(--s1);text-align:center}
-.email-inner{max-width:480px;margin:0 auto}
-.email-row{display:flex;gap:8px;margin:28px 0 12px}
-.e-in{flex:1;background:var(--bg);border:1px solid var(--b2);border-radius:8px;padding:12px 16px;color:var(--t1);font-size:14px;font-family:'Space Grotesk',sans-serif;outline:none;transition:border .2s}
-.e-in::placeholder{color:var(--t2)}
-.e-in:focus{border-color:rgba(79,142,247,.4)}
-.e-btn{background:var(--blue);color:#fff;border:none;border-radius:8px;padding:12px 22px;font-weight:600;font-size:13px;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:opacity .2s;white-space:nowrap}
-.e-btn:hover{opacity:.85}
-.e-note{font-size:11px;color:var(--t2)}
-.e-success{display:none;font-size:14px;color:var(--green);margin-top:16px;font-weight:500}
-.e-count{display:inline-flex;align-items:center;gap:8px;font-size:12px;color:var(--t2);margin-bottom:16px}
-
-/* FAQ */
-.faq-sec{padding:80px 48px;border-top:1px solid var(--b1)}
-.faq-inner{max-width:680px;margin:0 auto}
-.faq-list{margin-top:40px;display:flex;flex-direction:column;gap:1px;background:var(--b1);border:1px solid var(--b1);border-radius:var(--r3);overflow:hidden}
-.faq-item{background:var(--bg)}
-.faq-q{width:100%;padding:20px 24px;background:none;border:none;color:var(--t1);font-family:'Space Grotesk',sans-serif;font-size:14px;font-weight:500;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;transition:background .2s;letter-spacing:.01em}
-.faq-q:hover{background:var(--s1)}
-.faq-icon{width:18px;height:18px;border-radius:50%;border:1px solid var(--b2);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--t3);transition:transform .25s,background .2s,color .2s;font-size:14px;font-weight:300;line-height:1}
-.faq-item.open .faq-icon{background:var(--blue-d);border-color:rgba(79,142,247,.3);color:var(--blue);transform:rotate(45deg)}
-.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease}
-.faq-item.open .faq-a{max-height:600px}
-.faq-a-inner{padding:0 24px 20px;font-size:13px;color:var(--t2);line-height:1.75;font-weight:300}
-
-/* BACK TO TOP */
-#btt{position:fixed;bottom:28px;right:140px;z-index:300;width:40px;height:40px;border-radius:50%;background:var(--s2);border:1px solid var(--b2);display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;pointer-events:none;transition:opacity .3s,transform .2s;color:var(--t2);font-size:16px}
-#btt:hover{background:var(--s1);color:var(--t1);transform:translateY(-2px)}
-#btt.show{opacity:1;pointer-events:auto}
-
-
-/* DOT GRID */
-.hero-dots{position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.055) 1px,transparent 1px);background-size:28px 28px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 0%,transparent 100%);-webkit-mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 0%,transparent 100%);pointer-events:none}
-
-/* SOCIAL PROOF BAR */
-.proof-bar{display:flex;align-items:center;justify-content:center;gap:40px;padding:28px 48px;border-top:1px solid var(--b1);border-bottom:1px solid var(--b1);background:var(--s1)}
-.pb-item{text-align:center}
-.pb-val{font-family:'Space Mono',monospace;font-size:20px;font-weight:700;color:var(--t1)}
-.pb-lbl{font-size:11px;color:var(--t2);text-transform:uppercase;letter-spacing:.1em;margin-top:3px}
-.pb-div{width:1px;height:32px;background:var(--b1)}
-
-/* TAPE */
-.tape{height:34px;background:var(--s1);border-bottom:1px solid var(--b1);overflow:hidden;display:flex;align-items:center}
-.tape-inner{display:flex;animation:slide 32s linear infinite;white-space:nowrap}
-.tape-item{display:inline-flex;align-items:center;gap:8px;padding:0 28px;border-right:1px solid var(--b1);font-size:11px;font-family:'Space Mono',monospace;letter-spacing:0.04em}
-.tape-sym{color:var(--t1);font-weight:700}
-.t-b{color:var(--green)}
-.t-s{color:var(--red)}
-.t-h{color:var(--amber)}
-@keyframes slide{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
-
-/* NAV */
-nav{position:fixed;top:34px;left:0;right:0;z-index:200;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 48px;background:rgba(5,6,8,0.92);backdrop-filter:blur(32px);border-bottom:1px solid var(--b1)}
-.logo-mark{display:flex;align-items:center;gap:10px;text-decoration:none}
-.logo-icon{width:28px;height:28px;position:relative;flex-shrink:0}
-.logo-icon svg{width:28px;height:28px}
-.logo-wordmark{font-family:'Space Mono',monospace;font-size:14px;font-weight:700;letter-spacing:0.04em;color:var(--t1)}
-.logo-wordmark em{color:var(--blue);font-style:normal}
-.nav-links{display:flex;align-items:center;gap:32px}
-.nav-a{font-size:13px;color:var(--t2);text-decoration:none;transition:color .2s;letter-spacing:0.01em}
-.nav-a:hover{color:var(--t1)}
-.nav-cta{font-size:13px;font-weight:500;color:var(--bg);background:var(--t1);padding:7px 18px;border-radius:6px;text-decoration:none;transition:opacity .2s;letter-spacing:0.01em}
-.nav-cta:hover{opacity:.85}
-
-/* HERO */
-.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:120px 48px 80px;text-align:center;position:relative;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 40%,rgba(79,142,247,0.06) 0%,transparent 70%)}
-.hero-bg2{position:absolute;inset:0;background:radial-gradient(ellipse 40% 40% at 75% 60%,rgba(232,169,48,0.04) 0%,transparent 60%)}
-.hero-inner{max-width:780px;position:relative;z-index:2}
-.chip{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-family:'Space Mono',monospace;letter-spacing:0.12em;color:var(--blue);border:1px solid rgba(79,142,247,0.2);padding:5px 14px;border-radius:100px;background:var(--blue-d);margin-bottom:36px;text-transform:uppercase}
-.chip-dot{width:4px;height:4px;background:var(--blue);border-radius:50%;animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.2}}
-.hero h1{font-size:clamp(44px,6vw,82px);font-weight:600;line-height:1.04;letter-spacing:-0.04em;color:var(--t1);margin-bottom:24px}
-.hero h1 .hl{color:var(--gold)}
-.hero-sub{font-size:17px;color:var(--t2);line-height:1.72;max-width:540px;margin:0 auto 40px;font-weight:300}
-.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.btn-p{background:var(--t1);color:var(--bg);padding:13px 28px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:all .2s;letter-spacing:0.01em}
-.btn-p:hover{opacity:.88;transform:translateY(-1px)}
-.btn-g{background:transparent;color:var(--t2);padding:13px 24px;border-radius:8px;font-size:14px;font-weight:400;text-decoration:none;transition:color .2s}
-.btn-g:hover{color:var(--t1)}
-.hero-nums{display:flex;gap:64px;justify-content:center;margin-top:72px;padding-top:48px;border-top:1px solid var(--b1)}
-.h-num{text-align:center}
-.h-val{font-family:'Space Mono',monospace;font-size:32px;font-weight:700;color:var(--t1);display:block}
-.h-lbl{font-size:11px;color:var(--t2);text-transform:uppercase;letter-spacing:0.1em;margin-top:4px;display:block}
-
-/* CARD DEMO */
-.demo-wrap{padding:80px 48px;border-top:1px solid var(--b1)}
-.demo-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
-.demo-left{}
-.eye{font-family:'Space Mono',monospace;font-size:10px;letter-spacing:0.14em;color:var(--blue);text-transform:uppercase;margin-bottom:14px;display:block}
-.demo-h{font-size:clamp(28px,3vw,40px);font-weight:600;letter-spacing:-0.03em;line-height:1.12;margin-bottom:16px}
-.demo-p{font-size:14px;color:var(--t2);line-height:1.7;font-weight:300}
-.demo-right{}
-.dc{background:var(--s1);border:1px solid var(--b2);border-radius:var(--r3);overflow:hidden}
-.dc-top{padding:16px 20px;border-bottom:1px solid var(--b1);display:flex;justify-content:space-between;align-items:center}
-.dc-sym{font-family:'Space Mono',monospace;font-size:16px;font-weight:700;color:var(--t1)}
-.dc-co{font-size:12px;color:var(--t2);margin-top:2px}
-.dc-live{font-size:11px;color:var(--green);display:flex;align-items:center;gap:5px}
-.ld{width:5px;height:5px;background:var(--green);border-radius:50%;animation:pulse 1.5s infinite}
-.dc-rows{}
-.dc-row{padding:11px 20px;border-bottom:1px solid var(--b1);display:grid;grid-template-columns:1fr 72px 56px;align-items:center;gap:12px;opacity:1;transform:none;transition:opacity .4s,transform .4s}
-.dc-row.in{opacity:1;transform:none}
-.dc-rl{font-size:12px;color:var(--t2)}
-.dc-rs{font-size:11px;font-weight:600;font-family:'Space Mono',monospace;padding:3px 8px;border-radius:4px;text-align:center}
-.rs-b{background:rgba(34,197,94,.1);color:var(--green)}
-.rs-s{background:rgba(248,113,113,.1);color:var(--red)}
-.rs-h{background:rgba(255,255,255,.06);color:var(--t3)}
-.dc-bar{height:2px;background:var(--b1);border-radius:1px;overflow:hidden}
-.dc-fill{height:100%;border-radius:1px;width:0%;transition:width .9s ease}
-.dc-bot{padding:16px 20px;background:rgba(34,197,94,.03);border-top:1px solid rgba(34,197,94,.1);display:flex;justify-content:space-between;align-items:center;opacity:1;transition:opacity .5s}
-.dc-bot.in{opacity:1}
-.dc-v{font-family:'Space Mono',monospace;font-size:22px;font-weight:700;color:var(--green)}
-.dc-vs{font-size:11px;color:var(--t2);margin-top:3px;line-height:1.4;max-width:170px}
-.dc-pct{font-family:'Space Mono',monospace;font-size:20px;color:var(--t1);text-align:right}
-.dc-pl{font-size:10px;color:var(--t2);text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
-
-/* VS SECTION */
-.vs-sec{padding:80px 48px;border-top:1px solid var(--b1);background:var(--s1)}
-.vs-inner{max-width:840px;margin:0 auto;text-align:center}
-.vs-grid{display:grid;grid-template-columns:1fr 60px 1fr;align-items:center;gap:20px;margin:48px 0 40px}
-.vs-card{padding:32px;border-radius:var(--r3);text-align:center}
-.vs-card.bad{background:rgba(248,113,113,.05);border:1px solid rgba(248,113,113,.1)}
-.vs-card.good{background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.1)}
-.vs-price{font-family:'Space Mono',monospace;font-size:42px;font-weight:700;line-height:1}
-.vs-card.bad .vs-price{color:var(--red)}
-.vs-card.good .vs-price{color:var(--green)}
-.vs-name{font-size:12px;color:var(--t2);margin-top:8px;letter-spacing:.04em}
-.vs-div{font-size:18px;color:var(--t2);font-weight:300;text-align:center}
-.vs-tag{font-size:14px;color:var(--t2);font-weight:300}
-
-/* DIFF */
-.diff-sec{padding:80px 48px;border-top:1px solid var(--b1)}
-.diff-inner{max-width:840px;margin:0 auto}
-.diff-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--b1);border-radius:var(--r3);overflow:hidden;border:1px solid var(--b1);margin-top:40px}
-.diff-col{padding:32px;background:var(--bg)}
-.diff-col-h{font-size:11px;font-family:'Space Mono',monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:24px;display:block}
-.diff-col-h.bad{color:rgba(248,113,113,.6)}
-.diff-col-h.good{color:var(--green)}
-.di{display:flex;gap:10px;margin-bottom:16px;align-items:flex-start}
-.di-icon{font-size:12px;margin-top:2px;flex-shrink:0}
-.di-text{font-size:13px;color:var(--t2);line-height:1.55}
-.di-text b{color:var(--t1);font-weight:500}
-
-/* HOW */
-.how-sec{padding:80px 48px;border-top:1px solid var(--b1);background:var(--s1)}
-.how-inner{max-width:900px;margin:0 auto}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--b1);border-radius:var(--r3);overflow:hidden;border:1px solid var(--b1);margin-top:40px}
-.step{padding:32px;background:var(--bg);position:relative;overflow:hidden}
-.step::before{content:attr(data-n);position:absolute;right:16px;top:8px;font-family:'Space Mono',monospace;font-size:64px;font-weight:700;color:rgba(255,255,255,.04);line-height:1}
-.sn{font-family:'Space Mono',monospace;font-size:10px;color:var(--blue);letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px;display:block}
-.st{font-size:16px;font-weight:600;color:var(--t1);margin-bottom:8px;letter-spacing:-.02em}
-.sd{font-size:13px;color:var(--t2);line-height:1.65;font-weight:300}
-
-/* DEBATE */
-.debate-sec{padding:80px 48px;border-top:1px solid var(--b1)}
-.debate-inner{max-width:900px;margin:0 auto;display:grid;grid-template-columns:5fr 4fr;gap:40px;align-items:start}
-.debate-card{background:var(--s1);border:1px solid var(--b2);border-radius:var(--r3);overflow:hidden}
-.deb-h{padding:14px 20px;border-bottom:1px solid var(--b1);font-family:'Space Mono',monospace;font-size:10px;color:var(--t3);text-transform:uppercase;letter-spacing:.1em}
-.deb-row{padding:14px 20px;border-bottom:1px solid var(--b1);display:flex;gap:12px;align-items:flex-start}
-.deb-row:last-child{border-bottom:none}
-.deb-av{width:26px;height:26px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
-.deb-name{font-size:10px;font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:.08em;color:var(--t2);margin-bottom:4px}
-.deb-text{font-size:12px;color:var(--t2);line-height:1.6}
-.agents-list{display:flex;flex-direction:column;gap:8px}
-.ag{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--s1);border:1px solid var(--b1);border-radius:var(--r)}
-.ag-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.ag-name{font-size:13px;font-weight:500;color:var(--t1)}
-.ag-desc{font-size:11px;color:var(--t2)}
-
-/* INPUT */
-.input-sec{padding:80px 48px;border-top:1px solid var(--b1);background:var(--s1);text-align:center}
-.input-inner{max-width:480px;margin:0 auto}
-.input-row{display:flex;gap:8px;margin:32px 0 12px}
-.t-in{flex:1;background:var(--bg);border:1px solid var(--b2);border-radius:8px;padding:12px 16px;color:var(--t1);font-size:14px;font-family:'Space Mono',monospace;letter-spacing:.06em;text-transform:uppercase;outline:none;transition:border .2s}
-.t-in::placeholder{color:var(--t2);font-size:12px}
-.t-in:focus{border-color:rgba(79,142,247,.4)}
-.go{background:var(--t1);color:var(--bg);border:none;border-radius:8px;padding:12px 22px;font-weight:600;font-size:13px;cursor:pointer;font-family:'Space Grotesk',sans-serif;transition:opacity .2s;white-space:nowrap}
-.go:hover{opacity:.85}
-.i-res{display:none;margin-top:12px;padding:16px;background:var(--bg);border:1px solid var(--b2);border-radius:10px;text-align:left}
-.disc{font-size:11px;color:var(--t2);line-height:1.6;margin-top:20px}
-
-/* PRICING */
-.price-sec{padding:80px 48px;border-top:1px solid var(--b1)}
-.price-inner{max-width:840px;margin:0 auto}
-.pc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--b1);border:1px solid var(--b1);border-radius:var(--r3);overflow:hidden;margin-top:40px}
-.pc{padding:28px;background:var(--bg)}
-.pc.feat{background:var(--s2)}
-.pc-badge{display:inline-block;font-size:9px;font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);background:var(--gold-d);border:1px solid rgba(232,169,48,.2);padding:3px 10px;border-radius:100px;margin-bottom:10px}
-.pc-tier{font-size:10px;font-family:'Space Mono',monospace;text-transform:uppercase;letter-spacing:.12em;color:var(--t2);margin-bottom:16px;display:block}
-.pc-price{font-family:'Space Mono',monospace;font-size:40px;font-weight:700;color:var(--t1);line-height:1;margin-bottom:4px}
-.pc-per{font-size:12px;color:var(--t2);margin-bottom:20px;font-weight:300}
-.pc-desc{font-size:12px;color:var(--t2);line-height:1.6;margin-bottom:24px}
-.pc-feats{list-style:none;margin-bottom:24px}
-.pc-feats li{font-size:12px;color:var(--t2);padding:7px 0;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--b1)}
-.pc-feats li:last-child{border-bottom:none}
-.pc-feats li.on{color:rgba(236,234,228,.7)}
-.ck{color:var(--green);font-size:10px}
-.cx{color:rgba(255,255,255,.1);font-size:10px}
-.pc-btn{width:100%;padding:11px;border-radius:7px;font-size:13px;font-weight:500;cursor:pointer;border:1px solid var(--b2);background:transparent;color:var(--t1);font-family:'Space Grotesk',sans-serif;transition:all .2s;letter-spacing:.01em}
-.pc-btn:hover{background:var(--s2)}
-.pc-btn.prim{background:var(--t1);color:var(--bg);border-color:var(--t1)}
-.pc-btn.prim:hover{opacity:.86}
-
-/* FOOTER */
-footer{padding:32px 48px;border-top:1px solid var(--b1);display:flex;justify-content:space-between;align-items:center;gap:24px}
-.fl{display:flex;flex-direction:column;gap:4px}
-.fl-logo{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;color:var(--t1)}
-.fl-logo em{color:var(--blue);font-style:normal}
-.fl-line{height:1px;width:72px;background:linear-gradient(90deg,var(--blue),var(--gold))}
-.f-nav{display:flex;gap:24px}
-.f-nav a{font-size:12px;color:var(--t2);text-decoration:none;transition:color .2s}
-.f-nav a:hover{color:var(--t1)}
-.f-d{font-size:11px;color:rgba(236,234,228,0.45);max-width:280px;line-height:1.5;text-align:right}
-
-/* REVEAL */
-.rv{opacity:1;transform:none}
-.rv.in{opacity:1;transform:none}
-.rv2{opacity:1;transform:none}
-.rv2.in{opacity:1;transform:none}
-
-/* HAMBURGER */
-.ham{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:4px;background:none;border:none}
-.ham span{display:block;width:20px;height:1.5px;background:var(--t1);border-radius:2px;transition:all .25s}
+/* HEADER */
+header.hd{position:sticky;top:0;z-index:50;background:rgba(8,9,12,.9);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--hair)}
+.hd-in{max-width:1280px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.brand{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-weight:700;font-size:var(--sm);letter-spacing:.06em}
+.brand svg{width:24px;height:24px}
+.brand em{font-style:normal;color:var(--blue)}
+.nav{display:flex;align-items:center;gap:26px}
+.nav a,.nav button{font-size:var(--sm);color:var(--t2);font-weight:500;transition:color .14s}
+.nav a:hover,.nav button:hover{color:var(--t1)}
+.acts{display:flex;align-items:center;gap:8px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--mono);font-size:var(--xs);font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:10px 15px;border-radius:var(--r2);border:1px solid transparent;transition:background .15s,border-color .15s,color .15s;white-space:nowrap;min-height:40px}
+.btn svg{width:14px;height:14px}
+.btn-ghost{background:var(--bg-1);border-color:var(--hair-2);color:var(--t2)}
+.btn-ghost:hover{color:var(--t1);border-color:rgba(255,255,255,.24);background:var(--bg-2)}
+.btn-pri{background:var(--t1);color:var(--bg-0);border-color:var(--t1);font-weight:700}
+.btn-pri:hover{background:#d9dce3;border-color:#d9dce3}
+.btn-blue{background:var(--blue);color:#fff;border-color:var(--blue);font-weight:700}
+.btn-blue:hover{background:#4a83ea;border-color:#4a83ea}
+.ham{display:none;flex-direction:column;gap:5px;padding:8px}
+.ham span{display:block;width:20px;height:1.5px;background:var(--t1);transition:transform .2s,opacity .2s}
 .ham.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
 .ham.open span:nth-child(2){opacity:0}
 .ham.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
-.mobile-menu{display:none;position:fixed;top:90px;left:0;right:0;background:rgba(5,6,8,0.98);backdrop-filter:blur(32px);border-bottom:1px solid var(--b1);padding:20px 20px 28px;z-index:199;flex-direction:column;gap:0}
-.mobile-menu.open{display:flex}
-.mm-a{font-size:15px;color:var(--t2);text-decoration:none;padding:14px 0;border-bottom:1px solid var(--b1);display:block;transition:color .2s}
-.mm-a:hover{color:var(--t1)}
-.mm-cta{margin-top:16px;background:var(--t1);color:var(--bg);padding:13px 20px;border-radius:8px;font-size:14px;font-weight:600;text-decoration:none;text-align:center;display:block}
+.mmenu{display:none;position:fixed;top:62px;left:0;right:0;background:rgba(8,9,12,.98);border-bottom:1px solid var(--hair);padding:8px 20px 22px;z-index:49;flex-direction:column}
+.mmenu.open{display:flex}
+.mmenu a{padding:14px 0;border-bottom:1px solid var(--hair);color:var(--t2);font-size:15px}
+.mmenu .btn{margin-top:16px}
 
-@media(max-width:800px){
-  /* NAV */
-  nav{padding:0 20px}
-  .nav-links{display:none}
+/* LAYOUT */
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+.sec{padding:84px 0;border-bottom:1px solid var(--hair)}
+.sec.tight{padding:64px 0}
+.kick{font-family:var(--mono);font-size:var(--xs);text-transform:uppercase;letter-spacing:.08em;color:var(--blue);margin-bottom:10px}
+h2.st{font-size:var(--xl);font-weight:700;letter-spacing:-.02em;line-height:1.2}
+.sd{font-size:var(--sm);color:var(--t2);line-height:1.65}
+.shead{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:end;margin-bottom:36px}
+
+/* HERO */
+.hero{padding:56px 0 72px;border-bottom:1px solid var(--hair)}
+.hero-grid{display:grid;grid-template-columns:1fr 1.08fr;gap:44px;align-items:start}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;font-family:var(--mono);font-size:var(--xs);color:var(--t2);background:var(--bg-1);border:1px solid var(--hair-2);padding:5px 10px;border-radius:var(--r1);margin-bottom:22px;text-transform:uppercase;letter-spacing:.06em}
+.eyebrow strong{color:var(--gold);font-weight:600}
+h1.ht{font-size:var(--xxl);font-weight:700;line-height:1.08;letter-spacing:-.03em;margin-bottom:20px}
+h1.ht span{color:var(--gold)}
+.lead{font-size:var(--base);color:var(--t2);line-height:1.7;margin-bottom:26px;max-width:58ch}
+.lead b{color:var(--t1);font-weight:600}
+
+.form-box{background:var(--bg-1);border:1px solid var(--hair-2);border-radius:var(--r3);padding:18px}
+.fb-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-family:var(--mono);font-size:var(--xs);text-transform:uppercase;letter-spacing:.06em;color:var(--t2);margin-bottom:12px}
+.fb-head .g{color:var(--green)}
+.frow{display:grid;grid-template-columns:1fr auto;gap:8px}
+.inp{background:var(--bg-0);border:1px solid var(--hair-2);border-radius:var(--r2);padding:11px 13px;font-size:var(--sm);color:var(--t1);outline:none;min-height:44px;width:100%}
+.inp::placeholder{color:var(--t3)}
+.inp:focus{border-color:var(--blue)}
+.inp.tk{font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em}
+textarea.inp{resize:vertical;line-height:1.5;margin-top:8px;font-family:var(--sans)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;align-items:center}
+.chips .lbl{font-family:var(--mono);font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:.05em;margin-right:2px}
+.chip{font-family:var(--mono);font-size:11px;font-weight:500;padding:5px 9px;border-radius:var(--r1);border:1px solid var(--hair-2);background:var(--bg-0);color:var(--t2);transition:color .12s,border-color .12s}
+.chip:hover{color:var(--t1);border-color:rgba(255,255,255,.26)}
+.fnote{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:12px;font-family:var(--mono);font-size:var(--xs);color:var(--t3)}
+.fnote a{color:var(--t2);text-decoration:underline;text-underline-offset:2px}
+#temailRow{display:none;gap:8px;margin-top:8px}
+.ires{display:none;margin-top:12px;padding:14px;background:var(--bg-0);border:1px solid var(--hair-2);border-radius:var(--r2)}
+.ires-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+#is{font-family:var(--mono);font-weight:700}
+#iv{font-family:var(--mono);font-size:11px;font-weight:700;padding:3px 8px;border-radius:var(--r1)}
+#it{font-size:var(--sm);color:var(--t2);line-height:1.6}
+.ires .up{display:inline-block;margin-top:10px;font-size:var(--sm);color:var(--blue);cursor:pointer}
+
+.spec{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair-2);border-radius:var(--r2);overflow:hidden;margin-top:18px}
+.spec>div{background:var(--bg-1);padding:12px 14px}
+.spec .v{font-family:var(--mono);font-size:var(--lg);font-weight:700;line-height:1.2}
+.spec .l{font-family:var(--mono);font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:.04em;margin-top:2px}
+
+/* LIVE DEBATE TERMINAL */
+.term{background:var(--bg-1);border:1px solid var(--hair-2);border-radius:var(--r3);overflow:hidden}
+.term-top{background:var(--bg-2);border-bottom:1px solid var(--hair);padding:11px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.term-ttl{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:var(--xs);color:var(--t2)}
+.tabs{display:flex;gap:4px;flex-wrap:wrap}
+.tab{font-family:var(--mono);font-size:11px;font-weight:600;padding:4px 9px;border-radius:var(--r1);border:1px solid var(--hair);background:var(--bg-0);color:var(--t3);transition:color .12s,border-color .12s}
+.tab:hover{color:var(--t1);border-color:var(--hair-2)}
+.tab.on{background:var(--blue-dim);color:var(--blue);border-color:var(--blue-bd)}
+.term-body{padding:14px;display:flex;flex-direction:column;gap:12px}
+.tgrid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:var(--r2);overflow:hidden}
+.tgrid>div{background:var(--bg-0);padding:11px 12px;min-width:0}
+.tl{font-family:var(--mono);font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px;white-space:nowrap}
+.tm{font-family:var(--mono);font-size:clamp(1.05rem,1.2vw,1.3rem);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ts{font-size:var(--xs);color:var(--t2);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vb{display:inline-block;font-family:var(--mono);font-size:var(--xs);font-weight:700;padding:3px 9px;border-radius:var(--r1);border:1px solid}
+.vb.BUY{color:var(--green);background:var(--green-dim);border-color:var(--green-bd)}
+.vb.SELL{color:var(--red);background:var(--red-dim);border-color:var(--red-bd)}
+.vb.HOLD{color:var(--amber);background:var(--amber-dim);border-color:var(--amber-bd)}
+.arg{background:var(--bg-0);border:1px solid var(--hair);border-radius:var(--r2);padding:12px 14px}
+.arg-h{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.arg-h .who{font-weight:700}
+.arg-h .plain{color:var(--t3)}
+.arg p{font-size:var(--sm);color:var(--t2);line-height:1.6}
+.arg.bull .who{color:var(--green)}
+.arg.bear .who{color:var(--red)}
+.arg.judge{background:var(--bg-2);border-color:var(--hair-2)}
+.arg.judge .who{color:var(--t1)}
+.arg.judge p{color:var(--t1)}
+.term-foot{background:var(--bg-2);border-top:1px solid var(--hair);padding:11px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-family:var(--mono);font-size:var(--xs);color:var(--t3)}
+.term-foot a{color:var(--blue);font-weight:600}
+
+/* AUDIENCE LEDGER */
+.ledger{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--hair-2);border:1px solid var(--hair-2);border-radius:var(--r3);overflow:hidden}
+.lc{background:var(--bg-1);padding:28px}
+.lc-idx{display:flex;justify-content:space-between;font-family:var(--mono);font-size:var(--xs);color:var(--t3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--hair);padding-bottom:10px;margin-bottom:16px}
+.lc h3{font-size:var(--lg);font-weight:600;margin-bottom:8px;letter-spacing:-.01em}
+.lc>p{font-size:var(--sm);color:var(--t2);line-height:1.65;margin-bottom:18px}
+.lc ul{list-style:none;display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--hair);padding-top:16px}
+.lc li{display:grid;grid-template-columns:16px 1fr;gap:8px;font-size:var(--sm);color:var(--t2);line-height:1.5}
+.lc li b{color:var(--t1);font-weight:600}
+.lc li svg{width:14px;height:14px;color:var(--green);margin-top:3px}
+.lc .lc-cta{margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-family:var(--mono);font-size:var(--xs);color:var(--t3)}
+.lc .lc-cta a.lnk{color:var(--blue);font-weight:600}
+
+/* PIPELINE TABLE */
+.ptable{width:100%;border-collapse:collapse;border:1px solid var(--hair-2);border-radius:var(--r3);overflow:hidden;background:var(--bg-1)}
+.ptable th,.ptable td{text-align:left;padding:14px 16px;border-bottom:1px solid var(--hair);vertical-align:top}
+.ptable th{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;background:var(--bg-2)}
+.ptable tr:last-child td{border-bottom:none}
+.ptable td.n{font-family:var(--mono);font-size:var(--xs);color:var(--t3);width:56px}
+.ptable td.stage{font-weight:600;font-size:var(--sm);width:23%}
+.ptable td.stage small{display:block;font-family:var(--mono);font-size:11px;font-weight:500;color:var(--t3);margin-top:3px;text-transform:uppercase;letter-spacing:.04em}
+.ptable td.tech{font-family:var(--mono);font-size:var(--xs);color:var(--t2);line-height:1.6;width:38%}
+.ptable td.plain{font-size:var(--sm);color:var(--t2);line-height:1.6}
+.ptable tr.hl td{background:var(--bg-2)}
+
+/* THESIS EXCERPT */
+.thesis{display:grid;grid-template-columns:.9fr 1.1fr;gap:44px;align-items:start}
+.doc{background:var(--bg-1);border:1px solid var(--hair-2);border-radius:var(--r3);overflow:hidden}
+.doc-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 16px;background:var(--bg-2);border-bottom:1px solid var(--hair);font-family:var(--mono);font-size:var(--xs);color:var(--t2);text-transform:uppercase;letter-spacing:.05em}
+.doc-top a{color:var(--blue);text-transform:none;letter-spacing:0;font-weight:600}
+.doc-body{padding:20px}
+.quote{font-size:var(--sm);color:var(--t2);border-left:0;padding:12px 14px;background:var(--bg-0);border:1px solid var(--hair);border-radius:var(--r2);margin-bottom:16px}
+.quote b{display:block;font-family:var(--mono);font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;font-weight:500}
+.ruling{font-size:var(--base);line-height:1.65;margin-bottom:16px}
+.ruling b{color:var(--amber)}
+.doc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:var(--r2);overflow:hidden}
+.doc-grid>div{background:var(--bg-0);padding:12px 14px;font-size:var(--sm);color:var(--t2);line-height:1.6}
+.doc-grid b{display:block;font-family:var(--mono);font-size:11px;color:var(--t1);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.steps{list-style:none;counter-reset:s;display:flex;flex-direction:column;gap:0;border-top:1px solid var(--hair);margin-top:22px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:40px 1fr;gap:10px;padding:14px 0;border-bottom:1px solid var(--hair);font-size:var(--sm);color:var(--t2);line-height:1.55}
+.steps li::before{content:"0" counter(s);font-family:var(--mono);font-size:var(--xs);color:var(--blue);padding-top:2px}
+.steps li b{color:var(--t1);font-weight:600}
+
+/* DEBATE LOG TABLE */
+.log{width:100%;border-collapse:collapse;background:var(--bg-1);border:1px solid var(--hair-2);border-radius:var(--r3);overflow:hidden}
+.log th,.log td{padding:13px 16px;text-align:left;border-bottom:1px solid var(--hair);font-size:var(--sm)}
+.log th{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;background:var(--bg-2)}
+.log td{color:var(--t2)}
+.log td.tk{font-family:var(--mono);font-weight:700;color:var(--t1)}
+.log td.px,.log td.dt{font-family:var(--mono);font-size:var(--xs)}
+.log td.r{text-align:right}
+.log tr:last-child td{border-bottom:none}
+.log tbody tr{transition:background .12s}
+.log tbody tr:hover{background:var(--bg-2)}
+.log a.rd{font-family:var(--mono);font-size:var(--xs);color:var(--blue);font-weight:600;white-space:nowrap}
+.log-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px;font-family:var(--mono);font-size:var(--xs);color:var(--t3)}
+.log-foot a{color:var(--blue);font-weight:600}
+
+/* COMPARE */
+.cmp{width:100%;border-collapse:collapse;background:var(--bg-1);border:1px solid var(--hair-2);border-radius:var(--r3);overflow:hidden}
+.cmp th,.cmp td{padding:14px 16px;border-bottom:1px solid var(--hair);text-align:left;font-size:var(--sm);vertical-align:top}
+.cmp th{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;background:var(--bg-2)}
+.cmp th.us{color:var(--blue)}
+.cmp td{color:var(--t2)}
+.cmp td:first-child{color:var(--t1);font-weight:500;width:26%}
+.cmp td.us{color:var(--t1)}
+.cmp tr:last-child td{border-bottom:none}
+
+/* PRICING */
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hair-2);border:1px solid var(--hair-2);border-radius:var(--r3);overflow:hidden}
+.plan{background:var(--bg-1);padding:26px;display:flex;flex-direction:column}
+.plan.feat{background:var(--bg-2)}
+.p-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.p-name{font-family:var(--mono);font-size:var(--sm);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.p-pill{font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:var(--r1);border:1px solid var(--hair-2);color:var(--t2)}
+.p-pill.b{color:var(--blue);border-color:var(--blue-bd);background:var(--blue-dim)}
+.p-price{display:flex;align-items:baseline;gap:6px;margin-bottom:6px}
+.p-price .n{font-family:var(--mono);font-size:var(--xxl);font-weight:700;letter-spacing:-.03em;line-height:1}
+.p-price .per{font-family:var(--mono);font-size:var(--xs);color:var(--t3)}
+.p-for{font-size:var(--sm);color:var(--t2);line-height:1.55;margin-bottom:18px;min-height:44px}
+.p-list{list-style:none;display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--hair);padding-top:16px;margin-bottom:22px;flex:1}
+.p-list li{display:grid;grid-template-columns:16px 1fr;gap:8px;font-size:var(--sm);color:var(--t2);line-height:1.45}
+.p-list li svg{width:14px;height:14px;color:var(--green);margin-top:3px}
+.p-list li.off{color:var(--t3)}
+.p-list li.off svg{color:var(--t3)}
+.plan .btn{width:100%}
+.p-note{margin-top:14px;font-family:var(--mono);font-size:var(--xs);color:var(--t3);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.p-note a{color:var(--t2);text-decoration:underline;text-underline-offset:2px}
+
+/* FAQ */
+.faq{display:grid;grid-template-columns:.8fr 1.2fr;gap:44px;align-items:start}
+.fq{border:1px solid var(--hair-2);border-radius:var(--r3);overflow:hidden;background:var(--bg-1)}
+.fi{border-bottom:1px solid var(--hair)}
+.fi:last-child{border-bottom:none}
+.fqb{width:100%;padding:17px 20px;display:flex;justify-content:space-between;align-items:center;gap:14px;text-align:left;font-size:var(--sm);font-weight:500;color:var(--t1)}
+.fqb:hover{background:var(--bg-2)}
+.fqb .ic{font-family:var(--mono);color:var(--t3);transition:transform .2s;flex-shrink:0}
+.fi.open .fqb .ic{transform:rotate(45deg);color:var(--blue)}
+.fa{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.fi.open .fa{max-height:640px}
+.fa div{padding:0 20px 18px;font-size:var(--sm);color:var(--t2);line-height:1.7}
+
+/* CLOSING CTA */
+.close{display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center;background:var(--bg-1);border:1px solid var(--hair-2);border-radius:var(--r3);padding:32px}
+.close h2{font-size:var(--xl);font-weight:700;letter-spacing:-.02em;margin-bottom:8px}
+.close p{font-size:var(--sm);color:var(--t2)}
+.close .acts{justify-content:flex-end;flex-wrap:wrap}
+
+/* FOOTER */
+footer.ft{padding:36px 0 44px}
+.ft-in{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap;font-family:var(--mono);font-size:var(--xs);color:var(--t3)}
+.ft-nav{display:flex;gap:20px;flex-wrap:wrap}
+.ft-nav a{color:var(--t2)}
+.ft-nav a:hover{color:var(--t1)}
+.ft-d{max-width:420px;line-height:1.6}
+
+/* MODALS */
+.mb{position:fixed;inset:0;background:rgba(5,6,8,.84);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:100;display:none;align-items:center;justify-content:center;padding:16px}
+.mb.open{display:flex}
+.mp{background:var(--bg-1);border:1px solid var(--hair-2);border-radius:var(--r3);width:100%;max-height:92vh;overflow-y:auto}
+.mh{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:var(--bg-2);border-bottom:1px solid var(--hair)}
+.mh .t{font-family:var(--mono);font-size:var(--sm);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
+.mx{font-family:var(--mono);font-size:var(--xs);color:var(--t3);padding:4px 9px;border:1px solid var(--hair);border-radius:var(--r1)}
+.mx:hover{color:var(--t1)}
+.mbody{padding:20px}
+
+/* RESPONSIVE */
+@media(max-width:1060px){
+  .hero-grid,.thesis,.faq{grid-template-columns:1fr}
+  .nav{display:none}
   .ham{display:flex}
-
-  /* HERO */
-  .hero{padding:96px 20px 60px;text-align:center}
-  .hero h1{font-size:clamp(36px,9vw,52px)}
-  .hero-sub{font-size:15px;margin-bottom:28px}
-  .hero-btns{justify-content:center}
-  .hero-nums{gap:20px;flex-wrap:wrap;justify-content:center;margin-top:48px;padding-top:32px}
-  .h-val{font-size:24px}
-
-  /* ALL SECTIONS */
-  .demo-wrap,.vs-sec,.diff-sec,.how-sec,.debate-sec,.input-sec,.price-sec,.email-sec,.faq-sec{padding:56px 20px}
-
-  /* GRIDS → SINGLE COL */
-  .demo-inner,.vs-grid,.diff-grid,.steps,.debate-inner,.pc-grid{grid-template-columns:1fr}
-  .diff-grid,.steps,.pc-grid{gap:1px}
-  .vs-grid{gap:12px}
-  .vs-div{display:none}
-
-  /* PROOF BAR */
-  .proof-bar{gap:20px;flex-wrap:wrap;padding:24px 20px}
-
-  /* INPUT ROW */
-  .input-row,.email-row{flex-direction:column;gap:8px}
-  .t-in,.e-in{width:100%}
-  .go,.e-btn{width:100%;text-align:center}
-
-  /* FAQ */
-  .faq-q{font-size:13px;padding:16px 18px}
-  .faq-a-inner{padding:0 18px 16px;font-size:12px}
-
-  /* FLOATING BTNS */
-  #float-cta{bottom:20px;right:20px;font-size:12px;padding:10px 18px}
-  #btt{bottom:20px;right:auto;left:20px}
-
-  /* FOOTER */
-  footer{flex-direction:column;text-align:center;padding:24px 20px;gap:16px}
-  .f-d{text-align:center;max-width:100%}
-  .f-nav{justify-content:center;flex-wrap:wrap;gap:16px}
-
-  /* VS SECTION */
-  .vs-price{font-size:32px}
-  .vs-card{padding:24px}
-
-  /* DEBATE */
-  .deb-text{font-size:11px}
-
-  /* TAPE */
-  .tape{height:28px}
-  .tape-item{padding:0 16px;font-size:10px}
+  .acts .btn-ghost{display:none}
 }
-
-@media(max-width:400px){
-  .hero h1{font-size:32px}
-  .hero-nums{gap:16px}
-  .h-val{font-size:20px}
-  .h-lbl{font-size:10px}
-  .pc-price{font-size:32px}
+@media(max-width:760px){
+  .wrap,.hd-in,.ribbon-in{padding-left:16px;padding-right:16px}
+  .sec{padding:60px 0}
+  .hero{padding:32px 0 52px}
+  .shead,.ledger,.plans,.close{grid-template-columns:1fr}
+  .shead{gap:10px}
+  .spec{grid-template-columns:repeat(2,1fr)}
+  .tgrid{grid-template-columns:1fr 1fr}
+  .tgrid>div:first-child{grid-column:1/-1}
+  .frow{grid-template-columns:1fr}
+  .frow .btn{width:100%}
+  .doc-grid{grid-template-columns:1fr}
+  .close .acts{justify-content:flex-start}
+  .ribbon .hide-sm{display:none}
+  .acts .btn-pri{display:none}
+  .lc{padding:22px}
+  .plan{padding:22px}
+  /* pipeline: stack */
+  .ptable thead{display:none}
+  .ptable,.ptable tbody,.ptable tr,.ptable td{display:block;width:100%!important}
+  .ptable tr{padding:14px 16px;border-bottom:1px solid var(--hair)}
+  .ptable tr:last-child{border-bottom:none}
+  .ptable td{padding:0;border:none}
+  .ptable td.n{display:inline-block;width:auto!important;margin-right:8px}
+  .ptable td.stage{display:inline-block;width:auto!important}
+  .ptable td.tech{margin-top:8px}
+  .ptable td.plain{margin-top:6px}
+  .ptable td.tech::before{content:"Analyst view — ";color:var(--t3)}
+  .ptable td.plain::before{content:"Plain English — ";color:var(--t3);font-family:var(--mono);font-size:11px}
+  /* log: hide some cols */
+  .log .c-sec,.log .c-dt{display:none}
+  .log th,.log td{padding:12px}
+  /* compare */
+  .cmp th:nth-child(2),.cmp td:nth-child(2){display:none}
 }
-@media(max-width:700px){.plan-grid{grid-template-columns:1fr!important}}
-html,body{max-width:100%;overflow-x:hidden;touch-action:pan-y;-webkit-text-size-adjust:100%}
-@media (max-width:640px){input,textarea,select{font-size:16px!important}}
+@media(max-width:640px){input,textarea,select{font-size:16px!important}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
 </style>
-<!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W2VWCNQC6T"></script>
 <script>
-
-// ── Auth state detection ──────────────────────────────────────
-(function() {
-  const email = localStorage.getItem('hp_email');
-  if (email) {
-    document.addEventListener('DOMContentLoaded', function() {
-      const loggedOut = document.getElementById('nav-loggedout');
-      const loggedIn  = document.getElementById('nav-loggedin');
-      if (loggedOut) loggedOut.style.display = 'none';
-      if (loggedIn)  loggedIn.style.display = 'flex';
-
-      // Show dashboard CTA in hero
-      const heroCta = document.getElementById('hero-dashboard-cta');
-      if (heroCta) heroCta.style.display = 'inline-flex';
-      const heroSignup = document.getElementById('hero-signup-cta');
-      if (heroSignup) heroSignup.style.display = 'none';
-    });
-  }
-})();
-
-function doSignOut() {
-  localStorage.removeItem('hp_email');
-  window.location.reload();
-}
-
-
 window.dataLayer=window.dataLayer||[];
 function gtag(){dataLayer.push(arguments);}
 gtag('js',new Date());
 gtag('config','G-W2VWCNQC6T');
+(function(){
+  if(localStorage.getItem('hp_email')||localStorage.getItem('hp_session')){
+    document.addEventListener('DOMContentLoaded',function(){
+      document.querySelectorAll('[data-out]').forEach(function(e){e.style.display='none'});
+      document.querySelectorAll('[data-in]').forEach(function(e){e.style.display=''});
+    });
+  }
+})();
+function doSignOut(){localStorage.removeItem('hp_email');localStorage.removeItem('hp_session');window.location.reload();}
 </script>
 </head>
 <body>
+<a href="#main" class="skip">Skip to content</a>
 
-<!-- TAPE -->
-<div id="prog"></div>
-
-<!-- TICKER TAPE -->
-<div class="tape">
-  <div style="flex-shrink:0;padding:0 14px;height:100%;display:flex;align-items:center;font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);border-right:1px solid var(--b1);background:var(--s1);position:relative;z-index:1">Example verdicts</div>
-  <div class="tape-inner" id="tape"></div>
-</div>
-
-<!-- NAV -->
-<nav>
-  <a href="#" class="logo-mark">
-    <div class="logo-icon">
-      <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect width="28" height="28" rx="6" fill="#0C0D10"/>
-        <rect x="1" y="1" width="26" height="26" rx="5" stroke="rgba(79,142,247,0.3)" stroke-width="1"/>
-        <path d="M6 20L11 13L15 16.5L19 10L22 13" stroke="#4F8EF7" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <circle cx="22" cy="13" r="2" fill="#E8A930"/>
-        <circle cx="6" cy="20" r="1.5" fill="rgba(79,142,247,0.4)"/>
-      </svg>
+<!-- STATUS RIBBON -->
+<div class="ribbon" role="region" aria-label="Screener status">
+  <div class="ribbon-in">
+    <div class="rgrp">
+      <span class="rk"><span class="dot"></span><span class="k">Screener</span><span class="v" id="rbDate">Runs every weekday</span></span>
+      <span class="rsep hide-sm">/</span>
+      <span class="rk hide-sm"><span class="k">Published</span><span class="v" id="rbCount">Public debates</span></span>
+      <span class="rsep hide-sm">/</span>
+      <span class="rk hide-sm"><span class="k">Verdicts</span><span class="v" id="rbMix">BUY · HOLD · SELL</span></span>
     </div>
-    <div class="logo-wordmark">HEDGE<em>PICK</em></div>
-  </a>
-  <button class="ham" id="ham" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
-  <div class="nav-links" id="mainNav">
-    <a href="#how" class="nav-a">How It Works</a>
-    <a href="/system" class="nav-a">Methodology</a>
-    <a href="/analysis" class="nav-a">Daily analyses</a>
-    <a href="#pricing" class="nav-a">Pricing</a>
-    <!-- Logged-out state -->
-    <span id="nav-loggedout" style="display:inline-flex;align-items:center;gap:18px">
-      <a href="#" class="nav-a" onclick="showSignIn();return false;">Sign in</a>
-      <a href="#try" class="nav-cta">Test a stock free</a>
-    </span>
-    <!-- Logged-in state (hidden by default) -->
-    <span id="nav-loggedin" style="display:none;align-items:center;gap:16px">
-      <a href="/dashboard" class="nav-a" style="color:var(--gold);font-weight:500">Dashboard</a>
-      <a href="#" class="nav-a" onclick="event.preventDefault();doSignOut()" style="color:var(--t2)">Sign out</a>
-    </span>
+    <div class="rgrp">
+      <span class="rk"><span class="k">Free</span><span class="v">3 analyses · No card</span></span>
+    </div>
   </div>
-</nav>
-
-<!-- MOBILE MENU -->
-<div class="mobile-menu" id="mmenu">
-  <a href="#demo" class="mm-a" onclick="closeMenu()">How It Works</a>
-  <a href="#agents" class="mm-a" onclick="closeMenu()">System</a>
-  <a href="#faq" class="mm-a" onclick="closeMenu()">FAQ</a>
-  <a href="/analysis" class="mm-a">Daily analyses</a>
-  <a href="#" class="mm-a" onclick="closeMenu();showSignIn();return false;">Sign in</a>
-  <a href="#try" class="mm-cta" onclick="closeMenu()">Test a stock free →</a>
 </div>
+
+<!-- HEADER -->
+<header class="hd">
+  <div class="hd-in">
+    <a href="/" class="brand" aria-label="HedgePick home">
+      <svg viewBox="0 0 28 28" fill="none" aria-hidden="true"><rect width="28" height="28" rx="5" fill="#0d0f13"/><rect x=".5" y=".5" width="27" height="27" rx="4.5" stroke="rgba(91,147,245,.35)"/><path d="M6 20L11 13L15 16.5L19 10L22 13" stroke="#5b93f5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="22" cy="13" r="2" fill="#e3a83a"/></svg>
+      HEDGE<em>PICK</em>
+    </a>
+    <nav class="nav" aria-label="Primary">
+      <a href="#how">How it works</a>
+      <a href="#debates">Today's debates</a>
+      <a href="/system">Methodology</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="acts">
+      <button type="button" class="btn btn-ghost" data-out onclick="showSignIn()">Sign in</button>
+      <a href="/dashboard" class="btn btn-ghost" data-in style="display:none">Dashboard</a>
+      <a href="#try" class="btn btn-pri" data-out>Test a stock free</a>
+      <a href="/dashboard" class="btn btn-pri" data-in style="display:none">Open dashboard</a>
+      <button class="ham" id="ham" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<div class="mmenu" id="mmenu">
+  <a href="#how" onclick="closeMenu()">How it works</a>
+  <a href="#debates" onclick="closeMenu()">Today's debates</a>
+  <a href="/system">Methodology</a>
+  <a href="#pricing" onclick="closeMenu()">Pricing</a>
+  <a href="#faq" onclick="closeMenu()">FAQ</a>
+  <a href="#" data-out onclick="closeMenu();showSignIn();return false;">Sign in</a>
+  <a href="/dashboard" data-in style="display:none">Dashboard</a>
+  <a href="#try" class="btn btn-pri" onclick="closeMenu()">Test a stock free</a>
+</div>
+
+<main id="main">
+<div class="wrap">
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-dots"></div>
-  <div class="hero-bg2"></div>
-  <div class="hero-inner rv">
-    <div class="chip"><div class="chip-dot"></div>Adversarial Multi-Agent Analysis</div>
-    <h1>Pressure-test<br><span class="hl">your next trade.</span></h1>
-    <p class="hero-sub">Enter any ticker. Nine AI analysts build the bull case, tear it apart, and show you both sides of the argument. You make the call.<br>Every argument shown, so you can judge the reasoning yourself.<br>Free to start.</p>
-    <div class="hero-btns">
-      <a href="/dashboard" id="hero-dashboard-cta" style="display:none;background:var(--gold);color:#000;padding:13px 28px;border-radius:8px;font-size:15px;font-weight:600;text-decoration:none;font-family:'Space Grotesk',sans-serif;transition:opacity .2s;align-items:center;gap:8px" onmouseover="this.style.opacity='.88'" onmouseout="this.style.opacity='1'">Go to your dashboard →</a>
-      <a href="#try" id="hero-signup-cta" class="btn-p">Test a stock free →</a>
-      <a href="/sample-report-ko.pdf" target="_blank" rel="noopener" class="btn-g">Read a sample PDF report</a>
-    </div>
-    <div style="margin-top:14px;font-size:12px;color:var(--t2)">Or browse <a href="/analysis" style="color:var(--blue);text-decoration:none">today's 5 public AI debates →</a></div>
-    <div class="hero-nums">
-      <div class="h-num"><span class="h-val">9</span><span class="h-lbl">Specialized agents</span></div>
-      <div class="h-num"><span class="h-val">7</span><span class="h-lbl">Analysis stages</span></div>
-      <div class="h-num"><span class="h-val">Free</span><span class="h-lbl">3 analyses to start</span></div>
-    </div>
-  </div>
-</section>
+  <div class="hero-grid">
+    <div>
+      <div class="eyebrow"><span>Stock research</span><span>·</span><strong>Any US-listed stock</strong></div>
+      <h1 class="ht">Hear the case against a stock <span>before you buy it.</span></h1>
+      <p class="lead">Type a ticker and, if you like, why you want it. Nine AI analysts research the company, a bull and a bear argue it out, and a risk manager rules on who won. <b>You get a plain-English verdict, the full debate, and the weakest point in your own reasoning.</b> Then you decide.</p>
 
+      <div class="form-box" id="try">
+        <div class="fb-head"><span>Run an analysis</span><span class="g">3 free · No credit card</span></div>
+        <div class="frow">
+          <label for="tin" class="sr">Stock ticker</label>
+          <input class="inp tk" id="tin" type="text" maxlength="8" placeholder="Ticker, e.g. NVDA, KO, AAPL" autocomplete="off" autocapitalize="characters">
+          <button class="btn btn-blue" onclick="go()">Analyze
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+        <label for="tthesis" class="sr">Your reasoning (optional)</label>
+        <textarea class="inp" id="tthesis" rows="2" maxlength="600" placeholder="Optional: why are you considering it? e.g. &quot;Safe dividend if we get a recession&quot;"></textarea>
+        <div id="temailRow">
+          <label for="temail" class="sr">Email</label>
+          <input class="inp" id="temail" type="email" placeholder="Your email. We send a sign-in link and your PDF report">
+          <button class="btn btn-blue" onclick="go()">Send link</button>
+        </div>
+        <div class="chips">
+          <span class="lbl">Try one:</span>
+          <button type="button" class="chip" onclick="fillSample('NVDA','Hyperscaler AI spending keeps accelerating through 2027, so the forward P/E is cheap relative to earnings growth.')">NVDA · AI spending</button>
+          <button type="button" class="chip" onclick="fillSample('KO','Defensive consumer staple with pricing power and a safe 3% dividend if the economy slows.')">KO · Dividend safety</button>
+          <button type="button" class="chip" onclick="fillSample('AAPL','Services margin expansion and an upgrade cycle more than offset slower China hardware sales.')">AAPL · Services</button>
+          <button type="button" class="chip" onclick="fillSample('TSLA','Energy storage growth and autonomy optionality justify the premium over traditional automakers.')">TSLA · Energy &amp; autonomy</button>
+        </div>
+        <div class="ires" id="ires">
+          <div class="ires-top"><span id="is"></span><span id="iv"></span></div>
+          <p id="it"></p>
+          <span class="up" onclick="openPricingModal()">See what Pro and Trader add →</span>
+        </div>
+        <div class="fnote"><span>PDF report by email in about 5–15 minutes</span><a href="/sample-report-ko.pdf" target="_blank" rel="noopener">Open a sample report (KO)</a></div>
+      </div>
 
-<!-- LIVE DEMO CARD -->
-<section class="demo-wrap" id="demo">
-  <div class="demo-inner">
-    <div class="demo-left rv">
-      <span class="eye">Sample analysis</span>
-      <h2 class="demo-h">Watch the agents work.</h2>
-      <p class="demo-p">Every analysis runs in sequence — fundamentals, sentiment, news, technicals, bull/bear debate, risk review, final verdict. Nothing is hidden.</p>
-    </div>
-    <div class="demo-right rv2">
-      <div class="dc" id="dc">
-        <div class="dc-top">
-          <div><div class="dc-sym">NVDA</div><div class="dc-co">Nvidia Corporation</div></div>
-          <div class="dc-live"><div class="ld"></div>Analyzing</div>
-        </div>
-        <div class="dc-rows">
-          <div class="dc-row" data-c="88"><div class="dc-rl">Fundamentals</div><div class="dc-rs rs-b">BUY</div><div class="dc-bar"><div class="dc-fill" style="background:var(--green);width:88%"></div></div></div>
-          <div class="dc-row" data-c="72"><div class="dc-rl">Sentiment</div><div class="dc-rs rs-b">BUY</div><div class="dc-bar"><div class="dc-fill" style="background:var(--green);width:72%"></div></div></div>
-          <div class="dc-row" data-c="46"><div class="dc-rl">News</div><div class="dc-rs rs-h">HOLD</div><div class="dc-bar"><div class="dc-fill" style="background:var(--amber);width:46%"></div></div></div>
-          <div class="dc-row" data-c="83"><div class="dc-rl">Technical</div><div class="dc-rs rs-b">BUY</div><div class="dc-bar"><div class="dc-fill" style="background:var(--green);width:83%"></div></div></div>
-          <div class="dc-row" data-c="94"><div class="dc-rl">Bull researcher</div><div class="dc-rs rs-b">STRONG BUY</div><div class="dc-bar"><div class="dc-fill" style="background:var(--green);width:94%"></div></div></div>
-          <div class="dc-row" data-c="34"><div class="dc-rl">Bear researcher</div><div class="dc-rs rs-h">NEUTRAL</div><div class="dc-bar"><div class="dc-fill" style="background:var(--amber);width:34%"></div></div></div>
-          <div class="dc-row" data-c="79"><div class="dc-rl">Risk manager</div><div class="dc-rs rs-b">APPROVED</div><div class="dc-bar"><div class="dc-fill" style="background:var(--green);width:79%"></div></div></div>
-        </div>
-        <div class="dc-bot" id="dcv">
-          <div><div class="dc-v">BUY</div><div class="dc-vs">6/7 agents bullish. Bear case noted but insufficient to override momentum.</div></div>
-          <div><div class="dc-pct">87%</div><div class="dc-pl">Confidence</div></div>
-        </div>
+      <div class="spec">
+        <div><div class="v">9</div><div class="l">AI analysts</div></div>
+        <div><div class="v">2</div><div class="l">Sides argued</div></div>
+        <div><div class="v">1</div><div class="l">Final ruling</div></div>
+        <div><div class="v" style="color:var(--gold)">$0</div><div class="l">To start</div></div>
       </div>
     </div>
-  </div>
-</section>
 
-
-<!-- THESIS STRESS TEST EXCERPT -->
-<section class="vs-sec rv">
-  <div class="vs-inner" style="max-width:760px;text-align:left">
-    <div style="text-align:center;margin-bottom:32px">
-      <span class="eye">What page 1 looks like</span>
-      <h2 style="font-size:clamp(24px,3vw,38px);font-weight:600;letter-spacing:-.03em;margin-bottom:10px">Tell it why you want to buy.<br>It tries to prove you wrong.</h2>
-      <p style="font-size:14px;color:var(--t2);font-weight:300;max-width:520px;margin:0 auto">When you enter your thesis alongside a ticker, the bear researchers attack your exact premise and open your PDF report with a structured stress-test.</p>
-    </div>
-    <div style="background:#0C0D10;border:1px solid rgba(255,255,255,0.1);border-radius:14px;padding:26px 28px">
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;padding-bottom:14px;border-bottom:1px solid rgba(255,255,255,0.07);margin-bottom:16px">
-        <div style="font-family:'Space Mono',monospace;font-size:11px;letter-spacing:.08em;color:var(--blue);text-transform:uppercase">YOUR THESIS, TESTED &middot; KO (COCA-COLA)</div>
-        <a href="/sample-report-ko.pdf" target="_blank" rel="noopener" style="font-family:'Space Mono',monospace;font-size:11px;color:var(--t2);text-decoration:none">Read full 4-page PDF &rarr;</a>
+    <!-- Live debate terminal -->
+    <div class="term" aria-label="Latest published debate">
+      <div class="term-top">
+        <div class="term-ttl"><span class="dot"></span><span id="tmLabel">LATEST SCREENER DEBATES</span></div>
+        <div class="tabs" id="tmTabs" role="tablist" aria-label="Choose a debate">
+          <button type="button" class="tab on">BLK</button>
+        </div>
       </div>
-      <div style="font-size:13px;color:rgba(236,234,228,0.55);margin-bottom:14px;font-style:italic">Your reasoning: &ldquo;Defensive consumer staple with pricing power and a safe 3% dividend if the economy slows.&rdquo;</div>
-      <div style="font-size:14px;color:var(--t1);line-height:1.6;margin-bottom:14px"><strong style="color:var(--amber)">Verdict on your thesis:</strong> Partly holds — the dividend is well-covered, but organic volume growth is negative (-1% in North America) as cumulative price hikes hit elasticity limits, and at 23x trailing earnings you are paying a growth multiple for a bond proxy.</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;font-size:12px;color:var(--t2);line-height:1.6;padding-top:12px;border-top:1px solid rgba(255,255,255,0.06)">
-        <div><strong style="color:var(--t1);display:block;margin-bottom:4px;font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em">Weakest assumption</strong>That pricing power is inexhaustible — unit case volume has already stalled in developed markets as private-label substitution rises.</div>
-        <div><strong style="color:var(--t1);display:block;margin-bottom:4px;font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.06em">Kill criteria</strong>Exit if North American unit case volume stays negative for two consecutive quarters or operating margin compresses below 28%.</div>
+      <div class="term-body">
+        <div class="tgrid">
+          <div><div class="tl">Company</div><div class="tm" id="tmTicker">BLK</div><div class="ts" id="tmName">BlackRock, Inc. · Financial Services</div></div>
+          <div><div class="tl">Price at analysis</div><div class="tm" id="tmPrice">$1,134.38</div><div class="ts" id="tmDate">October 19, 2026</div></div>
+          <div><div class="tl">Ruling</div><div class="tm"><span class="vb BUY" id="tmVerdict">BUY</span></div><div class="ts" id="tmVerdictPlain">Bull case won</div></div>
+        </div>
+        <div class="arg bull"><div class="arg-h"><span class="who">Bull analyst</span><span class="plain">The case for buying</span></div><p id="tmBull">A dominant global asset manager posting 30.6% YoY revenue growth, delivering normalized EBITDA growth of 34%, with a technical breakout on institutional volume…</p></div>
+        <div class="arg bear"><div class="arg-h"><span class="who">Bear analyst</span><span class="plain">The case against</span></div><p id="tmBear">The bull's defense of Q1's negative cash flow relies on treating one terrible quarter as "normal seasonality." That's not analysis; that's rationalization.</p></div>
+        <div class="arg judge"><div class="arg-h"><span class="who">Ruling</span><span class="plain">Who won, and why</span></div><p id="tmJudge">The bull's strongest points were structural and hard to rebut convincingly. BLK's 30.6% YoY revenue growth and 34% normalized EBITDA growth are not statistical noise…</p></div>
+      </div>
+      <div class="term-foot">
+        <span>Unedited excerpts from the published report</span>
+        <a href="/analysis/BLK/2026-10-19" id="tmLink">Read the full debate →</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- DIFF -->
-<section class="diff-sec">
-  <div class="diff-inner">
-    <span class="eye rv">Why HedgePick</span>
-    <h2 class="rv" style="font-size:clamp(26px,3vw,40px);font-weight:600;letter-spacing:-.03em;margin-bottom:8px">Not another signal generator.</h2>
-    <p class="rv" style="font-size:14px;color:var(--t2);font-weight:300;max-width:480px">Other tools give you a score. We show you the debate — every agent's reasoning, the bull/bear confrontation, the full risk assessment.</p>
-    <div class="diff-grid rv">
-      <div class="diff-col">
-        <span class="diff-col-h bad">Other tools</span>
-        <div class="di"><span class="di-icon" style="color:var(--red)">✗</span><div class="di-text"><b>Black box signals</b> — a score with no reasoning behind it</div></div>
-        <div class="di"><span class="di-icon" style="color:var(--red)">✗</span><div class="di-text"><b>Single model</b> — one AI's opinion, no adversarial challenge</div></div>
-        <div class="di"><span class="di-icon" style="color:var(--red)">✗</span><div class="di-text"><b>Curated universe only</b> — their picks, not your tickers</div></div>
-        <div class="di"><span class="di-icon" style="color:var(--red)">✗</span><div class="di-text"><b>Other tools</b> — $40-100/month, forever</div></div>
-      </div>
-      <div class="diff-col">
-        <span class="diff-col-h good">HedgePick</span>
-        <div class="di"><span class="di-icon" style="color:var(--green)">✓</span><div class="di-text"><b>Full reasoning</b> — every agent's analysis, transparent</div></div>
-        <div class="di"><span class="di-icon" style="color:var(--green)">✓</span><div class="di-text"><b>Adversarial debate</b> — bull vs bear before any verdict</div></div>
-        <div class="di"><span class="di-icon" style="color:var(--green)">✓</span><div class="di-text"><b>Any ticker, on demand</b> — analyze whatever you want</div></div>
-        <div class="di"><span class="di-icon" style="color:var(--green)">✓</span><div class="di-text"><b>Simple pricing</b> — start free, then $15/mo Pro or $49/mo Trader. Cancel anytime</div></div>
+<!-- WHO IT'S FOR -->
+<section class="sec">
+  <div class="shead">
+    <div>
+      <div class="kick">01 / Who it's for</div>
+      <h2 class="st">One report, two ways to read it.</h2>
+    </div>
+    <p class="sd">Every report opens with a short verdict in plain language. Underneath is the full analyst file: valuation, cash flow, technicals, the debate transcript, and risk levels. Read as much or as little as you need.</p>
+  </div>
+  <div class="ledger">
+    <div class="lc">
+      <div class="lc-idx"><span>If you're newer to investing</span><span>Start with page 1</span></div>
+      <h3>A second opinion that argues with you.</h3>
+      <p>Most stock tips only tell you why to buy. HedgePick deliberately builds the case against the stock too, in everyday language, so you know what could go wrong before your money is in it.</p>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg><span><b>Buy, Hold or Sell, with the reason</b> in two or three sentences.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg><span><b>The weakest part of your idea,</b> named directly.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg><span><b>When to change your mind:</b> the specific things that would prove the idea wrong.</span></li>
+      </ul>
+      <div class="lc-cta"><a href="#try" class="btn btn-ghost">Try it free</a><span>3 analyses, no card</span></div>
+    </div>
+    <div class="lc">
+      <div class="lc-idx"><span>If you manage your own book</span><span>Go straight to the file</span></div>
+      <h3>An adversarial research desk on demand.</h3>
+      <p>Single-model tools agree with whatever you ask. HedgePick runs separate fundamentals, sentiment, news and technical analysts, then forces a structured bull/bear debate and a risk review before a portfolio-manager ruling.</p>
+      <ul>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg><span><b>Full debate transcript</b> with the figures each side used.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg><span><b>Stop loss, take profit and position sizing</b> from the risk manager.</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg><span><b>Trader plan:</b> track positions against the S&amp;P 500, set alerts, re-check theses weekly, stage orders in an Alpaca paper account.</span></li>
+      </ul>
+      <div class="lc-cta"><a href="#pricing" class="btn btn-ghost">Compare Pro and Trader</a><a href="/system" class="lnk">Read the methodology →</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- PIPELINE -->
+<section class="sec" id="how">
+  <div class="shead">
+    <div>
+      <div class="kick">02 / How it works</div>
+      <h2 class="st">Seven stages, each with a different job.</h2>
+    </div>
+    <p class="sd">Each analyst sees only its own data and writes its own view. The researchers then argue from those views, and nothing reaches the final ruling until the risk manager has reviewed it.</p>
+  </div>
+  <table class="ptable">
+    <thead><tr><th>#</th><th>Stage</th><th>Analyst view</th><th>In plain English</th></tr></thead>
+    <tbody>
+      <tr><td class="n">01</td><td class="stage">Fundamentals<small>Analyst</small></td><td class="tech">Revenue and EPS trend, margins, FCF, leverage, valuation multiples vs history</td><td class="plain">Is the business actually making money, and is the price fair?</td></tr>
+      <tr><td class="n">02</td><td class="stage">Sentiment<small>Analyst</small></td><td class="tech">Social and retail positioning, insider transactions, crowd momentum</td><td class="plain">What are other investors feeling and doing?</td></tr>
+      <tr><td class="n">03</td><td class="stage">News &amp; macro<small>Analyst</small></td><td class="tech">Company events, guidance, regulation, rates and sector catalysts</td><td class="plain">What's happening in the world that could move this stock?</td></tr>
+      <tr><td class="n">04</td><td class="stage">Technicals<small>Analyst</small></td><td class="tech">Trend vs 50/200-day averages, MACD, RSI, volume, support and resistance</td><td class="plain">What is the price chart saying right now?</td></tr>
+      <tr class="hl"><td class="n">05</td><td class="stage">Bull vs bear<small>Researchers · debate</small></td><td class="tech">Multi-round adversarial rebuttal built on stages 01–04 and your thesis</td><td class="plain">One argues to buy, one argues not to. They have to answer each other.</td></tr>
+      <tr><td class="n">06</td><td class="stage">Risk review<small>Trader + risk manager</small></td><td class="tech">Stop loss, take profit and position size relative to volatility and event risk</td><td class="plain">If you do buy, how much, and where do you get out?</td></tr>
+      <tr class="hl"><td class="n">07</td><td class="stage">Ruling<small>Portfolio manager</small></td><td class="tech">BUY / HOLD / SELL with written rationale on which side carried the debate</td><td class="plain">The final call, and exactly why.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- THESIS STRESS TEST -->
+<section class="sec">
+  <div class="thesis">
+    <div>
+      <div class="kick">03 / Thesis stress-test</div>
+      <h2 class="st">Tell it why you want to buy. It tries to prove you wrong.</h2>
+      <p class="sd" style="margin-top:12px">Add a sentence about your reasoning and the bear researchers attack that exact premise. Page one of your report says whether your idea holds up.</p>
+      <ol class="steps">
+        <li><span><b>Write your reason in one line.</b> "Safe dividend," "AI demand keeps growing," anything.</span></li>
+        <li><span><b>The bear goes after it</b> with the company's own numbers.</span></li>
+        <li><span><b>You get a ruling on your thesis,</b> its weakest assumption, and the conditions that would make you wrong.</span></li>
+      </ol>
+    </div>
+    <div class="doc">
+      <div class="doc-top"><span>Your thesis, tested · KO (Coca-Cola)</span><a href="/sample-report-ko.pdf" target="_blank" rel="noopener">Read the full sample PDF →</a></div>
+      <div class="doc-body">
+        <div class="quote"><b>Your reasoning</b>"Defensive consumer staple with pricing power and a safe 3% dividend if the economy slows."</div>
+        <p class="ruling"><b>Verdict on your thesis: partly holds.</b> The dividend is well covered, but organic volume growth is negative (-1% in North America) as cumulative price hikes hit elasticity limits, and at 23x trailing earnings you are paying a growth multiple for a bond proxy.</p>
+        <div class="doc-grid">
+          <div><b>Weakest assumption</b>That pricing power is inexhaustible. Unit case volume has already stalled in developed markets as private-label substitution rises.</div>
+          <div><b>Kill criteria</b>Exit if North American unit case volume stays negative for two consecutive quarters or operating margin compresses below 28%.</div>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- HOW IT WORKS -->
-<section class="how-sec" id="how">
-  <div class="how-inner">
-    <span class="eye rv">How It Works</span>
-    <h2 class="rv" style="font-size:clamp(26px,3vw,40px);font-weight:600;letter-spacing:-.03em;margin-bottom:8px">Three steps to a verdict.</h2>
-    <p class="rv" style="font-size:14px;color:var(--t2);font-weight:300;max-width:440px;margin-bottom:0">No charts. No jargon. Enter a ticker and let the system do the work.</p>
-    <div class="steps rv">
-      <div class="step" data-n="01"><span class="sn">01</span><div class="st">Enter any ticker</div><div class="sd">Type any US stock and, if you like, why you want to buy it. The bear agents go after your reasoning. Your first 3 are free.</div></div>
-      <div class="step" data-n="02"><span class="sn">02</span><div class="st">9 agents analyze and debate</div><div class="sd">Fundamentals, sentiment, news, technicals, bull, bear, risk manager, portfolio manager — adversarial by design.</div></div>
-      <div class="step" data-n="03"><span class="sn">03</span><div class="st">Clear verdict</div><div class="sd">BUY, SELL, or HOLD with confidence score, full reasoning, stop loss levels, and position sizing.</div></div>
+<!-- DEBATE LOG -->
+<section class="sec" id="debates">
+  <div class="shead">
+    <div>
+      <div class="kick">04 / Published debates</div>
+      <h2 class="st">Every weekday, the screener publishes its debates in public.</h2>
     </div>
+    <p class="sd">Each morning a screener flags US stocks with unusual setups and runs the full pipeline on them. Every result is published, including the SELLs. Read any of them free.</p>
   </div>
+  <table class="log">
+    <thead><tr><th class="c-dt">Date</th><th>Ticker</th><th>Company</th><th class="c-sec">Sector</th><th class="r">Price</th><th>Ruling</th><th class="r"><span class="sr">Link</span></th></tr></thead>
+    <tbody id="logBody">
+      <tr><td class="dt c-dt">Oct 19, 2026</td><td class="tk">BLK</td><td>BlackRock, Inc.</td><td class="c-sec">Financial Services</td><td class="px r">$1,134.38</td><td><span class="vb BUY">BUY</span></td><td class="r"><a class="rd" href="/analysis/BLK/2026-10-19">Read →</a></td></tr>
+      <tr><td class="dt c-dt">Oct 19, 2026</td><td class="tk">DKS</td><td>DICK'S Sporting Goods, Inc.</td><td class="c-sec">Consumer Cyclical</td><td class="px r">$144.35</td><td><span class="vb SELL">SELL</span></td><td class="r"><a class="rd" href="/analysis/DKS/2026-10-19">Read →</a></td></tr>
+      <tr><td class="dt c-dt">Oct 19, 2026</td><td class="tk">VMC</td><td>Vulcan Materials Company</td><td class="c-sec">Basic Materials</td><td class="px r">$257.63</td><td><span class="vb SELL">SELL</span></td><td class="r"><a class="rd" href="/analysis/VMC/2026-10-19">Read →</a></td></tr>
+    </tbody>
+  </table>
+  <div class="log-foot"><span>Rulings are AI research output, not recommendations. Prices are as of each analysis.</span><a href="/analysis">View the full archive →</a></div>
 </section>
 
-<!-- DEBATE -->
-<section class="debate-sec" id="agents">
-  <div class="debate-inner">
-    <div class="rv">
-      <span class="eye">The debate</span>
-      <h2 style="font-size:clamp(24px,2.8vw,38px);font-weight:600;letter-spacing:-.03em;margin-bottom:12px">Agents that argue<br>before they agree.</h2>
-      <p style="font-size:13px;color:var(--t2);line-height:1.7;font-weight:300;margin-bottom:24px;max-width:380px">Most tools hand you a score. HedgePick makes a bull and a bear argue the case first, then shows you the transcript so you can decide who won.</p>
-      <div class="debate-card">
-        <div class="deb-h">Debate transcript — NVDA · Sample excerpt</div>
-        <div class="deb-row">
-          <div class="deb-av" style="background:rgba(34,197,94,.1);color:var(--green);font-family:'Space Mono',monospace;font-size:9px;font-weight:700;border:1px solid rgba(34,197,94,.25)">BL</div>
-          <div><div class="deb-name">Bull researcher</div><div class="deb-text">GB300 ramp driving datacenter capex acceleration. Forward P/E justified by 78% gross margins and near-monopoly on AI training infrastructure.</div></div>
-        </div>
-        <div class="deb-row">
-          <div class="deb-av" style="background:rgba(248,113,113,.1);color:var(--red);font-family:'Space Mono',monospace;font-size:9px;font-weight:700;border:1px solid rgba(248,113,113,.25)">BR</div>
-          <div><div class="deb-name">Bear researcher</div><div class="deb-text">Export restrictions on H20 chips create material revenue risk. China was 17% of FY24 revenue. Valuation assumes flawless execution.</div></div>
-        </div>
-        <div class="deb-row">
-          <div class="deb-av" style="background:rgba(251,191,36,.1);color:var(--amber);font-family:'Space Mono',monospace;font-size:9px;font-weight:700;border:1px solid rgba(251,191,36,.25)">RK</div>
-          <div><div class="deb-name">Risk manager</div><div class="deb-text">Bull case prevails. Entry approved. Stop loss 15% at $193. Position: 1–1.5% of portfolio given earnings proximity.</div></div>
-        </div>
-        <div class="deb-row">
-          <div class="deb-av" style="background:rgba(79,142,247,.1);color:var(--blue);font-family:'Space Mono',monospace;font-size:9px;font-weight:700;border:1px solid rgba(79,142,247,.25)">PM</div>
-          <div><div class="deb-name">Portfolio manager</div><div class="deb-text">Final verdict: BUY. Confidence 87%. Risk/reward asymmetric to the upside.</div></div>
-        </div>
-      </div>
+<!-- COMPARE -->
+<section class="sec">
+  <div class="shead">
+    <div>
+      <div class="kick">05 / The difference</div>
+      <h2 class="st">A score tells you what. The debate tells you why.</h2>
     </div>
-    <div class="rv2">
-      <span class="eye">All 9 agents</span>
-      <div class="agents-list" style="margin-top:16px">
-        <div class="ag"><div class="ag-dot" style="background:var(--blue)"></div><div><div class="ag-name">Fundamentals analyst</div><div class="ag-desc">Revenue, valuation, balance sheet</div></div></div>
-        <div class="ag"><div class="ag-dot" style="background:var(--blue)"></div><div><div class="ag-name">Sentiment analyst</div><div class="ag-desc">Social momentum, retail positioning</div></div></div>
-        <div class="ag"><div class="ag-dot" style="background:var(--blue)"></div><div><div class="ag-name">News analyst</div><div class="ag-desc">Macro events, regulatory landscape</div></div></div>
-        <div class="ag"><div class="ag-dot" style="background:var(--blue)"></div><div><div class="ag-name">Technical analyst</div><div class="ag-desc">MACD, RSI, chart patterns</div></div></div>
-        <div class="ag"><div class="ag-dot" style="background:var(--green)"></div><div><div class="ag-name">Bull researcher</div><div class="ag-desc">Strongest case for buying</div></div></div>
-        <div class="ag"><div class="ag-dot" style="background:var(--red)"></div><div><div class="ag-name">Bear researcher</div><div class="ag-desc">Challenges every bull assumption</div></div></div>
-        <div class="ag"><div class="ag-dot" style="background:var(--gold)"></div><div><div class="ag-name">Trader agent</div><div class="ag-desc">Synthesizes the debate</div></div></div>
-        <div class="ag"><div class="ag-dot" style="background:var(--amber)"></div><div><div class="ag-name">Risk manager</div><div class="ag-desc">Stop loss, position sizing</div></div></div>
-        <div class="ag"><div class="ag-dot" style="background:#A855F7"></div><div><div class="ag-name">Portfolio manager</div><div class="ag-desc">Final go / no-go</div></div></div>
-      </div>
-    </div>
+    <p class="sd">Ratings sites give you a number. Chatbots tend to agree with your question. HedgePick is built to disagree with you, and to show its work.</p>
   </div>
-</section>
-
-<!-- LIVE PUBLIC DEBATES -->
-<section style="padding:72px 48px;border-top:1px solid var(--b1);background:var(--bg)" id="live-debates">
-  <div style="max-width:900px;margin:0 auto">
-    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:12px;margin-bottom:28px">
-      <div>
-        <span class="eye">Live from the screener</span>
-        <h2 style="font-size:clamp(22px,2.8vw,34px);font-weight:600;letter-spacing:-.03em;margin-bottom:6px">Recent 9-agent public debates.</h2>
-        <p style="font-size:13px;color:var(--t2);font-weight:300">Every weekday morning our screener selects the top US setups and publishes the full bull vs bear confrontation.</p>
-      </div>
-      <a href="/analysis" style="font-family:'Space Mono',monospace;font-size:11px;color:var(--blue);text-decoration:none;white-space:nowrap">View all daily analyses &rarr;</a>
-    </div>
-    <div id="liveDebatesGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
-      <a href="/analysis/BLK/2026-10-16" style="background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:18px 20px;text-decoration:none;display:block;transition:border-color .2s" onmouseover="this.style.borderColor='var(--b2)'" onmouseout="this.style.borderColor='var(--b1)'">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <span style="font-family:'Space Mono',monospace;font-size:16px;font-weight:700;color:var(--t1)">BLK</span>
-          <span style="font-family:'Space Mono',monospace;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;background:rgba(34,197,94,.1);color:var(--green)">BUY</span>
-        </div>
-        <div style="font-size:13px;color:var(--t2);margin-bottom:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">BlackRock, Inc.</div>
-        <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--blue)">Read bull vs bear &rarr;</div>
-      </a>
-      <a href="/analysis/PAG/2026-10-16" style="background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:18px 20px;text-decoration:none;display:block;transition:border-color .2s" onmouseover="this.style.borderColor='var(--b2)'" onmouseout="this.style.borderColor='var(--b1)'">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <span style="font-family:'Space Mono',monospace;font-size:16px;font-weight:700;color:var(--t1)">PAG</span>
-          <span style="font-family:'Space Mono',monospace;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;background:rgba(251,191,36,.1);color:var(--amber)">HOLD</span>
-        </div>
-        <div style="font-size:13px;color:var(--t2);margin-bottom:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Penske Automotive Group, Inc.</div>
-        <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--blue)">Read bull vs bear &rarr;</div>
-      </a>
-      <a href="/analysis/MGA/2026-10-15" style="background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:18px 20px;text-decoration:none;display:block;transition:border-color .2s" onmouseover="this.style.borderColor='var(--b2)'" onmouseout="this.style.borderColor='var(--b1)'">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
-          <span style="font-family:'Space Mono',monospace;font-size:16px;font-weight:700;color:var(--t1)">MGA</span>
-          <span style="font-family:'Space Mono',monospace;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;background:rgba(248,113,113,.1);color:var(--red)">SELL</span>
-        </div>
-        <div style="font-size:13px;color:var(--t2);margin-bottom:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Magna International Inc.</div>
-        <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--blue)">Read bull vs bear &rarr;</div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- INPUT -->
-<section class="input-sec rv" id="try">
-  <div class="input-inner" style="max-width:560px">
-    <span class="eye">Try it now · 3 free analyses</span>
-    <h2 style="font-size:clamp(24px,3vw,38px);font-weight:600;letter-spacing:-.03em;margin-bottom:10px">Stress-test a trade idea.</h2>
-    <p style="font-size:13px;color:var(--t2);font-weight:300">Enter a ticker and, optionally, why you want to buy it. Nine AI agents will research the stock and attack your reasoning. No credit card required.</p>
-    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:18px 0 12px">
-      <span style="font-size:11px;color:var(--t2);font-family:'Space Mono',monospace;align-self:center;margin-right:4px">Try a sample thesis:</span>
-      <button type="button" onclick="fillSample('NVDA','Hyperscaler AI capex keeps accelerating through 2027, so forward P/E is cheap relative to earnings growth.')" style="background:var(--bg);border:1px solid var(--b2);border-radius:6px;padding:5px 10px;font-family:'Space Mono',monospace;font-size:11px;color:var(--t1);cursor:pointer">NVDA · AI capex</button>
-      <button type="button" onclick="fillSample('KO','Defensive consumer staple with pricing power and a safe 3% dividend if the economy slows.')" style="background:var(--bg);border:1px solid var(--b2);border-radius:6px;padding:5px 10px;font-family:'Space Mono',monospace;font-size:11px;color:var(--t1);cursor:pointer">KO · Dividend safety</button>
-      <button type="button" onclick="fillSample('AAPL','Services margin expansion and upgrade supercycle more than offset slower China hardware sales.')" style="background:var(--bg);border:1px solid var(--b2);border-radius:6px;padding:5px 10px;font-family:'Space Mono',monospace;font-size:11px;color:var(--t1);cursor:pointer">AAPL · Services</button>
-      <button type="button" onclick="fillSample('TSLA','Energy storage growth and autonomy optionality justify the premium over traditional automakers.')" style="background:var(--bg);border:1px solid var(--b2);border-radius:6px;padding:5px 10px;font-family:'Space Mono',monospace;font-size:11px;color:var(--t1);cursor:pointer">TSLA · Energy &amp; FSD</button>
-    </div>
-    <div class="input-row" style="margin-top:8px;margin-bottom:10px">
-      <input class="t-in" type="text" placeholder="Ticker (e.g. NVDA, KO, AAPL)" maxlength="8" id="tin">
-      <button class="go" onclick="go()">Analyze →</button>
-    </div>
-    <textarea id="tthesis" maxlength="600" rows="2" placeholder="Optional: Why are you considering this trade? (e.g. 'Safe dividend in a recession' or 'Datacenter demand keeps accelerating')" style="width:100%;background:var(--bg);border:1px solid var(--b2);border-radius:8px;padding:10px 14px;color:var(--t1);font-family:'Space Grotesk',sans-serif;font-size:13px;line-height:1.45;resize:vertical;outline:none;margin-bottom:8px;box-sizing:border-box"></textarea>
-    <div id="temailRow" style="display:none;gap:8px;margin:8px 0 10px">
-      <input id="temail" type="email" placeholder="Your email — we'll send your login link & PDF report" style="flex:1;background:var(--bg);border:1px solid rgba(79,142,247,.5);border-radius:8px;padding:11px 14px;color:var(--t1);font-size:13px;font-family:'Space Grotesk',sans-serif;outline:none">
-      <button class="go" onclick="go()">Send link →</button>
-    </div>
-    <div class="i-res" id="ires">
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-        <span id="is" style="font-family:'Space Mono',monospace;font-size:15px;font-weight:700;color:var(--t1)"></span>
-        <span id="iv" style="font-size:11px;font-weight:700;font-family:'Space Mono',monospace;padding:3px 9px;border-radius:4px"></span>
-      </div>
-      <p id="it" style="font-size:12px;color:var(--t2);line-height:1.65;margin-bottom:10px"></p>
-      <div style="font-size:12px;color:var(--blue);cursor:pointer" onclick="openPricingModal()">Upgrade for the full debate transcript, stop loss, and position sizing →</div>
-    </div>
-    <div style="margin-top:14px;font-size:12px;color:var(--t2)">Want to see what you get first? <a href="/sample-report-ko.pdf" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:none">Open a sample PDF report (KO) →</a></div>
-    <p class="disc">Not financial advice. For educational and informational purposes only. Always conduct your own research.</p>
-  </div>
-</section>
-
-
-<!-- FAQ -->
-<section class="faq-sec rv" id="faq">
-  <div class="faq-inner">
-    <span class="eye">FAQ</span>
-    <h2 style="font-size:clamp(24px,3vw,38px);font-weight:600;letter-spacing:-.03em;margin-bottom:8px">Common questions.</h2>
-    <p style="font-size:13px;color:var(--t2);font-weight:300">Everything you need to know before getting started.</p>
-    <div class="faq-list">
-      <div class="faq-item">
-        <button class="faq-q" onclick="faq(this)">Is this financial advice?<span class="faq-icon">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">No. HedgePick is an educational and informational tool. Our AI agents analyze publicly available data and produce research-style output. Nothing on HedgePick constitutes financial, investment, or trading advice. Always conduct your own due diligence and consult a licensed advisor before making any investment decisions.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="faq(this)">How accurate is the system?<span class="faq-icon">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">We don't publish an accuracy figure, because we haven't measured one we can stand behind. Accuracy percentages that appeared on earlier versions of this page were not backed by a rigorous test, and we've removed them. Here's what HedgePick does do: it shows its work. Every report lays out the bull case, the bear case, the risks and the reasoning behind the verdict, so you judge the argument instead of trusting a number. Treat a verdict as a structured second opinion, not a prediction. If we publish a track record in future, it will be dated, complete — misses included — and linked from this page.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="faq(this)">What does the confidence score mean?<span class="faq-icon">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">It's the AI's own rating of how one-sided the evidence looked after the debate — a high score means the bull and bear cases weren't close. It is not a probability that the stock will go up or down, and it hasn't been checked against real outcomes.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="faq(this)">What tickers can I analyze?<span class="faq-icon">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Any US-listed equity. We've run it across quantum computing, AI infrastructure, energy, defense, large-cap tech, and blue chips. If it trades on a major US exchange, the agents can analyze it. International ADRs and ETFs are not currently supported.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="faq(this)">How is this different from ChatGPT or other AI tools?<span class="faq-icon">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">ChatGPT is a general-purpose assistant. HedgePick runs 9 specialized agents in a structured adversarial pipeline — bull vs bear debate, dedicated risk management, portfolio manager oversight. It's purpose-built for stock analysis, not adapted from a chatbot. The adversarial architecture is what produces rigorous, multi-perspective output instead of a single model's opinion.</div></div>
-      </div>
-      <div class="faq-item">
-        <button class="faq-q" onclick="faq(this)">What does Pro include?<span class="faq-icon">+</span></button>
-        <div class="faq-a"><div class="faq-a-inner">Pro is $15 a month: 5 ticker analyses per day, full 9-agent reasoning, the complete bull/bear debate transcript, stop loss and take profit levels, and position sizing guidance. Cancel anytime by emailing joseph@hedgepick.com — no contract, no cancellation fee. Trader is $49 a month and adds position tracking against the S&amp;P 500, price and stop alerts, a weekly AI re-check of your thesis on every holding, and an order ticket that sends trades to your own Alpaca paper trading account after you confirm them.</div></div>
-      </div>
-    </div>
-  </div>
+  <table class="cmp">
+    <thead><tr><th></th><th>Ratings and signal sites</th><th>General AI chatbots</th><th class="us">HedgePick</th></tr></thead>
+    <tbody>
+      <tr><td>Reasoning shown</td><td>A score or grade</td><td>One answer, one voice</td><td class="us">Separate bull, bear and risk write-ups, plus the ruling</td></tr>
+      <tr><td>Challenges your idea</td><td>No</td><td>Usually agrees with how you asked</td><td class="us">The bear researcher's whole job</td></tr>
+      <tr><td>Which stocks</td><td>Their coverage list</td><td>Any, without live data</td><td class="us">Any US-listed stock, using current data</td></tr>
+      <tr><td>Risk levels</td><td>Rarely</td><td>Generic</td><td class="us">Stop loss, target and sizing (Pro and Trader)</td></tr>
+      <tr><td>Cost</td><td>Often $40–100+/mo</td><td>Varies</td><td class="us">Free to start, then $15 or $49 a month</td></tr>
+    </tbody>
+  </table>
 </section>
 
 <!-- PRICING -->
-<section class="price-sec rv" id="pricing">
-  <div class="price-inner" style="padding-top:12px">
-    <span class="eye">Pricing</span>
-    <h2 style="font-size:clamp(26px,3vw,40px);font-weight:600;letter-spacing:-.03em;margin-bottom:8px">Simple pricing.</h2>
-    <p style="font-size:14px;color:var(--t2);font-weight:300">Start free. Upgrade to Pro when it earns a place in your process, or Trader when you want to act on it.</p>
-    <div class="plan-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:40px">
+<section class="sec" id="pricing">
+  <div class="shead">
+    <div>
+      <div class="kick">06 / Pricing</div>
+      <h2 class="st">Start free. Pay when it earns a place in your process.</h2>
+    </div>
+    <p class="sd">Monthly plans, cancel anytime. Paid plans include a 30-day money-back guarantee under our <a href="/terms" style="color:var(--t1);text-decoration:underline;text-underline-offset:2px">terms</a>.</p>
+  </div>
+  <div class="plans">
+    <div class="plan">
+      <div class="p-top"><span class="p-name">Free</span><span class="p-pill">No card</span></div>
+      <div class="p-price"><span class="n">$0</span></div>
+      <p class="p-for">Try it on the stocks you're already thinking about.</p>
+      <ul class="p-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>3 analyses</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>BUY / HOLD / SELL ruling</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Thesis stress-test</li>
+        <li class="off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 12h12"/></svg>Full debate transcript</li>
+        <li class="off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 12h12"/></svg>Stop loss and sizing</li>
+      </ul>
+      <a href="#try" class="btn btn-ghost">Start free</a>
+    </div>
+    <div class="plan feat">
+      <div class="p-top"><span class="p-name">Pro</span><span class="p-pill b">For researching</span></div>
+      <div class="p-price"><span class="n">$15</span><span class="per">/ month</span></div>
+      <p class="p-for">For investors who want the whole argument before every buy.</p>
+      <ul class="p-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>5 analyses per day</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Full 9-analyst reasoning</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Complete bull/bear debate transcript</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Stop loss, take profit, position sizing</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Thesis stress-test on every report</li>
+      </ul>
+      <a href="https://buy.stripe.com/14A5kFakJ31TdiPef14AU03" class="btn btn-blue" data-plan="pro">Get Pro, $15/mo</a>
+    </div>
+    <div class="plan">
+      <div class="p-top"><span class="p-name">Trader</span><span class="p-pill b">For acting</span></div>
+      <div class="p-price"><span class="n">$49</span><span class="per">/ month</span></div>
+      <p class="p-for">For people who act on the research and want to track it.</p>
+      <ul class="p-list">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Everything in Pro</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>10 analyses per day, first in queue</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Positions with P&amp;L vs the S&amp;P 500</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Price, stop and target email alerts</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Weekly AI re-check of each thesis</li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Order ticket for your Alpaca paper account</li>
+      </ul>
+      <a href="https://buy.stripe.com/dRm6oJ9gF31T1A7ef14AU05" class="btn btn-pri" data-plan="trader">Get Trader, $49/mo</a>
+    </div>
+  </div>
+  <div class="p-note"><span>Secure checkout by Stripe · Cancel anytime by email</span><a href="/terms">Plan terms</a></div>
+</section>
 
-      <!-- Free -->
-      <div style="background:var(--s1);border:1px solid var(--b1);border-radius:14px;padding:28px;display:flex;flex-direction:column">
-        <div style="font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--t2);margin-bottom:14px">Free</div>
-        <div style="font-family:'Space Mono',monospace;font-size:40px;font-weight:700;color:var(--t1);line-height:1;margin-bottom:4px">$0</div>
-        <div style="font-size:12px;color:var(--t2);margin-bottom:20px">3 analyses to start</div>
-        <p style="font-size:13px;color:var(--t2);font-weight:300;margin-bottom:20px;line-height:1.55">Three analyses to try it. See the verdict, not the debate.</p>
-        <div style="flex:1;margin-bottom:20px">
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> 3 free analyses</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> BUY / SELL / HOLD signal</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Thesis stress test</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> No credit card</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.25);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="font-size:10px">&#8212;</span> Full agent reasoning</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.25);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="font-size:10px">&#8212;</span> Debate transcript</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.25);padding:7px 0;display:flex;gap:8px;align-items:center"><span style="font-size:10px">&#8212;</span> Stop loss levels</div>
-        </div>
-        <a href="#try" onclick="closePricingModal()" style="display:block;text-align:center;padding:12px;border-radius:8px;font-size:13px;font-weight:500;color:var(--t1);border:1px solid var(--b2);background:transparent;text-decoration:none;font-family:'Space Grotesk',sans-serif">Start free</a>
-      </div>
-
-      <!-- Monthly -->
-      <div style="background:var(--s2);border:1px solid var(--b2);border-radius:14px;padding:28px;display:flex;flex-direction:column;position:relative">
-        <div style="font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#4F8EF7;margin-bottom:14px">Pro</div>
-        <div style="font-family:'Space Mono',monospace;font-size:40px;font-weight:700;color:var(--t1);line-height:1;margin-bottom:4px">$15</div>
-        <div style="font-size:12px;color:var(--t2);margin-bottom:20px">per month &middot; cancel anytime</div>
-        <p style="font-size:13px;color:var(--t2);font-weight:300;margin-bottom:20px;line-height:1.55">Full access, billed monthly. Cancel anytime — no questions asked.</p>
-        <div style="flex:1;margin-bottom:20px">
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> 5 tickers per day</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Thesis stress test on every report</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Full 9-agent reasoning</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Debate transcript</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Stop loss &amp; take profit</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Position sizing</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Cancel anytime</div>
-        </div>
-        <a href="https://buy.stripe.com/14A5kFakJ31TdiPef14AU03" style="display:block;text-align:center;padding:12px;border-radius:8px;font-size:13px;font-weight:600;color:#fff;background:#4F8EF7;border:none;text-decoration:none;font-family:'Space Grotesk',sans-serif">Get Pro — $15/mo →</a>
-      </div>
-
-      <!-- Trader -->
-      <div style="background:var(--s2);border:1px solid rgba(79,142,247,0.45);border-radius:14px;padding:28px;display:flex;flex-direction:column;position:relative">
-        <div style="font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#4F8EF7;margin-bottom:14px">Trader</div>
-        <div style="font-family:'Space Mono',monospace;font-size:40px;font-weight:700;color:var(--t1);line-height:1;margin-bottom:4px">$49</div>
-        <div style="font-size:12px;color:var(--t2);margin-bottom:20px">per month &middot; cancel anytime</div>
-        <p style="font-size:13px;color:var(--t2);font-weight:300;margin-bottom:20px;line-height:1.55">For people who act on the analysis. Track it, get alerted, place the order.</p>
-        <div style="flex:1;margin-bottom:20px">
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Everything in Pro</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> 10 tickers per day, first in queue</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Positions with P&amp;L vs the S&amp;P 500</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Price, stop &amp; target alerts by email</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Weekly AI re-check of your thesis</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:7px 0;display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Order ticket for your Alpaca paper account</div>
-        </div>
-        <a href="https://buy.stripe.com/dRm6oJ9gF31T1A7ef14AU05" style="display:block;text-align:center;padding:12px;border-radius:8px;font-size:13px;font-weight:600;color:#fff;background:#4F8EF7;border:none;text-decoration:none;font-family:'Space Grotesk',sans-serif">Get Trader — $49/mo →</a>
-      </div>
-
-          </div>
+<!-- FAQ -->
+<section class="sec" id="faq">
+  <div class="faq">
+    <div>
+      <div class="kick">07 / Questions</div>
+      <h2 class="st">What people ask before they start.</h2>
+      <p class="sd" style="margin-top:12px">Anything else: <a href="mailto:joseph@hedgepick.com" style="color:var(--t1);text-decoration:underline;text-underline-offset:2px">joseph@hedgepick.com</a>. A person reads every email.</p>
+    </div>
+    <div class="fq">
+      <div class="fi"><button class="fqb" onclick="faq(this)" aria-expanded="false">Is this financial advice?<span class="ic">+</span></button><div class="fa"><div>No. HedgePick is an educational research tool. The analysts work from publicly available data and produce research-style output. Nothing here is a recommendation to buy or sell. Do your own due diligence and consult a licensed advisor before investing.</div></div></div>
+      <div class="fi"><button class="fqb" onclick="faq(this)" aria-expanded="false">How accurate is it?<span class="ic">+</span></button><div class="fa"><div>We don't publish an accuracy figure, because we haven't measured one we can stand behind. Earlier versions of this page showed percentages that weren't backed by a rigorous test; we removed them. What HedgePick does do is show its work: the bull case, the bear case, the risks and the reasoning, so you judge the argument instead of trusting a number. If we publish a track record, it will be dated, complete (misses included) and linked from this page.</div></div></div>
+      <div class="fi"><button class="fqb" onclick="faq(this)" aria-expanded="false">I'm new to investing. Will I understand the report?<span class="ic">+</span></button><div class="fa"><div>Yes. Page one is a short verdict in plain language: the ruling, why, the weakest part of your idea, and what would change the picture. The detailed analyst sections come after, for when you want to go deeper.</div></div></div>
+      <div class="fi"><button class="fqb" onclick="faq(this)" aria-expanded="false">What does the confidence score mean?<span class="ic">+</span></button><div class="fa"><div>It's the AI's own rating of how one-sided the evidence looked after the debate. A high score means the bull and bear cases weren't close. It is not a probability that the stock will go up or down, and it hasn't been checked against real outcomes.</div></div></div>
+      <div class="fi"><button class="fqb" onclick="faq(this)" aria-expanded="false">Which stocks can I analyze?<span class="ic">+</span></button><div class="fa"><div>Any US-listed equity on a major exchange, from mega-caps to small caps. Coverage of ETFs and foreign listings is limited and results may be thinner.</div></div></div>
+      <div class="fi"><button class="fqb" onclick="faq(this)" aria-expanded="false">How is this different from asking ChatGPT?<span class="ic">+</span></button><div class="fa"><div>A chatbot gives you one model's answer, and it tends to follow the framing of your question. HedgePick runs specialised analysts on current data, then forces a structured bull-versus-bear debate with a separate risk review before any ruling. It is designed to push back on you.</div></div></div>
+      <div class="fi"><button class="fqb" onclick="faq(this)" aria-expanded="false">What do Pro and Trader include? Can I cancel?<span class="ic">+</span></button><div class="fa"><div>Pro ($15/month): 5 analyses a day, full reasoning, the complete debate transcript, stop loss and take profit levels, and position sizing. Trader ($49/month) adds position tracking against the S&amp;P 500, price and stop alerts, a weekly AI re-check of every thesis you hold, and an order ticket that sends trades to your own Alpaca paper account after you confirm them. Cancel anytime by emailing joseph@hedgepick.com. No contract, no fee.</div></div></div>
+    </div>
   </div>
 </section>
 
-<footer>
-  <div class="fl">
-    <div class="fl-logo">HEDGE<em>PICK</em></div>
-    <div class="fl-line"></div>
+<!-- CLOSING CTA -->
+<section class="sec tight" style="border-bottom:none">
+  <div class="close">
+    <div>
+      <h2>What's the stock you're thinking about?</h2>
+      <p>Run it through the debate before you buy. Your first three are free.</p>
+    </div>
+    <div class="acts">
+      <a href="#try" class="btn btn-blue" onclick="setTimeout(function(){document.getElementById('tin').focus()},400)">Test a stock free</a>
+      <a href="/analysis" class="btn btn-ghost">Browse today's debates</a>
+    </div>
   </div>
-  <div class="f-nav">
-    <a href="/analysis">Daily analyses</a>
-    <a href="/privacy">Privacy</a>
-    <a href="/terms">Terms</a>
-    <a href="/terms#disclaimer">Disclaimer</a>
-    <a href="mailto:joseph@hedgepick.com">Contact</a>
+</section>
+
+</div>
+</main>
+
+<footer class="ft" style="border-top:1px solid var(--hair)">
+  <div class="wrap">
+    <div class="ft-in">
+      <div>
+        <div class="brand" style="margin-bottom:8px">HEDGE<em>PICK</em></div>
+        <div>© 2026 HedgePick</div>
+      </div>
+      <nav class="ft-nav" aria-label="Footer">
+        <a href="/analysis">Daily debates</a>
+        <a href="/system">Methodology</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+        <a href="/terms#disclaimer">Disclaimer</a>
+        <a href="mailto:joseph@hedgepick.com">Contact</a>
+      </nav>
+      <p class="ft-d">Not financial advice. For educational and informational purposes only. AI-generated research can be wrong. Past performance does not guarantee future results.</p>
+    </div>
   </div>
-  <p class="f-d">Not financial advice. For informational and educational purposes only. Past performance does not guarantee future results.</p>
 </footer>
 
+<!-- PRICING MODAL -->
+<div class="mb" id="pricingModal" onclick="if(event.target===this)closePricingModal()">
+  <div class="mp" style="max-width:720px" role="dialog" aria-modal="true" aria-labelledby="pmT">
+    <div class="mh"><span class="t" id="pmT">Choose a plan</span><button class="mx" onclick="closePricingModal()">Close</button></div>
+    <div class="mbody">
+      <div class="plans">
+        <div class="plan" style="padding:20px">
+          <div class="p-top"><span class="p-name">Free</span></div>
+          <div class="p-price"><span class="n" style="font-size:var(--xl)">$0</span></div>
+          <p class="p-for" style="min-height:0">3 analyses, ruling and thesis test.</p>
+          <a href="#try" class="btn btn-ghost" onclick="closePricingModal()">Start free</a>
+        </div>
+        <div class="plan feat" style="padding:20px">
+          <div class="p-top"><span class="p-name">Pro</span></div>
+          <div class="p-price"><span class="n" style="font-size:var(--xl)">$15</span><span class="per">/ mo</span></div>
+          <p class="p-for" style="min-height:0">5 a day, full debate, stop loss and sizing.</p>
+          <a href="https://buy.stripe.com/14A5kFakJ31TdiPef14AU03" class="btn btn-blue" data-plan="pro">Get Pro</a>
+        </div>
+        <div class="plan" style="padding:20px">
+          <div class="p-top"><span class="p-name">Trader</span></div>
+          <div class="p-price"><span class="n" style="font-size:var(--xl)">$49</span><span class="per">/ mo</span></div>
+          <p class="p-for" style="min-height:0">10 a day, positions vs S&amp;P, alerts, paper orders.</p>
+          <a href="https://buy.stripe.com/dRm6oJ9gF31T1A7ef14AU05" class="btn btn-pri" data-plan="trader">Get Trader</a>
+        </div>
+      </div>
+      <div class="p-note"><span>30-day money-back guarantee · Cancel anytime</span><a href="/terms">Terms</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- SIGN IN MODAL -->
+<div class="mb" id="signinModal" onclick="if(event.target===this)hideSignIn()">
+  <div class="mp" style="max-width:420px" role="dialog" aria-modal="true" aria-labelledby="siT">
+    <div class="mh"><span class="t" id="siT">Sign in</span><button class="mx" onclick="hideSignIn()">Close</button></div>
+    <div class="mbody">
+      <p class="sd" style="margin-bottom:14px">Enter your email and we'll send a one-time sign-in link. No password needed.</p>
+      <label for="signinEmail" class="sr">Email</label>
+      <input id="signinEmail" class="inp" type="email" placeholder="you@example.com" onkeydown="if(event.key==='Enter')sendSignIn()">
+      <button class="btn btn-blue" style="width:100%;margin-top:10px" onclick="sendSignIn()">Email me a sign-in link</button>
+      <p id="signinMsg" style="font-size:var(--sm);color:var(--t2);margin-top:12px;text-align:center"></p>
+    </div>
+  </div>
+</div>
+
 <script>
-// TAPE
-const td=[
-  {s:'NVDA',v:'BUY',c:'t-b'},{s:'AAPL',v:'SELL',c:'t-s'},{s:'IONQ',v:'HOLD',c:'t-h'},
-  {s:'MSFT',v:'BUY',c:'t-b'},{s:'TSLA',v:'HOLD',c:'t-h'},{s:'RGTI',v:'SELL',c:'t-s'},
-  {s:'AMZN',v:'BUY',c:'t-b'},{s:'META',v:'BUY',c:'t-b'},{s:'QBTS',v:'SELL',c:'t-s'},
-  {s:'IBM',v:'HOLD',c:'t-h'},{s:'ARQQ',v:'SELL',c:'t-s'},{s:'GOOGL',v:'BUY',c:'t-b'},
-  {s:'CEG',v:'HOLD',c:'t-h'},{s:'IESC',v:'BUY',c:'t-b'},{s:'QUBT',v:'SELL',c:'t-s'},
-  {s:'VRT',v:'HOLD',c:'t-h'},{s:'XOM',v:'BUY',c:'t-b'},{s:'MU',v:'HOLD',c:'t-h'},
-];
-const track=document.getElementById('tape');
-[...td,...td].forEach(t=>{
-  const el=document.createElement('div');
-  el.className='tape-item';
-  el.innerHTML=`<span class="tape-sym">${t.s}</span><span class="${t.c}">${t.v}</span>`;
-  track.appendChild(el);
-});
+var API='https://web-production-45241.up.railway.app';
 
-// REVEAL
-const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');obs.unobserve(x.target)}})},{threshold:.08});
-document.querySelectorAll('.rv,.rv2').forEach(r=>obs.observe(r));
-
-// HERO NUMBERS are static text in the HTML — no counter script, so they can never show 0.
-
-// CARD ANIMATION
-function runCard(){
-  const rows=document.querySelectorAll('.dc-row');
-  const v=document.getElementById('dcv');
-  rows.forEach((r,i)=>{
-    setTimeout(()=>{
-      r.classList.add('in');
-      setTimeout(()=>{r.querySelector('.dc-fill').style.width=r.dataset.c+'%'},80);
-    },300+i*260);
+// Prefill email on Stripe links when known
+(function(){
+  var em=localStorage.getItem('hp_email');
+  if(!em)return;
+  document.querySelectorAll('a[data-plan]').forEach(function(a){
+    a.href=a.href.split('?')[0]+'?prefilled_email='+encodeURIComponent(em);
   });
-  setTimeout(()=>v.classList.add('in'),300+rows.length*260+200);
-}
-const crd=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){runCard();crd.unobserve(x.target)}})},{threshold:.15});
-const dc=document.getElementById('dc');
-if(dc)crd.observe(dc);
-
-// INPUT
-const pv={
-  NVDA:{v:'BUY',c:'var(--green)',b:'rgba(34,197,94,.08)',t:'Strong consensus — 6 of 7 agents bullish. GB300 ramp driving datacenter capex. Bear case acknowledged but insufficient to override momentum.'},
-  AAPL:{v:'SELL',c:'var(--red)',b:'rgba(248,113,113,.08)',t:'Services growth decelerating. China headwinds flagged. Bear researcher won the debate 5-2. Risk manager recommends exit.'},
-  IONQ:{v:'HOLD',c:'var(--amber)',b:'rgba(251,191,36,.08)',t:'Technology validated but commercialization timeline uncertain. Agents split 4-3. Insufficient conviction for entry or exit.'},
-  TSLA:{v:'HOLD',c:'var(--amber)',b:'rgba(251,191,36,.08)',t:'Mixed signals. Fundamentals bullish on energy storage; bear flagged brand sentiment deterioration and margin compression. Debate inconclusive.'},
-  AMZN:{v:'BUY',c:'var(--green)',b:'rgba(34,197,94,.08)',t:'AWS growth reaccelerating. Advertising emerging as high-margin driver. 5 of 7 agents bullish. Risk manager approved entry.'},
-};
-function fillSample(tkr, th){
-  const ti = document.getElementById('tin');
-  const thEl = document.getElementById('tthesis');
-  if(ti) ti.value = tkr;
-  if(thEl) thEl.value = th;
-  if(ti) ti.focus();
-}
-(function loadLiveDebates(){
-  fetch('https://web-production-45241.up.railway.app/api/public-analyses')
-    .then(r => r.ok ? r.json() : null)
-    .then(d => {
-      if(!d || !d.analyses || !d.analyses.length) return;
-      const g = document.getElementById('liveDebatesGrid');
-      if(!g) return;
-      const col = {BUY:{bg:'rgba(34,197,94,.1)',fg:'var(--green)'},SELL:{bg:'rgba(248,113,113,.1)',fg:'var(--red)'},HOLD:{bg:'rgba(251,191,36,.1)',fg:'var(--amber)'}};
-      g.innerHTML = d.analyses.slice(0, 6).map(a => {
-        const c = col[a.verdict] || col.HOLD;
-        const pr = a.price ? (' · $' + Number(a.price).toFixed(2)) : '';
-        return `<a href="${a.url}" style="background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:18px 20px;text-decoration:none;display:block;transition:border-color .2s" onmouseover="this.style.borderColor='var(--b2)'" onmouseout="this.style.borderColor='var(--b1)'">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-            <span style="font-family:'Space Mono',monospace;font-size:16px;font-weight:700;color:var(--t1)">${a.ticker}</span>
-            <span style="font-family:'Space Mono',monospace;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px;background:${c.bg};color:${c.fg}">${a.verdict}</span>
-          </div>
-          <div style="font-size:13px;color:var(--t2);margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${a.name || a.ticker}</div>
-          <div style="font-size:11px;color:rgba(236,234,228,.4);margin-bottom:10px;font-family:'Space Mono',monospace">${a.nice_date || a.date}${pr}</div>
-          <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--blue)">Read bull vs bear &rarr;</div>
-        </a>`;
-      }).join('');
-    }).catch(()=>{});
 })();
+
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function money(p){return p==null?'—':'$'+Number(p).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
+function shortDate(iso){try{var d=new Date(iso+'T12:00:00');return d.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}catch(e){return iso}}
+var PLAIN={BUY:'Bull case won',SELL:'Bear case won',HOLD:'Too close to call'};
+
+// LIVE DATA
+var LIVE=[];
+function showDebate(i){
+  var a=LIVE[i];if(!a)return;
+  document.getElementById('tmTicker').textContent=a.ticker;
+  document.getElementById('tmName').textContent=(a.name||a.ticker)+(a.sector?' · '+a.sector:'');
+  document.getElementById('tmPrice').textContent=money(a.price);
+  document.getElementById('tmDate').textContent=a.nice_date||a.date;
+  var v=document.getElementById('tmVerdict');v.textContent=a.verdict;v.className='vb '+a.verdict;
+  document.getElementById('tmVerdictPlain').textContent=PLAIN[a.verdict]||'';
+  if(a.bull_excerpt)document.getElementById('tmBull').textContent=a.bull_excerpt;
+  if(a.bear_excerpt)document.getElementById('tmBear').textContent=a.bear_excerpt;
+  if(a.judge_excerpt)document.getElementById('tmJudge').textContent=a.judge_excerpt;
+  document.getElementById('tmLink').href=a.url;
+  document.querySelectorAll('#tmTabs .tab').forEach(function(t,j){t.classList.toggle('on',j===i);t.setAttribute('aria-selected',j===i)});
+}
+fetch(API+'/api/public-analyses').then(function(r){return r.ok?r.json():null}).then(function(d){
+  if(!d||!d.analyses||!d.analyses.length)return;
+  LIVE=d.analyses.slice(0,6);
+  // tabs
+  document.getElementById('tmTabs').innerHTML=LIVE.map(function(a,i){return '<button type="button" role="tab" class="tab'+(i===0?' on':'')+'" onclick="showDebate('+i+')">'+esc(a.ticker)+'</button>'}).join('');
+  // prefer a BUY first if available, else first
+  showDebate(0);
+  // log table
+  document.getElementById('logBody').innerHTML=LIVE.map(function(a){
+    return '<tr><td class="dt c-dt">'+esc(shortDate(a.date))+'</td><td class="tk">'+esc(a.ticker)+'</td><td>'+esc(a.name||a.ticker)+'</td><td class="c-sec">'+esc(a.sector||'')+'</td><td class="px r">'+esc(money(a.price))+'</td><td><span class="vb '+esc(a.verdict)+'">'+esc(a.verdict)+'</span></td><td class="r"><a class="rd" href="'+esc(a.url)+'">Read →</a></td></tr>';
+  }).join('');
+  // ribbon
+  var latest=LIVE[0].date, today=LIVE.filter(function(a){return a.date===latest});
+  var c={BUY:0,HOLD:0,SELL:0};today.forEach(function(a){c[a.verdict]=(c[a.verdict]||0)+1});
+  document.getElementById('rbDate').textContent='Last run '+shortDate(latest);
+  document.getElementById('rbCount').textContent=today.length+' debates';
+  document.getElementById('rbMix').textContent=c.BUY+' BUY · '+c.HOLD+' HOLD · '+c.SELL+' SELL';
+}).catch(function(){});
+
+function fillSample(t,th){
+  document.getElementById('tin').value=t;
+  document.getElementById('tthesis').value=th;
+  document.getElementById('tin').focus();
+}
+
+// ANALYZE FLOW
 async function go(){
-  const ticker = document.getElementById('tin').value.trim().toUpperCase();
-  const thesis = (document.getElementById('tthesis')?.value || '').trim().slice(0, 600);
-  if(!ticker) { document.getElementById('tin').focus(); return; }
-
-  const r = document.getElementById('ires');
-  const isEl = document.getElementById('is');
-  const ivEl = document.getElementById('iv');
-  const itEl = document.getElementById('it');
-
-  // Check if user is signed in
-  const session = localStorage.getItem('hp_session');
-  if(!session) {
-    const emailRow = document.getElementById('temailRow');
-    const emailIn = document.getElementById('temail');
-    if(emailRow && emailRow.style.display === 'none') {
-      emailRow.style.display = 'flex';
-      emailIn.focus();
-      return;
-    }
-    const email = (emailIn ? emailIn.value : '').trim();
-    if(!email || !email.includes('@')) {
-      if(emailIn) emailIn.focus();
-      return;
-    }
-    isEl.textContent = ticker;
-    ivEl.textContent = 'CHECK EMAIL';
-    ivEl.style.background = 'rgba(79,142,247,0.08)';
-    ivEl.style.color = 'var(--blue)';
-    itEl.textContent = 'Sending a sign-in link to ' + email + '...';
-    r.style.display = 'block';
-    r.scrollIntoView({behavior:'smooth', block:'nearest'});
-    localStorage.setItem('hp_pending_ticker', ticker);
-    if(thesis) localStorage.setItem('hp_pending_thesis', thesis); else localStorage.removeItem('hp_pending_thesis');
+  var ticker=document.getElementById('tin').value.trim().toUpperCase();
+  var thesis=(document.getElementById('tthesis').value||'').trim().slice(0,600);
+  if(!ticker){document.getElementById('tin').focus();return;}
+  var r=document.getElementById('ires'),isEl=document.getElementById('is'),ivEl=document.getElementById('iv'),itEl=document.getElementById('it');
+  function state(label,kind,msg){
+    isEl.textContent=ticker;ivEl.textContent=label;
+    var m={info:['var(--blue-dim)','var(--blue)'],err:['var(--red-dim)','var(--red)']}[kind];
+    ivEl.style.background=m[0];ivEl.style.color=m[1];itEl.textContent=msg;r.style.display='block';
+  }
+  var session=localStorage.getItem('hp_session');
+  if(!session){
+    var row=document.getElementById('temailRow'),emIn=document.getElementById('temail');
+    if(row.style.display!=='flex'){row.style.display='flex';emIn.focus();return;}
+    var email=(emIn.value||'').trim();
+    if(!email||email.indexOf('@')<0){emIn.focus();return;}
+    state('CHECK EMAIL','info','Sending a sign-in link to '+email+'…');
+    localStorage.setItem('hp_pending_ticker',ticker);
+    if(thesis)localStorage.setItem('hp_pending_thesis',thesis);else localStorage.removeItem('hp_pending_thesis');
     localStorage.removeItem('hp_session');
-    try {
-      const resp = await fetch('https://web-production-45241.up.railway.app/api/magic-link', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({email: email})
-      });
-      const data = await resp.json();
-      if(!resp.ok) {
-        ivEl.textContent = 'ERROR';
-        ivEl.style.background = 'rgba(248,113,113,0.08)';
-        ivEl.style.color = 'var(--red)';
-        itEl.textContent = data.error || 'Could not send sign-in link.';
-        return;
-      }
-      itEl.textContent = 'Check ' + email + ' for a sign-in link. After you click it, your ' + ticker + ' analysis will start automatically.';
-    } catch(err) {
-      ivEl.textContent = 'ERROR';
-      ivEl.style.background = 'rgba(248,113,113,0.08)';
-      ivEl.style.color = 'var(--red)';
-      itEl.textContent = 'Could not reach the server. Please try again.';
-    }
+    try{
+      var resp=await fetch(API+'/api/magic-link',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email})});
+      var data=await resp.json();
+      if(!resp.ok){state('ERROR','err',data.error||'Could not send sign-in link.');return;}
+      gtag('event','sign_up_start',{ticker:ticker});
+      itEl.textContent='Check '+email+' for a sign-in link. When you click it, your '+ticker+' analysis starts automatically.';
+    }catch(e){state('ERROR','err','Could not reach the server. Please try again.');}
     return;
   }
-
-  // Signed in — submit the analysis
-  isEl.textContent = ticker;
-  ivEl.textContent = 'ANALYZING';
-  ivEl.style.background = 'rgba(79,142,247,0.08)';
-  ivEl.style.color = 'var(--blue)';
-  itEl.textContent = 'Your analysis is starting. 9 agents are now reviewing ' + ticker + '. This takes about 15 minutes. We will email you the PDF report when it is ready.';
-  r.style.display = 'block';
-  r.scrollIntoView({behavior:'smooth', block:'nearest'});
-
-  try {
-    const response = await fetch('https://web-production-45241.up.railway.app/api/analyze', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + session
-      },
-      body: JSON.stringify({tickers: [ticker], thesis: thesis})
-    });
-    const data = await response.json();
-    if(response.status === 401) {
-      localStorage.removeItem('hp_session');
-      ivEl.textContent = 'SIGN IN';
-      ivEl.style.background = 'rgba(79,142,247,0.08)';
-      ivEl.style.color = 'var(--blue)';
-      itEl.textContent = 'Your session has expired. Please click Analyze again to sign in.';
-      return;
-    }
-    if(!response.ok) {
-      ivEl.textContent = 'ERROR';
-      ivEl.style.background = 'rgba(248,113,113,0.08)';
-      ivEl.style.color = 'var(--red)';
-      itEl.textContent = data.error || 'Something went wrong. Please try again.';
-      return;
-    }
-    itEl.textContent = 'Analysis started for ' + ticker + '. We will email the report in about ' + (data.estimated_minutes || 5) + ' minutes. You can close this page.';
-  } catch(err) {
-    ivEl.textContent = 'ERROR';
-    ivEl.style.background = 'rgba(248,113,113,0.08)';
-    ivEl.style.color = 'var(--red)';
-    itEl.textContent = 'Could not reach the analysis server. Please try again in a moment.';
-  }
+  state('ANALYZING','info','Starting your analysis. Nine analysts are now reviewing '+ticker+'. We will email your PDF report when it is ready.');
+  try{
+    var response=await fetch(API+'/api/analyze',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+session},body:JSON.stringify({tickers:[ticker],thesis:thesis})});
+    var d=await response.json();
+    if(response.status===401){localStorage.removeItem('hp_session');state('SIGN IN','info','Your session expired. Click Analyze again to get a new sign-in link.');return;}
+    if(response.status===429){state('LIMIT','err',d.error||'You have used your free analyses.');openPricingModal();return;}
+    if(!response.ok){state('ERROR','err',d.error||'Something went wrong. Please try again.');return;}
+    gtag('event','analysis_start',{ticker:ticker});
+    itEl.textContent='Analysis started for '+ticker+'. Your report arrives by email in about '+(d.estimated_minutes||5)+' minutes. You can close this page.';
+  }catch(e){state('ERROR','err','Could not reach the analysis server. Please try again in a moment.');}
 }
-document.getElementById('tin').addEventListener('keydown',e=>{if(e.key==='Enter')go()});
-document.getElementById('temail')?.addEventListener('keydown',e=>{if(e.key==='Enter')go()});
-
-// Hide floating CTA when hero button is visible
-const heroBtn=document.querySelector('.hero-btns .btn-p');
-const floatObs=new IntersectionObserver(e=>{
-  const floatBtn=document.getElementById('float-cta');
-  if(!floatBtn)return;
-  floatBtn.style.opacity=e[0].isIntersecting?'0':'1';
-  floatBtn.style.pointerEvents=e[0].isIntersecting?'none':'auto';
-},{threshold:0.5});
-if(heroBtn)floatObs.observe(heroBtn);
-
-// PROGRESS BAR
-const prog=document.getElementById('prog');
-window.addEventListener('scroll',()=>{
-  const h=document.body.scrollHeight-window.innerHeight;
-  prog.style.width=(window.scrollY/h*100)+'%';
-  // BACK TO TOP
-  
-  // NAV ACTIVE
-  const sections=['demo','diff','how','agents','pricing'];
-  let cur='';
-  sections.forEach(id=>{const el=document.getElementById(id);if(el&&window.scrollY>=el.offsetTop-120)cur=id});
-  document.querySelectorAll('.nav-a').forEach(a=>{
-    a.classList.toggle('active',a.getAttribute('href')==='#'+cur);
-  });
-},{passive:true});
+document.getElementById('tin').addEventListener('keydown',function(e){if(e.key==='Enter')go()});
+document.getElementById('temail').addEventListener('keydown',function(e){if(e.key==='Enter')go()});
 
 // FAQ
-function faq(btn){
-  const item=btn.parentElement;
-  const isOpen=item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
-  if(!isOpen)item.classList.add('open');
+function faq(b){
+  var it=b.parentElement,open=it.classList.contains('open');
+  document.querySelectorAll('.fi').forEach(function(x){x.classList.remove('open');x.querySelector('.fqb').setAttribute('aria-expanded','false')});
+  if(!open){it.classList.add('open');b.setAttribute('aria-expanded','true')}
 }
 
-// EMAIL SUB
-function esub(){
-  const v=document.getElementById('ein').value.trim();
-  if(!v||!v.includes('@'))return;
-  document.getElementById('ein').value='';
-  document.querySelector('.email-row').style.display='none';
-  document.querySelector('.e-note').style.display='none';
-  document.getElementById('esuc').style.display='block';
+// MENU
+function toggleMenu(){var h=document.getElementById('ham'),m=document.getElementById('mmenu');h.classList.toggle('open');m.classList.toggle('open');h.setAttribute('aria-expanded',m.classList.contains('open'))}
+function closeMenu(){document.getElementById('ham').classList.remove('open');document.getElementById('mmenu').classList.remove('open')}
+
+// MODALS
+function openPricingModal(){document.getElementById('pricingModal').classList.add('open');document.body.style.overflow='hidden'}
+function closePricingModal(){document.getElementById('pricingModal').classList.remove('open');document.body.style.overflow=''}
+function showSignIn(){
+  if(localStorage.getItem('hp_session')){window.location.href='/dashboard';return;}
+  document.getElementById('signinModal').classList.add('open');
+  setTimeout(function(){document.getElementById('signinEmail').focus()},80);
 }
-document.getElementById('ein')&&document.getElementById('ein').addEventListener('keydown',e=>{if(e.key==='Enter')esub()});
-
-// MOBILE MENU
-function toggleMenu(){
-  const h=document.getElementById('ham');
-  const m=document.getElementById('mmenu');
-  h.classList.toggle('open');
-  m.classList.toggle('open');
-}
-function closeMenu(){
-  document.getElementById('ham').classList.remove('open');
-  document.getElementById('mmenu').classList.remove('open');
-}
-</script>
-
-<!-- BACK TO TOP -->
-
-
-
-
-
-<!-- PRICING MODAL -->
-<div id="pricingModal" onclick="if(event.target===this){closePricingModal()}" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:1000;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(16px)">
-  <div style="background:#0F1012;border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:44px 40px;max-width:640px;width:100%;position:relative">
-
-    <button onclick="closePricingModal()" style="position:absolute;top:16px;right:16px;background:rgba(255,255,255,0.06);border:none;color:rgba(236,234,228,0.5);width:28px;height:28px;border-radius:50%;font-size:16px;cursor:pointer;line-height:1">&times;</button>
-
-    <div style="text-align:center;margin-bottom:32px">
-      <div style="font-family:'Space Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#4F8EF7;margin-bottom:10px">Choose your plan</div>
-      <h2 style="font-family:'Space Mono',monospace;font-size:22px;font-weight:700;color:#ECEAE4;margin-bottom:8px">Start free. Upgrade if it earns it.</h2>
-      <p style="font-size:13px;color:rgba(236,234,228,0.5);font-weight:300">Pro is $15 and Trader is $49 a month, cancel anytime &mdash; or start free, no card needed.</p>
-    </div>
-
-    <div class="plan-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px">
-
-      <!-- Free -->
-      <div style="background:#111318;border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:22px 18px">
-        <div style="font-family:'Space Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.12em;color:rgba(236,234,228,0.35);margin-bottom:10px">Free</div>
-        <div style="font-family:'Space Mono',monospace;font-size:28px;font-weight:700;color:#ECEAE4;line-height:1;margin-bottom:3px">$0</div>
-        <div style="font-size:10px;color:rgba(236,234,228,0.3);margin-bottom:16px">3 analyses to start</div>
-        <div style="margin-bottom:16px">
-          <div style="font-size:11px;color:rgba(236,234,228,0.6);padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;gap:6px;align-items:center"><span style="color:#22C55E;font-size:9px">&#10003;</span>3 free analyses</div>
-          <div style="font-size:11px;color:rgba(236,234,228,0.6);padding:5px 0;border-bottom:1px solid rgba(255,255,255,0.05);display:flex;gap:6px;align-items:center"><span style="color:#22C55E;font-size:9px">&#10003;</span>BUY/SELL/HOLD signal</div>
-          <div style="font-size:11px;color:rgba(236,234,228,0.6);padding:5px 0;display:flex;gap:6px;align-items:center"><span style="color:#22C55E;font-size:9px">&#10003;</span>No card needed</div>
-        </div>
-        <a href="#try" onclick="closePricingModal()" style="display:block;text-align:center;padding:10px;border-radius:7px;font-size:12px;font-weight:500;color:#ECEAE4;border:1px solid rgba(255,255,255,0.1);background:transparent;text-decoration:none;font-family:'Space Grotesk',sans-serif">Start free</a>
-      </div>
-
-      <!-- Monthly -->
-      <div style="background:var(--s2);border:1px solid var(--b2);border-radius:14px;padding:22px 16px;display:flex;flex-direction:column;position:relative">
-        <div style="font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#4F8EF7;margin-bottom:14px">Pro</div>
-        <div style="font-family:'Space Mono',monospace;font-size:28px;font-weight:700;color:var(--t1);line-height:1;margin-bottom:4px">$15</div>
-        <div style="font-size:12px;color:var(--t2);margin-bottom:20px">per month &middot; cancel anytime</div>
-        <p style="font-size:13px;color:var(--t2);font-weight:300;margin-bottom:20px;line-height:1.55">Full access, billed monthly. Cancel anytime — no questions asked.</p>
-        <div style="flex:1;margin-bottom:20px">
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:5px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> 5 tickers per day</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:5px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Thesis stress test on every report</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:5px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Full 9-agent reasoning</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:5px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Debate transcript</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:5px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Stop loss &amp; take profit</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:5px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Position sizing</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:5px 0;display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Cancel anytime</div>
-        </div>
-        <a href="https://buy.stripe.com/14A5kFakJ31TdiPef14AU03" style="display:block;text-align:center;padding:12px;border-radius:8px;font-size:13px;font-weight:600;color:#fff;background:#4F8EF7;border:none;text-decoration:none;font-family:'Space Grotesk',sans-serif">Get Pro — $15/mo →</a>
-      </div>
-
-      <!-- Trader -->
-      <div style="background:var(--s2);border:1px solid rgba(79,142,247,0.45);border-radius:14px;padding:22px 16px;display:flex;flex-direction:column;position:relative">
-        <div style="font-family:'Space Mono',monospace;font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:#4F8EF7;margin-bottom:14px">Trader</div>
-        <div style="font-family:'Space Mono',monospace;font-size:28px;font-weight:700;color:var(--t1);line-height:1;margin-bottom:4px">$49</div>
-        <div style="font-size:12px;color:var(--t2);margin-bottom:20px">per month &middot; cancel anytime</div>
-        <p style="font-size:13px;color:var(--t2);font-weight:300;margin-bottom:20px;line-height:1.55">For people who act on the analysis. Track it, get alerted, place the order.</p>
-        <div style="flex:1;margin-bottom:20px">
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:5px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Everything in Pro</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:5px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> 10 tickers per day, first in queue</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:5px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Positions with P&amp;L vs the S&amp;P 500</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:5px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Price, stop &amp; target alerts by email</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:5px 0;border-bottom:1px solid var(--b1);display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Weekly AI re-check of your thesis</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:5px 0;display:flex;gap:8px;align-items:center"><span style="color:#22C55E;font-size:10px">&#10003;</span> Order ticket for your Alpaca paper account</div>
-        </div>
-        <a href="https://buy.stripe.com/dRm6oJ9gF31T1A7ef14AU05" style="display:block;text-align:center;padding:12px;border-radius:8px;font-size:13px;font-weight:600;color:#fff;background:#4F8EF7;border:none;text-decoration:none;font-family:'Space Grotesk',sans-serif">Get Trader — $49/mo →</a>
-      </div>
-
-      
-    </div>
-
-    <div style="text-align:center;font-size:11px;color:rgba(236,234,228,0.25)">
-      30-day money-back guarantee &middot; No questions asked &mdash; <a href="/terms" style="color:#4F8EF7;text-decoration:none">Terms</a> &middot; <a href="/privacy" style="color:#4F8EF7;text-decoration:none">Privacy</a>
-    </div>
-
-  </div>
-</div>
-
-<script>
-function openPricingModal(){
-  document.getElementById('pricingModal').style.display='flex';
-  document.body.style.overflow='hidden';
-}
-function closePricingModal(){
-  document.getElementById('pricingModal').style.display='none';
-  document.body.style.overflow='';
-}
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closePricingModal();});
-</script>
-
-<!-- Sign in modal -->
-<div id="signinModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1000;align-items:center;justify-content:center;">
-  <div style="background:#0D0F12;border:1px solid #1C1E24;border-radius:16px;padding:40px;max-width:400px;width:90%;position:relative;">
-    <button onclick="hideSignIn()" style="position:absolute;top:16px;right:16px;background:none;border:none;color:#6B7280;font-size:20px;cursor:pointer;">✕</button>
-    <h2 style="font-family:monospace;font-size:22px;color:#ECEAE4;margin:0 0 8px">HEDGE<span style="color:#4F8EF7">PICK</span></h2>
-    <p style="color:#6B7280;font-size:13px;margin:0 0 24px">Enter your email to receive a sign-in link.</p>
-    <input id="signinEmail" type="email" placeholder="your@email.com"
-      style="width:100%;padding:12px;border-radius:8px;border:1px solid #1C1E24;background:#050608;color:#ECEAE4;font-size:14px;box-sizing:border-box;margin-bottom:12px;font-family:'Space Grotesk',sans-serif;"
-      onkeydown="if(event.key==='Enter')sendSignIn()">
-    <button onclick="sendSignIn()"
-      style="width:100%;padding:12px;border-radius:8px;background:#4F8EF7;color:#fff;font-size:14px;font-weight:600;border:none;cursor:pointer;font-family:'Space Grotesk',sans-serif;">
-      Email me a sign-in link →
-    </button>
-    <p id="signinMsg" style="color:#6B7280;font-size:12px;margin:12px 0 0;text-align:center;"></p>
-  </div>
-</div>
-
-<script>
-function showSignIn() {
-  // If already logged in, go straight to dashboard
-  const session = localStorage.getItem('hp_session');
-  if(session) {
-    window.location.href = '/dashboard';
-    return;
-  }
-  document.getElementById('signinModal').style.display = 'flex';
-  setTimeout(() => document.getElementById('signinEmail').focus(), 100);
-}
-function hideSignIn() {
-  document.getElementById('signinModal').style.display = 'none';
-  document.getElementById('signinMsg').textContent = '';
-  document.getElementById('signinEmail').value = '';
-}
-async function sendSignIn() {
-  const email = document.getElementById('signinEmail').value.trim();
-  if(!email || !email.includes('@')) {
-    document.getElementById('signinMsg').textContent = 'Please enter a valid email.';
-    return;
-  }
-  document.getElementById('signinMsg').textContent = 'Sending your sign-in link...';
+function hideSignIn(){document.getElementById('signinModal').classList.remove('open');document.getElementById('signinMsg').textContent='';document.getElementById('signinEmail').value=''}
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){closePricingModal();hideSignIn();closeMenu()}});
+async function sendSignIn(){
+  var email=document.getElementById('signinEmail').value.trim(),msg=document.getElementById('signinMsg');
+  if(!email||email.indexOf('@')<0){msg.style.color='var(--red)';msg.textContent='Please enter a valid email.';return;}
+  msg.style.color='var(--t2)';msg.textContent='Sending your sign-in link…';
   localStorage.removeItem('hp_session');
-  try {
-    const resp = await fetch('https://web-production-45241.up.railway.app/api/magic-link-direct', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({email})
-    });
-    const data = await resp.json();
-    if(resp.ok && data.message) {
-      document.getElementById('signinMsg').style.color = '#22C55E';
-      document.getElementById('signinMsg').textContent = data.message;
-    } else {
-      document.getElementById('signinMsg').style.color = '#F87171';
-      document.getElementById('signinMsg').textContent = data.error || 'Could not log in.';
-    }
-  } catch(e) {
-    document.getElementById('signinMsg').style.color = '#F87171';
-    document.getElementById('signinMsg').textContent = 'Network error. Please try again.';
-  }
+  try{
+    var resp=await fetch(API+'/api/magic-link-direct',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email})});
+    var data=await resp.json();
+    if(resp.ok&&data.message){msg.style.color='var(--green)';msg.textContent=data.message}
+    else{msg.style.color='var(--red)';msg.textContent=data.error||'Could not send a sign-in link.'}
+  }catch(e){msg.style.color='var(--red)';msg.textContent='Network error. Please try again.'}
 }
-// Close modal on background click
-document.getElementById('signinModal').addEventListener('click', function(e) {
-  if(e.target === this) hideSignIn();
-});
 </script>
 </body>
 </html>
