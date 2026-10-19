@@ -71,7 +71,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;display:flex;ali
 .sources-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
 .source-card{background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:24px;transition:border-color .2s}
 .source-card:hover{border-color:var(--b2)}
-.source-icon{font-size:28px;margin-bottom:12px}
+.source-icon{display:inline-flex;align-items:center;justify-content:center;height:28px;padding:0 9px;border-radius:6px;background:rgba(79,142,247,0.08);border:1px solid rgba(79,142,247,0.2);font-family:'Space Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--blue);margin-bottom:14px}
 .source-name{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;color:var(--t1);margin-bottom:6px}
 .source-desc{font-size:13px;color:var(--t2);line-height:1.6;font-weight:300}
 .source-tag{display:inline-block;font-size:10px;font-family:'Space Mono',monospace;padding:3px 8px;border-radius:4px;background:rgba(34,197,94,0.08);color:var(--green);border:1px solid rgba(34,197,94,0.15);margin-top:10px}
@@ -97,7 +97,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;display:flex;ali
 .agent-node.active{border-color:var(--blue);background:rgba(79,142,247,0.06)}
 .agent-node.active .agent-glow{opacity:1}
 .agent-glow{position:absolute;inset:-1px;border-radius:10px;background:transparent;box-shadow:0 0 16px rgba(79,142,247,0.3);opacity:0;transition:opacity .3s;pointer-events:none}
-.agent-emoji{font-size:22px;margin-bottom:6px;display:block}
+.agent-emoji{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;background:rgba(79,142,247,0.08);border:1px solid rgba(79,142,247,0.2);font-family:'Space Mono',monospace;font-size:9px;font-weight:700;color:var(--blue);margin:0 auto 8px}
 .agent-label{font-family:'Space Mono',monospace;font-size:9px;text-transform:uppercase;letter-spacing:.08em;color:var(--t2)}
 .agent-status{font-size:9px;color:var(--t3);margin-top:3px;min-height:12px;transition:color .3s}
 .agent-node.active .agent-status{color:var(--blue)}
@@ -124,7 +124,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;display:flex;ali
 .agent-card{background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:24px;transition:border-color .2s}
 .agent-card:hover{border-color:var(--b2)}
 .ac-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
-.ac-icon{font-size:24px}
+.ac-icon{width:34px;height:34px;border-radius:8px;background:rgba(79,142,247,0.08);border:1px solid rgba(79,142,247,0.2);display:flex;align-items:center;justify-content:center;font-family:'Space Mono',monospace;font-size:10px;font-weight:700;color:var(--blue);flex-shrink:0}
 .ac-name{font-family:'Space Mono',monospace;font-size:13px;font-weight:700;color:var(--t1)}
 .ac-role{font-size:11px;color:var(--blue);text-transform:uppercase;letter-spacing:.08em}
 .ac-desc{font-size:13px;color:var(--t2);line-height:1.65;font-weight:300}
@@ -177,7 +177,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;display:flex;ali
     <a href="/system" class="nav-a active">Methodology</a>
     <a href="/#pricing" class="nav-a">Pricing</a>
     <span id="nav-loggedout">
-      <a href="#" class="nav-cta" onclick="event.preventDefault();window.location='/dashboard'">Get started</a>
+      <a href="/#try" class="nav-cta">Test a stock free</a>
     </span>
     <span id="nav-loggedin" style="display:none;align-items:center;gap:16px">
       <a href="/dashboard" class="nav-a" style="color:var(--gold);font-weight:500">Dashboard</a>
@@ -202,37 +202,37 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;display:flex;ali
     <div class="sec-sub">HedgePick runs on public, mostly free data — chiefly Yahoo Finance, accessed through the open-source yfinance library. Free data can be delayed, incomplete or occasionally wrong, and every report should be read with that in mind.</div>
     <div class="sources-grid">
       <div class="source-card">
-        <div class="source-icon">📈</div>
+        <div class="source-icon">MKT</div>
         <div class="source-name">Yahoo Finance</div>
         <div class="source-desc">Price history, volume, moving averages, RSI, MACD, Bollinger Bands, and recent quotes for US-listed equities.</div>
         <div class="source-tag">Free · Updated daily</div>
       </div>
       <div class="source-card">
-        <div class="source-icon">🏛️</div>
+        <div class="source-icon">SEC</div>
         <div class="source-name">SEC EDGAR</div>
         <div class="source-desc">Official company filings including quarterly earnings (10-Q), annual reports (10-K), and insider transaction disclosures (Form 4).</div>
         <div class="source-tag">Official · Public filings</div>
       </div>
       <div class="source-card">
-        <div class="source-icon">📊</div>
+        <div class="source-icon">FIN</div>
         <div class="source-name">Company Financials</div>
         <div class="source-desc">Revenue trends, earnings per share, PEG ratios, balance sheet data, and quarterly growth acceleration pulled directly from reported financials.</div>
         <div class="source-tag">Reported · Quarterly</div>
       </div>
       <div class="source-card">
-        <div class="source-icon">🔬</div>
+        <div class="source-icon">TA</div>
         <div class="source-name">Technical Indicators</div>
         <div class="source-desc">Standard technical indicators (RSI, MACD, Bollinger Bands, moving averages) computed from daily price and volume data using the open-source TA library.</div>
         <div class="source-tag">Computed · Daily</div>
       </div>
       <div class="source-card">
-        <div class="source-icon">🌐</div>
+        <div class="source-icon">NWS</div>
         <div class="source-name">Financial News</div>
         <div class="source-desc">News sentiment analysis across earnings announcements, analyst upgrades, macroeconomic events, and sector developments.</div>
         <div class="source-tag">AI-analyzed · Recent</div>
       </div>
       <div class="source-card">
-        <div class="source-icon">🤖</div>
+        <div class="source-icon">LLM</div>
         <div class="source-name">Claude AI (Anthropic)</div>
         <div class="source-desc">All 9 analytical agents are powered by Claude, a large language model from Anthropic. Language models can misread data or state things confidently that are wrong — which is why every report shows its reasoning.</div>
         <div class="source-tag">Anthropic · Claude</div>
@@ -315,15 +315,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;display:flex;ali
       <button class="play-btn" id="playBtn" onclick="runSimulation()">▶ Run simulation</button>
 
       <div class="agents-row" id="agentsRow">
-        <div class="agent-node" id="an0"><span class="agent-glow"></span><span class="agent-emoji">📰</span><div class="agent-label">Market News</div><div class="agent-status" id="as0">Waiting</div></div>
-        <div class="agent-node" id="an1"><span class="agent-glow"></span><span class="agent-emoji">📊</span><div class="agent-label">Fundamentals</div><div class="agent-status" id="as1">Waiting</div></div>
-        <div class="agent-node" id="an2"><span class="agent-glow"></span><span class="agent-emoji">📈</span><div class="agent-label">Technical</div><div class="agent-status" id="as2">Waiting</div></div>
-        <div class="agent-node" id="an3"><span class="agent-glow"></span><span class="agent-emoji">💬</span><div class="agent-label">Social Sentiment</div><div class="agent-status" id="as3">Waiting</div></div>
-        <div class="agent-node" id="an4"><span class="agent-glow"></span><span class="agent-emoji">⚖️</span><div class="agent-label">Risk Bull</div><div class="agent-status" id="as4">Waiting</div></div>
-        <div class="agent-node" id="an5"><span class="agent-glow"></span><span class="agent-emoji">🛡️</span><div class="agent-label">Risk Bear</div><div class="agent-status" id="as5">Waiting</div></div>
-        <div class="agent-node" id="an6"><span class="agent-glow"></span><span class="agent-emoji">🔄</span><div class="agent-label">Risk Neutral</div><div class="agent-status" id="as6">Waiting</div></div>
-        <div class="agent-node" id="an7"><span class="agent-glow"></span><span class="agent-emoji">🎯</span><div class="agent-label">Risk Judge</div><div class="agent-status" id="as7">Waiting</div></div>
-        <div class="agent-node" id="an8"><span class="agent-glow"></span><span class="agent-emoji">💼</span><div class="agent-label">Portfolio Mgr</div><div class="agent-status" id="as8">Waiting</div></div>
+        <div class="agent-node" id="an0"><span class="agent-glow"></span><span class="agent-emoji">01</span><div class="agent-label">Market News</div><div class="agent-status" id="as0">Waiting</div></div>
+        <div class="agent-node" id="an1"><span class="agent-glow"></span><span class="agent-emoji">02</span><div class="agent-label">Fundamentals</div><div class="agent-status" id="as1">Waiting</div></div>
+        <div class="agent-node" id="an2"><span class="agent-glow"></span><span class="agent-emoji">03</span><div class="agent-label">Technical</div><div class="agent-status" id="as2">Waiting</div></div>
+        <div class="agent-node" id="an3"><span class="agent-glow"></span><span class="agent-emoji">04</span><div class="agent-label">Social Sentiment</div><div class="agent-status" id="as3">Waiting</div></div>
+        <div class="agent-node" id="an4"><span class="agent-glow"></span><span class="agent-emoji">05</span><div class="agent-label">Risk Bull</div><div class="agent-status" id="as4">Waiting</div></div>
+        <div class="agent-node" id="an5"><span class="agent-glow"></span><span class="agent-emoji">06</span><div class="agent-label">Risk Bear</div><div class="agent-status" id="as5">Waiting</div></div>
+        <div class="agent-node" id="an6"><span class="agent-glow"></span><span class="agent-emoji">07</span><div class="agent-label">Risk Neutral</div><div class="agent-status" id="as6">Waiting</div></div>
+        <div class="agent-node" id="an7"><span class="agent-glow"></span><span class="agent-emoji">08</span><div class="agent-label">Risk Judge</div><div class="agent-status" id="as7">Waiting</div></div>
+        <div class="agent-node" id="an8"><span class="agent-glow"></span><span class="agent-emoji">09</span><div class="agent-label">Portfolio Mgr</div><div class="agent-status" id="as8">Waiting</div></div>
       </div>
 
       <div class="signal-line" id="signalLine"></div>
@@ -343,47 +343,47 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;display:flex;ali
     <div class="sec-sub">Each agent has a distinct mandate, analytical lens, and contribution to the final decision.</div>
     <div class="agents-grid">
       <div class="agent-card">
-        <div class="ac-head"><div class="ac-icon">📰</div><div><div class="ac-name">Market News Analyst</div><div class="ac-role">Information layer</div></div></div>
+        <div class="ac-head"><div class="ac-icon">NWS</div><div><div class="ac-name">Market News Analyst</div><div class="ac-role">Information layer</div></div></div>
         <div class="ac-desc">Scans recent news, earnings announcements, analyst upgrades, and macro events affecting the stock. Identifies catalysts and narrative shifts that price action alone can't capture.</div>
         <div class="ac-analyzes"><span class="ac-tag">Earnings news</span><span class="ac-tag">Analyst ratings</span><span class="ac-tag">Macro events</span><span class="ac-tag">Sector trends</span></div>
       </div>
       <div class="agent-card">
-        <div class="ac-head"><div class="ac-icon">📊</div><div><div class="ac-name">Fundamentals Analyst</div><div class="ac-role">Financial health</div></div></div>
+        <div class="ac-head"><div class="ac-icon">FND</div><div><div class="ac-name">Fundamentals Analyst</div><div class="ac-role">Financial health</div></div></div>
         <div class="ac-desc">Reads balance sheets, income statements, and cash flow reports. Evaluates revenue growth, margins, debt levels, and earnings quality to assess intrinsic value.</div>
         <div class="ac-analyzes"><span class="ac-tag">Revenue growth</span><span class="ac-tag">EPS trends</span><span class="ac-tag">Debt ratios</span><span class="ac-tag">Cash flow</span></div>
       </div>
       <div class="agent-card">
-        <div class="ac-head"><div class="ac-icon">📈</div><div><div class="ac-name">Technical Analyst</div><div class="ac-role">Price & momentum</div></div></div>
+        <div class="ac-head"><div class="ac-icon">TEC</div><div><div class="ac-name">Technical Analyst</div><div class="ac-role">Price & momentum</div></div></div>
         <div class="ac-desc">Analyzes price charts, volume patterns, support/resistance levels, and momentum indicators. Identifies entry timing and trend direction independent of fundamentals.</div>
         <div class="ac-analyzes"><span class="ac-tag">RSI / MACD</span><span class="ac-tag">Moving averages</span><span class="ac-tag">Volume patterns</span><span class="ac-tag">Chart patterns</span></div>
       </div>
       <div class="agent-card">
-        <div class="ac-head"><div class="ac-icon">💬</div><div><div class="ac-name">Social Sentiment Analyst</div><div class="ac-role">Market psychology</div></div></div>
+        <div class="ac-head"><div class="ac-icon">SNT</div><div><div class="ac-name">Social Sentiment Analyst</div><div class="ac-role">Market psychology</div></div></div>
         <div class="ac-desc">Gauges retail and institutional sentiment through options flow patterns, short interest data, and market positioning. Identifies crowded trades and contrarian setups.</div>
         <div class="ac-analyzes"><span class="ac-tag">Short interest</span><span class="ac-tag">Options flow</span><span class="ac-tag">Positioning</span><span class="ac-tag">Sentiment shifts</span></div>
       </div>
       <div class="agent-card">
-        <div class="ac-head"><div class="ac-icon">⚖️</div><div><div class="ac-name">Bull Risk Analyst</div><div class="ac-role">Upside case</div></div></div>
+        <div class="ac-head"><div class="ac-icon">BUL</div><div><div class="ac-name">Bull Risk Analyst</div><div class="ac-role">Upside case</div></div></div>
         <div class="ac-desc">Constructs the strongest possible bull case — identifying catalysts, underappreciated growth vectors, and scenarios where the stock outperforms. Challenges bearish assumptions.</div>
         <div class="ac-analyzes"><span class="ac-tag">Upside catalysts</span><span class="ac-tag">Growth vectors</span><span class="ac-tag">Bull scenarios</span></div>
       </div>
       <div class="agent-card">
-        <div class="ac-head"><div class="ac-icon">🛡️</div><div><div class="ac-name">Bear Risk Analyst</div><div class="ac-role">Downside case</div></div></div>
+        <div class="ac-head"><div class="ac-icon">BER</div><div><div class="ac-name">Bear Risk Analyst</div><div class="ac-role">Downside case</div></div></div>
         <div class="ac-desc">Constructs the strongest possible bear case — identifying risks, competitive threats, valuation concerns, and scenarios where the stock underperforms. Challenges bullish assumptions.</div>
         <div class="ac-analyzes"><span class="ac-tag">Downside risks</span><span class="ac-tag">Competitive threats</span><span class="ac-tag">Bear scenarios</span></div>
       </div>
       <div class="agent-card">
-        <div class="ac-head"><div class="ac-icon">🔄</div><div><div class="ac-name">Neutral Risk Analyst</div><div class="ac-role">Base case</div></div></div>
+        <div class="ac-head"><div class="ac-icon">NEU</div><div><div class="ac-name">Neutral Risk Analyst</div><div class="ac-role">Base case</div></div></div>
         <div class="ac-desc">Evaluates the most probable outcome independent of bull or bear bias. Weighs evidence from both sides and identifies what would need to be true for each scenario to play out.</div>
         <div class="ac-analyzes"><span class="ac-tag">Base case</span><span class="ac-tag">Probability weights</span><span class="ac-tag">Scenario analysis</span></div>
       </div>
       <div class="agent-card">
-        <div class="ac-head"><div class="ac-icon">🎯</div><div><div class="ac-name">Risk Judge</div><div class="ac-role">Synthesis</div></div></div>
+        <div class="ac-head"><div class="ac-icon">JDG</div><div><div class="ac-name">Risk Judge</div><div class="ac-role">Synthesis</div></div></div>
         <div class="ac-desc">Reviews the bull, bear, and neutral arguments and renders a verdict on the risk/reward balance. Assigns a conviction level and identifies the key swing factors that could change the outcome.</div>
         <div class="ac-analyzes"><span class="ac-tag">Risk/reward</span><span class="ac-tag">Conviction level</span><span class="ac-tag">Key risks</span></div>
       </div>
       <div class="agent-card">
-        <div class="ac-head"><div class="ac-icon">💼</div><div><div class="ac-name">Portfolio Manager</div><div class="ac-role">Final decision</div></div></div>
+        <div class="ac-head"><div class="ac-icon">PM</div><div><div class="ac-name">Portfolio Manager</div><div class="ac-role">Final decision</div></div></div>
         <div class="ac-desc">The final decision-maker. Reviews all agent outputs, weighs the collective evidence, and issues the final BUY / HOLD / SELL recommendation with a confidence score, price target rationale, and position sizing guidance.</div>
         <div class="ac-analyzes"><span class="ac-tag">Final signal</span><span class="ac-tag">Confidence score</span><span class="ac-tag">Position sizing</span><span class="ac-tag">Stop loss</span></div>
       </div>
@@ -422,7 +422,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;height:56px;display:flex;ali
   <div class="cta-sec">
     <h2>See it work on your tickers</h2>
     <p>Run a free analysis on any stock — no credit card required.</p>
-    <a href="/dashboard" class="btn-primary">Try HedgePick free →</a>
+    <a href="/#try" class="btn-primary">Test a stock free →</a>
   </div>
 
 </div>
