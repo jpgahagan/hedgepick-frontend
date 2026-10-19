@@ -139,7 +139,7 @@ h1.ht span{color:var(--gold)}
 .inp::placeholder{color:var(--t3)}
 .inp:focus{border-color:var(--blue)}
 .inp.tk{font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em}
-textarea.inp{resize:vertical;line-height:1.5;margin-top:8px;font-family:var(--sans)}
+textarea.inp{resize:vertical;line-height:1.5;margin-top:8px;font-family:var(--sans);min-height:66px}
 .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;align-items:center}
 .chips .lbl{font-family:var(--mono);font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:.05em;margin-right:2px}
 .chip{font-family:var(--mono);font-size:11px;font-weight:500;padding:5px 9px;border-radius:var(--r1);border:1px solid var(--hair-2);background:var(--bg-0);color:var(--t2);transition:color .12s,border-color .12s}
@@ -494,7 +494,7 @@ function doSignOut(){localStorage.removeItem('hp_email');localStorage.removeItem
       <div class="term-body">
         <div class="tgrid">
           <div><div class="tl">Company</div><div class="tm" id="tmTicker">BLK</div><div class="ts" id="tmName">BlackRock, Inc. · Financial Services</div></div>
-          <div><div class="tl">Price at analysis</div><div class="tm" id="tmPrice">$1,134.38</div><div class="ts" id="tmDate">October 19, 2026</div></div>
+          <div><div class="tl">Price at analysis</div><div class="tm" id="tmPrice">$1,134.38</div><div class="ts" id="tmDate">Oct 19, 2026</div></div>
           <div><div class="tl">Ruling</div><div class="tm"><span class="vb BUY" id="tmVerdict">BUY</span></div><div class="ts" id="tmVerdictPlain">Bull case won</div></div>
         </div>
         <div class="arg bull"><div class="arg-h"><span class="who">Bull analyst</span><span class="plain">The case for buying</span></div><p id="tmBull">A dominant global asset manager posting 30.6% YoY revenue growth, delivering normalized EBITDA growth of 34%, with a technical breakout on institutional volume…</p></div>
@@ -814,7 +814,7 @@ function showDebate(i){
   document.getElementById('tmTicker').textContent=a.ticker;
   document.getElementById('tmName').textContent=(a.name||a.ticker)+(a.sector?' · '+a.sector:'');
   document.getElementById('tmPrice').textContent=money(a.price);
-  document.getElementById('tmDate').textContent=a.nice_date||a.date;
+  document.getElementById('tmDate').textContent=shortDate(a.date)||a.nice_date;
   var v=document.getElementById('tmVerdict');v.textContent=a.verdict;v.className='vb '+a.verdict;
   document.getElementById('tmVerdictPlain').textContent=PLAIN[a.verdict]||'';
   if(a.bull_excerpt)document.getElementById('tmBull').textContent=a.bull_excerpt;
