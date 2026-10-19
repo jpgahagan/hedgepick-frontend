@@ -795,6 +795,14 @@ var API='https://web-production-45241.up.railway.app';
 
 // Prefill email on Stripe links when known
 (function(){
+  var up=new URLSearchParams(window.location.search).get('upgraded');
+  if(up){
+    document.addEventListener('DOMContentLoaded',function(){
+      showSignIn();
+      var msg=document.getElementById('signinMsg');
+      if(msg){msg.style.color='var(--green)';msg.textContent='Payment confirmed for '+up.toUpperCase()+'. Check your email for your instant dashboard link, or enter your checkout email above.';}
+    });
+  }
   var em=localStorage.getItem('hp_email');
   if(!em)return;
   document.querySelectorAll('a[data-plan]').forEach(function(a){

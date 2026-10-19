@@ -478,8 +478,11 @@ async function initDashboard() {
 
   const session = localStorage.getItem('hp_session');
   if(!session) {
-    // Not signed in — back to the landing page
-    window.location.href = '/';
+    if(params.get('upgraded')) {
+      window.location.href = '/?upgraded=' + encodeURIComponent(params.get('upgraded'));
+    } else {
+      window.location.href = '/';
+    }
     return;
   }
 
