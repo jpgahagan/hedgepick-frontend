@@ -425,9 +425,9 @@ gtag('config','G-W2VWCNQC6T');
     <a href="/analysis" class="nav-a">Daily analyses</a>
     <a href="#pricing" class="nav-a">Pricing</a>
     <!-- Logged-out state -->
-    <span id="nav-loggedout">
-      <a href="#" class="nav-link" style="color:rgba(236,234,228,0.7);margin-right:8px" onclick="showSignIn();return false;">Sign in</a>
-      <a href="#" class="nav-cta" onclick="event.preventDefault();openPricingModal()">Get started</a>
+    <span id="nav-loggedout" style="display:inline-flex;align-items:center;gap:18px">
+      <a href="#" class="nav-a" onclick="showSignIn();return false;">Sign in</a>
+      <a href="#try" class="nav-cta">Test a stock free</a>
     </span>
     <!-- Logged-in state (hidden by default) -->
     <span id="nav-loggedin" style="display:none;align-items:center;gap:16px">
@@ -1111,7 +1111,7 @@ window.addEventListener('scroll',()=>{
   const h=document.body.scrollHeight-window.innerHeight;
   prog.style.width=(window.scrollY/h*100)+'%';
   // BACK TO TOP
-  document.getElementById('btt').classList.toggle('show',window.scrollY>600);
+  
   // NAV ACTIVE
   const sections=['demo','diff','how','agents','pricing'];
   let cur='';
@@ -1154,13 +1154,9 @@ function closeMenu(){
 </script>
 
 <!-- BACK TO TOP -->
-<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
 
-<!-- FLOATING CTA -->
-<a href="#try" id="float-cta" style="position:fixed;bottom:28px;right:28px;z-index:300;background:var(--t1);color:var(--bg);padding:12px 22px;border-radius:100px;font-family:'Space Grotesk',sans-serif;font-size:13px;font-weight:600;text-decoration:none;box-shadow:0 4px 24px rgba(0,0,0,0.4);transition:opacity .3s,transform .2s;letter-spacing:.01em;display:flex;align-items:center;gap:6px">
-  <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 9L7 5L11 9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-  Try it free
-</a>
+
+
 
 
 <!-- PRICING MODAL -->
