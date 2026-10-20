@@ -785,6 +785,7 @@ function renderHistory(history) {
         <span class="hi-date">${dateStr}</span>
       </div>
       <div style="display:flex;align-items:center;gap:16px">
+        <a href="/go/tradingview?ticker=${encodeURIComponent(h.ticker)}&ref=dashboard" target="_blank" rel="noopener" style="font-size:11px;color:var(--t2);text-decoration:none;font-family:'Space Mono',monospace">Chart ↗</a>
         <span class="hi-signal ${sigClass}">${sigLabel}</span>
         ${isPending
           ? '<span style="font-size:12px;color:var(--t2)">Report emailing...</span>'
@@ -1139,7 +1140,7 @@ function renderPicksModal(data) {
       </div>
       <div class="pk-name">${c.name||''}</div>
       <div class="pk-chips">${fired}</div>
-      <button class="pk-btn" onclick="closePicksModal();loadTicker('${c.ticker}','${data.date}')" style="background:${i < 5 ? 'var(--gold)' : 'var(--blue)'};color:${i < 5 ? '#000' : '#fff'}">${i < 5 ? 'View Report →' : 'Run Analysis →'}</button>
+      <a href="/go/tradingview?ticker=${encodeURIComponent(c.ticker)}&ref=picks" target="_blank" rel="noopener" style="font-size:11px;color:var(--t2);text-decoration:none;font-family:'Space Mono',monospace;margin-right:10px">TradingView Chart ↗</a><button class="pk-btn" onclick="closePicksModal();loadTicker('${c.ticker}','${data.date}')" style="background:${i < 5 ? 'var(--gold)' : 'var(--blue)'};color:${i < 5 ? '#000' : '#fff'}">${i < 5 ? 'View Report →' : 'Run Analysis →'}</button>
     </div>`;
   });
 
