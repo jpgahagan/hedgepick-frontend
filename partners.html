@@ -37,10 +37,10 @@ h1{font-size:var(--xxl);font-weight:700;letter-spacing:-.025em;line-height:1.1;m
 h2{font-size:var(--xl);font-weight:700;letter-spacing:-.02em;line-height:1.2;margin-bottom:14px}
 .lead{font-size:var(--lg);color:var(--t2);max-width:60ch;margin-top:18px}
 .sec{padding:72px 0;border-bottom:1px solid var(--hair)}
-.hero{padding:80px 0 64px}
+.hero{padding-top:80px;padding-bottom:64px}
 .terms-row{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--hair-2);border-radius:6px;margin-top:40px;background:var(--bg-1)}
-.terms-row div{padding:18px 20px;border-right:1px solid var(--hair)}
-.terms-row div:last-child{border-right:none}
+.terms-row>div{padding:18px 20px;border-right:1px solid var(--hair)}
+.terms-row>div:last-child{border-right:none}
 .terms-row .k{font-family:var(--mono);font-size:var(--xs);color:var(--t3);text-transform:uppercase;letter-spacing:.06em}
 .terms-row .v{font-family:var(--mono);font-size:var(--xl);font-weight:700;margin-top:4px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
@@ -76,12 +76,12 @@ footer nav{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:12px}
 footer a:hover{color:var(--t1)}
 @media (max-width:860px){
   .terms-row{grid-template-columns:1fr 1fr}
-  .terms-row div:nth-child(2){border-right:none}
-  .terms-row div:nth-child(-n+2){border-bottom:1px solid var(--hair)}
+  .terms-row>div:nth-child(2){border-right:none}
+  .terms-row>div:nth-child(-n+2){border-bottom:1px solid var(--hair)}
   .grid2,.who{grid-template-columns:1fr}
   .stat-grid{grid-template-columns:1fr 1fr}
   .sec{padding:56px 0}
-  .hero{padding:56px 0 48px}
+  .hero{padding-top:56px;padding-bottom:48px}
 }
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W2VWCNQC6T"></script>
@@ -96,8 +96,8 @@ gtag('config','G-W2VWCNQC6T');
 <header><div class="hd"><a class="brand" href="/">HEDGE<em>PICK</em></a><a class="btn btn-ghost" href="#apply">Get your link</a></div></header>
 
 <main>
-<section class="wrap" id="stats" aria-live="polite">
-  <div class="sec" style="border-bottom:1px solid var(--hair)">
+<section id="stats" aria-live="polite">
+  <div class="sec wrap">
     <div class="kick">Partner dashboard</div>
     <h2 id="stName">Your referrals</h2>
     <p style="color:var(--t2);font-size:var(--sm)">Your link: <code id="stLink" style="font-family:var(--mono);color:var(--t1)"></code></p>
