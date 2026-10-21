@@ -23,386 +23,513 @@
 <meta name="twitter:title" content="HedgePick — See the bull and bear case before you buy">
 <meta name="twitter:description" content="Nine AI analysts research any US stock, argue both sides, and stress-test your reasoning. 3 free analyses, no card.">
 <meta name="twitter:image" content="https://hedgepick.com/og-image.png">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=gambetta@400,500,600,401,501&f[]=switzer@400,500,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<meta name="theme-color" content="#F2EFE7">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg-0:#08090c;
-  --bg-1:#0d0f13;
-  --bg-2:#12151b;
-  --bg-3:#181c24;
-  --hair:rgba(255,255,255,.07);
-  --hair-2:rgba(255,255,255,.13);
-  --t1:#eef0f4;
-  --t2:#a3aab8;
-  --t3:#6c7483;
-  --blue:#5b93f5;
-  --blue-dim:rgba(91,147,245,.10);
-  --blue-bd:rgba(91,147,245,.30);
-  --gold:#e3a83a;
-  --green:#22c27a;
-  --green-dim:rgba(34,194,122,.10);
-  --green-bd:rgba(34,194,122,.28);
-  --red:#f0606e;
-  --red-dim:rgba(240,96,110,.10);
-  --red-bd:rgba(240,96,110,.28);
-  --amber:#f2b33d;
-  --amber-dim:rgba(242,179,61,.10);
-  --amber-bd:rgba(242,179,61,.28);
-  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --paper:#F2EFE7;--paper-2:#E9E5DA;--card:#FBFAF6;--ink:#11161B;--ink-2:#353C44;--t2:#545B63;--t3:#7A8087;
+  --rule:rgba(17,22,27,.12);--rule-2:rgba(17,22,27,.22);
+  --night:#0E1317;--night-2:#151B21;--night-3:#1C232A;--nrule:rgba(236,232,222,.10);--nt1:#ECE8DE;--nt2:#A7ABA8;--nt3:#767C7F;
+  --bull:#1D6A49;--bull-l:#3FA777;--bear:#A13A2B;--bear-l:#E06A55;--brass:#9B7426;--brass-l:#D3A44A;
+  --green:#1D6A49;--green-dim:rgba(29,106,73,.10);--green-bd:rgba(29,106,73,.30);
+  --red:#A13A2B;--red-dim:rgba(161,58,43,.09);--red-bd:rgba(161,58,43,.30);
+  --amber:#9B7426;--amber-dim:rgba(155,116,38,.10);--amber-bd:rgba(155,116,38,.32);
+  --blue:#1E4C74;--blue-dim:rgba(30,76,116,.09);
+  --serif:'Gambetta','Iowan Old Style','Times New Roman',serif;
+  --sans:'Switzer','Helvetica Neue',Arial,sans-serif;
   --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
-  --xs:clamp(.75rem,.72rem + .15vw,.8125rem);
-  --sm:clamp(.8125rem,.78rem + .2vw,.875rem);
-  --base:clamp(.9375rem,.9rem + .2vw,1rem);
-  --lg:clamp(1.0625rem,1rem + .35vw,1.25rem);
-  --xl:clamp(1.375rem,1.2rem + .75vw,1.75rem);
-  --xxl:clamp(2rem,1.5rem + 2vw,3.1rem);
-  --r1:3px;--r2:4px;--r3:6px;--r4:8px;
+  --xs:.78rem;--sm:.875rem;--base:1rem;--lg:1.125rem;
+  --h3:clamp(1.25rem,1.1rem + .6vw,1.5rem);
+  --h2:clamp(2rem,1.4rem + 2.4vw,3.25rem);
+  --hero:clamp(2.6rem,1.4rem + 3.9vw,4.7rem);
+  --r1:4px;--r2:8px;--r3:14px;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --wrap:1240px;
+  --bg-0:var(--paper);--hair:var(--rule);--hair-2:var(--rule-2);--t1:var(--ink);--r2x:8px;
 }
-html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;background:var(--bg-0);-webkit-text-size-adjust:100%}
-body{background:var(--bg-0);color:var(--t1);font-family:var(--sans);font-size:var(--base);line-height:1.55;overflow-x:hidden;max-width:100%;touch-action:pan-y;font-variant-numeric:tabular-nums}
-section,[id]{scroll-margin-top:84px}
-a{color:inherit;text-decoration:none}
-button,input,select,textarea{font:inherit;color:inherit}
-button{cursor:pointer;background:none;border:none}
-.mono{font-family:var(--mono)}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:var(--base);line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden}
+a{color:inherit}
+button{font:inherit;color:inherit;cursor:pointer;background:none;border:0}
+img,svg{display:block;max-width:100%}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
-.skip{position:absolute;left:-999px;top:8px;background:var(--t1);color:var(--bg-0);padding:8px 12px;border-radius:var(--r2);z-index:999;font-size:var(--sm)}
+.skip{position:absolute;left:-9999px;top:8px;background:var(--ink);color:var(--paper);padding:8px 14px;border-radius:var(--r1);z-index:200}
 .skip:focus{left:8px}
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 clamp(20px,4vw,40px)}
+.mono{font-family:var(--mono)}
+.kick{font-family:var(--mono);font-size:var(--xs);letter-spacing:.08em;text-transform:uppercase;color:var(--t2);display:flex;gap:10px;align-items:center}
+.kick::before{content:"";width:22px;height:1px;background:currentColor;opacity:.6}
+h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-.015em;line-height:1.04}
+h2.st{text-wrap:balance;font-size:var(--h2);max-width:16ch;margin-top:18px}
+.sd{color:var(--t2);font-size:var(--lg);max-width:58ch;margin-top:18px;line-height:1.55}
 
-/* STATUS RIBBON */
-.ribbon{background:var(--bg-1);border-bottom:1px solid var(--hair);font-family:var(--mono);font-size:var(--xs);color:var(--t2)}
-.ribbon-in{max-width:1280px;margin:0 auto;padding:7px 24px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-.rk{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
-.rk .k{color:var(--t3);text-transform:uppercase;letter-spacing:.06em}
-.rk .v{color:var(--t1);font-weight:500}
-.rgrp{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.rsep{color:var(--hair-2)}
-.dot{width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block}
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:10px 18px;border-radius:999px;font-weight:500;font-size:var(--sm);text-decoration:none;border:1px solid transparent;transition:background .2s var(--ease),color .2s,border-color .2s,transform .2s var(--ease);white-space:nowrap}
+.btn svg{width:15px;height:15px;transition:transform .25s var(--ease)}
+.btn:hover svg{transform:translateX(3px)}
+.btn:active{transform:scale(.98)}
+.btn-pri,.btn-blue{background:var(--ink);color:var(--paper)}
+.btn-pri:hover,.btn-blue:hover{background:#000}
+.btn-ghost{border-color:var(--rule-2);color:var(--ink)}
+.btn-ghost:hover{border-color:var(--ink)}
+.btn-brass{background:var(--brass);color:#fff}
+.btn-brass:hover{background:#7f5f1d}
+.lnk{font-size:var(--sm);font-weight:500;text-decoration:none;border-bottom:1px solid var(--rule-2);padding-bottom:2px}
+.lnk:hover{border-color:var(--ink)}
 
-/* HEADER */
-header.hd{position:sticky;top:0;z-index:50;background:rgba(8,9,12,.9);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--hair)}
-.hd-in{max-width:1280px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
-.brand{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-weight:700;font-size:var(--sm);letter-spacing:.06em}
-.brand .wm{letter-spacing:.04em}
-.brand svg{width:24px;height:24px}
-.brand em{font-style:normal;color:var(--blue)}
-.nav{display:flex;align-items:center;gap:26px}
-.nav a,.nav button{font-size:var(--sm);color:var(--t2);font-weight:500;transition:color .14s}
-.nav a:hover,.nav button:hover{color:var(--t1)}
-.acts{display:flex;align-items:center;gap:8px}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--mono);font-size:var(--xs);font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:10px 15px;border-radius:var(--r2);border:1px solid transparent;transition:background .15s,border-color .15s,color .15s;white-space:nowrap;min-height:40px}
-.btn svg{width:14px;height:14px}
-.btn-ghost{background:var(--bg-1);border-color:var(--hair-2);color:var(--t2)}
-.btn-ghost:hover{color:var(--t1);border-color:rgba(255,255,255,.24);background:var(--bg-2)}
-.btn-pri{background:var(--t1);color:var(--bg-0);border-color:var(--t1);font-weight:700}
-.btn-pri:hover{background:#d9dce3;border-color:#d9dce3}
-.btn-blue{background:var(--blue);color:#fff;border-color:var(--blue);font-weight:700}
-.btn-blue:hover{background:#4a83ea;border-color:#4a83ea}
-.ham{display:none;flex-direction:column;gap:5px;padding:8px}
-.ham span{display:block;width:20px;height:1.5px;background:var(--t1);transition:transform .2s,opacity .2s}
-.ham.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
-.ham.open span:nth-child(2){opacity:0}
-.ham.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
-.mmenu{display:none;position:fixed;top:62px;left:0;right:0;background:rgba(8,9,12,.98);border-bottom:1px solid var(--hair);padding:8px 20px 22px;z-index:49;flex-direction:column}
+/* Verdict badge (used by live data) */
+.vb{display:inline-block;font-family:var(--mono);font-size:.72rem;font-weight:600;letter-spacing:.06em;padding:3px 8px;border-radius:var(--r1);border:1px solid}
+.vb.BUY{color:var(--bull);background:var(--green-dim);border-color:var(--green-bd)}
+.vb.SELL{color:var(--bear);background:var(--red-dim);border-color:var(--red-bd)}
+.vb.HOLD{color:var(--brass);background:var(--amber-dim);border-color:var(--amber-bd)}
+
+/* Ribbon */
+.ribbon{background:var(--ink);color:var(--nt2);font-family:var(--mono);font-size:.72rem;letter-spacing:.03em}
+.ribbon-in{max-width:var(--wrap);margin:0 auto;padding:8px clamp(20px,4vw,40px);display:flex;justify-content:space-between;gap:16px}
+.rgrp{display:flex;gap:14px;align-items:center;white-space:nowrap;overflow:hidden}
+.rk{display:inline-flex;gap:8px;align-items:center}.rk .k{color:var(--nt3);text-transform:uppercase}.rk .v{color:var(--nt1)}
+.rsep{color:var(--nt3)}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--bull-l);display:inline-block;box-shadow:0 0 0 0 rgba(63,167,119,.6);animation:pulse 2.4s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(63,167,119,.55)}70%{box-shadow:0 0 0 7px rgba(63,167,119,0)}100%{box-shadow:0 0 0 0 rgba(63,167,119,0)}}
+
+/* Header */
+.hdr{position:sticky;top:0;z-index:50;background:rgba(242,239,231,.86);backdrop-filter:saturate(1.4) blur(12px);-webkit-backdrop-filter:saturate(1.4) blur(12px);border-bottom:1px solid transparent;transition:border-color .3s}
+.hdr.scrolled{border-bottom-color:var(--rule)}
+.hdr-in{max-width:var(--wrap);margin:0 auto;padding:0 clamp(20px,4vw,40px);height:68px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{font-family:var(--serif);font-size:1.45rem;font-weight:600;letter-spacing:-.02em;text-decoration:none;display:inline-flex;align-items:baseline;gap:1px}
+.brand em{font-style:italic;font-weight:500;color:var(--brass)}
+.nav{display:flex;gap:28px;font-size:var(--sm)}
+.nav a{text-decoration:none;color:var(--ink-2);position:relative}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:1px;background:var(--ink);transform:scaleX(0);transform-origin:left;transition:transform .3s var(--ease)}
+.nav a:hover{color:var(--ink)}.nav a:hover::after{transform:scaleX(1)}
+.hdr-act{display:flex;gap:10px;align-items:center}
+.ham{display:none;width:44px;height:44px;align-items:center;justify-content:center;flex-direction:column;gap:5px}
+.ham span{width:20px;height:1.5px;background:var(--ink);transition:transform .3s var(--ease),opacity .2s}
+.ham.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}.ham.open span:nth-child(2){opacity:0}.ham.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
+.mmenu{display:none;position:fixed;inset:68px 0 0 0;background:var(--paper);z-index:49;padding:28px clamp(20px,4vw,40px);flex-direction:column;gap:4px}
 .mmenu.open{display:flex}
-.mmenu a{padding:14px 0;border-bottom:1px solid var(--hair);color:var(--t2);font-size:15px}
-.mmenu .btn{margin-top:16px}
-
-/* LAYOUT */
-.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
-.sec{padding:84px 0;border-bottom:1px solid var(--hair)}
-.sec.tight{padding:64px 0}
-.kick{font-family:var(--mono);font-size:var(--xs);text-transform:uppercase;letter-spacing:.08em;color:var(--blue);margin-bottom:10px}
-h2.st{font-size:var(--xl);font-weight:700;letter-spacing:-.02em;line-height:1.2}
-.sd{font-size:var(--sm);color:var(--t2);line-height:1.65}
-.shead{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:end;margin-bottom:36px}
+.mmenu a{font-family:var(--serif);font-size:1.75rem;text-decoration:none;padding:10px 0;border-bottom:1px solid var(--rule)}
+.mmenu .btn{font-family:var(--sans);font-size:var(--base);margin-top:20px;border-bottom:0}
 
 /* HERO */
-.hero{padding:56px 0 72px;border-bottom:1px solid var(--hair)}
-.hero-grid{display:grid;grid-template-columns:1fr 1.08fr;gap:44px;align-items:start}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;flex-wrap:wrap;font-family:var(--mono);font-size:var(--xs);color:var(--t2);background:var(--bg-1);border:1px solid var(--hair-2);padding:5px 10px;border-radius:var(--r1);margin-bottom:22px;text-transform:uppercase;letter-spacing:.06em}
-.eyebrow strong{color:var(--gold);font-weight:600}
-h1.ht{font-size:var(--xxl);font-weight:700;line-height:1.08;letter-spacing:-.03em;margin-bottom:20px}
-h1.ht span{color:var(--gold)}
-.lead{font-size:var(--base);color:var(--t2);line-height:1.7;margin-bottom:26px;max-width:58ch}
-.lead b{color:var(--t1);font-weight:600}
+.hero{padding:clamp(40px,6vw,84px) 0 clamp(48px,6vw,80px)}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.12fr) minmax(0,1fr);gap:clamp(32px,5vw,72px);align-items:start}
+.ht{text-wrap:balance;font-size:var(--hero);font-weight:500;letter-spacing:-.028em;line-height:.98;margin-top:22px}
+.ht em{font-style:italic;color:var(--bear)}
+.lead{font-size:clamp(1.05rem,.98rem + .3vw,1.2rem);color:var(--ink-2);max-width:52ch;margin-top:24px;line-height:1.55}
+.lead b{font-weight:600;color:var(--ink)}
 
-.form-box{background:var(--bg-1);border:1px solid var(--hair-2);border-radius:var(--r3);padding:18px}
-.fb-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-family:var(--mono);font-size:var(--xs);text-transform:uppercase;letter-spacing:.06em;color:var(--t2);margin-bottom:12px}
-.fb-head .g{color:var(--green)}
-.frow{display:grid;grid-template-columns:1fr auto;gap:8px}
-.inp{background:var(--bg-0);border:1px solid var(--hair-2);border-radius:var(--r2);padding:11px 13px;font-size:var(--sm);color:var(--t1);outline:none;min-height:44px;width:100%}
+.form-box{margin-top:32px;background:var(--card);border:1px solid var(--rule);border-radius:var(--r3);padding:18px;box-shadow:0 1px 0 rgba(17,22,27,.03),0 18px 40px -24px rgba(17,22,27,.25)}
+.fb-head{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--t2);margin-bottom:12px}
+.fb-head .g{color:var(--bull)}
+.frow{display:flex;gap:8px}
+.inp{width:100%;background:var(--paper);border:1px solid var(--rule);border-radius:var(--r2);padding:12px 14px;font:inherit;font-size:var(--base);color:var(--ink);transition:border-color .2s,background .2s}
 .inp::placeholder{color:var(--t3)}
-.inp:focus{border-color:var(--blue)}
-.inp.tk{font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em}
-textarea.inp{resize:vertical;line-height:1.5;margin-top:8px;font-family:var(--sans);min-height:66px}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;align-items:center}
-.chips .lbl{font-family:var(--mono);font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:.05em;margin-right:2px}
-.chip{font-family:var(--mono);font-size:11px;font-weight:500;padding:5px 9px;border-radius:var(--r1);border:1px solid var(--hair-2);background:var(--bg-0);color:var(--t2);transition:color .12s,border-color .12s}
-.chip:hover{color:var(--t1);border-color:rgba(255,255,255,.26)}
-.fnote{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:12px;font-family:var(--mono);font-size:var(--xs);color:var(--t3)}
-.fnote a{color:var(--t2);text-decoration:underline;text-underline-offset:2px}
+.inp:focus{outline:none;border-color:var(--ink);background:#fff}
+.inp.tk{font-family:var(--mono);text-transform:uppercase;letter-spacing:.04em;font-size:1rem}
+.inp.tk::placeholder{text-transform:none;letter-spacing:0;font-family:var(--sans)}
+textarea.inp{resize:vertical;min-height:74px;margin-top:8px;line-height:1.45}
 #temailRow{display:none;gap:8px;margin-top:8px}
-.ires{display:none;margin-top:12px;padding:14px;background:var(--bg-0);border:1px solid var(--hair-2);border-radius:var(--r2)}
-.ires-top{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-#is{font-family:var(--mono);font-weight:700}
-#iv{font-family:var(--mono);font-size:11px;font-weight:700;padding:3px 8px;border-radius:var(--r1)}
-#it{font-size:var(--sm);color:var(--t2);line-height:1.6}
-.ires .up{display:inline-block;margin-top:10px;font-size:var(--sm);color:var(--blue);cursor:pointer}
+.frow .btn,#temailRow .btn{border-radius:var(--r2);flex-shrink:0}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;align-items:center}
+.chips .lbl{font-size:var(--xs);color:var(--t3);margin-right:2px}
+.chip{font-size:.78rem;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--ink-2);transition:border-color .2s,color .2s,background .2s}
+.chip:hover{border-color:var(--ink);color:var(--ink);background:#fff}
+.ires{display:none;margin-top:12px;padding:12px 14px;border-radius:var(--r2);background:var(--paper);border:1px solid var(--rule)}
+.ires-top{display:flex;gap:10px;align-items:center}
+#is{font-family:var(--mono);font-weight:600}
+#iv{font-family:var(--mono);font-size:.7rem;font-weight:600;padding:3px 8px;border-radius:var(--r1);letter-spacing:.05em}
+#it{font-size:var(--sm);color:var(--ink-2);margin-top:6px}
+.ires .up{display:inline-block;margin-top:8px;font-size:var(--sm);font-weight:500;cursor:pointer;border-bottom:1px solid var(--rule-2)}
+.fnote{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:14px;padding-top:12px;border-top:1px dashed var(--rule);font-size:var(--xs);color:var(--t3)}
+.fnote a{color:var(--ink);font-weight:500}
 
-.spec{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hair);border:1px solid var(--hair-2);border-radius:var(--r2);overflow:hidden;margin-top:18px}
-.spec>div{background:var(--bg-1);padding:12px 14px}
-.spec .v{font-family:var(--mono);font-size:var(--lg);font-weight:700;line-height:1.2}
-.spec .l{font-family:var(--mono);font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:.04em;margin-top:2px}
+.facts{display:flex;gap:clamp(18px,3vw,36px);margin-top:28px;flex-wrap:wrap}
+.facts div{display:flex;flex-direction:column}
+.facts .v{font-family:var(--serif);font-size:2rem;line-height:1;font-weight:500}
+.facts .l{font-size:var(--xs);color:var(--t2);margin-top:6px;font-family:var(--mono);letter-spacing:.04em;text-transform:uppercase}
 
-/* LIVE DEBATE TERMINAL */
-.term{background:var(--bg-1);border:1px solid var(--hair-2);border-radius:var(--r3);overflow:hidden}
-.term-top{background:var(--bg-2);border-bottom:1px solid var(--hair);padding:11px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.term-ttl{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:var(--xs);color:var(--t2)}
+/* THE CHAMBER (signature) */
+.chamber{position:relative;background:var(--night);color:var(--nt1);border-radius:18px;padding:22px;overflow:hidden;box-shadow:0 40px 80px -40px rgba(14,19,23,.55),0 0 0 1px rgba(14,19,23,.6)}
+.chamber::before{content:"";position:absolute;inset:0;background-image:linear-gradient(var(--nrule) 1px,transparent 1px);background-size:100% 32px;opacity:.35;pointer-events:none;mask-image:linear-gradient(180deg,transparent,#000 20%,#000 80%,transparent)}
+.chamber > *{position:relative}
+.ch-top{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--nt3)}
+.ch-top .l{display:flex;gap:8px;align-items:center;color:var(--nt2)}
+.ch-ctl{display:flex;gap:6px;align-items:center}
+.ch-ctl button{font-family:var(--mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;color:var(--nt2);border:1px solid var(--nrule);border-radius:999px;padding:4px 10px;transition:color .2s,border-color .2s}
+.ch-ctl button:hover{color:var(--nt1);border-color:rgba(236,232,222,.35)}
+.ch-doc{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin-top:18px;padding-bottom:16px;border-bottom:1px solid var(--nrule)}
+.ch-tk{font-family:var(--serif);font-size:2.6rem;line-height:.9;letter-spacing:-.02em}
+.ch-nm{font-size:var(--xs);color:var(--nt2);margin-top:8px;max-width:36ch;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ch-px{text-align:right;white-space:nowrap;font-family:var(--mono);font-size:.78rem;color:var(--nt2)}
+.ch-px b{display:block;font-size:1.05rem;color:var(--nt1);font-weight:500}
+/* rail */
+.ch-rail{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:16px}
+.ch-step{font-family:var(--mono);font-size:.62rem;letter-spacing:.07em;text-transform:uppercase;color:var(--nt3);transition:color .4s}
+.ch-step i{display:block;height:2px;background:var(--nrule);margin-bottom:7px;position:relative;overflow:hidden;border-radius:2px}
+.ch-step i::after{content:"";position:absolute;inset:0;background:var(--nt1);transform:scaleX(0);transform-origin:left;transition:transform var(--d,1s) linear}
+.ch-step.on{color:var(--nt1)}.ch-step.on i::after{transform:scaleX(1)}
+.ch-step.done{color:var(--nt2)}.ch-step.done i::after{transform:scaleX(1);background:var(--nt2);transition:none}
+/* analysts */
+.ch-an{display:grid;grid-template-columns:1fr 1fr;gap:6px 18px;margin-top:16px}
+.an{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;font-size:.78rem;color:var(--nt2);padding:6px 0}
+.an .n{font-family:var(--mono);font-size:.62rem;color:var(--nt3)}
+.an .b{height:3px;border-radius:2px;background:var(--nrule);position:relative;overflow:hidden}
+.an .b::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(236,232,222,.25),var(--nt1));transform:scaleX(0);transform-origin:left;transition:transform .9s var(--ease)}
+.an .s{font-family:var(--mono);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;color:var(--nt3);width:44px;text-align:right;transition:color .3s}
+.an.go .b::after{transform:scaleX(1)}
+.an.ok .s{color:var(--bull-l)}
+.an .lbl{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;grid-column:1/-1;display:none}
+/* debate */
+.ch-deb{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.side{border:1px solid var(--nrule);border-radius:12px;padding:12px 14px 14px;min-height:150px;transition:border-color .4s,background .4s,opacity .4s;opacity:.55}
+.side h4{font-family:var(--mono);font-size:.62rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center}
+.side.bull h4{color:var(--bull-l)}.side.bear h4{color:var(--bear-l)}
+.side p{font-family:var(--serif);font-size:.98rem;line-height:1.38;color:var(--nt1);margin-top:8px;height:calc(1.38em * 5);display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;overflow:hidden}
+.side.live{opacity:1}
+.side.bull.live{border-color:rgba(63,167,119,.45);background:rgba(63,167,119,.06)}
+.side.bear.live{border-color:rgba(224,106,85,.45);background:rgba(224,106,85,.06)}
+.side.said{opacity:.85}
+.mic{width:7px;height:7px;border-radius:50%;background:currentColor;opacity:0}
+.side.live .mic{opacity:1;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.25}}
+.typing::after{content:"";display:inline-block;width:.5ch;height:1em;background:var(--nt1);margin-left:2px;vertical-align:-2px;animation:blink .8s infinite}
+/* gauge */
+.ch-gauge{margin-top:16px}
+.g-lbl{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--nt3)}
+.g-lbl .bear{color:var(--bear-l)}.g-lbl .bull{color:var(--bull-l)}
+.g-trk{position:relative;height:26px;margin-top:6px;background:repeating-linear-gradient(90deg,var(--nrule) 0 1px,transparent 1px 10%);border-bottom:1px solid var(--nrule)}
+.g-trk::before{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:rgba(236,232,222,.35)}
+.g-fill{position:absolute;top:11px;height:4px;border-radius:2px;left:50%;width:0;transition:left 1.1s var(--ease),width 1.1s var(--ease),background .6s}
+.g-pin{position:absolute;top:3px;width:2px;height:20px;background:var(--nt1);left:calc(50% - 1px);transition:left 1.1s var(--ease);border-radius:2px}
+.g-pin::after{content:"";position:absolute;left:-4px;top:-5px;width:10px;height:10px;border-radius:50%;background:var(--nt1)}
+.g-cap{font-size:.72rem;color:var(--nt3);margin-top:8px;min-height:1.2em}
+/* ruling */
+.ch-rul{margin-top:14px;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:center;padding:14px;border-radius:12px;background:var(--night-2);border:1px solid var(--nrule);min-height:92px}
+.stamp{width:84px;height:84px;border-radius:50%;border:1.5px solid var(--nrule);display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--mono);font-size:.56rem;letter-spacing:.08em;text-transform:uppercase;color:var(--nt3);transition:border-color .5s,color .5s,transform .6s cubic-bezier(.3,1.6,.5,1);transform:scale(.92)}
+.stamp b{font-family:var(--serif);font-size:1.45rem;font-weight:600;letter-spacing:0;line-height:1.1;margin-top:2px;text-transform:none}
+.stamp.BUY{border-color:var(--bull-l);color:var(--bull-l);transform:scale(1) rotate(-6deg)}
+.stamp.SELL{border-color:var(--bear-l);color:var(--bear-l);transform:scale(1) rotate(-6deg)}
+.stamp.HOLD{border-color:var(--brass-l);color:var(--brass-l);transform:scale(1) rotate(-6deg)}
+.rul-t{font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--nt3)}
+.rul-x{font-size:.85rem;color:var(--nt2);margin-top:6px;line-height:1.45;min-height:calc(1.45em * 3);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;opacity:0;transition:opacity .6s}
+.ch-rul.on .rul-x{opacity:1}
+.rul-a{display:inline-block;margin-top:8px;font-size:.78rem;color:var(--nt1);text-decoration:none;border-bottom:1px solid rgba(236,232,222,.3);opacity:0;transition:opacity .6s .2s}
+.ch-rul.on .rul-a{opacity:1}
+.ch-foot{display:flex;justify-content:space-between;gap:10px;margin-top:14px;font-size:.68rem;color:var(--nt3)}
+.ch-dots{display:flex;gap:5px;align-items:center}
+.ch-dots button{width:6px;height:6px;border-radius:50%;background:var(--nrule);padding:0}
+.ch-dots button.on{background:var(--nt1)}
+
+/* TAPE */
+.tape{border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);overflow:hidden;background:var(--paper-2);position:relative}
+.tape::before,.tape::after{content:"";position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none}
+.tape::before{left:0;background:linear-gradient(90deg,var(--paper-2),transparent)}.tape::after{right:0;background:linear-gradient(-90deg,var(--paper-2),transparent)}
+.tape-in{display:flex;width:max-content;animation:tape 60s linear infinite}
+.tape:hover .tape-in{animation-play-state:paused}
+@keyframes tape{to{transform:translateX(-50%)}}
+.tape a{display:inline-flex;gap:10px;align-items:center;padding:13px 26px;font-family:var(--mono);font-size:.78rem;text-decoration:none;white-space:nowrap;border-right:1px solid var(--rule)}
+.tape a .t{font-weight:600}.tape a .p{color:var(--t2)}.tape a .d{color:var(--t3);font-size:.7rem}
+.tape a:hover .t{text-decoration:underline}
+
+/* SECTIONS */
+.sec{padding:clamp(72px,9vw,128px) 0}
+.sec-h{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:end}
+.sec-h .sd{margin-top:0}
+
+/* Readers */
+.readers{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:20px;margin-top:56px}
+.rd-card{border-radius:var(--r3);padding:clamp(24px,3vw,40px);border:1px solid var(--rule);background:var(--card);display:flex;flex-direction:column}
+.rd-card.pro{background:var(--ink);color:var(--nt1);border-color:var(--ink)}
+.rd-card .tag{font-family:var(--mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--t2)}
+.rd-card.pro .tag{color:var(--nt3)}
+.rd-card h3{font-size:clamp(1.6rem,1.2rem + 1.4vw,2.3rem);margin-top:14px;max-width:18ch}
+.rd-card > p{margin-top:14px;color:var(--ink-2);max-width:50ch}
+.rd-card.pro > p{color:var(--nt2)}
+.rd-card ul{list-style:none;margin-top:22px;border-top:1px solid var(--rule)}
+.rd-card.pro ul{border-color:var(--nrule)}
+.rd-card li{padding:12px 0;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:28px 1fr;font-size:var(--sm)}
+.rd-card.pro li{border-color:var(--nrule)}
+.rd-card li span{font-family:var(--mono);font-size:.7rem;color:var(--t3);padding-top:2px}
+.rd-card .acts{margin-top:auto;padding-top:26px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.rd-card.pro .btn-ghost{color:var(--nt1);border-color:rgba(236,232,222,.3)}
+.rd-card.pro .btn-ghost:hover{border-color:var(--nt1)}
+.rd-card.pro .lnk{border-color:rgba(236,232,222,.3)}
+
+/* Pipeline */
+.pipe-ctl{display:inline-flex;border:1px solid var(--rule-2);border-radius:999px;padding:3px;margin-top:28px;background:var(--card)}
+.pipe-ctl button{padding:8px 16px;border-radius:999px;font-size:var(--sm);color:var(--t2);transition:background .25s,color .25s}
+.pipe-ctl button.on{background:var(--ink);color:var(--paper)}
+.pipe{margin-top:44px;position:relative}
+.pipe::before{content:"";position:absolute;left:23px;top:8px;bottom:8px;width:1px;background:var(--rule)}
+.pipe-prog{position:absolute;left:23px;top:8px;width:1px;background:var(--ink);height:0;transition:height .2s linear}
+.stg{display:grid;grid-template-columns:48px minmax(0,.9fr) minmax(0,1.6fr);gap:24px;padding:26px 0;border-bottom:1px solid var(--rule);align-items:start}
+.stg:last-child{border-bottom:0}
+.stg .n{width:47px;height:47px;border-radius:50%;background:var(--paper);border:1px solid var(--rule-2);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:.75rem;position:relative;z-index:1;transition:background .4s,color .4s,border-color .4s}
+.stg.lit .n{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.stg.deb .n{background:var(--card)}
+.stg.deb.lit .n{background:linear-gradient(90deg,var(--bull) 50%,var(--bear) 50%);border-color:transparent;color:#fff}
+.stg.rul.lit .n{background:var(--brass);border-color:var(--brass)}
+.stg h3{font-size:1.45rem;padding-top:8px}
+.stg .who{font-family:var(--mono);font-size:.7rem;color:var(--t3);letter-spacing:.05em;text-transform:uppercase;margin-top:6px}
+.stg .txt{padding-top:10px;color:var(--ink-2);font-size:var(--lg);line-height:1.5}
+.stg .tech{display:none;font-family:var(--mono);font-size:.88rem;line-height:1.6;color:var(--ink-2)}
+.pipe-wrap[data-view="tech"] .stg .plain{display:none}
+.pipe-wrap[data-view="tech"] .stg .tech{display:block}
+
+/* Night section (record) */
+.night{background:var(--night);color:var(--nt1)}
+.night .kick{color:var(--nt3)}
+.night .sd{color:var(--nt2)}
+.term{margin-top:52px;border:1px solid var(--nrule);border-radius:var(--r3);overflow:hidden;background:var(--night-2)}
+.term-top{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 16px;border-bottom:1px solid var(--nrule);flex-wrap:wrap}
+.term-ttl{display:flex;gap:10px;align-items:center;font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--nt2)}
 .tabs{display:flex;gap:4px;flex-wrap:wrap}
-.tab{font-family:var(--mono);font-size:11px;font-weight:600;padding:4px 9px;border-radius:var(--r1);border:1px solid var(--hair);background:var(--bg-0);color:var(--t3);transition:color .12s,border-color .12s}
-.tab:hover{color:var(--t1);border-color:var(--hair-2)}
-.tab.on{background:var(--blue-dim);color:var(--blue);border-color:var(--blue-bd)}
-.term-body{padding:14px;display:flex;flex-direction:column;gap:12px}
-.tgrid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:var(--r2);overflow:hidden}
-.tgrid>div{background:var(--bg-0);padding:11px 12px;min-width:0}
-.tl{font-family:var(--mono);font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:5px;white-space:nowrap}
-.tm{font-family:var(--mono);font-size:clamp(1.05rem,1.2vw,1.3rem);font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ts{font-size:var(--xs);color:var(--t2);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.vb{display:inline-block;font-family:var(--mono);font-size:var(--xs);font-weight:700;padding:3px 9px;border-radius:var(--r1);border:1px solid}
-.vb.BUY{color:var(--green);background:var(--green-dim);border-color:var(--green-bd)}
-.vb.SELL{color:var(--red);background:var(--red-dim);border-color:var(--red-bd)}
-.vb.HOLD{color:var(--amber);background:var(--amber-dim);border-color:var(--amber-bd)}
-.arg{background:var(--bg-0);border:1px solid var(--hair);border-radius:var(--r2);padding:12px 14px}
-.arg-h{display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
-.arg-h .who{font-weight:700}
-.arg-h .plain{color:var(--t3)}
-.arg p{font-size:var(--sm);color:var(--t2);line-height:1.6}
-.arg.bull .who{color:var(--green)}
-.arg.bear .who{color:var(--red)}
-.arg.judge{background:var(--bg-2);border-color:var(--hair-2)}
-.arg.judge .who{color:var(--t1)}
-.arg.judge p{color:var(--t1)}
-.term-foot{background:var(--bg-2);border-top:1px solid var(--hair);padding:11px 14px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-family:var(--mono);font-size:var(--xs);color:var(--t3)}
-.term-foot a{color:var(--blue);font-weight:600}
+.tab{font-family:var(--mono);font-size:.74rem;padding:6px 12px;border-radius:999px;color:var(--nt2);border:1px solid transparent;transition:all .2s}
+.tab:hover{color:var(--nt1);border-color:var(--nrule)}
+.tab.on{background:var(--nt1);color:var(--night)}
+.term-meta{display:grid;grid-template-columns:1.3fr 1fr 1fr;border-bottom:1px solid var(--nrule)}
+.term-meta > div{padding:18px 20px;border-right:1px solid var(--nrule)}
+.term-meta > div:last-child{border-right:0}
+.tl{font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--nt3)}
+.tm{font-family:var(--serif);font-size:1.6rem;margin-top:6px;line-height:1.1}
+.tm .vb{font-size:.8rem;vertical-align:middle}
+.night .vb.BUY{color:var(--bull-l);border-color:rgba(63,167,119,.4);background:rgba(63,167,119,.08)}
+.night .vb.SELL{color:var(--bear-l);border-color:rgba(224,106,85,.4);background:rgba(224,106,85,.08)}
+.night .vb.HOLD{color:var(--brass-l);border-color:rgba(211,164,74,.4);background:rgba(211,164,74,.08)}
+.ts{font-size:var(--xs);color:var(--nt2);margin-top:6px}
+.term-body{display:grid;grid-template-columns:1fr 1fr 1fr}
+.tb{padding:22px 20px;border-right:1px solid var(--nrule)}
+.tb:last-child{border-right:0}
+.tb h4{font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;font-weight:500;display:flex;justify-content:space-between;color:var(--nt3)}
+.tb.b h4 .r{color:var(--bull-l)}.tb.s h4 .r{color:var(--bear-l)}.tb.j h4 .r{color:var(--brass-l)}
+.tb p{font-family:var(--serif);font-size:1.08rem;line-height:1.45;margin-top:12px;color:var(--nt1)}
+.term-f{display:flex;justify-content:space-between;gap:12px;padding:14px 20px;border-top:1px solid var(--nrule);font-size:var(--xs);color:var(--nt3);flex-wrap:wrap}
+.term-f a{color:var(--nt1)}
+.log{width:100%;border-collapse:collapse;margin-top:28px;font-size:var(--sm)}
+.log th{font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--nt3);font-weight:500;text-align:left;padding:12px 14px;border-bottom:1px solid var(--nrule)}
+.log td{padding:14px;border-bottom:1px solid var(--nrule);color:var(--nt2)}
+.log tr{transition:background .2s}
+.log tbody tr:hover{background:rgba(236,232,222,.03)}
+.log .tk{font-family:var(--mono);font-weight:600;color:var(--nt1)}
+.log .px,.log .dt{font-family:var(--mono);font-size:.8rem}
+.log .r{text-align:right}
+.log .rd{color:var(--nt1);text-decoration:none;font-weight:500}
+.log .rd:hover{text-decoration:underline}
+.log-f{display:flex;justify-content:space-between;gap:12px;margin-top:18px;font-size:var(--xs);color:var(--nt3);flex-wrap:wrap}
+.log-f a{color:var(--nt1)}
 
-/* AUDIENCE LEDGER */
-.ledger{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--hair-2);border:1px solid var(--hair-2);border-radius:var(--r3);overflow:hidden}
-.lc{background:var(--bg-1);padding:28px}
-.lc-idx{display:flex;justify-content:space-between;font-family:var(--mono);font-size:var(--xs);color:var(--t3);text-transform:uppercase;letter-spacing:.06em;border-bottom:1px solid var(--hair);padding-bottom:10px;margin-bottom:16px}
-.lc h3{font-size:var(--lg);font-weight:600;margin-bottom:8px;letter-spacing:-.01em}
-.lc>p{font-size:var(--sm);color:var(--t2);line-height:1.65;margin-bottom:18px}
-.lc ul{list-style:none;display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--hair);padding-top:16px}
-.lc li{display:grid;grid-template-columns:16px 1fr;gap:8px;font-size:var(--sm);color:var(--t2);line-height:1.5}
-.lc li b{color:var(--t1);font-weight:600}
-.lc li svg{width:14px;height:14px;color:var(--green);margin-top:3px}
-.lc .lc-cta{margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-family:var(--mono);font-size:var(--xs);color:var(--t3)}
-.lc .lc-cta a.lnk{color:var(--blue);font-weight:600}
+/* Thesis memo */
+.memo-grid{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(32px,5vw,80px);align-items:start}
+.steps{list-style:none;margin-top:30px;counter-reset:s}
+.steps li{counter-increment:s;display:grid;grid-template-columns:36px 1fr;padding:14px 0;border-top:1px solid var(--rule);color:var(--ink-2)}
+.steps li::before{content:counter(s,decimal-leading-zero);font-family:var(--mono);font-size:.72rem;color:var(--t3);padding-top:3px}
+.memo{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:clamp(24px,3.4vw,44px);position:relative;box-shadow:0 30px 60px -36px rgba(17,22,27,.35);transform:rotate(-.4deg)}
+.memo::before{content:"";position:absolute;inset:8px -8px -8px 8px;border:1px solid var(--rule);border-radius:4px;z-index:-1;background:var(--paper-2)}
+.memo-h{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);padding-bottom:14px;border-bottom:1px solid var(--rule)}
+.memo-h a{color:var(--ink)}
+.memo .q-l{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);margin-top:22px}
+.memo blockquote{font-family:var(--serif);font-size:clamp(1.35rem,1.1rem + .9vw,1.8rem);line-height:1.3;margin-top:10px;color:var(--ink)}
+.hl{position:relative;white-space:nowrap}
+.hl svg{position:absolute;left:-2%;bottom:-8px;width:104%;height:12px;overflow:visible}
+.hl path{fill:none;stroke:var(--bear);stroke-width:2.2;stroke-linecap:round;stroke-dasharray:240;stroke-dashoffset:240;transition:stroke-dashoffset 1.2s var(--ease) .4s}
+.memo.in .hl path{stroke-dashoffset:0}
+.memo .ruling{margin-top:24px;padding:16px 18px;border-left:3px solid var(--brass);background:var(--amber-dim);font-size:var(--base);color:var(--ink-2)}
+.memo .ruling b{color:var(--ink)}
+.memo-2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:20px}
+.memo-2 div{font-size:var(--sm);color:var(--ink-2)}
+.memo-2 h5{font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;font-weight:500;margin-bottom:6px}
+.memo-2 .w h5{color:var(--bear)}.memo-2 .k h5{color:var(--ink)}
+.margin-note{position:absolute;right:18px;top:-30px;transform:rotate(2deg);text-align:right;font-family:var(--serif);font-style:italic;color:var(--bear);font-size:1rem;width:auto;line-height:1.3;opacity:0;transition:opacity .6s 1.4s}
+.memo.in .margin-note{opacity:1}
 
-/* PIPELINE TABLE */
-.ptable{width:100%;border-collapse:collapse;border:1px solid var(--hair-2);border-radius:var(--r3);overflow:hidden;background:var(--bg-1)}
-.ptable th,.ptable td{text-align:left;padding:14px 16px;border-bottom:1px solid var(--hair);vertical-align:top}
-.ptable th{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;background:var(--bg-2)}
-.ptable tr:last-child td{border-bottom:none}
-.ptable td.n{font-family:var(--mono);font-size:var(--xs);color:var(--t3);width:56px}
-.ptable td.stage{font-weight:600;font-size:var(--sm);width:23%}
-.ptable td.stage small{display:block;font-family:var(--mono);font-size:11px;font-weight:500;color:var(--t3);margin-top:3px;text-transform:uppercase;letter-spacing:.04em}
-.ptable td.tech{font-family:var(--mono);font-size:var(--xs);color:var(--t2);line-height:1.6;width:38%}
-.ptable td.plain{font-size:var(--sm);color:var(--t2);line-height:1.6}
-.ptable tr.hl td{background:var(--bg-2)}
-
-/* THESIS EXCERPT */
-.thesis{display:grid;grid-template-columns:.9fr 1.1fr;gap:44px;align-items:start}
-.doc{background:var(--bg-1);border:1px solid var(--hair-2);border-radius:var(--r3);overflow:hidden}
-.doc-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 16px;background:var(--bg-2);border-bottom:1px solid var(--hair);font-family:var(--mono);font-size:var(--xs);color:var(--t2);text-transform:uppercase;letter-spacing:.05em}
-.doc-top a{color:var(--blue);text-transform:none;letter-spacing:0;font-weight:600}
-.doc-body{padding:20px}
-.quote{font-size:var(--sm);color:var(--t2);border-left:0;padding:12px 14px;background:var(--bg-0);border:1px solid var(--hair);border-radius:var(--r2);margin-bottom:16px}
-.quote b{display:block;font-family:var(--mono);font-size:11px;color:var(--t3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;font-weight:500}
-.ruling{font-size:var(--base);line-height:1.65;margin-bottom:16px}
-.ruling b{color:var(--amber)}
-.doc-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:var(--r2);overflow:hidden}
-.doc-grid>div{background:var(--bg-0);padding:12px 14px;font-size:var(--sm);color:var(--t2);line-height:1.6}
-.doc-grid b{display:block;font-family:var(--mono);font-size:11px;color:var(--t1);text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
-.steps{list-style:none;counter-reset:s;display:flex;flex-direction:column;gap:0;border-top:1px solid var(--hair);margin-top:22px}
-.steps li{counter-increment:s;display:grid;grid-template-columns:40px 1fr;gap:10px;padding:14px 0;border-bottom:1px solid var(--hair);font-size:var(--sm);color:var(--t2);line-height:1.55}
-.steps li::before{content:"0" counter(s);font-family:var(--mono);font-size:var(--xs);color:var(--blue);padding-top:2px}
-.steps li b{color:var(--t1);font-weight:600}
-
-/* DEBATE LOG TABLE */
-.log{width:100%;border-collapse:collapse;background:var(--bg-1);border:1px solid var(--hair-2);border-radius:var(--r3);overflow:hidden}
-.log th,.log td{padding:13px 16px;text-align:left;border-bottom:1px solid var(--hair);font-size:var(--sm)}
-.log th{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;background:var(--bg-2)}
-.log td{color:var(--t2)}
-.log td.tk{font-family:var(--mono);font-weight:700;color:var(--t1)}
-.log td.px,.log td.dt{font-family:var(--mono);font-size:var(--xs)}
-.log td.r{text-align:right}
-.log tr:last-child td{border-bottom:none}
-.log tbody tr{transition:background .12s}
-.log tbody tr:hover{background:var(--bg-2)}
-.log a.rd{font-family:var(--mono);font-size:var(--xs);color:var(--blue);font-weight:600;white-space:nowrap}
-.log-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px;font-family:var(--mono);font-size:var(--xs);color:var(--t3)}
-.log-foot a{color:var(--blue);font-weight:600}
-
-/* COMPARE */
-.cmp{width:100%;border-collapse:collapse;background:var(--bg-1);border:1px solid var(--hair-2);border-radius:var(--r3);overflow:hidden}
-.cmp th,.cmp td{padding:14px 16px;border-bottom:1px solid var(--hair);text-align:left;font-size:var(--sm);vertical-align:top}
-.cmp th{font-family:var(--mono);font-size:11px;font-weight:500;color:var(--t3);text-transform:uppercase;letter-spacing:.06em;background:var(--bg-2)}
-.cmp th.us{color:var(--blue)}
+/* Compare */
+.cmp-wrap{margin-top:48px;overflow-x:auto}
+.cmp{width:100%;border-collapse:collapse;min-width:720px}
+.cmp th,.cmp td{text-align:left;padding:18px 18px;border-bottom:1px solid var(--rule);vertical-align:top;font-size:var(--sm)}
+.cmp th{font-family:var(--mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);font-weight:500}
+.cmp td:first-child{font-weight:500;color:var(--ink);width:18%}
 .cmp td{color:var(--t2)}
-.cmp td:first-child{color:var(--t1);font-weight:500;width:26%}
-.cmp td.us{color:var(--t1)}
-.cmp tr:last-child td{border-bottom:none}
+.cmp .us{background:var(--card);color:var(--ink);border-left:1px solid var(--rule);border-right:1px solid var(--rule)}
+.cmp th.us{color:var(--ink);border-top:2px solid var(--ink)}
 
-/* PRICING */
-.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hair-2);border:1px solid var(--hair-2);border-radius:var(--r3);overflow:hidden}
-.plan{background:var(--bg-1);padding:26px;display:flex;flex-direction:column}
-.plan.feat{background:var(--bg-2)}
-.p-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-.p-name{font-family:var(--mono);font-size:var(--sm);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
-.p-pill{font-family:var(--mono);font-size:11px;padding:2px 7px;border-radius:var(--r1);border:1px solid var(--hair-2);color:var(--t2)}
-.p-pill.b{color:var(--blue);border-color:var(--blue-bd);background:var(--blue-dim)}
-.p-price{display:flex;align-items:baseline;gap:6px;margin-bottom:6px}
-.p-price .n{font-family:var(--mono);font-size:var(--xxl);font-weight:700;letter-spacing:-.03em;line-height:1}
-.p-price .per{font-family:var(--mono);font-size:var(--xs);color:var(--t3)}
-.p-for{font-size:var(--sm);color:var(--t2);line-height:1.55;margin-bottom:18px;min-height:44px}
-.p-list{list-style:none;display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--hair);padding-top:16px;margin-bottom:22px;flex:1}
-.p-list li{display:grid;grid-template-columns:16px 1fr;gap:8px;font-size:var(--sm);color:var(--t2);line-height:1.45}
-.p-list li svg{width:14px;height:14px;color:var(--green);margin-top:3px}
-.p-list li.off{color:var(--t3)}
-.p-list li.off svg{color:var(--t3)}
-.plan .btn{width:100%}
-.bill{display:inline-flex;border:1px solid var(--hair-2);border-radius:var(--r2);padding:3px;background:var(--bg-0);margin-bottom:10px}
-.bill button{font-family:var(--mono);font-size:var(--xs);font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:7px 12px;border-radius:var(--r1);color:var(--t3)}
-.bill button span{color:var(--green);font-weight:500;text-transform:none;letter-spacing:0;margin-left:4px}
-.bill button.on{background:var(--bg-3);color:var(--t1)}
-.p-sub{font-family:var(--mono);font-size:11px;color:var(--t3);margin-bottom:10px;min-height:14px}
-.p-note{margin-top:14px;font-family:var(--mono);font-size:var(--xs);color:var(--t3);display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
-.p-note a{color:var(--t2);text-decoration:underline;text-underline-offset:2px}
+/* Pricing */
+.bill{display:inline-flex;border:1px solid var(--rule-2);border-radius:999px;padding:3px;background:var(--card)}
+.bill button{padding:8px 16px;border-radius:999px;font-size:var(--sm);color:var(--t2);transition:background .25s,color .25s;display:inline-flex;gap:8px;align-items:center}
+.bill button.on{background:var(--ink);color:var(--paper)}
+.bill .sv{font-family:var(--mono);font-size:.66rem;color:var(--bull)}
+.bill button.on .sv{color:#9fd7b9}
+.plans{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:44px}
+.plan{border:1px solid var(--rule);border-radius:var(--r3);padding:28px;background:var(--card);display:flex;flex-direction:column}
+.plan.feat{background:var(--ink);color:var(--nt1);border-color:var(--ink);position:relative}
+.p-top{display:flex;justify-content:space-between;align-items:center}
+.p-name{font-family:var(--serif);font-size:1.6rem;font-weight:500}
+.p-tag{font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--t3)}
+.plan.feat .p-tag{color:var(--brass-l)}
+.p-price{margin-top:18px;display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.p-price .n{font-family:var(--serif);font-size:3rem;line-height:1;letter-spacing:-.02em}
+.p-price .per{font-size:var(--sm);color:var(--t2)}
+.plan.feat .p-price .per{color:var(--nt2)}
+.p-sub{font-size:var(--xs);color:var(--t3);margin-top:6px;font-family:var(--mono)}
+.plan.feat .p-sub{color:var(--nt3)}
+.p-for{margin-top:14px;color:var(--ink-2);font-size:var(--sm);min-height:3em}
+.plan.feat .p-for{color:var(--nt2)}
+.p-list{list-style:none;margin:20px 0 26px;border-top:1px solid var(--rule)}
+.plan.feat .p-list{border-color:var(--nrule)}
+.p-list li{padding:10px 0 10px 22px;border-bottom:1px solid var(--rule);font-size:var(--sm);position:relative}
+.plan.feat .p-list li{border-color:var(--nrule)}
+.p-list li::before{content:"";position:absolute;left:2px;top:17px;width:9px;height:5px;border-left:1.5px solid var(--bull);border-bottom:1.5px solid var(--bull);transform:rotate(-45deg)}
+.plan.feat .p-list li::before{border-color:var(--bull-l)}
+.p-list li.off{color:var(--t3);text-decoration:line-through;text-decoration-color:var(--rule-2)}
+.p-list li.off::before{border:0;height:1.5px;width:9px;background:var(--t3);transform:none;top:20px}
+.plan .btn{margin-top:auto;width:100%}
+.plan.feat .btn-pri,.plan.feat .btn-blue{background:var(--paper);color:var(--ink)}
+.plan.feat .btn-pri:hover,.plan.feat .btn-blue:hover{background:#fff}
+.extras{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.extra{border:1px solid var(--rule);border-radius:var(--r3);padding:22px 24px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;background:transparent}
+.extra.fd{border-color:var(--amber-bd);background:linear-gradient(180deg,rgba(155,116,38,.06),transparent)}
+.extra .k{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--t3)}
+.extra.fd .k{color:var(--brass)}
+.extra .h{font-weight:600;margin-top:4px}
+.extra .d{font-size:var(--xs);color:var(--t2);margin-top:4px;max-width:52ch}
+.extra .btn{flex-shrink:0}
+.p-note{display:flex;justify-content:space-between;gap:12px;margin-top:20px;font-size:var(--xs);color:var(--t3);flex-wrap:wrap}
+.p-note a{color:var(--ink)}
 
 /* FAQ */
-.faq{display:grid;grid-template-columns:.8fr 1.2fr;gap:44px;align-items:start}
-.fq{border:1px solid var(--hair-2);border-radius:var(--r3);overflow:hidden;background:var(--bg-1)}
-.fi{border-bottom:1px solid var(--hair)}
-.fi:last-child{border-bottom:none}
-.fqb{width:100%;padding:17px 20px;display:flex;justify-content:space-between;align-items:center;gap:14px;text-align:left;font-size:var(--sm);font-weight:500;color:var(--t1)}
-.fqb:hover{background:var(--bg-2)}
-.fqb .ic{font-family:var(--mono);color:var(--t3);transition:transform .2s;flex-shrink:0}
-.fi.open .fqb .ic{transform:rotate(45deg);color:var(--blue)}
-.fa{max-height:0;overflow:hidden;transition:max-height .3s ease}
-.fi.open .fa{max-height:640px}
-.fa div{padding:0 20px 18px;font-size:var(--sm);color:var(--t2);line-height:1.7}
+.faq{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(32px,5vw,80px)}
+.fq{border-top:1px solid var(--rule)}
+.fi{border-bottom:1px solid var(--rule)}
+.fqb{width:100%;text-align:left;padding:22px 0;display:flex;justify-content:space-between;gap:20px;font-family:var(--serif);font-size:1.3rem;line-height:1.3;align-items:center}
+.fqb .ic{font-family:var(--sans);font-size:1.3rem;font-weight:300;transition:transform .3s var(--ease);flex-shrink:0;width:28px;height:28px;border:1px solid var(--rule-2);border-radius:50%;display:flex;align-items:center;justify-content:center}
+.fi.open .ic{transform:rotate(45deg)}
+.fa{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s var(--ease)}
+.fa > div{overflow:hidden;color:var(--ink-2);max-width:62ch}
+.fi.open .fa{grid-template-rows:1fr}
+.fi.open .fa > div{padding-bottom:24px}
 
-/* CLOSING CTA */
-.close{display:grid;grid-template-columns:1.2fr .8fr;gap:32px;align-items:center;background:var(--bg-1);border:1px solid var(--hair-2);border-radius:var(--r3);padding:32px}
-.close h2{font-size:var(--xl);font-weight:700;letter-spacing:-.02em;margin-bottom:8px}
-.close p{font-size:var(--sm);color:var(--t2)}
-.close .acts{justify-content:flex-end;flex-wrap:wrap}
+/* Close */
+.close{padding:clamp(80px,10vw,140px) 0;text-align:center;border-top:1px solid var(--rule)}
+.close h2{font-size:clamp(2.4rem,1.5rem + 3.6vw,4.6rem);max-width:18ch;margin:0 auto;letter-spacing:-.025em}
+.close h2 em{font-style:italic;color:var(--bear)}
+.close p{color:var(--t2);margin-top:18px;font-size:var(--lg)}
+.close .acts{display:flex;gap:12px;justify-content:center;margin-top:32px;flex-wrap:wrap}
 
-/* FOOTER */
-footer.ft{padding:36px 0 44px}
-.ft-in{display:flex;justify-content:space-between;align-items:flex-start;gap:24px;flex-wrap:wrap;font-family:var(--mono);font-size:var(--xs);color:var(--t3)}
-.ft-nav{display:flex;gap:20px;flex-wrap:wrap}
-.ft-nav a{color:var(--t2)}
-.ft-nav a:hover{color:var(--t1)}
-.ft-d{max-width:420px;line-height:1.6}
+/* Footer */
+.ft{background:var(--ink);color:var(--nt2);padding:56px 0 40px;font-size:var(--sm)}
+.ft-in{display:grid;grid-template-columns:1fr 2fr;gap:40px}
+.ft .brand{color:var(--nt1)}.ft .brand em{color:var(--brass-l)}
+.ft-nav{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:flex-end}
+.ft-nav a{text-decoration:none;color:var(--nt2)}.ft-nav a:hover{color:var(--nt1)}
+.ft-d{grid-column:1/-1;border-top:1px solid var(--nrule);padding-top:24px;font-size:var(--xs);color:var(--nt3);max-width:90ch}
 
-/* MODALS */
-.mb{position:fixed;inset:0;background:rgba(5,6,8,.84);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);z-index:100;display:none;align-items:center;justify-content:center;padding:16px}
-.mb.open{display:flex}
-.mp{background:var(--bg-1);border:1px solid var(--hair-2);border-radius:var(--r3);width:100%;max-height:92vh;overflow-y:auto}
-.mh{display:flex;justify-content:space-between;align-items:center;padding:14px 20px;background:var(--bg-2);border-bottom:1px solid var(--hair)}
-.mh .t{font-family:var(--mono);font-size:var(--sm);font-weight:700;text-transform:uppercase;letter-spacing:.06em}
-.mx{font-family:var(--mono);font-size:var(--xs);color:var(--t3);padding:4px 9px;border:1px solid var(--hair);border-radius:var(--r1)}
-.mx:hover{color:var(--t1)}
-.mbody{padding:20px}
-
-
-/* ASK THE DESK */
-.desk-btn{position:fixed;right:20px;bottom:20px;z-index:90;display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:var(--xs);font-weight:600;letter-spacing:.04em;text-transform:uppercase;padding:11px 15px;border-radius:var(--r2);background:var(--bg-2);border:1px solid var(--hair-2);color:var(--t1);box-shadow:0 8px 24px rgba(0,0,0,.45)}
-.desk-btn:hover{border-color:rgba(255,255,255,.26);background:var(--bg-3)}
-.desk-btn .dot{background:var(--green)}
-.desk{position:fixed;right:20px;bottom:20px;z-index:95;width:380px;max-width:calc(100vw - 24px);height:540px;max-height:calc(100vh - 40px);background:var(--bg-1);border:1px solid var(--hair-2);border-radius:var(--r3);box-shadow:0 18px 48px rgba(0,0,0,.6);display:none;flex-direction:column;overflow:hidden}
-.desk.open{display:flex}
-.desk-h{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:var(--bg-2);border-bottom:1px solid var(--hair)}
-.desk-h .t{font-family:var(--mono);font-size:var(--xs);font-weight:700;text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center;gap:8px}
-.desk-h .s{font-family:var(--mono);font-size:11px;color:var(--t3);margin-top:2px}
-.desk-log{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px}
-.dm{font-size:var(--sm);line-height:1.55;padding:10px 12px;border-radius:var(--r2);max-width:92%;white-space:pre-wrap;word-wrap:break-word}
-.dm.a{background:var(--bg-0);border:1px solid var(--hair);color:var(--t2);align-self:flex-start}
-.dm.a b{color:var(--t1)}
-.dm.a a{color:var(--blue);text-decoration:underline;text-underline-offset:2px;word-break:break-all}
-.dm.u{background:var(--blue-dim);border:1px solid var(--blue-bd);color:var(--t1);align-self:flex-end}
-.dm.sys{font-family:var(--mono);font-size:11px;color:var(--t3);background:none;border:none;padding:0 2px}
-.desk-sug{display:flex;flex-wrap:wrap;gap:6px;padding:0 14px 10px}
-.desk-sug button{font-family:var(--mono);font-size:11px;padding:5px 9px;border-radius:var(--r1);border:1px solid var(--hair-2);background:var(--bg-0);color:var(--t2)}
-.desk-sug button:hover{color:var(--t1);border-color:rgba(255,255,255,.26)}
-.desk-f{border-top:1px solid var(--hair);padding:10px;display:flex;flex-direction:column;gap:8px;background:var(--bg-1)}
+/* Desk */
+.desk-btn{position:fixed;right:20px;bottom:20px;z-index:60;background:var(--ink);color:var(--paper);border-radius:999px;padding:12px 18px;font-size:var(--sm);font-weight:500;display:flex;gap:10px;align-items:center;box-shadow:0 12px 30px -10px rgba(17,22,27,.5);transition:transform .25s var(--ease)}
+.desk-btn:hover{transform:translateY(-2px)}
+.desk{position:fixed;right:20px;bottom:20px;z-index:61;width:min(380px,calc(100vw - 24px));max-height:min(600px,calc(100vh - 40px));background:var(--card);border:1px solid var(--rule);border-radius:16px;box-shadow:0 30px 60px -20px rgba(17,22,27,.4);display:flex;flex-direction:column;opacity:0;pointer-events:none;transform:translateY(12px) scale(.98);transition:opacity .25s,transform .3s var(--ease)}
+.desk.open{opacity:1;pointer-events:auto;transform:none}
+.desk-h{display:flex;justify-content:space-between;align-items:flex-start;padding:16px 18px;border-bottom:1px solid var(--rule)}
+.desk-h .t{font-weight:600;display:flex;gap:8px;align-items:center}
+.desk-h .s{font-size:var(--xs);color:var(--t3);margin-top:3px}
+.mx{font-size:var(--xs);color:var(--t2);border:1px solid var(--rule);border-radius:999px;padding:5px 12px}
+.mx:hover{color:var(--ink);border-color:var(--ink)}
+.desk-log{flex:1;overflow-y:auto;padding:16px 18px;display:flex;flex-direction:column;gap:10px;min-height:160px}
+.dm{font-size:var(--sm);line-height:1.5;padding:10px 12px;border-radius:12px;max-width:92%}
+.dm.a{background:var(--paper);color:var(--ink-2);align-self:flex-start}
+.dm.a a{color:var(--blue)}
+.dm.u{background:var(--ink);color:var(--paper);align-self:flex-end}
+.dm.sys{color:var(--t3);font-size:var(--xs);align-self:flex-start;padding:4px 0}
+.desk-sug{display:flex;flex-wrap:wrap;gap:6px;padding:0 18px 12px}
+.desk-sug button{font-size:.76rem;padding:5px 10px;border:1px solid var(--rule);border-radius:999px;color:var(--ink-2)}
+.desk-sug button:hover{border-color:var(--ink)}
+.desk-f{padding:12px 18px 14px;border-top:1px solid var(--rule)}
 .desk-row{display:flex;gap:8px}
-.desk-row .inp{min-height:40px;padding:9px 11px}
-.desk-row .btn{min-height:40px;padding:9px 13px}
+.desk-row .btn{border-radius:var(--r2)}
 .desk-esc{display:none;flex-direction:column;gap:8px}
 .desk-esc.on{display:flex}
-.desk-links{display:flex;justify-content:space-between;font-family:var(--mono);font-size:11px;color:var(--t3)}
-.desk-links button{color:var(--t2);text-decoration:underline;text-underline-offset:2px;font-size:11px;font-family:var(--mono)}
-@media(max-width:760px){
-  .desk-btn{right:12px;bottom:12px;padding:10px 13px}
-  .desk{right:8px;left:8px;bottom:8px;width:auto;height:min(78vh,560px)}
-}
+.desk-links{display:flex;justify-content:space-between;margin-top:10px;font-size:.72rem;color:var(--t3)}
+.desk-links button{text-decoration:underline;text-underline-offset:2px;font-size:.72rem;color:var(--t2)}
 
-/* RESPONSIVE */
-@media(max-width:980px){
-  .hero-grid,.thesis,.faq{grid-template-columns:1fr}
-}
-@media(max-width:860px){
+/* Modals */
+.mb{position:fixed;inset:0;z-index:100;background:rgba(17,22,27,.5);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:16px}
+.mb.open{display:flex}
+.mp{background:var(--card);border-radius:16px;width:100%;max-height:calc(100vh - 32px);overflow-y:auto;box-shadow:0 40px 80px -20px rgba(0,0,0,.4)}
+.mh{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--rule)}
+.mh .t{font-family:var(--serif);font-size:1.4rem}
+.mbody{padding:20px}
+.mbody .plans{margin-top:0;gap:10px}
+.mbody .plan{padding:18px}
+.mbody .p-price .n{font-size:2rem}
+
+/* Reveal (JS-enhanced only; content visible without JS) */
+.js .rv{opacity:0;transition:opacity .9s var(--ease)}
+.js .rv.in{opacity:1}
+
+/* Responsive */
+@media(max-width:1080px){
+  .hero-grid{grid-template-columns:1fr}
+  .chamber{max-width:640px}
   .nav{display:none}
   .ham{display:flex}
-  .acts .btn-ghost{display:none}
+  .hdr-act .btn-ghost{display:none}
+  .margin-note{display:none}
 }
-@media(max-width:760px){
-  .wrap,.hd-in,.ribbon-in{padding-left:16px;padding-right:16px}
-  .sec{padding:60px 0}
-  .hero{padding:32px 0 52px}
-  .shead,.ledger,.plans,.close{grid-template-columns:1fr}
-  .shead{gap:10px}
-  .spec{grid-template-columns:repeat(2,1fr)}
-  .tgrid{grid-template-columns:1fr 1fr}
-  .tgrid>div:first-child{grid-column:1/-1}
-  .frow{grid-template-columns:1fr}
-  .frow .btn{width:100%}
-  .doc-grid{grid-template-columns:1fr}
-  .close .acts{justify-content:flex-start}
-  .ribbon .hide-sm{display:none}
-  .acts .btn-pri{display:none}
-  .lc{padding:22px}
-  .plan{padding:22px}
-  /* pipeline: stack */
-  .ptable thead{display:none}
-  .ptable,.ptable tbody,.ptable tr,.ptable td{display:block;width:100%!important}
-  .ptable tr{padding:14px 16px;border-bottom:1px solid var(--hair)}
-  .ptable tr:last-child{border-bottom:none}
-  .ptable td{padding:0;border:none}
-  .ptable td.n{display:inline-block;width:auto!important;margin-right:8px}
-  .ptable td.stage{display:inline-block;width:auto!important}
-  .ptable td.tech{margin-top:8px}
-  .ptable td.plain{margin-top:6px}
-  .ptable td.tech::before{content:"Analyst view — ";color:var(--t3)}
-  .ptable td.plain::before{content:"Plain English — ";color:var(--t3);font-family:var(--mono);font-size:11px}
-  /* log: hide some cols */
+@media(max-width:860px){
+  .sec-h,.readers,.memo-grid,.faq,.plans,.extras,.ft-in{grid-template-columns:1fr}
+  .term-meta,.term-body{grid-template-columns:1fr}
+  .term-meta > div,.tb{border-right:0;border-bottom:1px solid var(--nrule)}
+  .tb:last-child{border-bottom:0}
+  .stg{grid-template-columns:48px 1fr;gap:16px}
+  .stg .txt{grid-column:2}
+  .stg h3{padding-top:10px}
+  .ft-nav{justify-content:flex-start}
   .log .c-sec,.log .c-dt{display:none}
-  .log th,.log td{padding:12px}
-  /* compare */
-  .cmp th:nth-child(2),.cmp td:nth-child(2){display:none}
+  .memo{transform:none}
+}
+@media(max-width:560px){
+  .hdr-act .btn-pri{display:none}
+  .ch-deb{grid-template-columns:1fr}
+  .side{min-height:0}
+  .side p{-webkit-line-clamp:4;height:calc(1.38em * 4)}
+  .ch-an{grid-template-columns:1fr}
+  .an:nth-child(n+3){display:none}
+  .ch-tk{font-size:2.1rem}
+  .chamber{padding:16px;border-radius:14px}
+  .frow{flex-direction:column}
+  .frow .btn{width:100%}
+  #temailRow{flex-direction:column}
+  .memo-2{grid-template-columns:1fr}
+  .facts{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .facts .v{font-size:1.6rem}
+  .facts .l{font-size:.6rem}
+  .ch-step{font-size:.55rem;letter-spacing:.04em}
+  .desk-btn{right:12px;bottom:12px;padding:10px 14px}
+  .log td,.log th{padding:12px 8px}
+  .rgrp .hide-sm,.rsep.hide-sm{display:none}
+  .ribbon-in .rgrp:last-child{display:none}
+  .log td.px,.log th.c-px{display:none}
+  .cmp{min-width:0}.cmp th:nth-child(2),.cmp td:nth-child(2){display:none}
+  .cmp th,.cmp td{padding:14px 10px}
+  .fqb{font-size:1.12rem}
+  .extra .btn{width:100%}
 }
 @media(max-width:640px){input,textarea,select{font-size:16px!important}}
-@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .js .rv{opacity:1}
+  .tape-in{animation:none}
+  .tape{overflow-x:auto}
+}
 </style>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W2VWCNQC6T"></script>
 <script>
+document.documentElement.classList.add('js');
 window.dataLayer=window.dataLayer||[];
 function gtag(){dataLayer.push(arguments);}
 gtag('js',new Date());
@@ -421,7 +548,6 @@ function doSignOut(){localStorage.removeItem('hp_email');localStorage.removeItem
 <body>
 <a href="#main" class="skip">Skip to content</a>
 
-<!-- STATUS RIBBON -->
 <div class="ribbon" role="region" aria-label="Screener status">
   <div class="ribbon-in">
     <div class="rgrp">
@@ -429,21 +555,15 @@ function doSignOut(){localStorage.removeItem('hp_email');localStorage.removeItem
       <span class="rsep hide-sm">/</span>
       <span class="rk hide-sm"><span class="k">Published</span><span class="v" id="rbCount">Public debates</span></span>
       <span class="rsep hide-sm">/</span>
-      <span class="rk hide-sm"><span class="k">Verdicts</span><span class="v" id="rbMix">BUY · HOLD · SELL</span></span>
+      <span class="rk hide-sm"><span class="k">Rulings</span><span class="v" id="rbMix">BUY · HOLD · SELL</span></span>
     </div>
-    <div class="rgrp">
-      <span class="rk"><span class="k">Free</span><span class="v">3 analyses · No card</span></span>
-    </div>
+    <div class="rgrp"><span class="rk"><span class="k">Free</span><span class="v">3 analyses · No card</span></span></div>
   </div>
 </div>
 
-<!-- HEADER -->
-<header class="hd">
-  <div class="hd-in">
-    <a href="/" class="brand" aria-label="HedgePick home">
-      <svg viewBox="0 0 28 28" fill="none" aria-hidden="true"><rect width="28" height="28" rx="5" fill="#0d0f13"/><rect x=".5" y=".5" width="27" height="27" rx="4.5" stroke="rgba(91,147,245,.35)"/><path d="M6 20L11 13L15 16.5L19 10L22 13" stroke="#5b93f5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="22" cy="13" r="2" fill="#e3a83a"/></svg>
-      <span class="wm">HEDGE<em>PICK</em></span>
-    </a>
+<header class="hdr" id="hdr">
+  <div class="hdr-in">
+    <a href="/" class="brand" aria-label="HedgePick home">Hedge<em>Pick</em></a>
     <nav class="nav" aria-label="Primary">
       <a href="#how">How it works</a>
       <a href="#debates">Today's debates</a>
@@ -451,7 +571,7 @@ function doSignOut(){localStorage.removeItem('hp_email');localStorage.removeItem
       <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
     </nav>
-    <div class="acts">
+    <div class="hdr-act">
       <button type="button" class="btn btn-ghost" data-out onclick="showSignIn()">Sign in</button>
       <a href="/dashboard" class="btn btn-ghost" data-in style="display:none">Dashboard</a>
       <a href="#try" class="btn btn-pri" data-out>Test a stock free</a>
@@ -460,7 +580,7 @@ function doSignOut(){localStorage.removeItem('hp_email');localStorage.removeItem
     </div>
   </div>
 </header>
-<div class="mmenu" id="mmenu">
+<nav class="mmenu" id="mmenu" aria-label="Mobile">
   <a href="#how" onclick="closeMenu()">How it works</a>
   <a href="#debates" onclick="closeMenu()">Today's debates</a>
   <a href="/system">Methodology</a>
@@ -469,17 +589,16 @@ function doSignOut(){localStorage.removeItem('hp_email');localStorage.removeItem
   <a href="#" data-out onclick="closeMenu();showSignIn();return false;">Sign in</a>
   <a href="/dashboard" data-in style="display:none">Dashboard</a>
   <a href="#try" class="btn btn-pri" onclick="closeMenu()">Test a stock free</a>
-</div>
+</nav>
 
 <main id="main">
-<div class="wrap">
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-grid">
+  <div class="wrap hero-grid">
     <div>
-      <div class="eyebrow"><span>Stock research</span><span>·</span><strong>Any US-listed stock</strong></div>
-      <h1 class="ht">Hear the case against a stock <span>before you buy it.</span></h1>
+      <div class="kick">Equity research · Any US-listed stock</div>
+      <h1 class="ht">Hear the case <em>against</em> a stock before you buy it.</h1>
       <p class="lead">Type a ticker and, if you like, why you want it. Nine AI analysts research the company, a bull and a bear argue it out, and a risk manager rules on who won. <b>You get a plain-English verdict, the full debate, and the weakest point in your own reasoning.</b> Then you decide.</p>
 
       <div class="form-box" id="try">
@@ -488,11 +607,11 @@ function doSignOut(){localStorage.removeItem('hp_email');localStorage.removeItem
           <label for="tin" class="sr">Stock ticker</label>
           <input class="inp tk" id="tin" type="text" maxlength="8" placeholder="Ticker, e.g. NVDA, KO, AAPL" autocomplete="off" autocapitalize="characters">
           <button class="btn btn-blue" onclick="go()">Analyze
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
           </button>
         </div>
         <label for="tthesis" class="sr">Your reasoning (optional)</label>
-        <textarea class="inp" id="tthesis" rows="3" maxlength="600" placeholder="Optional: why are you considering it? (e.g. Safe dividend in a downturn)"></textarea>
+        <textarea class="inp" id="tthesis" rows="2" maxlength="600" placeholder="Optional: why are you considering it? (e.g. Safe dividend in a downturn)"></textarea>
         <div id="temailRow">
           <label for="temail" class="sr">Email</label>
           <input class="inp" id="temail" type="email" placeholder="Your email. We send a sign-in link and your PDF report">
@@ -513,251 +632,290 @@ function doSignOut(){localStorage.removeItem('hp_email');localStorage.removeItem
         <div class="fnote"><span>PDF report by email in about 5–15 minutes</span><a href="/sample-report-ko.pdf" target="_blank" rel="noopener">Open a sample report (KO)</a></div>
       </div>
 
-      <div class="spec">
-        <div><div class="v">9</div><div class="l">AI analysts</div></div>
-        <div><div class="v">2</div><div class="l">Sides argued</div></div>
-        <div><div class="v">1</div><div class="l">Final ruling</div></div>
-        <div><div class="v" style="color:var(--gold)">$0</div><div class="l">To start</div></div>
+      <div class="facts">
+        <div><span class="v">9</span><span class="l">AI analysts</span></div>
+        <div><span class="v">2</span><span class="l">Sides argued</span></div>
+        <div><span class="v">1</span><span class="l">Final ruling</span></div>
+        <div><span class="v">$0</span><span class="l">To start</span></div>
       </div>
     </div>
 
-    <!-- Live debate terminal -->
-    <div class="term" aria-label="Latest published debate">
-      <div class="term-top">
-        <div class="term-ttl"><span class="dot"></span><span id="tmLabel">LATEST SCREENER DEBATES</span></div>
-        <div class="tabs" id="tmTabs" role="tablist" aria-label="Choose a debate">
-          <button type="button" class="tab on">BLK</button>
+    <!-- THE CHAMBER: replays real published debates -->
+    <div class="chamber" id="chamber" aria-label="Replay of a published HedgePick debate">
+      <div class="ch-top">
+        <span class="l"><span class="dot"></span>Debate replay</span>
+        <span class="ch-ctl"><button type="button" id="chPause" aria-pressed="false">Pause</button><button type="button" id="chNext">Next debate</button></span>
+      </div>
+      <div class="ch-doc">
+        <div><div class="ch-tk" id="chTk">BLK</div><div class="ch-nm" id="chNm">BlackRock, Inc.</div></div>
+        <div class="ch-px"><b id="chPx">$1,134.38</b><span id="chDt">Oct 19, 2026</span></div>
+      </div>
+      <div class="ch-rail" aria-hidden="true">
+        <div class="ch-step" data-s="1"><i></i>01 Evidence</div>
+        <div class="ch-step" data-s="2"><i></i>02 Debate</div>
+        <div class="ch-step" data-s="3"><i></i>03 Risk</div>
+        <div class="ch-step" data-s="4"><i></i>04 Ruling</div>
+      </div>
+      <div class="ch-an" aria-hidden="true">
+        <div class="an"><span class="n">A1</span><span>Fundamentals</span><span class="s">—</span><span class="b" style="grid-column:1/-1"></span></div>
+        <div class="an"><span class="n">A2</span><span>Sentiment</span><span class="s">—</span><span class="b" style="grid-column:1/-1"></span></div>
+        <div class="an"><span class="n">A3</span><span>News &amp; macro</span><span class="s">—</span><span class="b" style="grid-column:1/-1"></span></div>
+        <div class="an"><span class="n">A4</span><span>Technicals</span><span class="s">—</span><span class="b" style="grid-column:1/-1"></span></div>
+      </div>
+      <div class="ch-deb">
+        <div class="side bull" id="chBullBox"><h4>Bull researcher <span class="mic"></span></h4><p id="chBull">A dominant global asset manager posting 30.6% YoY revenue growth, delivering normalized EBITDA growth of 34%, with a technical breakout on institutional volume…</p></div>
+        <div class="side bear" id="chBearBox"><h4>Bear researcher <span class="mic"></span></h4><p id="chBear">The bull's defense of Q1's negative cash flow relies on treating one terrible quarter as "normal seasonality." That's not analysis; that's rationalization.</p></div>
+      </div>
+      <div class="ch-gauge" aria-hidden="true">
+        <div class="g-lbl"><span class="bear">◂ Bear case</span><span>Weight of argument</span><span class="bull">Bull case ▸</span></div>
+        <div class="g-trk"><span class="g-fill" id="gFill"></span><span class="g-pin" id="gPin"></span></div>
+        <div class="g-cap" id="gCap">Risk manager sets stop loss, target and position size before any ruling.</div>
+      </div>
+      <div class="ch-rul" id="chRul">
+        <div class="stamp" id="chStamp">Ruling<b id="chV">BUY</b></div>
+        <div>
+          <div class="rul-t">Research manager's assessment</div>
+          <p class="rul-x" id="chJudge">The bull's strongest points were structural and hard to rebut convincingly…</p>
+          <a class="rul-a" id="chLink" href="/analysis/BLK/2026-10-19">Read the full debate →</a>
         </div>
       </div>
-      <div class="term-body">
-        <div class="tgrid">
-          <div><div class="tl">Company</div><div class="tm" id="tmTicker">BLK</div><div class="ts" id="tmName">BlackRock, Inc. · Financial Services</div></div>
-          <div><div class="tl">Price at analysis</div><div class="tm" id="tmPrice">$1,134.38</div><div class="ts" id="tmDate">Oct 19, 2026</div></div>
-          <div><div class="tl">Ruling</div><div class="tm"><span class="vb BUY" id="tmVerdict">BUY</span></div><div class="ts" id="tmVerdictPlain">Bull case won</div></div>
-        </div>
-        <div class="arg bull"><div class="arg-h"><span class="who">Bull analyst</span><span class="plain">The case for buying</span></div><p id="tmBull">A dominant global asset manager posting 30.6% YoY revenue growth, delivering normalized EBITDA growth of 34%, with a technical breakout on institutional volume…</p></div>
-        <div class="arg bear"><div class="arg-h"><span class="who">Bear analyst</span><span class="plain">The case against</span></div><p id="tmBear">The bull's defense of Q1's negative cash flow relies on treating one terrible quarter as "normal seasonality." That's not analysis; that's rationalization.</p></div>
-        <div class="arg judge"><div class="arg-h"><span class="who">Ruling</span><span class="plain">Who won, and why</span></div><p id="tmJudge">The bull's strongest points were structural and hard to rebut convincingly. BLK's 30.6% YoY revenue growth and 34% normalized EBITDA growth are not statistical noise…</p></div>
-      </div>
-      <div class="term-foot">
-        <span>Unedited excerpts from the published report</span>
-        <a href="/analysis/BLK/2026-10-19" id="tmLink">Read the full debate →</a>
-      </div>
+      <div class="ch-foot"><span>Unedited excerpts from published reports. Not advice.</span><span class="ch-dots" id="chDots"></span></div>
     </div>
   </div>
 </section>
 
-<!-- WHO IT'S FOR -->
-<section class="sec">
-  <div class="shead">
-    <div>
-      <div class="kick">01 / Who it's for</div>
-      <h2 class="st">One report, two ways to read it.</h2>
-    </div>
-    <p class="sd">Every report opens with a short verdict in plain language. Underneath is the full analyst file: valuation, cash flow, technicals, the debate transcript, and risk levels. Read as much or as little as you need.</p>
+<!-- TAPE -->
+<div class="tape" aria-label="Recently published debates">
+  <div class="tape-in" id="tape">
+    <a href="/analysis"><span class="t">Daily screener</span><span class="p">Every ruling published, SELLs included</span></a>
   </div>
-  <div class="ledger">
-    <div class="lc">
-      <div class="lc-idx"><span>If you're newer to investing</span><span>Start with page 1</span></div>
-      <h3>A second opinion that argues with you.</h3>
-      <p>Most stock tips only tell you why to buy. HedgePick deliberately builds the case against the stock too, in everyday language, so you know what could go wrong before your money is in it.</p>
-      <ul>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg><span><b>Buy, Hold or Sell, with the reason</b> in two or three sentences.</span></li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg><span><b>The weakest part of your idea,</b> named directly.</span></li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg><span><b>When to change your mind:</b> the specific things that would prove the idea wrong.</span></li>
-      </ul>
-      <div class="lc-cta"><a href="#try" class="btn btn-ghost">Try it free</a><span>3 analyses, no card</span></div>
+</div>
+
+<!-- READERS -->
+<section class="sec" id="for">
+  <div class="wrap">
+    <div class="sec-h rv">
+      <div>
+        <div class="kick">01 / Who it's for</div>
+        <h2 class="st">One report, two ways to read it.</h2>
+      </div>
+      <p class="sd">Every report opens with a short verdict in plain language. Underneath is the full analyst file: valuation, cash flow, technicals, the debate transcript, and risk levels. Read as much or as little as you need.</p>
     </div>
-    <div class="lc">
-      <div class="lc-idx"><span>If you manage your own book</span><span>Go straight to the file</span></div>
-      <h3>An adversarial research desk on demand.</h3>
-      <p>Single-model tools agree with whatever you ask. HedgePick runs separate fundamentals, sentiment, news and technical analysts, then forces a structured bull/bear debate and a risk review before a portfolio-manager ruling.</p>
-      <ul>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg><span><b>Full debate transcript</b> with the figures each side used.</span></li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg><span><b>Stop loss, take profit and position sizing</b> from the risk manager.</span></li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg><span><b>Trader plan:</b> track positions against the S&amp;P 500, set alerts, re-check theses weekly, stage orders in an Alpaca paper account.</span></li>
-      </ul>
-      <div class="lc-cta"><a href="#pricing" class="btn btn-ghost">Compare Pro and Trader</a><a href="/system" class="lnk">Read the methodology →</a></div>
+    <div class="readers">
+      <article class="rd-card rv">
+        <div class="tag">If you're newer to investing · Start with page 1</div>
+        <h3>A second opinion that argues with you.</h3>
+        <p>Most stock tips only tell you why to buy. HedgePick deliberately builds the case against the stock too, in everyday language, so you know what could go wrong before your money is in it.</p>
+        <ul>
+          <li><span>01</span>Buy, Hold or Sell, with the reason in two or three sentences.</li>
+          <li><span>02</span>The weakest part of your idea, named directly.</li>
+          <li><span>03</span>When to change your mind: the specific things that would prove the idea wrong.</li>
+        </ul>
+        <div class="acts"><a href="#try" class="btn btn-pri">Try it free</a><span class="mono" style="font-size:.72rem;color:var(--t3)">3 analyses, no card</span></div>
+      </article>
+      <article class="rd-card pro rv">
+        <div class="tag">If you manage your own book · Go straight to the file</div>
+        <h3>An adversarial research desk on demand.</h3>
+        <p>Single-model tools agree with whatever you ask. HedgePick runs separate fundamentals, sentiment, news and technical analysts, then forces a structured bull/bear debate and a risk review before a portfolio-manager ruling.</p>
+        <ul>
+          <li><span>01</span>Full debate transcript with the figures each side used.</li>
+          <li><span>02</span>Stop loss, take profit and position sizing from the risk manager.</li>
+          <li><span>03</span>Trader plan: track positions against the S&amp;P 500, set alerts, re-check theses weekly, stage orders in an Alpaca paper account.</li>
+        </ul>
+        <div class="acts"><a href="#pricing" class="btn btn-ghost">Compare Pro and Trader</a><a href="/system" class="lnk">Read the methodology →</a></div>
+      </article>
     </div>
   </div>
 </section>
 
 <!-- PIPELINE -->
-<section class="sec" id="how">
-  <div class="shead">
-    <div>
-      <div class="kick">02 / How it works</div>
-      <h2 class="st">Seven stages, each with a different job.</h2>
+<section class="sec" id="how" style="padding-top:0">
+  <div class="wrap pipe-wrap" id="pipeWrap" data-view="plain">
+    <div class="sec-h rv">
+      <div>
+        <div class="kick">02 / How it works</div>
+        <h2 class="st">Seven stages, each with a different job.</h2>
+      </div>
+      <div>
+        <p class="sd">Each analyst sees only its own data and writes its own view. The researchers then argue from those views, and nothing reaches the final ruling until the risk manager has reviewed it.</p>
+        <div class="pipe-ctl" role="group" aria-label="Choose how to read the stages">
+          <button type="button" class="on" data-v="plain" aria-pressed="true">In plain English</button>
+          <button type="button" data-v="tech" aria-pressed="false">Analyst view</button>
+        </div>
+      </div>
     </div>
-    <p class="sd">Each analyst sees only its own data and writes its own view. The researchers then argue from those views, and nothing reaches the final ruling until the risk manager has reviewed it.</p>
+    <div class="pipe" id="pipe">
+      <span class="pipe-prog" id="pipeProg"></span>
+      <div class="stg"><span class="n">01</span><div><h3>Fundamentals</h3><div class="who">Analyst</div></div><div class="txt"><span class="plain">Is the business actually making money, and is the price fair?</span><span class="tech">Revenue and EPS trend, margins, FCF, leverage, valuation multiples vs history</span></div></div>
+      <div class="stg"><span class="n">02</span><div><h3>Sentiment</h3><div class="who">Analyst</div></div><div class="txt"><span class="plain">What are other investors feeling and doing?</span><span class="tech">Social and retail positioning, insider transactions, crowd momentum</span></div></div>
+      <div class="stg"><span class="n">03</span><div><h3>News &amp; macro</h3><div class="who">Analyst</div></div><div class="txt"><span class="plain">What's happening in the world that could move this stock?</span><span class="tech">Company events, guidance, regulation, rates and sector catalysts</span></div></div>
+      <div class="stg"><span class="n">04</span><div><h3>Technicals</h3><div class="who">Analyst</div></div><div class="txt"><span class="plain">What is the price chart saying right now?</span><span class="tech">Trend vs 50/200-day averages, MACD, RSI, volume, support and resistance</span></div></div>
+      <div class="stg deb"><span class="n">05</span><div><h3>Bull vs bear</h3><div class="who">Researchers · debate</div></div><div class="txt"><span class="plain">One argues to buy, one argues not to. They have to answer each other.</span><span class="tech">Multi-round adversarial rebuttal built on stages 01–04 and your thesis</span></div></div>
+      <div class="stg"><span class="n">06</span><div><h3>Risk review</h3><div class="who">Trader + risk manager</div></div><div class="txt"><span class="plain">If you do buy, how much, and where do you get out?</span><span class="tech">Stop loss, take profit and position size relative to volatility and event risk</span></div></div>
+      <div class="stg rul"><span class="n">07</span><div><h3>Ruling</h3><div class="who">Portfolio manager</div></div><div class="txt"><span class="plain">The final call, and exactly why.</span><span class="tech">BUY / HOLD / SELL with written rationale on which side carried the debate</span></div></div>
+    </div>
   </div>
-  <table class="ptable">
-    <thead><tr><th>#</th><th>Stage</th><th>Analyst view</th><th>In plain English</th></tr></thead>
-    <tbody>
-      <tr><td class="n">01</td><td class="stage">Fundamentals<small>Analyst</small></td><td class="tech">Revenue and EPS trend, margins, FCF, leverage, valuation multiples vs history</td><td class="plain">Is the business actually making money, and is the price fair?</td></tr>
-      <tr><td class="n">02</td><td class="stage">Sentiment<small>Analyst</small></td><td class="tech">Social and retail positioning, insider transactions, crowd momentum</td><td class="plain">What are other investors feeling and doing?</td></tr>
-      <tr><td class="n">03</td><td class="stage">News &amp; macro<small>Analyst</small></td><td class="tech">Company events, guidance, regulation, rates and sector catalysts</td><td class="plain">What's happening in the world that could move this stock?</td></tr>
-      <tr><td class="n">04</td><td class="stage">Technicals<small>Analyst</small></td><td class="tech">Trend vs 50/200-day averages, MACD, RSI, volume, support and resistance</td><td class="plain">What is the price chart saying right now?</td></tr>
-      <tr class="hl"><td class="n">05</td><td class="stage">Bull vs bear<small>Researchers · debate</small></td><td class="tech">Multi-round adversarial rebuttal built on stages 01–04 and your thesis</td><td class="plain">One argues to buy, one argues not to. They have to answer each other.</td></tr>
-      <tr><td class="n">06</td><td class="stage">Risk review<small>Trader + risk manager</small></td><td class="tech">Stop loss, take profit and position size relative to volatility and event risk</td><td class="plain">If you do buy, how much, and where do you get out?</td></tr>
-      <tr class="hl"><td class="n">07</td><td class="stage">Ruling<small>Portfolio manager</small></td><td class="tech">BUY / HOLD / SELL with written rationale on which side carried the debate</td><td class="plain">The final call, and exactly why.</td></tr>
-    </tbody>
-  </table>
 </section>
 
-<!-- THESIS STRESS TEST -->
-<section class="sec">
-  <div class="thesis">
-    <div>
+<!-- THESIS -->
+<section class="sec" id="thesis" style="background:var(--paper-2)">
+  <div class="wrap memo-grid">
+    <div class="rv">
       <div class="kick">03 / Thesis stress-test</div>
       <h2 class="st">Tell it why you want to buy. It tries to prove you wrong.</h2>
-      <p class="sd" style="margin-top:12px">Add a sentence about your reasoning and the bear researchers attack that exact premise. Page one of your report says whether your idea holds up.</p>
+      <p class="sd">Add a sentence about your reasoning and the bear researchers attack that exact premise. Page one of your report says whether your idea holds up.</p>
       <ol class="steps">
-        <li><span><b>Write your reason in one line.</b> "Safe dividend," "AI demand keeps growing," anything.</span></li>
-        <li><span><b>The bear goes after it</b> with the company's own numbers.</span></li>
-        <li><span><b>You get a ruling on your thesis,</b> its weakest assumption, and the conditions that would make you wrong.</span></li>
+        <li>Write your reason in one line. "Safe dividend," "AI demand keeps growing," anything.</li>
+        <li>The bear goes after it with the company's own numbers.</li>
+        <li>You get a ruling on your thesis, its weakest assumption, and the conditions that would make you wrong.</li>
       </ol>
     </div>
-    <div class="doc">
-      <div class="doc-top"><span>Your thesis, tested · KO (Coca-Cola)</span><a href="/sample-report-ko.pdf" target="_blank" rel="noopener">Read the full sample PDF →</a></div>
-      <div class="doc-body">
-        <div class="quote"><b>Your reasoning</b>"Defensive consumer staple with pricing power and a safe 3% dividend if the economy slows."</div>
-        <p class="ruling"><b>Verdict on your thesis: partly holds.</b> The dividend is well covered, but organic volume growth is negative (-1% in North America) as cumulative price hikes hit elasticity limits, and at 23x trailing earnings you are paying a growth multiple for a bond proxy.</p>
-        <div class="doc-grid">
-          <div><b>Weakest assumption</b>That pricing power is inexhaustible. Unit case volume has already stalled in developed markets as private-label substitution rises.</div>
-          <div><b>Kill criteria</b>Exit if North American unit case volume stays negative for two consecutive quarters or operating margin compresses below 28%.</div>
-        </div>
+    <div class="memo rv" id="memo">
+      <div class="memo-h"><span>Your thesis, tested · KO (Coca-Cola)</span><a href="/sample-report-ko.pdf" target="_blank" rel="noopener">Full sample PDF →</a></div>
+      <div class="q-l">Your reasoning</div>
+      <blockquote>"Defensive consumer staple with <span class="hl">pricing power<svg viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 8 C 50 2, 120 12, 198 5"/></svg></span> and a safe 3% dividend if the economy slows."</blockquote>
+      <span class="margin-note" aria-hidden="true">The bear went after this premise first.</span>
+      <p class="ruling"><b>Verdict on your thesis: partly holds.</b> The dividend is well covered, but organic volume growth is negative (-1% in North America) as cumulative price hikes hit elasticity limits, and at 23x trailing earnings you are paying a growth multiple for a bond proxy.</p>
+      <div class="memo-2">
+        <div class="w"><h5>Weakest assumption</h5>That pricing power is inexhaustible. Unit case volume has already stalled in developed markets as private-label substitution rises.</div>
+        <div class="k"><h5>Kill criteria</h5>Exit if North American unit case volume stays negative for two consecutive quarters or operating margin compresses below 28%.</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- DEBATE LOG -->
-<section class="sec" id="debates">
-  <div class="shead">
-    <div>
-      <div class="kick">04 / Published debates</div>
-      <h2 class="st">Every weekday, the screener publishes its debates in public.</h2>
+<!-- RECORD -->
+<section class="sec night" id="debates">
+  <div class="wrap">
+    <div class="sec-h rv">
+      <div>
+        <div class="kick">04 / Published debates</div>
+        <h2 class="st">Every weekday, the screener publishes its debates in public.</h2>
+      </div>
+      <p class="sd">Each morning a screener flags US stocks with unusual setups and runs the full pipeline on them. Every result is published, including the SELLs. Read any of them free.</p>
     </div>
-    <p class="sd">Each morning a screener flags US stocks with unusual setups and runs the full pipeline on them. Every result is published, including the SELLs. Read any of them free.</p>
+
+    <div class="term rv" aria-label="Latest published debate">
+      <div class="term-top">
+        <div class="term-ttl"><span class="dot"></span><span id="tmLabel">Latest screener debates</span></div>
+        <div class="tabs" id="tmTabs" role="tablist" aria-label="Choose a debate"><button type="button" class="tab on">BLK</button></div>
+      </div>
+      <div class="term-meta">
+        <div><div class="tl">Company</div><div class="tm" id="tmTicker">BLK</div><div class="ts" id="tmName">BlackRock, Inc. · Financial Services</div></div>
+        <div><div class="tl">Price at analysis</div><div class="tm mono" style="font-size:1.25rem" id="tmPrice">$1,134.38</div><div class="ts" id="tmDate">Oct 19, 2026</div></div>
+        <div><div class="tl">Ruling</div><div class="tm"><span class="vb BUY" id="tmVerdict">BUY</span></div><div class="ts" id="tmVerdictPlain">Bull case won</div></div>
+      </div>
+      <div class="term-body">
+        <div class="tb b"><h4><span>Bull analyst</span><span class="r">The case for buying</span></h4><p id="tmBull">A dominant global asset manager posting 30.6% YoY revenue growth, delivering normalized EBITDA growth of 34%, with a technical breakout on institutional volume…</p></div>
+        <div class="tb s"><h4><span>Bear analyst</span><span class="r">The case against</span></h4><p id="tmBear">The bull's defense of Q1's negative cash flow relies on treating one terrible quarter as "normal seasonality." That's not analysis; that's rationalization.</p></div>
+        <div class="tb j"><h4><span>Research manager</span><span class="r">Who won, and why</span></h4><p id="tmJudge">The bull's strongest points were structural and hard to rebut convincingly. BLK's 30.6% YoY revenue growth and 34% normalized EBITDA growth are not statistical noise…</p></div>
+      </div>
+      <div class="term-f"><span>Unedited excerpts from the published report</span><a href="/analysis/BLK/2026-10-19" id="tmLink">Read the full debate →</a></div>
+    </div>
+
+    <table class="log rv">
+      <thead><tr><th class="c-dt">Date</th><th>Ticker</th><th>Company</th><th class="c-sec">Sector</th><th class="r c-px">Price</th><th>Ruling</th><th class="r"><span class="sr">Link</span></th></tr></thead>
+      <tbody id="logBody">
+        <tr><td class="dt c-dt">Oct 19, 2026</td><td class="tk">BLK</td><td>BlackRock, Inc.</td><td class="c-sec">Financial Services</td><td class="px r">$1,134.38</td><td><span class="vb BUY">BUY</span></td><td class="r"><a class="rd" href="/analysis/BLK/2026-10-19">Read →</a></td></tr>
+      </tbody>
+    </table>
+    <div class="log-f"><span>Rulings are AI research output, not recommendations. Prices are as of each analysis.</span><a href="/analysis">View the full archive →</a></div>
   </div>
-  <table class="log">
-    <thead><tr><th class="c-dt">Date</th><th>Ticker</th><th>Company</th><th class="c-sec">Sector</th><th class="r">Price</th><th>Ruling</th><th class="r"><span class="sr">Link</span></th></tr></thead>
-    <tbody id="logBody">
-      <tr><td class="dt c-dt">Oct 19, 2026</td><td class="tk">BLK</td><td>BlackRock, Inc.</td><td class="c-sec">Financial Services</td><td class="px r">$1,134.38</td><td><span class="vb BUY">BUY</span></td><td class="r"><a class="rd" href="/analysis/BLK/2026-10-19">Read →</a></td></tr>
-      <tr><td class="dt c-dt">Oct 19, 2026</td><td class="tk">DKS</td><td>DICK'S Sporting Goods, Inc.</td><td class="c-sec">Consumer Cyclical</td><td class="px r">$144.35</td><td><span class="vb SELL">SELL</span></td><td class="r"><a class="rd" href="/analysis/DKS/2026-10-19">Read →</a></td></tr>
-      <tr><td class="dt c-dt">Oct 19, 2026</td><td class="tk">VMC</td><td>Vulcan Materials Company</td><td class="c-sec">Basic Materials</td><td class="px r">$257.63</td><td><span class="vb SELL">SELL</span></td><td class="r"><a class="rd" href="/analysis/VMC/2026-10-19">Read →</a></td></tr>
-    </tbody>
-  </table>
-  <div class="log-foot"><span>Rulings are AI research output, not recommendations. Prices are as of each analysis.</span><a href="/analysis">View the full archive →</a></div>
 </section>
 
 <!-- COMPARE -->
-<section class="sec">
-  <div class="shead">
-    <div>
-      <div class="kick">05 / The difference</div>
-      <h2 class="st">A score tells you what. The debate tells you why.</h2>
+<section class="sec" id="compare">
+  <div class="wrap">
+    <div class="sec-h rv">
+      <div>
+        <div class="kick">05 / The difference</div>
+        <h2 class="st">A score tells you what. The debate tells you why.</h2>
+      </div>
+      <p class="sd">Ratings sites give you a number. Chatbots tend to agree with your question. HedgePick is built to disagree with you, and to show its work.</p>
     </div>
-    <p class="sd">Ratings sites give you a number. Chatbots tend to agree with your question. HedgePick is built to disagree with you, and to show its work.</p>
+    <div class="cmp-wrap rv">
+      <table class="cmp">
+        <thead><tr><th></th><th>Ratings and signal sites</th><th>General AI chatbots</th><th class="us">HedgePick</th></tr></thead>
+        <tbody>
+          <tr><td>Reasoning shown</td><td>A score or grade</td><td>One answer, one voice</td><td class="us">Separate bull, bear and risk write-ups, plus the ruling</td></tr>
+          <tr><td>Challenges your idea</td><td>No</td><td>Usually agrees with how you asked</td><td class="us">The bear researcher's whole job</td></tr>
+          <tr><td>Which stocks</td><td>Their coverage list</td><td>Any, without live data</td><td class="us">Any US-listed stock, using current data</td></tr>
+          <tr><td>Risk levels</td><td>Rarely</td><td>Generic</td><td class="us">Stop loss, target and sizing (Pro and Trader)</td></tr>
+          <tr><td>Cost</td><td>Often $40–100+/mo</td><td>Varies</td><td class="us">Free to start, then $39 or $99 a month (20% less billed yearly)</td></tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-  <table class="cmp">
-    <thead><tr><th></th><th>Ratings and signal sites</th><th>General AI chatbots</th><th class="us">HedgePick</th></tr></thead>
-    <tbody>
-      <tr><td>Reasoning shown</td><td>A score or grade</td><td>One answer, one voice</td><td class="us">Separate bull, bear and risk write-ups, plus the ruling</td></tr>
-      <tr><td>Challenges your idea</td><td>No</td><td>Usually agrees with how you asked</td><td class="us">The bear researcher's whole job</td></tr>
-      <tr><td>Which stocks</td><td>Their coverage list</td><td>Any, without live data</td><td class="us">Any US-listed stock, using current data</td></tr>
-      <tr><td>Risk levels</td><td>Rarely</td><td>Generic</td><td class="us">Stop loss, target and sizing (Pro and Trader)</td></tr>
-      <tr><td>Cost</td><td>Often $40–100+/mo</td><td>Varies</td><td class="us">Free to start, then $39 or $99 a month (20% less billed yearly)</td></tr>
-    </tbody>
-  </table>
 </section>
 
 <!-- PRICING -->
-<section class="sec" id="pricing">
-  <div class="shead">
-    <div>
-      <div class="kick">06 / Pricing</div>
-      <h2 class="st">Start free. Pay when it earns a place in your process.</h2>
+<section class="sec" id="pricing" style="background:var(--paper-2)">
+  <div class="wrap">
+    <div class="sec-h rv">
+      <div>
+        <div class="kick">06 / Pricing</div>
+        <h2 class="st">Start free. Pay when it earns a place in your process.</h2>
+      </div>
+      <div>
+        <p class="sd">Cancel anytime. Paid plans include a 30-day money-back guarantee under our <a href="/terms" style="text-underline-offset:2px">terms</a>.</p>
+        <div class="bill" style="margin-top:24px"><button type="button" class="on" data-bill="m" onclick="setBill('m')">Monthly</button><button type="button" data-bill="a" onclick="setBill('a')">Yearly <span class="sv">2 months free</span></button></div>
+      </div>
     </div>
-    <div>
-      <div class="bill" role="group" aria-label="Billing period"><button type="button" class="on" data-bill="m" onclick="setBill('m')">Monthly</button><button type="button" data-bill="a" onclick="setBill('a')">Yearly <span>2 months free</span></button></div>
-      <p class="sd">Cancel anytime. Paid plans include a 30-day money-back guarantee under our <a href="/terms" style="color:var(--t1);text-decoration:underline;text-underline-offset:2px">terms</a>.</p>
+    <div class="plans">
+      <div class="plan rv">
+        <div class="p-top"><span class="p-name">Free</span><span class="p-tag">No card</span></div>
+        <div class="p-price"><span class="n">$0</span></div>
+        <div class="p-sub">Free forever</div>
+        <p class="p-for">Try it on the stocks you're already thinking about.</p>
+        <ul class="p-list"><li>3 analyses</li><li>BUY / HOLD / SELL ruling</li><li>Thesis stress-test</li><li class="off">Full debate transcript</li><li class="off">Stop loss and sizing</li></ul>
+        <a href="#try" class="btn btn-ghost">Start free</a>
+      </div>
+      <div class="plan feat rv">
+        <div class="p-top"><span class="p-name">Pro</span><span class="p-tag">For researching</span></div>
+        <div class="p-price"><span class="n" data-m="$39" data-a="$379">$39</span><span class="per" data-m="/ month" data-a="/ year">/ month</span></div>
+        <div class="p-sub" data-m="or $379 billed yearly" data-a="about $31.58 a month">or $379 billed yearly</div>
+        <p class="p-for">For investors who want the whole argument before every buy.</p>
+        <ul class="p-list"><li>5 analyses per day</li><li>Full 9-analyst reasoning</li><li>Complete bull/bear debate transcript</li><li>Stop loss, take profit, position sizing</li><li>Thesis stress-test on every report</li></ul>
+        <a href="https://buy.stripe.com/9B6cN70K9gSJgv14Er4AU06" class="btn btn-blue" data-plan="pro" data-m="https://buy.stripe.com/9B6cN70K9gSJgv14Er4AU06" data-a="https://buy.stripe.com/aFaeVffF31XPemT0ob4AU07" data-lm="Get Pro, $39/mo" data-la="Get Pro, $379/yr">Get Pro, $39/mo</a>
+      </div>
+      <div class="plan rv">
+        <div class="p-top"><span class="p-name">Trader</span><span class="p-tag">For acting</span></div>
+        <div class="p-price"><span class="n" data-m="$99" data-a="$949">$99</span><span class="per" data-m="/ month" data-a="/ year">/ month</span></div>
+        <div class="p-sub" data-m="or $949 billed yearly" data-a="about $79.08 a month">or $949 billed yearly</div>
+        <p class="p-for">For people who act on the research and want to track it.</p>
+        <ul class="p-list"><li>Everything in Pro</li><li>10 analyses per day, first in queue</li><li>Positions with P&amp;L vs the S&amp;P 500</li><li>Price, stop and target email alerts</li><li>Weekly AI re-check of each thesis</li><li>Order ticket for your Alpaca paper account</li><li>White-label PDF header for your firm or newsletter</li></ul>
+        <a href="https://buy.stripe.com/dRmcN79gF7i9emTfj54AU08" class="btn btn-pri" data-plan="trader" data-m="https://buy.stripe.com/dRmcN79gF7i9emTfj54AU08" data-a="https://buy.stripe.com/eVq14pcsRbyp3If5Iv4AU09" data-lm="Get Trader, $99/mo" data-la="Get Trader, $949/yr">Get Trader, $99/mo</a>
+      </div>
     </div>
+    <div class="extras">
+      <div class="extra rv">
+        <div>
+          <div class="k">One-time credit pack · No subscription</div>
+          <div class="h">5-Report Pack, <span class="mono">$19</span></div>
+          <div class="d">5 full Pro-level 4-page PDF reports (complete bull/bear debate, stop loss, take profit, sizing &amp; thesis test). Credits never expire.</div>
+        </div>
+        <a href="https://buy.stripe.com/6oU14pdwVcCt0w37QD4AU0a" class="btn btn-ghost" data-plan="pack5">Buy 5-Report Pack</a>
+      </div>
+      <div class="extra fd rv">
+        <div>
+          <div class="k">Founding cohort · <span id="fdSeatsLeft">20</span> of 20 seats remaining</div>
+          <div class="h">Founding Trader &amp; Advisor Lifetime Pass, <span class="mono">$499</span> once <span style="font-weight:400;color:var(--t3);font-size:var(--xs)">(vs. $949/yr)</span></div>
+          <div class="d">Lifetime Trader access (10 reports/day, portfolio tracker vs. S&amp;P 500, 5-min alerts, weekly thesis re-checks) plus a custom white-label PDF header for your newsletter, fund, or advisory practice.</div>
+        </div>
+        <a href="https://buy.stripe.com/aFa00lboN6e57Yv9YL4AU0b" class="btn btn-brass" data-plan="founding">Claim Founding Pass</a>
+      </div>
+    </div>
+    <div class="p-note"><span>Secure checkout by Stripe · Cancel anytime by email</span><a href="/terms">Plan terms</a></div>
   </div>
-  <div class="plans">
-    <div class="plan">
-      <div class="p-top"><span class="p-name">Free</span><span class="p-pill">No card</span></div>
-      <div class="p-price"><span class="n">$0</span></div>
-      <div class="p-sub">Free forever</div>
-      <p class="p-for">Try it on the stocks you're already thinking about.</p>
-      <ul class="p-list">
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>3 analyses</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>BUY / HOLD / SELL ruling</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Thesis stress-test</li>
-        <li class="off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 12h12"/></svg>Full debate transcript</li>
-        <li class="off"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 12h12"/></svg>Stop loss and sizing</li>
-      </ul>
-      <a href="#try" class="btn btn-ghost">Start free</a>
-    </div>
-    <div class="plan feat">
-      <div class="p-top"><span class="p-name">Pro</span><span class="p-pill b">For researching</span></div>
-      <div class="p-price"><span class="n" data-m="$39" data-a="$379">$39</span><span class="per" data-m="/ month" data-a="/ year">/ month</span></div>
-      <div class="p-sub" data-m="or $379 billed yearly" data-a="$31.58 a month, billed yearly">or $379 billed yearly</div>
-      <p class="p-for">For investors who want the whole argument before every buy.</p>
-      <ul class="p-list">
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>5 analyses per day</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Full 9-analyst reasoning</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Complete bull/bear debate transcript</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Stop loss, take profit, position sizing</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Thesis stress-test on every report</li>
-      </ul>
-      <a href="https://buy.stripe.com/9B6cN70K9gSJgv14Er4AU06" class="btn btn-blue" data-plan="pro" data-m="https://buy.stripe.com/9B6cN70K9gSJgv14Er4AU06" data-a="https://buy.stripe.com/aFaeVffF31XPemT0ob4AU07" data-lm="Get Pro, $39/mo" data-la="Get Pro, $379/yr">Get Pro, $39/mo</a>
-    </div>
-    <div class="plan">
-      <div class="p-top"><span class="p-name">Trader</span><span class="p-pill b">For acting</span></div>
-      <div class="p-price"><span class="n" data-m="$99" data-a="$949">$99</span><span class="per" data-m="/ month" data-a="/ year">/ month</span></div>
-      <div class="p-sub" data-m="or $949 billed yearly" data-a="$79.08 a month, billed yearly">or $949 billed yearly</div>
-      <p class="p-for">For people who act on the research and want to track it.</p>
-      <ul class="p-list">
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Everything in Pro</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>10 analyses per day, first in queue</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Positions with P&amp;L vs the S&amp;P 500</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Price, stop and target email alerts</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Weekly AI re-check of each thesis</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>Order ticket for your Alpaca paper account</li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12l5 5L20 7"/></svg>White-label PDF header for your firm or newsletter</li>
-      </ul>
-      <a href="https://buy.stripe.com/dRmcN79gF7i9emTfj54AU08" class="btn btn-pri" data-plan="trader" data-m="https://buy.stripe.com/dRmcN79gF7i9emTfj54AU08" data-a="https://buy.stripe.com/eVq14pcsRbyp3If5Iv4AU09" data-lm="Get Trader, $99/mo" data-la="Get Trader, $949/yr">Get Trader, $99/mo</a>
-    </div>
-  </div>
-  <div style="margin-top:14px;padding:16px 20px;border:1px solid var(--hair-2);border-radius:var(--r2);background:var(--bg-1);display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap">
-    <div>
-      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--green);margin-bottom:3px">One-Time Credit Pack · No Subscription</div>
-      <div style="font-size:var(--sm);color:var(--t1);font-weight:600">Only researching a few stocks right now? Get a 5-Report Pack for <span style="font-family:var(--mono)">$19</span> one-time.</div>
-      <div style="font-size:var(--xs);color:var(--t2);margin-top:2px">Includes 5 full Pro-level 4-page PDF reports (complete bull/bear debate, stop loss, take profit, sizing &amp; thesis test). Credits never expire.</div>
-    </div>
-    <a href="https://buy.stripe.com/6oU14pdwVcCt0w37QD4AU0a" class="btn btn-ghost" data-plan="pack5" style="border-color:rgba(34,197,94,.45);color:var(--green)">Buy 5-Report Pack, $19 →</a>
-  </div>
-  <div style="margin-top:10px;padding:16px 20px;border:1px solid rgba(232,169,48,.35);border-radius:var(--r2);background:linear-gradient(180deg,rgba(232,169,48,.06),rgba(11,13,18,.95));display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap">
-    <div>
-      <div style="font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--amber);margin-bottom:3px">Founding Cohort · <span id="fdSeatsLeft">20</span> of 20 Seats Remaining</div>
-      <div style="font-size:var(--sm);color:var(--t1);font-weight:600">Founding Trader &amp; Advisor Lifetime Pass — <span style="font-family:var(--mono)">$499</span> one-time <span style="font-size:var(--xs);color:var(--t3);font-weight:400">(vs. $949/yr)</span></div>
-      <div style="font-size:var(--xs);color:var(--t2);margin-top:2px">Lifetime Trader access (10 reports/day, portfolio tracker vs. S&amp;P 500, 5-min alerts, weekly thesis re-checks) + <strong>Custom White-Label PDF Header</strong> for your newsletter, fund, or advisory practice.</div>
-    </div>
-    <a href="https://buy.stripe.com/aFa00lboN6e57Yv9YL4AU0b" class="btn btn-pri" data-plan="founding" style="background:var(--amber);border-color:var(--amber);color:#06070A">Claim Founding Pass, $499 →</a>
-  </div>
-  <script>fetch("https://web-production-45241.up.railway.app/api/founding-seats").then(r=>r.json()).then(d=>{var el=document.getElementById("fdSeatsLeft");if(el&&d&&typeof d.remaining==="number")el.textContent=d.remaining;}).catch(()=>{});</script>
-  <div class="p-note"><span>Secure checkout by Stripe · Cancel anytime by email</span><a href="/terms">Plan terms</a></div>
 </section>
 
 <!-- FAQ -->
 <section class="sec" id="faq">
-  <div class="faq">
-    <div>
+  <div class="wrap faq">
+    <div class="rv">
       <div class="kick">07 / Questions</div>
       <h2 class="st">What people ask before they start.</h2>
-      <p class="sd" style="margin-top:12px">Anything else: <a href="mailto:joseph@hedgepick.com" style="color:var(--t1);text-decoration:underline;text-underline-offset:2px">joseph@hedgepick.com</a>. A person reads every email.</p>
+      <p class="sd">Anything else: <a href="mailto:joseph@hedgepick.com" style="text-underline-offset:2px">joseph@hedgepick.com</a>. A person reads every email.</p>
     </div>
     <div class="fq">
       <div class="fi"><button class="fqb" onclick="faq(this)" aria-expanded="false">Is this financial advice?<span class="ic">+</span></button><div class="fa"><div>No. HedgePick is an educational research tool. The analysts work from publicly available data and produce research-style output. Nothing here is a recommendation to buy or sell. Do your own due diligence and consult a licensed advisor before investing.</div></div></div>
@@ -771,28 +929,24 @@ function doSignOut(){localStorage.removeItem('hp_email');localStorage.removeItem
   </div>
 </section>
 
-<!-- CLOSING CTA -->
-<section class="sec tight" style="border-bottom:none">
-  <div class="close">
-    <div>
-      <h2>What's the stock you're thinking about?</h2>
-      <p>Run it through the debate before you buy. Your first three are free.</p>
-    </div>
+<section class="close">
+  <div class="wrap rv">
+    <h2>What's the stock you're <em>sure</em> about?</h2>
+    <p>Run it through the debate before you buy. Your first three are free.</p>
     <div class="acts">
-      <a href="#try" class="btn btn-blue" onclick="setTimeout(function(){document.getElementById('tin').focus()},400)">Test a stock free</a>
+      <a href="#try" class="btn btn-pri" onclick="setTimeout(function(){document.getElementById('tin').focus()},400)">Test a stock free <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
       <a href="/analysis" class="btn btn-ghost">Browse today's debates</a>
     </div>
   </div>
 </section>
 
-</div>
 </main>
 
-<footer class="ft" style="border-top:1px solid var(--hair)">
+<footer class="ft">
   <div class="wrap">
     <div class="ft-in">
       <div>
-        <div class="brand" style="margin-bottom:8px">HEDGE<em>PICK</em></div>
+        <div class="brand" style="margin-bottom:8px">Hedge<em>Pick</em></div>
         <div>© 2026 HedgePick</div>
       </div>
       <nav class="ft-nav" aria-label="Footer">
@@ -808,7 +962,6 @@ function doSignOut(){localStorage.removeItem('hp_email');localStorage.removeItem
     </div>
   </div>
 </footer>
-
 
 <!-- ASK THE DESK -->
 <button type="button" class="desk-btn" id="deskBtn" onclick="openDesk()" aria-label="Ask the HedgePick desk a question"><span class="dot"></span>Ask the desk</button>
@@ -935,6 +1088,8 @@ function showDebate(i){
 fetch(API+'/api/public-analyses').then(function(r){return r.ok?r.json():null}).then(function(d){
   if(!d||!d.analyses||!d.analyses.length)return;
   LIVE=d.analyses.slice(0,6);
+  if(window.HPChamber)HPChamber.load(d.analyses);
+  if(window.HPTape)HPTape(d.analyses);
   // tabs
   document.getElementById('tmTabs').innerHTML=LIVE.map(function(a,i){return '<button type="button" role="tab" class="tab'+(i===0?' on':'')+'" onclick="showDebate('+i+')">'+esc(a.ticker)+'</button>'}).join('');
   var buyIdx=LIVE.findIndex(function(a){return a.verdict==='BUY'});
@@ -1098,6 +1253,159 @@ async function sendSignIn(){
     else{msg.style.color='var(--red)';msg.textContent=data.error||'Could not send a sign-in link.'}
   }catch(e){msg.style.color='var(--red)';msg.textContent='Network error. Please try again.'}
 }
+</script>
+<script>fetch("https://web-production-45241.up.railway.app/api/founding-seats").then(r=>r.json()).then(d=>{var el=document.getElementById("fdSeatsLeft");if(el&&d&&typeof d.remaining==="number")el.textContent=d.remaining;}).catch(()=>{});</script>
+<script>
+/* Page motion: header state, reveals, pipeline progress, view toggle, the debate chamber and the tape. */
+(function(){
+  var RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hdr=document.getElementById('hdr');
+  function onScroll(){hdr.classList.toggle('scrolled',window.scrollY>8);pipeProgress()}
+  window.addEventListener('scroll',onScroll,{passive:true});
+
+  // Reveal
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{rootMargin:'0px 0px -8% 0px',threshold:.08});
+    document.querySelectorAll('.rv').forEach(function(el){io.observe(el)});
+  }else{document.querySelectorAll('.rv').forEach(function(el){el.classList.add('in')})}
+
+  // Pipeline: progress line + lit stages
+  var pipe=document.getElementById('pipe'),prog=document.getElementById('pipeProg'),stgs=pipe?pipe.querySelectorAll('.stg'):[];
+  function pipeProgress(){
+    if(!pipe)return;
+    var r=pipe.getBoundingClientRect(),vh=window.innerHeight,mark=vh*.62;
+    var h=Math.max(0,Math.min(r.height-16,mark-r.top));
+    prog.style.height=h+'px';
+    stgs.forEach(function(s){var sr=s.getBoundingClientRect();s.classList.toggle('lit',sr.top+24<mark)});
+  }
+  onScroll();
+  document.querySelectorAll('.pipe-ctl button').forEach(function(b){
+    b.addEventListener('click',function(){
+      document.getElementById('pipeWrap').dataset.view=b.dataset.v;
+      document.querySelectorAll('.pipe-ctl button').forEach(function(x){var on=x===b;x.classList.toggle('on',on);x.setAttribute('aria-pressed',on)});
+      if(window.gtag)gtag('event','pipeline_view',{view:b.dataset.v});
+    });
+  });
+
+  // ---------- THE CHAMBER ----------
+  var C=document.getElementById('chamber');if(!C)return;
+  var $=function(id){return document.getElementById(id)};
+  var FALLBACK=[{ticker:'BLK',name:'BlackRock, Inc.',sector:'Financial Services',price:1134.38,date:'2026-10-19',verdict:'BUY',url:'/analysis/BLK/2026-10-19',
+    bull_excerpt:$('chBull').textContent,bear_excerpt:$('chBear').textContent,judge_excerpt:$('chJudge').textContent}];
+  var DATA=FALLBACK,idx=0,timers=[],paused=false,visible=true,running=false;
+  var steps=C.querySelectorAll('.ch-step'),ans=C.querySelectorAll('.an'),bullBox=$('chBullBox'),bearBox=$('chBearBox');
+  function T(fn,ms){timers.push(setTimeout(fn,ms))}
+  function clearT(){timers.forEach(clearTimeout);timers=[]}
+  function money(p){return p==null?'—':'$'+Number(p).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
+  function sd(iso){try{return new Date(iso+'T12:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}catch(e){return iso}}
+  function clip(s,n){s=String(s||'').replace(/\s+/g,' ').trim();return s.length>n?s.slice(0,n).replace(/\s+\S*$/,'')+'…':s}
+  function gauge(v,final){
+    var pin=$('gPin'),fill=$('gFill'),pct=50+v*44;
+    pin.style.left='calc('+pct+'% - 1px)';
+    fill.style.left=(v<0?pct:50)+'%';fill.style.width=Math.abs(v*44)+'%';
+    fill.style.background=v>0?'var(--bull-l)':'var(--bear-l)';
+    if(final==='HOLD'){fill.style.background='var(--brass-l)'}
+  }
+  function step(n,dur){steps.forEach(function(s){var k=+s.dataset.s;s.classList.toggle('done',k<n);s.classList.toggle('on',k===n);if(k===n)s.style.setProperty('--d',(dur||1000)+'ms')})}
+  function type(el,txt,done){
+    if(RM){el.textContent=txt;done&&done();return}
+    var i=0;el.textContent='';el.classList.add('typing');
+    (function tick(){i+=3;el.textContent=txt.slice(0,i);if(i<txt.length){timers.push(setTimeout(tick,24))}else{el.classList.remove('typing');done&&done()}})();
+  }
+  function dots(){
+    var d=$('chDots');d.innerHTML=DATA.map(function(a,i){return '<button type="button" aria-label="Show '+a.ticker+' debate"'+(i===idx?' class="on"':'')+' data-i="'+i+'"></button>'}).join('');
+  }
+  function header(a){
+    $('chTk').textContent=a.ticker;$('chNm').textContent=(a.name||a.ticker);
+    $('chPx').textContent=money(a.price);$('chDt').textContent=sd(a.date);
+    $('chLink').href=a.url;
+  }
+  function finalState(a){
+    var v={BUY:.62,SELL:-.62,HOLD:0}[a.verdict]||0;
+    step(5);ans.forEach(function(x){x.classList.add('go','ok');x.querySelector('.s').textContent='Filed'});
+    $('chBull').textContent=clip(a.bull_excerpt,230);$('chBear').textContent=clip(a.bear_excerpt,230);
+    bullBox.className='side bull said';bearBox.className='side bear said';
+    gauge(v,a.verdict);
+    $('gCap').textContent=a.verdict==='HOLD'?'Neither side carried it decisively.':(a.verdict==='BUY'?'The bull case carried the debate.':'The bear case carried the debate.');
+    $('chStamp').className='stamp '+a.verdict;$('chV').textContent=a.verdict;
+    $('chJudge').textContent=clip(a.judge_excerpt,200);$('chRul').classList.add('on');
+  }
+  function play(i){
+    clearT();idx=(i+DATA.length)%DATA.length;var a=DATA[idx];running=true;
+    header(a);dots();
+    if(RM){finalState(a);return}
+    // reset
+    steps.forEach(function(s){s.classList.remove('on','done')});
+    ans.forEach(function(x){x.classList.remove('go','ok');x.querySelector('.s').textContent='—'});
+    bullBox.className='side bull';bearBox.className='side bear';
+    $('chBull').textContent='';$('chBear').textContent='';
+    $('chStamp').className='stamp';$('chV').textContent='—';$('chRul').classList.remove('on');$('chJudge').textContent='';
+    gauge(0);$('gCap').textContent='Four analysts gather evidence independently.';
+    // 1 evidence
+    step(1,2200);
+    ans.forEach(function(x,k){T(function(){x.classList.add('go');x.querySelector('.s').textContent='Reading'},k*380);T(function(){x.classList.add('ok');x.querySelector('.s').textContent='Filed'},k*380+1000)});
+    // 2 debate
+    T(function(){
+      step(2,7000);$('gCap').textContent='The bull makes the case for buying.';
+      bullBox.className='side bull live';gauge(.38);
+      type($('chBull'),clip(a.bull_excerpt,230),function(){
+        T(function(){
+          bullBox.className='side bull said';bearBox.className='side bear live';gauge(-.38);
+          $('gCap').textContent='The bear has to answer it, point by point.';
+          type($('chBear'),clip(a.bear_excerpt,230),function(){
+            T(function(){
+              bearBox.className='side bear said';
+              // 3 risk
+              step(3,1800);$('gCap').textContent='Risk manager sets stop loss, target and position size.';
+              gauge(.12);T(function(){gauge(-.08)},600);T(function(){gauge(.04)},1200);
+              // 4 ruling
+              T(function(){
+                step(4,600);var v={BUY:.62,SELL:-.62,HOLD:0}[a.verdict]||0;gauge(v,a.verdict);
+                $('gCap').textContent=a.verdict==='HOLD'?'Neither side carried it decisively.':(a.verdict==='BUY'?'The bull case carried the debate.':'The bear case carried the debate.');
+                $('chStamp').className='stamp '+a.verdict;$('chV').textContent=a.verdict;
+                $('chJudge').textContent=clip(a.judge_excerpt,200);$('chRul').classList.add('on');
+                T(function(){step(5)},700);
+                T(function(){running=false;if(!paused&&visible)play(idx+1)},8500);
+              },1900);
+            },500);
+          });
+        },700);
+      });
+    },2000);
+  }
+  $('chNext').addEventListener('click',function(){play(idx+1);if(window.gtag)gtag('event','chamber_next')});
+  $('chDots').addEventListener('click',function(e){var b=e.target.closest('button');if(b)play(+b.dataset.i)});
+  $('chPause').addEventListener('click',function(){
+    paused=!paused;this.textContent=paused?'Resume':'Pause';this.setAttribute('aria-pressed',paused);
+    if(paused){clearT();finalState(DATA[idx])}else{play(idx+1)}
+  });
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(es){es.forEach(function(e){
+      var was=visible;visible=e.isIntersecting;
+      if(!visible&&running&&!RM){clearT();finalState(DATA[idx]);running=false}
+      if(visible&&!was&&!paused&&!running)play(idx+1);
+    })},{threshold:.25}).observe(C);
+  }
+  document.addEventListener('visibilitychange',function(){if(document.hidden&&running){clearT();finalState(DATA[idx]);running=false}else if(!document.hidden&&visible&&!paused&&!running){play(idx+1)}});
+
+  // Called from the live-data fetch
+  window.HPChamber={load:function(list){
+    var ok=(list||[]).filter(function(a){return a.bull_excerpt&&a.bear_excerpt&&a.verdict});
+    if(!ok.length)return;
+    // Lead with a mix: first of each verdict, then the rest
+    var seen={},lead=[],rest=[];ok.forEach(function(a){(seen[a.verdict]?rest:lead).push(a);seen[a.verdict]=1});
+    DATA=lead.concat(rest).slice(0,6);idx=0;
+    if(!paused)play(0);else{header(DATA[0]);finalState(DATA[0]);dots()}
+  }};
+  play(0);
+
+  // Tape
+  window.HPTape=function(list){
+    var t=document.getElementById('tape');if(!t||!list||!list.length)return;
+    var html=list.map(function(a){return '<a href="'+esc(a.url)+'"><span class="t">'+esc(a.ticker)+'</span><span class="vb '+esc(a.verdict)+'">'+esc(a.verdict)+'</span><span class="p">'+money(a.price)+'</span><span class="d">'+sd(a.date)+'</span></a>'}).join('');
+    t.innerHTML=html+html;
+  };
+})();
 </script>
 <script src="/ref.js" defer></script>
 </body>
