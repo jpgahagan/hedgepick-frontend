@@ -4,6 +4,8 @@
 /partners     /partners.html     200
 /start        /start.html        200
 /sample       /sample.html       200
+/compare      /compare/index.html 200
+/compare/:slug /compare/:slug.html 200
 /analysis                /debates.html      200
 /analysis/               /debates.html      200
 /debates                 /debates.html      200

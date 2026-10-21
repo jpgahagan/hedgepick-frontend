@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>HedgePick vs just asking ChatGPT about a stock — HedgePick</title>
+<meta name="description" content="Why a structured twelve-agent bull-vs-bear debate is different from asking ChatGPT about a stock: process, data, reasoning, price and limitations.">
+<link rel="canonical" href="https://hedgepick.com/compare/chatgpt">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<meta name="theme-color" content="#07080a">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HedgePick">
+<meta property="og:title" content="HedgePick vs just asking ChatGPT about a stock — HedgePick">
+<meta property="og:description" content="Why a structured twelve-agent bull-vs-bear debate is different from asking ChatGPT about a stock: process, data, reasoning, price and limitations.">
+<meta property="og:url" content="https://hedgepick.com/compare/chatgpt">
+<meta property="og:image" content="https://hedgepick.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HedgePick vs just asking ChatGPT about a stock — HedgePick">
+<meta name="twitter:description" content="Why a structured twelve-agent bull-vs-bear debate is different from asking ChatGPT about a stock: process, data, reasoning, price and limitations.">
+<meta name="twitter:image" content="https://hedgepick.com/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/hp.css?v=4">
+<script src="/assets/hp.js?v=4"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W2VWCNQC6T"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-W2VWCNQC6T');</script>
+<style>
+.cmp-hero{padding:132px 0 40px}
+.cmp-hero h1{font-size:clamp(2.2rem,1.4rem + 3vw,3.6rem);letter-spacing:-.04em;line-height:1.02;max-width:20ch;text-wrap:balance}
+.cmp-hero .sd{font-size:1.15rem;color:var(--t2);max-width:60ch;margin-top:18px}
+.cmp-quick{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:36px 0 8px}
+.cmp-quick>div{border:1px solid var(--line-2);border-radius:var(--r3);padding:22px;background:var(--bg-1)}
+.cmp-quick>div.us{border-color:var(--blue-bd);background:radial-gradient(ellipse at top left,rgba(91,147,245,.12),rgba(91,147,245,0) 60%),var(--bg-1)}
+.cmp-quick h3{font-size:1rem;margin-bottom:12px;letter-spacing:-.01em}
+.cmp-quick ul{padding-left:18px;margin:0}.cmp-quick li{color:var(--t2);margin-bottom:8px;font-size:.95rem}
+.cmp-t{width:100%;border-collapse:collapse;margin:28px 0 8px;font-size:.92rem}
+.cmp-t th,.cmp-t td{text-align:left;vertical-align:top;padding:16px 14px;border-bottom:1px solid var(--line)}
+.cmp-t thead th{font-family:var(--mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);font-weight:500}
+.cmp-t tbody th{font-weight:600;color:var(--t1);width:20%}
+.cmp-t td{color:var(--t2);width:40%}.cmp-t td.hp{color:var(--t1)}
+.cmp-t a{color:var(--blue-2)}
+.cmp-sec{padding:44px 0;border-top:1px solid var(--line)}
+.cmp-sec h2{font-size:1.5rem;letter-spacing:-.025em;margin-bottom:12px}
+.cmp-sec p{color:var(--t2);max-width:68ch}
+.cmp-cta{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin:24px 0 56px;padding:26px;border:1px solid var(--blue-bd);border-radius:var(--r3);background:var(--bg-1)}
+.cmp-cta b{display:block;font-family:var(--display);font-size:1.35rem;letter-spacing:-.03em}
+.cmp-cta span{display:block;color:var(--t2);margin-top:6px}
+.cmp-cta form{display:flex;gap:8px}
+.cmp-cta input{width:140px;background:var(--bg);border:1px solid var(--line-2);border-radius:var(--r2);padding:11px 12px;font-family:var(--mono);font-weight:600;text-transform:uppercase;color:var(--t1);font-size:.95rem}
+.cmp-cta input:focus{outline:none;border-color:var(--blue)}
+.cmp-note{font-size:.8rem;color:var(--t3);max-width:80ch;padding-bottom:80px}
+.cmp-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin:36px 0 80px}
+.cmp-list a{display:block;padding:22px;border:1px solid var(--line-2);border-radius:var(--r3);background:var(--bg-1);text-decoration:none;color:var(--t1);transition:border-color .2s,transform .2s}
+.cmp-list a:hover{border-color:var(--blue-bd);transform:translateY(-2px)}
+.cmp-list b{display:block;font-size:1.05rem;letter-spacing:-.01em}.cmp-list span{display:block;color:var(--t2);font-size:.9rem;margin-top:8px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media(max-width:760px){.cmp-quick{grid-template-columns:1fr}.cmp-t thead{display:none}.cmp-t,.cmp-t tbody,.cmp-t tr,.cmp-t th,.cmp-t td{display:block;width:100%!important}.cmp-t tr{border-bottom:1px solid var(--line);padding:12px 0}.cmp-t th,.cmp-t td{border:0;padding:6px 0}.cmp-t td:before{content:attr(data-l);display:block;font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);margin-bottom:4px}.cmp-cta form{width:100%}.cmp-cta input{flex:1;width:auto;min-width:0}}
+</style><script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"HedgePick vs just asking ChatGPT about a stock","url":"https://hedgepick.com/compare/chatgpt","dateModified":"2026-10-21"}</script></head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="hdr" id="hdr">
+  <div class="hdr-in">
+    <a href="/" class="brand" aria-label="HedgePick home"><svg viewBox="0 0 28 28" fill="none" aria-hidden="true"><rect width="28" height="28" rx="6" fill="#0d0f13"/><rect x=".5" y=".5" width="27" height="27" rx="5.5" stroke="rgba(91,147,245,.35)"/><path class="ln" d="M6 20L11 13L15 16.5L19 10L22 13" stroke="#5b93f5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="22" cy="13" r="2" fill="#e3a83a"/></svg><span>HEDGE<em>PICK</em></span></a>
+    <nav class="nav" aria-label="Primary">
+      <a href="/#how">How it works</a>
+      <a href="/analysis">Debates</a>
+      <a href="/sample">Sample dashboard</a>
+      <a href="/#pricing">Pricing</a>
+      <a href="/system">Methodology</a>
+    </nav>
+    <div class="hdr-act">
+      <button type="button" class="btn btn-ghost" data-out onclick="showSignIn()">Sign in</button>
+      <a href="/start" class="btn btn-pri" data-out>Test a stock free</a>
+      <a href="/dashboard" class="btn btn-pri" data-in style="display:none">Open dashboard</a>
+      <button class="ham" id="ham" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<nav class="mmenu" id="mmenu" aria-label="Mobile">
+  <a href="/#how" onclick="closeMenu()">How it works</a>
+  <a href="/analysis">Debates</a>
+  <a href="/sample">Sample dashboard</a>
+  <a href="/#pricing" onclick="closeMenu()">Pricing</a>
+  <a href="/system">Methodology</a>
+  <a href="/partners">Partners</a>
+  <a href="#" data-out onclick="closeMenu();showSignIn();return false;">Sign in</a>
+  <a href="/dashboard" data-in style="display:none">Dashboard</a>
+  <a href="/start" class="btn btn-pri" data-out>Test a stock free</a>
+  <a href="/dashboard" class="btn btn-pri" data-in style="display:none">Open dashboard</a>
+</nav>
+
+<main id="main"><div class="wrap">
+<section class="cmp-hero">
+  <div class="kick rv"><b>Compare</b> Updated October 21, 2026</div>
+  <h1 class="rv d1">HedgePick vs asking ChatGPT</h1>
+  <p class="sd rv d2">ChatGPT answers the question you ask. HedgePick runs a fixed process designed to argue against you.</p>
+  <div class="cmp-quick rv d3">
+    <div><h3>Choose ChatGPT if</h3><ul><li>You want a fast conversational answer or explanation of a concept.</li><li>You want to explore many unrelated questions in one place.</li><li>You’re comfortable writing careful prompts and checking sources yourself.</li></ul></div>
+    <div class="us"><h3>Choose HedgePick if</h3><ul><li>You want the same rigorous process every time, not a prompt you have to get right.</li><li>You want a dedicated bear whose only job is to find what’s wrong with the trade.</li><li>You want a ruling, trade levels and a PDF you can keep.</li></ul></div>
+  </div>
+</section>
+<section class="cmp-sec">
+  <h2>Side by side</h2>
+  <table class="cmp-t"><thead><tr><th></th><th>ChatGPT</th><th>HedgePick</th></tr></thead><tbody>
+<tr><th scope="row">What it is</th><td data-l="ChatGPT">A general-purpose AI assistant. OpenAI does not describe a stock-rating method (<a href="https://openai.com/chatgpt/pricing/" target="_blank" rel="noopener nofollow">OpenAI</a>).</td><td class="hp" data-l="HedgePick">Research software that runs a structured debate on one US stock: four analysts, a bull and a bear, a research manager, a trader, a three-person risk desk and a portfolio manager.</td></tr>
+<tr><th scope="row">How the rating is made</th><td data-l="ChatGPT">Whatever you prompt. The quality depends on your question, what data it finds, and whether it pushes back.</td><td class="hp" data-l="HedgePick">Twelve AI agents work from market data, filings, news and sentiment. The bull and bear argue; a research manager rules; the risk desk argues position size; the portfolio manager gives BUY, HOLD or SELL.</td></tr>
+<tr><th scope="row">Shows the reasoning</th><td data-l="ChatGPT">It explains itself, but OpenAI notes the model “may express high confidence even in incorrect answers” (<a href="https://help.openai.com/en/articles/8313428-does-chatgpt-tell-the-truth" target="_blank" rel="noopener nofollow">OpenAI Help</a>).</td><td class="hp" data-l="HedgePick">Yes. You read the full bull case, the full bear case and the ruling in plain English, not just a score.</td></tr>
+<tr><th scope="row">Tests your own thesis</th><td data-l="ChatGPT">You can type a thesis, but it tends to work with your framing unless you ask it to argue against you.</td><td class="hp" data-l="HedgePick">Yes. Type why you want to buy and the agents argue against that specific reasoning.</td></tr>
+<tr><th scope="row">Price</th><td data-l="ChatGPT">Plus is $20/month; a free plan exists (<a href="https://help.openai.com/en/articles/6950777-what-is-chatgpt-plus" target="_blank" rel="noopener nofollow">OpenAI Help</a>, <a href="https://openai.com/chatgpt/pricing/" target="_blank" rel="noopener nofollow">Pricing</a>).</td><td class="hp" data-l="HedgePick">Pro $39/month or $379/year. Trader $99/month or $949/year. $19 one-time 5-pack.</td></tr>
+<tr><th scope="row">Free tier</th><td data-l="ChatGPT">Free plan with limits (<a href="https://openai.com/chatgpt/pricing/" target="_blank" rel="noopener nofollow">OpenAI Pricing</a>).</td><td class="hp" data-l="HedgePick">3 full debates, no card, no password. Free reports include the bull, bear, ruling and entry, stop and target.</td></tr>
+  </tbody></table>
+</section>
+<section class="cmp-sec">
+  <h2>Can you use both?</h2>
+  <p>Asking a chatbot is a conversation. HedgePick is a procedure: separate analysts, an adversarial debate, a judge and a risk desk, run the same way on every stock.</p>
+  <div class="cmp-cta"><div><b>Run the debate on a stock you’re considering.</b><span>Three free debates. No card, no password.</span></div>
+<form action="/start"><input type="hidden" name="ref" value="compare-chatgpt"><label class="sr" for="cT">Ticker</label><input id="cT" name="t" placeholder="Ticker" maxlength="10" autocomplete="off"><button class="btn btn-pri" type="submit">Debate it free</button></form></div>
+  <p>Not sure what a debate looks like? <a class="lnk" href="/sample">Open the sample dashboard</a> or <a class="lnk" href="/analysis">read today’s published debates</a>.</p>
+</section>
+<p class="cmp-note">Facts about ChatGPT come from its public pages as linked, checked October 21, 2026. Prices and features change; check the vendor’s site before you buy. HedgePick is not affiliated with ChatGPT. HedgePick is research software, not financial advice, and AI can be wrong. <a href="/compare">All comparisons</a></p>
+</div></main>
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft-in">
+      <div>
+        <a href="/" class="brand" aria-label="HedgePick home"><svg viewBox="0 0 28 28" fill="none" aria-hidden="true"><rect width="28" height="28" rx="6" fill="#0d0f13"/><rect x=".5" y=".5" width="27" height="27" rx="5.5" stroke="rgba(91,147,245,.35)"/><path class="ln" d="M6 20L11 13L15 16.5L19 10L22 13" stroke="#5b93f5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="22" cy="13" r="2" fill="#e3a83a"/></svg><span>HEDGE<em>PICK</em></span></a>
+        <p class="ft-tag">Adversarial AI research for US stocks. Hear the case against it before you buy.</p>
+      </div>
+      <div class="ft-cols">
+        <div><h4>Product</h4><a href="/#how">How it works</a><a href="/analysis">Daily debates</a><a href="/sample">Sample dashboard</a><a href="/start">Test a stock free</a><a href="/#pricing">Pricing</a><a href="/compare">Compare</a><a href="/dashboard">Dashboard</a></div>
+        <div><h4>Company</h4><a href="/system">Methodology</a><a href="/partners">Partners</a><a href="mailto:joseph@hedgepick.com">Contact</a></div>
+        <div><h4>Legal</h4><a href="/terms">Terms</a><a href="/privacy">Privacy</a><a href="/terms#disclaimer">Disclaimer</a></div>
+      </div>
+      <div class="ft-d"><p>Not financial advice. For educational and informational purposes only. AI-generated research can be wrong. Past performance does not guarantee future results.</p><span>© 2026 HedgePick</span></div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
