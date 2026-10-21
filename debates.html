@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Daily AI Stock Debates — HedgePick</title>
+<meta name="description" content="Every weekday, twelve AI agents argue the bull and bear case on the stocks HedgePick’s screener flags. Every ruling is published, including the SELLs.">
+<link rel="canonical" href="https://hedgepick.com/analysis">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<meta name="theme-color" content="#07080a">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HedgePick">
+<meta property="og:title" content="Daily AI Stock Debates — HedgePick">
+<meta property="og:description" content="Every weekday, twelve AI agents argue the bull and bear case on the stocks HedgePick’s screener flags. Every ruling is published, including the SELLs.">
+<meta property="og:url" content="https://hedgepick.com/analysis">
+<meta property="og:image" content="https://hedgepick.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Daily AI Stock Debates — HedgePick">
+<meta name="twitter:description" content="Every weekday, twelve AI agents argue the bull and bear case on the stocks HedgePick’s screener flags. Every ruling is published, including the SELLs.">
+<meta name="twitter:image" content="https://hedgepick.com/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/hp.css?v=3">
+<script src="/assets/hp.js?v=3"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W2VWCNQC6T"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-W2VWCNQC6T');</script>
+<style>/* Home */
+.hero{position:relative;padding:clamp(40px,6vw,88px) 0 clamp(56px,7vw,96px);overflow:hidden}
+.hero::before{content:"";position:absolute;inset:-1px 0 auto 0;height:720px;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:64px 64px;-webkit-mask-image:radial-gradient(ellipse 70% 60% at 30% 0%,#000 10%,transparent 70%);mask-image:radial-gradient(ellipse 70% 60% at 30% 0%,#000 10%,transparent 70%);pointer-events:none;opacity:.7}
+.hero-grid{position:relative;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,1fr);grid-template-areas:"copy eng" "lead eng" "form eng";grid-template-rows:auto auto 1fr;column-gap:clamp(32px,5vw,72px);align-items:start}
+.h-copy{grid-area:copy}.h-lead{grid-area:lead}.h-form{grid-area:form}.h-eng{grid-area:eng}
+
+.d-hero .ht{font-size:clamp(2.5rem,1.3rem + 3.8vw,4.6rem);letter-spacing:-.045em;line-height:.97;margin-top:18px;text-wrap:balance}
+.d-hero .ht .x{color:var(--red)}
+.d-hero .lead{font-size:clamp(1.05rem,.98rem + .3vw,1.2rem);color:var(--t2);max-width:50ch;margin-top:22px}
+.dstats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin-top:32px;border-top:1px solid var(--line)}
+.dstats div{padding:16px 0 0}
+.dstats .v{font-family:var(--display);font-size:2rem;font-weight:600;letter-spacing:-.04em;line-height:1}
+.dstats .v.b{color:var(--green)}.dstats .v.h{color:var(--gold)}.dstats .v.s{color:var(--red)}
+.dstats .l{display:block;margin-top:8px;font-family:var(--mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--t3)}
+.hero-grid{grid-template-areas:"copy eng";grid-template-rows:auto}
+.bar{position:sticky;top:64px;z-index:5;background:rgba(7,8,10,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--line);border-top:1px solid var(--line)}
+.bar-in{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-top:12px;padding-bottom:12px;flex-wrap:wrap}
+.flt{display:flex;gap:6px;flex-wrap:wrap}
+.flt button{font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;padding:7px 13px;border-radius:999px;border:1px solid var(--line-2);color:var(--t2);transition:all .2s}
+.flt button:hover{color:var(--t1);border-color:var(--line-3)}
+.flt button.on{background:var(--t1);color:var(--bg);border-color:var(--t1)}
+.flt button b{font-weight:500;opacity:.6;margin-left:6px}
+.srch{background:var(--bg-1);border:1px solid var(--line-2);border-radius:999px;padding:8px 14px;font:inherit;font-size:var(--sm);color:var(--t1);width:220px;transition:border-color .2s}
+.srch:focus{outline:none;border-color:var(--blue)}
+.list{padding-top:24px;padding-bottom:100px;min-height:50vh}
+.dg{margin-top:28px}
+.dh{display:flex;justify-content:space-between;font-family:var(--mono);font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);padding:0 4px 10px;border-bottom:1px solid var(--line)}
+.dh .c{color:var(--t4)}
+.dr{display:grid;grid-template-columns:72px minmax(0,1.1fr) minmax(0,1.6fr) 92px 64px 64px;gap:18px;align-items:center;padding:16px 4px;border-bottom:1px solid var(--line);text-decoration:none;color:var(--t2);font-size:var(--sm);position:relative;transition:background .25s,padding .35s var(--ease)}
+.dr::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--line-3);transform:scaleY(0);transition:transform .3s var(--ease)}
+.dr[data-v=BUY]::before{background:var(--green)}.dr[data-v=SELL]::before{background:var(--red)}.dr[data-v=HOLD]::before{background:var(--gold)}
+.dr:hover{background:rgba(255,255,255,.025);padding-left:14px}
+.dr:hover::before{transform:scaleY(1)}
+.dr .tk{font-family:var(--mono);font-weight:600;color:var(--t1);font-size:.95rem}
+.dr .nm{color:var(--t1);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dr .ex{color:var(--t3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dr .px{font-family:var(--mono);font-size:.8rem;text-align:right}
+.dr .vb{justify-self:start}
+.dr .go{color:var(--t1);font-weight:500;text-align:right;white-space:nowrap}
+.dr:hover .go{color:var(--blue-2)}
+.dr.hide{display:none}
+.dg.hide{display:none}
+.empty{display:none;color:var(--t3);padding:40px 4px}
+.js .dr{opacity:0;transform:translateY(8px)}
+.js .dr.in{opacity:1;transform:none;transition:opacity .5s var(--ease),transform .5s var(--ease),background .25s,padding .35s var(--ease)}
+@media(max-width:1020px){.hero-grid{grid-template-columns:1fr;grid-template-areas:"copy" "eng"}.h-eng{margin-top:28px;max-width:620px}.dr{grid-template-columns:64px minmax(0,1fr) 80px 56px}.dr .ex,.dr .go{display:none}}
+@media(max-width:560px){.dr{grid-template-columns:56px minmax(0,1fr) 54px;gap:12px}.dr .px{display:none}.srch{width:100%}.bar-in{gap:10px}.dstats .v{font-size:1.5rem}.bar{top:64px}}
+@media(prefers-reduced-motion:reduce){.js .dr{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="hdr" id="hdr">
+  <div class="hdr-in">
+    <a href="/" class="brand" aria-label="HedgePick home"><svg viewBox="0 0 28 28" fill="none" aria-hidden="true"><rect width="28" height="28" rx="6" fill="#0d0f13"/><rect x=".5" y=".5" width="27" height="27" rx="5.5" stroke="rgba(91,147,245,.35)"/><path class="ln" d="M6 20L11 13L15 16.5L19 10L22 13" stroke="#5b93f5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="22" cy="13" r="2" fill="#e3a83a"/></svg><span>HEDGE<em>PICK</em></span></a>
+    <nav class="nav" aria-label="Primary">
+      <a href="/#how">How it works</a>
+      <a href="/analysis" class="on">Debates</a>
+      <a href="/system">Methodology</a>
+      <a href="/#pricing">Pricing</a>
+      <a href="/partners">Partners</a>
+    </nav>
+    <div class="hdr-act">
+      <button type="button" class="btn btn-ghost" data-out onclick="showSignIn()">Sign in</button>
+      <a href="/dashboard" class="btn btn-ghost" data-in style="display:none">Dashboard</a>
+      <a href="/#try" class="btn btn-pri" data-out>Test a stock free</a>
+      <a href="/dashboard" class="btn btn-pri" data-in style="display:none">Open dashboard</a>
+      <button class="ham" id="ham" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<nav class="mmenu" id="mmenu" aria-label="Mobile">
+  <a href="/#how" onclick="closeMenu()">How it works</a>
+  <a href="/analysis">Debates</a>
+  <a href="/system">Methodology</a>
+  <a href="/#pricing" onclick="closeMenu()">Pricing</a>
+  <a href="/partners">Partners</a>
+  <a href="#" data-out onclick="closeMenu();showSignIn();return false;">Sign in</a>
+  <a href="/dashboard" data-in style="display:none">Dashboard</a>
+  <a href="/#try" class="btn btn-pri" onclick="closeMenu()">Test a stock free</a>
+</nav>
+
+<main id="main">
+<section class="hero d-hero">
+  <div class="wrap hero-grid">
+    <div class="h-copy">
+      <div class="kick rv"><b>Debates</b> Published every weekday</div>
+      <h1 class="ht rv d1">Every ruling, published. <span class="x">Including the SELLs.</span></h1>
+      <p class="lead rv d2">Each weekday morning the screener flags US stocks with unusual setups, and the full twelve-agent pipeline argues each one. Every result goes up here unedited. Read any of them free.</p>
+      <div class="dstats rv d3">
+        <div><span class="v" id="sT">43</span><span class="l">Debates</span></div>
+        <div><span class="v b" id="sB">7</span><span class="l">Buy</span></div>
+        <div><span class="v h" id="sH">10</span><span class="l">Hold</span></div>
+        <div><span class="v s" id="sS">26</span><span class="l">Sell</span></div>
+      </div>
+    </div>
+    <div class="h-eng rv d2">
+      <div class="eng" id="engHero" aria-label="Replay of a published HedgePick debate">
+        <div class="eng-top"><span class="l"><span class="dot"></span>Live replay · Published debate</span><span class="eng-ctl"><button type="button" class="eng-pause" aria-pressed="false">Pause</button><button type="button" class="eng-next">Next</button></span></div>
+        <div class="eng-doc"><div><div class="eng-tk">—</div><div class="eng-nm">Loading the latest debate</div></div><div class="eng-pr"><span class="eng-px">—</span><span class="eng-dt">Today</span></div></div>
+        <div class="eng-stage"></div>
+        <div class="eng-cap" aria-live="off"><div class="eng-cap-k">Stage 1 · Evidence</div><div class="eng-cap-t">Four analysts work separately: price and technicals, sentiment, news and macro, and the company’s financials.</div></div>
+        <div class="eng-foot"><a class="eng-link" href="/analysis">Read the full debate →</a><span class="eng-dots"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+<div class="bar"><div class="wrap bar-in">
+  <div class="flt" role="group" aria-label="Filter by ruling">
+    <button type="button" class="on" data-f="ALL">All<b id="cA"></b></button>
+    <button type="button" data-f="BUY">Buy<b id="cB"></b></button>
+    <button type="button" data-f="HOLD">Hold<b id="cH"></b></button>
+    <button type="button" data-f="SELL">Sell<b id="cS"></b></button>
+  </div>
+  <label class="sr" for="q">Search by ticker or company</label>
+  <input class="srch" id="q" type="search" placeholder="Search ticker or company" autocomplete="off">
+</div></div>
+<section class="wrap list" id="list" aria-live="polite"><div class="dg"><div class="dh"><span>October 21, 2026</span><span class="c">5 debates</span></div><a class="dr" href="/analysis/RGR/2026-10-21" data-v="SELL" data-q="rgr sturm, ruger &amp; company, inc."><span class="tk">RGR</span><span class="nm">Sturm, Ruger &amp; Company, Inc.</span><span class="ex"></span><span class="px"></span><span class="vb SELL">SELL</span><span class="go">Read →</span></a><a class="dr" href="/analysis/COLL/2026-10-21" data-v="SELL" data-q="coll collegium pharmaceutical, inc."><span class="tk">COLL</span><span class="nm">Collegium Pharmaceutical, Inc.</span><span class="ex"></span><span class="px"></span><span class="vb SELL">SELL</span><span class="go">Read →</span></a><a class="dr" href="/analysis/BLK/2026-10-21" data-v="HOLD" data-q="blk blackrock, inc."><span class="tk">BLK</span><span class="nm">BlackRock, Inc.</span><span class="ex"></span><span class="px"></span><span class="vb HOLD">HOLD</span><span class="go">Read →</span></a><a class="dr" href="/analysis/KKR/2026-10-21" data-v="SELL" data-q="kkr kkr &amp; co. inc."><span class="tk">KKR</span><span class="nm">KKR &amp; Co. Inc.</span><span class="ex"></span><span class="px"></span><span class="vb SELL">SELL</span><span class="go">Read →</span></a><a class="dr" href="/analysis/TDY/2026-10-21" data-v="SELL" data-q="tdy teledyne technologies incorporated"><span class="tk">TDY</span><span class="nm">Teledyne Technologies Incorporated</span><span class="ex"></span><span class="px"></span><span class="vb SELL">SELL</span><span class="go">Read →</span></a></div><div class="dg"><div class="dh"><span>October 20, 2026</span><span class="c">15 debates</span></div><a class="dr" href="/analysis/RGR/2026-10-20" data-v="SELL" data-q="rgr sturm, ruger &amp; company, inc."><span class="tk">RGR</span><span class="nm">Sturm, Ruger &amp; Company, Inc.</span><span class="ex"></span><span class="px"></span><span class="vb SELL">SELL</span><span class="go">Read →</span></a><a class="dr" href="/analysis/RAMP/2026-10-20" data-v="HOLD" data-q="ramp liveramp holdings, inc."><span class="tk">RAMP</span><span class="nm">LiveRamp Holdings, Inc.</span><span class="ex"></span><span class="px"></span><span class="vb HOLD">HOLD</span><span class="go">Read →</span></a><a class="dr" href="/analysis/BLK/2026-10-20" data-v="HOLD" data-q="blk blackrock, inc."><span class="tk">BLK</span><span class="nm">BlackRock, Inc.</span><span class="ex"></span><span class="px"></span><span class="vb HOLD">HOLD</span><span class="go">Read →</span></a><a class="dr" href="/analysis/IRON/2026-10-20" data-v="SELL" data-q="iron disc medicine, inc."><span class="tk">IRON</span><span class="nm">Disc Medicine, Inc.</span><span class="ex"></span><span class="px"></span><span class="vb SELL">SELL</span><span class="go">Read →</span></a><a class="dr" href="/analysis/COLL/2026-10-20" data-v="SELL" data-q="coll collegium pharmaceutical, inc."><span class="tk">COLL</span><span class="nm">Collegium Pharmaceutical, Inc.</span><span class="ex"></span><span class="px"></span><span class="vb SELL">SELL</span><span class="go">Read →</span></a><a class="dr" href="/analysis/JPM/2026-10-20" data-v="BUY" data-q="jpm jpmorgan chase &amp; co."><span class="tk">JPM</span><span class="nm">JPMorgan Chase &amp; Co.</span><span class="ex"></span><span class="px"></span><span class="vb BUY">BUY</span><span class="go">Read →</span></a><a class="dr" href="/analysis/LLY/2026-10-20" data-v="HOLD" data-q="lly eli lilly and company"><span class="tk">LLY</span><span class="nm">Eli Lilly and Company</span><span class="ex"></span><span class="px"></span><span class="vb HOLD">HOLD</span><span class="go">Read →</span></a><a class="dr" href="/analysis/CRWD/2026-10-20" data-v="BUY" data-q="crwd crowdstrike holdings, inc."><span class="tk">CRWD</span><span class="nm">CrowdStrike Holdings, Inc.</span><span class="ex"></span><span class="px"></span><span class="vb BUY">BUY</span><span class="go">Read →</span></a><a class="dr" href="/analysis/COIN/2026-10-20" data-v="SELL" data-q="coin coinbase global, inc."><span class="tk">COIN</span><span class="nm">Coinbase Global, Inc.</span><span class="ex"></span><span class="px"></span><span class="vb SELL">SELL</span><span class="go">Read →</span></a><a class="dr" href="/analysis/GOOGL/2026-10-20" data-v="HOLD" data-q="googl alphabet inc."><span class="tk">GOOGL</span><span class="nm">Alphabet Inc.</span><span class="ex"></span><span class="px"></span><span class="vb HOLD">HOLD</span><span class="go">Read →</span></a><a class="dr" href="/analysis/AVGO/2026-10-20" data-v="SELL" data-q="avgo broadcom inc."><span class="tk">AVGO</span><span class="nm">Broadcom Inc.</span><span class="ex"></span><span class="px"></span><span class="vb SELL">SELL</span><span class="go">Read →</span></a><a class="dr" href="/analysis/MSTR/2026-10-20" data-v="SELL" data-q="mstr strategy inc"><span class="tk">MSTR</span><span class="nm">Strategy Inc</span><span class="ex"></span><span class="px"></span><span class="vb SELL">SELL</span><span class="go">Read →</span></a><a class="dr" href="/analysis/UBER/2026-10-20" data-v="BUY" data-q="uber uber technologies, inc."><span class="tk">UBER</span><span class="nm">Uber Technologies, Inc.</span><span class="ex"></span><span class="px"></span><span class="vb BUY">BUY</span><span class="go">Read →</span></a><a class="dr" href="/analysis/SOFI/2026-10-20" data-v="HOLD" data-q="sofi sofi technologies, inc."><span class="tk">SOFI</span><span class="nm">SoFi Technologies, Inc.</span><span class="ex"></span><span class="px"></span><span class="vb HOLD">HOLD</span><span class="go">Read →</span></a><a class="dr" href="/analysis/NFLX/2026-10-20" data-v="HOLD" data-q="nflx netflix, inc."><span class="tk">NFLX</span><span class="nm">Netflix, Inc.</span><span class="ex"></span><span class="px"></span><span class="vb HOLD">HOLD</span><span class="go">Read →</span></a></div><div class="dg"><div class="dh"><span>October 19, 2026</span><span class="c">13 debates</span></div><a class="dr" href="/analysis/META/2026-10-19" data-v="HOLD" data-q="meta meta platforms, inc."><span class="tk">META</span><span class="nm">Meta Platforms, Inc.</span><span class="ex"></span><span class="px"></span><span class="vb HOLD">HOLD</span><span class="go">Read →</span></a><a class="dr" href="/analysis/AMD/2026-10-19" data-v="SELL" data-q="amd advanced micro devices, inc."><span class="tk">AMD</span><span class="nm">Advanced Micro Devices, Inc.</span><span class="ex"></span><span class="px"></span><span class="vb SELL">SELL</span><span class="go">Read →</span></a><a class="dr" href="/analysis/PLTR/2026-10-19" data-v="SELL" data-q="pltr palantir technologies inc."><span class="tk">PLTR</span><span class="nm">Palantir Technologies Inc.</span><span class="ex"></span><span class="px"></span><span class="vb SELL">SELL</span><span class="go">Read →</span></a><a class="dr" href="/analysis/MSFT/2026-10-19" data-v="BUY" data-q="msft microsoft corporation"><span class="tk">MSFT</span><span class="nm">Microsoft Corporation</span><span class="ex"></span><span class="px"></span><span class="vb BUY">BUY</span><span class="go">Read →</span></a><a class="dr" href="/analysis/AMZN/2026-10-19" data-v="HOLD" data-q="amzn amazon.com, inc."><span class="tk">AMZN</span><span class="nm">Amazon.com, Inc.</span><span class="ex"></span><span class="px"></span><span class="vb HOLD">HOLD</span><span class="go">Read →</span></a><a class="dr" href="/analysis/TSLA/2026-10-19" data-v="SELL" data-q="tsla tesla, inc."><span class="tk">TSLA</span><span class="nm">Tesla, Inc.</span><span class="ex"></span><span class="px"></span><span class="vb SELL">SELL</span><span class="go">Read →</span></a><a class="dr" href="/analysis/NVDA/2026-10-19" data-v="BUY" data-q="nvda nvidia corporation"><span class="tk">NVDA</span><span class="nm">NVIDIA Corporation</span><span class="ex"></span><span class="px"></span><span class="vb BUY">BUY</span><span class="go">Read →</span></a><a class="dr" href="/analysis/AAPL/2026-10-19" data-v="SELL" data-q="aapl apple inc."><span class="tk">AAPL</span><span class="nm">Apple Inc.</span><span class="ex"></span><span class="px"></span><span class="vb SELL">SELL</span><span class="go">Read →</span></a><a class="dr" href="/analysis/DKS/2026-10-19" data-v="SELL" data-q="dks dick&#x27;s sporting goods, inc."><span class="tk">DKS</span><span class="nm">DICK&#x27;S Sporting Goods, Inc.</span><span class="ex"></span><span class="px"></span><span class="vb SELL">SELL</span><span class="go">Read →</span></a><a class="dr" href="/analysis/VMC/2026-10-19" data-v="SELL" data-q="vmc vulcan materials company"><span class="tk">VMC</span><span class="nm">Vulcan Materials Company</span><span class="ex"></span><span class="px"></span><span class="vb SELL">SELL</span><span class="go">Read →</span></a><a class="dr" href="/analysis/BLK/2026-10-19" data-v="BUY" data-q="blk blackrock, inc."><span class="tk">BLK</span><span class="nm">BlackRock, Inc.</span><span class="ex"></span><span class="px"></span><span class="vb BUY">BUY</span><span class="go">Read →</span></a><a class="dr" href="/analysis/COLL/2026-10-19" data-v="SELL" data-q="coll collegium pharmaceutical, inc."><span class="tk">COLL</span><span class="nm">Collegium Pharmaceutical, Inc.</span><span class="ex"></span><span class="px"></span><span class="vb SELL">SELL</span><span class="go">Read →</span></a><a class="dr" href="/analysis/SYK/2026-10-19" data-v="SELL" data-q="syk stryker corporation"><span class="tk">SYK</span><span class="nm">Stryker Corporation</span><span class="ex"></span><span class="px"></span><span class="vb SELL">SELL</span><span class="go">Read →</span></a></div><div class="dg"><div class="dh"><span>October 16, 2026</span><span class="c">5 debates</span></div><a class="dr" href="/analysis/BLK/2026-10-16" data-v="BUY" data-q="blk blackrock, inc."><span class="tk">BLK</span><span class="nm">BlackRock, Inc.</span><span class="ex"></span><span class="px"></span><span class="vb BUY">BUY</span><span class="go">Read →</span></a><a class="dr" href="/analysis/VSTM/2026-10-16" data-v="SELL" data-q="vstm verastem, inc."><span class="tk">VSTM</span><span class="nm">Verastem, Inc.</span><span class="ex"></span><span class="px"></span><span class="vb SELL">SELL</span><span class="go">Read →</span></a><a class="dr" href="/analysis/PAG/2026-10-16" data-v="HOLD" data-q="pag penske automotive group, inc."><span class="tk">PAG</span><span class="nm">Penske Automotive Group, Inc.</span><span class="ex"></span><span class="px"></span><span class="vb HOLD">HOLD</span><span class="go">Read →</span></a><a class="dr" href="/analysis/ERIXF/2026-10-16" data-v="SELL" data-q="erixf telefonaktiebolaget lm ericsson (publ)"><span class="tk">ERIXF</span><span class="nm">Telefonaktiebolaget LM Ericsson (publ)</span><span class="ex"></span><span class="px"></span><span class="vb SELL">SELL</span><span class="go">Read →</span></a><a class="dr" href="/analysis/OPK/2026-10-16" data-v="SELL" data-q="opk opko health, inc."><span class="tk">OPK</span><span class="nm">OPKO Health, Inc.</span><span class="ex"></span><span class="px"></span><span class="vb SELL">SELL</span><span class="go">Read →</span></a></div><div class="dg"><div class="dh"><span>October 15, 2026</span><span class="c">5 debates</span></div><a class="dr" href="/analysis/MGA/2026-10-15" data-v="SELL" data-q="mga magna international inc."><span class="tk">MGA</span><span class="nm">Magna International Inc.</span><span class="ex"></span><span class="px"></span><span class="vb SELL">SELL</span><span class="go">Read →</span></a><a class="dr" href="/analysis/ERIC/2026-10-15" data-v="SELL" data-q="eric telefonaktiebolaget lm ericsson (publ)"><span class="tk">ERIC</span><span class="nm">Telefonaktiebolaget LM Ericsson (publ)</span><span class="ex"></span><span class="px"></span><span class="vb SELL">SELL</span><span class="go">Read →</span></a><a class="dr" href="/analysis/PFGC/2026-10-15" data-v="SELL" data-q="pfgc performance food group company"><span class="tk">PFGC</span><span class="nm">Performance Food Group Company</span><span class="ex"></span><span class="px"></span><span class="vb SELL">SELL</span><span class="go">Read →</span></a><a class="dr" href="/analysis/COLL/2026-10-15" data-v="SELL" data-q="coll collegium pharmaceutical, inc."><span class="tk">COLL</span><span class="nm">Collegium Pharmaceutical, Inc.</span><span class="ex"></span><span class="px"></span><span class="vb SELL">SELL</span><span class="go">Read →</span></a><a class="dr" href="/analysis/OPK/2026-10-15" data-v="SELL" data-q="opk opko health, inc."><span class="tk">OPK</span><span class="nm">OPKO Health, Inc.</span><span class="ex"></span><span class="px"></span><span class="vb SELL">SELL</span><span class="go">Read →</span></a></div><p class="empty" id="empty">No debates match that search.</p></section>
+</main>
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft-in">
+      <div>
+        <a href="/" class="brand" aria-label="HedgePick home"><svg viewBox="0 0 28 28" fill="none" aria-hidden="true"><rect width="28" height="28" rx="6" fill="#0d0f13"/><rect x=".5" y=".5" width="27" height="27" rx="5.5" stroke="rgba(91,147,245,.35)"/><path class="ln" d="M6 20L11 13L15 16.5L19 10L22 13" stroke="#5b93f5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="22" cy="13" r="2" fill="#e3a83a"/></svg><span>HEDGE<em>PICK</em></span></a>
+        <p class="ft-tag">Adversarial AI research for US stocks. Hear the case against it before you buy.</p>
+      </div>
+      <div class="ft-cols">
+        <div><h4>Product</h4><a href="/#how">How it works</a><a href="/analysis">Daily debates</a><a href="/#pricing">Pricing</a><a href="/dashboard">Dashboard</a></div>
+        <div><h4>Company</h4><a href="/system">Methodology</a><a href="/partners">Partners</a><a href="mailto:joseph@hedgepick.com">Contact</a></div>
+        <div><h4>Legal</h4><a href="/terms">Terms</a><a href="/privacy">Privacy</a><a href="/terms#disclaimer">Disclaimer</a></div>
+      </div>
+      <div class="ft-d"><p>Not financial advice. For educational and informational purposes only. AI-generated research can be wrong. Past performance does not guarantee future results.</p><span>© 2026 HedgePick</span></div>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/engine.js?v=3"></script>
+<script>
+(function(){
+  var API='https://web-production-45241.up.railway.app',list=document.getElementById('list'),f='ALL',q='';
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+  function money(p){return p==null?'':'$'+Number(p).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}
+  var eng=HPEngine.mount(document.getElementById('engHero'),{mode:'auto'});eng.setStage(1);
+  function counts(){
+    var rs=list.querySelectorAll('.dr'),c={BUY:0,HOLD:0,SELL:0};rs.forEach(function(r){c[r.dataset.v]++});
+    document.getElementById('cA').textContent=rs.length;document.getElementById('cB').textContent=c.BUY;document.getElementById('cH').textContent=c.HOLD;document.getElementById('cS').textContent=c.SELL;
+  }
+  function apply(){
+    var any=0;
+    list.querySelectorAll('.dg').forEach(function(g){var n=0;g.querySelectorAll('.dr').forEach(function(r){var ok=(f==='ALL'||r.dataset.v===f)&&(!q||r.dataset.q.indexOf(q)>=0);r.classList.toggle('hide',!ok);if(ok)n++});g.classList.toggle('hide',!n);any+=n});
+    document.getElementById('empty').style.display=any?'none':'block';
+  }
+  function reveal(){
+    var rs=list.querySelectorAll('.dr:not(.in)');
+    if(!('IntersectionObserver' in window)){rs.forEach(function(r){r.classList.add('in')});return}
+    var io=new IntersectionObserver(function(es){es.forEach(function(e,i){if(e.isIntersecting){var r=e.target;setTimeout(function(){r.classList.add('in')},i*40);io.unobserve(r)}})},{rootMargin:'0px 0px -4% 0px'});
+    rs.forEach(function(r){io.observe(r)});
+  }
+  document.querySelectorAll('.flt button').forEach(function(b){b.addEventListener('click',function(){f=b.dataset.f;document.querySelectorAll('.flt button').forEach(function(x){x.classList.toggle('on',x===b)});apply()})});
+  document.getElementById('q').addEventListener('input',function(e){q=e.target.value.trim().toLowerCase();apply()});
+  function rowH(a){return '<a class="dr" href="'+esc(a.url)+'" data-v="'+a.verdict+'" data-q="'+esc((a.ticker+' '+a.name).toLowerCase())+'"><span class="tk">'+esc(a.ticker)+'</span><span class="nm">'+esc(a.name)+'</span><span class="ex"></span><span class="px"></span><span class="vb '+a.verdict+'">'+a.verdict+'</span><span class="go">Read →</span></a>'}
+  function rebuild(items){
+    var g={},order=[];items.forEach(function(a){if(!g[a.date]){g[a.date]=[];order.push(a.date)}g[a.date].push(a)});
+    var h=order.map(function(d){var x=g[d];return '<div class="dg"><div class="dh"><span>'+esc(d)+'</span><span class="c">'+x.length+' debate'+(x.length>1?'s':'')+'</span></div>'+x.map(rowH).join('')+'</div>'}).join('');
+    list.innerHTML=h+'<p class="empty" id="empty">No debates match that search.</p>';
+    var c={BUY:0,HOLD:0,SELL:0};items.forEach(function(a){c[a.verdict]++});
+    document.getElementById('sT').textContent=items.length;document.getElementById('sB').textContent=c.BUY;document.getElementById('sH').textContent=c.HOLD;document.getElementById('sS').textContent=c.SELL;
+  }
+  counts();reveal();
+  var archive=fetch(API+'/analysis').then(function(r){return r.ok?r.text():''}).then(function(t){
+    var re=/<a href="(\/analysis\/([A-Z.\-]+)\/[\d-]+)"><b>[A-Z.\-]+ — (.*?)<\/b><span>(.*?) · (BUY|HOLD|SELL)<\/span><\/a>/g,m,out=[],tx=document.createElement('textarea');
+    while((m=re.exec(t))){tx.innerHTML=m[3];out.push({url:m[1],ticker:m[2],name:tx.value,date:m[4],verdict:m[5]})}
+    if(out.length>=list.querySelectorAll('.dr').length){rebuild(out);counts();apply();reveal()}
+  }).catch(function(){});
+  Promise.all([archive.catch(function(){}),fetch(API+'/api/public-analyses')]).then(function(x){return x[1].ok?x[1].json():null}).then(function(d){
+    if(!d||!d.analyses)return;eng.load(d.analyses);
+    var m={};d.analyses.forEach(function(a){m[a.url]=a});
+    list.querySelectorAll('.dr').forEach(function(r){var a=m[r.getAttribute('href')];if(!a)return;r.querySelector('.px').textContent=money(a.price);r.querySelector('.ex').textContent=(a.sector?a.sector+' · ':'')+(a.bull_excerpt||'').replace(/\*\*/g,'')});
+  }).catch(function(){});
+})();
+</script>
+<script src="/ref.js" defer></script>
+</body>
+</html>
