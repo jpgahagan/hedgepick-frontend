@@ -24,7 +24,7 @@ body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--t1)
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 32px;background:rgba(5,6,8,0.95);backdrop-filter:blur(24px);border-bottom:1px solid var(--b1);z-index:100}
-.logo{font-family:'Space Mono',monospace;font-size:14px;font-weight:700;color:var(--t1);text-decoration:none}
+.logo{display:inline-flex;align-items:center;gap:10px;font-family:'Space Mono',monospace;font-size:14px;font-weight:700;color:var(--t1);text-decoration:none}
 .logo em{color:var(--blue);font-style:normal}
 .nav-r{display:flex;align-items:center;gap:16px}
 .plan-badge{font-family:'Space Mono',monospace;font-size:10px;font-weight:700;padding:4px 10px;border-radius:100px;letter-spacing:.08em;text-transform:uppercase}
@@ -256,7 +256,7 @@ gtag('config','G-W2VWCNQC6T');
 <body>
 
 <nav>
-  <a href="/" class="logo">HEDGE<em>PICK</em></a>
+  <a href="/" class="logo" aria-label="HedgePick home"><svg width="24" height="24" viewBox="0 0 28 28" fill="none" aria-hidden="true"><rect width="28" height="28" rx="6" fill="#0d0f13"/><rect x=".5" y=".5" width="27" height="27" rx="5.5" stroke="rgba(91,147,245,.35)"/><path class="ln" d="M6 20L11 13L15 16.5L19 10L22 13" stroke="#5b93f5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="22" cy="13" r="2" fill="#e3a83a"/></svg><span>HEDGE<em>PICK</em></span></a>
   <div class="nav-r">
     <a href="/" class="nav-a" style="font-size:13px;color:var(--t2);text-decoration:none;transition:color .2s" onmouseover="this.style.color='var(--t1)'" onmouseout="this.style.color='var(--t2)'">Home</a>
     <a href="#how" onclick="window.location='//#how'" class="nav-a" style="font-size:13px;color:var(--t2);text-decoration:none;transition:color .2s" onmouseover="this.style.color='var(--t1)'" onmouseout="this.style.color='var(--t2)'">How It Works</a>
@@ -370,7 +370,7 @@ gtag('config','G-W2VWCNQC6T');
   <div class="loading-card" id="loadingCard">
     <div class="loading-spinner"></div>
     <div class="loading-title">Analysis submitted</div>
-    <div class="loading-sub" style="margin-bottom:16px">Your 9-agent AI analysis is running. This takes <strong>about 15 minutes</strong> per ticker.</div>
+    <div class="loading-sub" style="margin-bottom:16px">Your 12-agent AI analysis is running. This takes <strong>about 15 minutes</strong> per ticker.</div>
     <div style="background:rgba(34,197,94,0.06);border:1px solid rgba(34,197,94,0.15);border-radius:8px;padding:12px 16px;margin-bottom:16px;font-size:13px;color:rgba(236,234,228,0.7);display:flex;align-items:center;gap:10px">
       <span style="color:#22C55E;font-size:16px">&#9993;</span>
       <span>Your report will be emailed to <strong id="loadingEmail">your inbox</strong>. <strong>You can close this window</strong> &mdash; we&rsquo;ll send it when it&rsquo;s ready.</span>
@@ -1015,7 +1015,7 @@ document.addEventListener('DOMContentLoaded',function(){
         <div style="font-size:11px;color:rgba(236,234,228,0.35);margin-bottom:18px">per month &middot; cancel anytime</div>
         <div style="margin-bottom:20px">
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> 5 analyses per day</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Full 9-agent reasoning</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Full 12-agent reasoning</div>
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Bull/bear debate</div>
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Stop loss levels</div>
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Position sizing</div>
