@@ -15,7 +15,7 @@
     window.closeMenu=function(){var h=d.getElementById('ham'),m=d.getElementById('mmenu');if(h)h.classList.remove('open');if(m)m.classList.remove('open')};
   }
   if(typeof window.doSignOut!=='function'){window.doSignOut=function(){localStorage.removeItem('hp_email');localStorage.removeItem('hp_session');location.href='/'}}
-  if(typeof window.showSignIn!=='function'){window.showSignIn=function(){location.href=localStorage.getItem('hp_session')?'/dashboard':'/?signin=1'}}
+  if(typeof window.showSignIn!=='function'){window.showSignIn=function(){location.href=localStorage.getItem('hp_session')?'/dashboard':'/start?signin=1'}}
   function ready(){
     var hdr=d.getElementById('hdr');
     function sc(){if(hdr)hdr.classList.toggle('scrolled',window.scrollY>8)}

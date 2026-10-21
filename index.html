@@ -27,8 +27,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/hp.css?v=3">
-<script src="/assets/hp.js?v=3"></script>
+<link rel="stylesheet" href="/assets/hp.css?v=4">
+<script src="/assets/hp.js?v=4"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W2VWCNQC6T"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-W2VWCNQC6T');</script>
 <style>/* Home */
@@ -355,14 +355,13 @@ textarea.inp{resize:vertical;min-height:70px;margin-top:8px;line-height:1.45}
     <nav class="nav" aria-label="Primary">
       <a href="#how">How it works</a>
       <a href="/analysis">Debates</a>
-      <a href="/system">Methodology</a>
+      <a href="/sample">Sample dashboard</a>
       <a href="#pricing">Pricing</a>
-      <a href="/partners">Partners</a>
+      <a href="/system">Methodology</a>
     </nav>
     <div class="hdr-act">
       <button type="button" class="btn btn-ghost" data-out onclick="showSignIn()">Sign in</button>
-      <a href="/dashboard" class="btn btn-ghost" data-in style="display:none">Dashboard</a>
-      <a href="#try" class="btn btn-pri" data-out>Test a stock free</a>
+      <a href="/start" class="btn btn-pri" data-out>Test a stock free</a>
       <a href="/dashboard" class="btn btn-pri" data-in style="display:none">Open dashboard</a>
       <button class="ham" id="ham" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
@@ -371,12 +370,14 @@ textarea.inp{resize:vertical;min-height:70px;margin-top:8px;line-height:1.45}
 <nav class="mmenu" id="mmenu" aria-label="Mobile">
   <a href="#how" onclick="closeMenu()">How it works</a>
   <a href="/analysis">Debates</a>
-  <a href="/system">Methodology</a>
+  <a href="/sample">Sample dashboard</a>
   <a href="#pricing" onclick="closeMenu()">Pricing</a>
+  <a href="/system">Methodology</a>
   <a href="/partners">Partners</a>
   <a href="#" data-out onclick="closeMenu();showSignIn();return false;">Sign in</a>
   <a href="/dashboard" data-in style="display:none">Dashboard</a>
-  <a href="#try" class="btn btn-pri" onclick="closeMenu()">Test a stock free</a>
+  <a href="/start" class="btn btn-pri" data-out>Test a stock free</a>
+  <a href="/dashboard" class="btn btn-pri" data-in style="display:none">Open dashboard</a>
 </nav>
 <main id="main">
 <section class="hero">
@@ -427,7 +428,7 @@ textarea.inp{resize:vertical;min-height:70px;margin-top:8px;line-height:1.45}
           <p id="it"></p>
           <span class="up" onclick="openPricingModal()">See what Pro and Trader add →</span>
         </div>
-        <div class="fnote"><span>PDF report by email in about 5–15 minutes</span><a href="/sample-report-ko.pdf" target="_blank" rel="noopener">Open a sample report (KO)</a></div>
+        <div class="fnote"><span>3 free debates · No card · Report in about 15 minutes</span><a href="/sample">See a sample dashboard →</a></div>
       </div>
       <div class="stats" id="stats">
         <div><span class="v" data-n="12">12</span><span class="l">AI agents</span></div>
@@ -725,7 +726,7 @@ textarea.inp{resize:vertical;min-height:70px;margin-top:8px;line-height:1.45}
         <p class="ft-tag">Adversarial AI research for US stocks. Hear the case against it before you buy.</p>
       </div>
       <div class="ft-cols">
-        <div><h4>Product</h4><a href="/#how">How it works</a><a href="/analysis">Daily debates</a><a href="/#pricing">Pricing</a><a href="/dashboard">Dashboard</a></div>
+        <div><h4>Product</h4><a href="/#how">How it works</a><a href="/analysis">Daily debates</a><a href="/sample">Sample dashboard</a><a href="/start">Test a stock free</a><a href="/#pricing">Pricing</a><a href="/dashboard">Dashboard</a></div>
         <div><h4>Company</h4><a href="/system">Methodology</a><a href="/partners">Partners</a><a href="mailto:joseph@hedgepick.com">Contact</a></div>
         <div><h4>Legal</h4><a href="/terms">Terms</a><a href="/privacy">Privacy</a><a href="/terms#disclaimer">Disclaimer</a></div>
       </div>
@@ -903,15 +904,15 @@ async function go(){
     if(thesis)localStorage.setItem('hp_pending_thesis',thesis);else localStorage.removeItem('hp_pending_thesis');
     localStorage.removeItem('hp_session');
     try{
-      var resp=await fetch(API+'/api/magic-link',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email})});
+      var resp=await fetch(API+'/api/magic-link',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,ticker:ticker,thesis:thesis})});
       var data=await resp.json();
       if(!resp.ok){state('ERROR','err',data.error||'Could not send sign-in link.');return;}
       gtag('event','sign_up_start',{ticker:ticker});
-      itEl.textContent='Check '+email+' for a sign-in link. When you click it, your '+ticker+' analysis starts automatically.';
+      itEl.textContent='Link sent to '+email+'. Click the button in that email and your '+ticker+' debate starts right away. It takes about 15 minutes. Nothing there? Check spam or Promotions.';
     }catch(e){state('ERROR','err','Could not reach the server. Please try again.');}
     return;
   }
-  state('ANALYZING','info','Starting your analysis. Nine analysts are now reviewing '+ticker+'. We will email your PDF report when it is ready.');
+  state('ANALYZING','info','Starting your analysis. Twelve agents are now working on '+ticker+'. We will email your PDF report when it is ready.');
   try{
     var response=await fetch(API+'/api/analyze',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+session},body:JSON.stringify({tickers:[ticker],thesis:thesis})});
     var d=await response.json();
@@ -1024,7 +1025,7 @@ async function sendSignIn(){
 }
 </script>
 <script>fetch("https://web-production-45241.up.railway.app/api/founding-seats").then(r=>r.json()).then(d=>{var el=document.getElementById("fdSeatsLeft");if(el&&d&&typeof d.remaining==="number")el.textContent=d.remaining;}).catch(()=>{});</script>
-<script src="/assets/engine.js?v=3"></script>
+<script src="/assets/engine.js?v=4"></script>
 <script>
 (function(){
   var RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;

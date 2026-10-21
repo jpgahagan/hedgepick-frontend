@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Sample dashboard — HedgePick</title>
+<meta name="description" content="See exactly what a HedgePick report looks like: a real published bull vs bear debate, the research manager’s ruling, and the morning screener picks.">
+<link rel="canonical" href="https://hedgepick.com/sample">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<meta name="theme-color" content="#07080a">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HedgePick">
+<meta property="og:title" content="Sample dashboard — HedgePick">
+<meta property="og:description" content="See exactly what a HedgePick report looks like: a real published bull vs bear debate, the research manager’s ruling, and the morning screener picks.">
+<meta property="og:url" content="https://hedgepick.com/sample">
+<meta property="og:image" content="https://hedgepick.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Sample dashboard — HedgePick">
+<meta name="twitter:description" content="See exactly what a HedgePick report looks like: a real published bull vs bear debate, the research manager’s ruling, and the morning screener picks.">
+<meta name="twitter:image" content="https://hedgepick.com/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/hp.css?v=4">
+<script src="/assets/hp.js?v=4"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W2VWCNQC6T"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-W2VWCNQC6T');</script>
+<style>
+.sb{border-bottom:1px solid var(--line);background:linear-gradient(90deg,rgba(91,147,245,.08),rgba(91,147,245,0) 60%)}
+.sb-in{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-top:14px;padding-bottom:14px;flex-wrap:wrap}
+.sb p{font-size:var(--sm);color:var(--t2)}
+.sb p b{color:var(--t1);font-weight:500}
+.sb .tag{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);border:1px solid var(--blue-bd);background:var(--blue-dim);border-radius:999px;padding:3px 9px;margin-right:10px}
+.dash{display:grid;grid-template-columns:290px minmax(0,1fr);grid-template-areas:"side main";gap:28px;padding-top:28px;padding-bottom:90px;align-items:start}
+.side{grid-area:side;display:grid;gap:16px;position:sticky;top:84px;min-width:0}
+.side .pn{min-width:0}
+.nd .inp{width:100%}
+.mainc{grid-area:main;min-width:0}
+.pn{background:var(--bg-1);border:1px solid var(--line-2);border-radius:var(--r3);padding:18px}
+.pn-k{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--t3)}
+.nd{display:flex;gap:8px;margin-top:12px}
+.inp{flex:1;min-width:0;background:var(--bg);border:1px solid var(--line-2);border-radius:var(--r2);padding:10px 12px;font-family:var(--mono);font-size:.95rem;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--t1)}
+.inp::placeholder{font-family:var(--sans);font-weight:400;letter-spacing:0;text-transform:none;color:var(--t4)}
+.inp:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(91,147,245,.12)}
+.nd .btn{border-radius:var(--r2);min-height:42px}
+.use{margin-top:16px;font-size:.78rem;color:var(--t3);display:flex;justify-content:space-between}
+.use b{color:var(--t1);font-weight:500}
+.bar{height:5px;border-radius:3px;background:var(--bg-3);margin-top:8px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--blue);border-radius:3px}
+.hist{list-style:none;margin-top:10px;display:grid;gap:6px}
+.hist li{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:10px 12px;border-radius:var(--r2);font-size:var(--sm)}
+.hist li.on{background:var(--bg-3);border:1px solid var(--line-2)}
+.hist li.on b{font-family:var(--mono)}
+.hist li.slot{border:1px dashed var(--line-2);color:var(--t4);font-size:.8rem}
+.hist li.slot a{color:var(--blue-2);text-decoration:none}
+.pl{list-style:none;margin-top:10px;display:grid;gap:7px;font-size:.8rem;color:var(--t2)}
+.pl li{display:flex;justify-content:space-between;gap:8px}
+.pl li span:last-child{font-family:var(--mono);font-size:.72rem;color:var(--t3)}
+.pl li.y span:last-child{color:var(--green)}
+.pl li.n span:last-child{color:var(--gold)}
+/* Report */
+.rh{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;flex-wrap:wrap}
+.rh-tk{font-family:var(--display);font-size:clamp(2.4rem,1.6rem + 2.4vw,3.6rem);font-weight:600;letter-spacing:-.05em;line-height:.95}
+.rh-nm{color:var(--t2);margin-top:10px;font-size:.95rem}
+.rh-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.chip{font-family:var(--mono);font-size:.7rem;border:1px solid var(--line-2);border-radius:999px;padding:4px 10px;color:var(--t2)}
+.rv-box{text-align:right}
+.rv-k{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--t3)}
+.rv-v{font-family:var(--display);font-size:2.6rem;font-weight:600;letter-spacing:-.04em;line-height:1;margin-top:8px}
+.rv-v.BUY{color:var(--green)}.rv-v.SELL{color:var(--red)}.rv-v.HOLD{color:var(--gold)}
+.rv-px{font-family:var(--mono);font-size:.85rem;color:var(--t3);margin-top:8px}
+.ov{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin-top:26px}
+.ov .pn h4{font-family:var(--mono);font-size:.62rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--t3)}
+.sig{list-style:none;margin-top:12px;display:grid;gap:8px}
+.sig li{display:flex;gap:10px;align-items:center;font-size:var(--sm);color:var(--t1)}
+.sig li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--blue);flex-shrink:0}
+.rul{font-size:.92rem;color:var(--t2);margin-top:12px;line-height:1.6}
+.ov .eng{padding:12px;border-radius:var(--r3)}
+.ov .eng .eng-cap,.ov .eng .eng-top,.ov .eng .eng-doc,.ov .eng .eng-foot{display:none}
+.tabs{display:flex;gap:4px;margin-top:30px;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{padding:12px 14px;font-size:var(--sm);color:var(--t3);border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;display:inline-flex;gap:7px;align-items:center;transition:color .2s,border-color .2s}
+.tabs button:hover{color:var(--t1)}
+.tabs button.on{color:var(--t1);border-color:var(--blue)}
+.tabs button[data-k=bull].on{border-color:var(--green)}.tabs button[data-k=bear].on{border-color:var(--red)}
+.tabs button .lk{width:12px;height:12px;color:var(--gold)}
+.tp{display:none;padding-top:24px}
+.tp.on{display:block;animation:tpIn .4s var(--ease)}
+@keyframes tpIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.rc{max-width:74ch}
+.rc h3{font-family:var(--display);font-size:1.12rem;letter-spacing:-.02em;line-height:1.3;margin:24px 0 8px;color:var(--t1)}
+.rc h3:first-child{margin-top:0}
+.rc p,.rc li{font-size:.97rem;color:var(--t2);line-height:1.7;margin-bottom:12px}
+.rc strong{color:var(--t1);font-weight:600}
+.rc ul,.rc ol{padding-left:20px;margin-bottom:12px}
+.rc .tbl{overflow-x:auto;border:1px solid var(--line-2);border-radius:var(--r2);margin:8px 0 16px}
+.rc table{border-collapse:collapse;width:100%;font-size:.85rem}
+.rc th,.rc td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap;color:var(--t2)}
+.rc th{font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.06em;color:var(--t3);font-weight:500}
+.rc .fade{position:relative;max-height:520px;overflow:hidden}
+.rc .fade::after{content:"";position:absolute;left:0;right:0;bottom:0;height:140px;background:linear-gradient(180deg,rgba(7,8,10,0),var(--bg))}
+.more{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;margin-top:6px;padding:16px 18px;border:1px solid var(--line-2);border-radius:var(--r3);background:var(--bg-1);font-size:var(--sm);color:var(--t2)}
+.more b{color:var(--t1);font-weight:500}
+.more .btn{border-radius:var(--r2)}
+.lock{position:relative;border:1px solid var(--line-2);border-radius:var(--r3);overflow:hidden;background:var(--bg-1)}
+.lock .ghost{padding:22px;display:grid;gap:12px;filter:blur(1px);opacity:.55}
+.lock .ghost i{display:block;height:12px;border-radius:6px;background:linear-gradient(90deg,var(--bg-3),var(--bg-4),var(--bg-3));background-size:200% 100%;animation:sh 2.6s linear infinite}
+.lock .ghost i:nth-child(3n){width:62%}.lock .ghost i:nth-child(3n+2){width:84%}
+.lock .ghost .g2{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.lock .ghost .g2 div{height:74px;border-radius:var(--r2);background:var(--bg-3)}
+@keyframes sh{to{background-position:-200% 0}}
+.lock .ov2{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:24px;background:radial-gradient(ellipse at center,rgba(7,8,10,.86),rgba(7,8,10,.55))}
+.lock .ov2 h4{font-family:var(--display);font-size:1.3rem;letter-spacing:-.03em}
+.lock .ov2 p{font-size:var(--sm);color:var(--t2);max-width:46ch;margin:8px auto 0}
+.lock .ov2 .row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.lock .ov2 .btn{border-radius:var(--r2)}
+.lkicon{width:34px;height:34px;margin:0 auto 12px;color:var(--gold)}
+.pdf{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:28px;padding:18px 20px;border:1px solid var(--line-2);border-radius:var(--r3)}
+.pdf p{font-size:var(--sm);color:var(--t2)}
+.pdf p b{color:var(--t1);font-weight:500}
+.pdf a{font-size:var(--sm);color:var(--t1);font-weight:500;text-decoration:none;border-bottom:1px solid var(--line-3)}
+/* Picks */
+.pk{margin-top:44px}
+.pk-h{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.pk-h h3{font-family:var(--display);font-size:1.4rem;letter-spacing:-.03em}
+.pk-h p{font-size:.8rem;color:var(--t3)}
+.pkl{margin-top:14px;border:1px solid var(--line-2);border-radius:var(--r3);overflow:hidden}
+.pkr{display:grid;grid-template-columns:64px minmax(0,1fr) 90px 70px;gap:14px;align-items:center;padding:14px 16px;border-bottom:1px solid var(--line);font-size:var(--sm)}
+.pkr:last-child{border-bottom:0}
+.pkr b{font-family:var(--mono)}
+.pkr .s{color:var(--t3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pkr .px{font-family:var(--mono);text-align:right;color:var(--t2)}
+.pkr .sc{font-family:var(--mono);text-align:right;color:var(--blue-2)}
+.pkr.lk{filter:blur(4px);opacity:.5;user-select:none;pointer-events:none}
+.pkr.lk i{display:block;height:10px;border-radius:5px;background:var(--bg-4)}
+.pk-cta{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 16px;background:var(--gold-dim);border-top:1px solid var(--gold-bd);font-size:var(--sm);color:var(--t2)}
+.pk-cta b{color:var(--t1);font-weight:500}
+.pk-cta a{color:var(--gold);font-weight:500;text-decoration:none;white-space:nowrap}
+/* Final CTA */
+.fc{margin-top:56px;padding:clamp(26px,4vw,44px);border:1px solid var(--blue-bd);border-radius:var(--r4);background:radial-gradient(ellipse at top left,rgba(91,147,245,.14),rgba(91,147,245,0) 60%),var(--bg-1);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:center}
+.fc h3{font-family:var(--display);font-size:clamp(1.6rem,1.2rem + 1.4vw,2.3rem);letter-spacing:-.04em;line-height:1.05}
+.fc p{color:var(--t2);margin-top:10px;font-size:.98rem}
+.fc form{display:flex;gap:8px}
+.fc .inp{width:150px;flex:none}
+.fc .btn{border-radius:var(--r2);min-height:46px}
+.skl{display:block;height:12px;border-radius:6px;background:var(--bg-3);margin:10px 0}
+@media(max-width:1020px){.dash{grid-template-columns:1fr;grid-template-areas:"main" "side"}.side{position:static;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}.fc{grid-template-columns:1fr}}
+@media(max-width:700px){.ov{grid-template-columns:1fr}.rv-box{text-align:left}.rh{flex-direction:column}.pkr{grid-template-columns:54px minmax(0,1fr) 70px}.pkr .sc{display:none}.fc form{flex-direction:column}.fc .inp{width:100%}.lock .ghost .g2{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){.tp.on{animation:none}.lock .ghost i{animation:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="hdr" id="hdr">
+  <div class="hdr-in">
+    <a href="/" class="brand" aria-label="HedgePick home"><svg viewBox="0 0 28 28" fill="none" aria-hidden="true"><rect width="28" height="28" rx="6" fill="#0d0f13"/><rect x=".5" y=".5" width="27" height="27" rx="5.5" stroke="rgba(91,147,245,.35)"/><path class="ln" d="M6 20L11 13L15 16.5L19 10L22 13" stroke="#5b93f5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="22" cy="13" r="2" fill="#e3a83a"/></svg><span>HEDGE<em>PICK</em></span></a>
+    <nav class="nav" aria-label="Primary">
+      <a href="/#how">How it works</a>
+      <a href="/analysis">Debates</a>
+      <a href="/sample" class="on">Sample dashboard</a>
+      <a href="/#pricing">Pricing</a>
+      <a href="/system">Methodology</a>
+    </nav>
+    <div class="hdr-act">
+      <button type="button" class="btn btn-ghost" data-out onclick="showSignIn()">Sign in</button>
+      <a href="/start" class="btn btn-pri" data-out>Test a stock free</a>
+      <a href="/dashboard" class="btn btn-pri" data-in style="display:none">Open dashboard</a>
+      <button class="ham" id="ham" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<nav class="mmenu" id="mmenu" aria-label="Mobile">
+  <a href="/#how" onclick="closeMenu()">How it works</a>
+  <a href="/analysis">Debates</a>
+  <a href="/sample">Sample dashboard</a>
+  <a href="/#pricing" onclick="closeMenu()">Pricing</a>
+  <a href="/system">Methodology</a>
+  <a href="/partners">Partners</a>
+  <a href="#" data-out onclick="closeMenu();showSignIn();return false;">Sign in</a>
+  <a href="/dashboard" data-in style="display:none">Dashboard</a>
+  <a href="/start" class="btn btn-pri" data-out>Test a stock free</a>
+  <a href="/dashboard" class="btn btn-pri" data-in style="display:none">Open dashboard</a>
+</nav>
+
+<div class="sb"><div class="wrap sb-in"><p><span class="tag">Sample</span><b>This is a real published debate,</b> shown exactly the way your own reports appear.</p><a class="btn btn-pri" href="/start" id="sbCta">Test your own stock free</a></div></div>
+<main id="main" class="wrap dash">
+  <div class="mainc">
+    <div class="rh">
+      <div>
+        <div class="kick"><b>Report</b> <span id="rDate">Loading…</span></div>
+        <div class="rh-tk" id="rTk" style="margin-top:14px">—</div>
+        <div class="rh-nm" id="rNm">&nbsp;</div>
+        <div class="rh-meta" id="rMeta"></div>
+      </div>
+      <div class="rv-box"><div class="rv-k">Portfolio manager’s ruling</div><div class="rv-v" id="rV">—</div><div class="rv-px" id="rPx"></div></div>
+    </div>
+    <div class="ov">
+      <div class="pn"><div id="sigW"><h4>Why the screener flagged it</h4><ul class="sig" id="rSig"><li><span class="skl" style="width:60%"></span></li></ul></div><h4 id="rulH" style="margin-top:22px">The ruling in one paragraph</h4><p class="rul" id="rRul"><span class="skl"></span><span class="skl" style="width:70%"></span></p></div>
+      <div><div class="eng" id="engS" aria-label="The twelve-agent pipeline that produced this ruling"><div class="eng-top"></div><div class="eng-doc"></div><div class="eng-stage"></div><div class="eng-cap"><div class="eng-cap-k"></div><div class="eng-cap-t"></div></div><div class="eng-foot"></div></div></div>
+    </div>
+    <div class="tabs" role="tablist" aria-label="Report sections">
+      <button type="button" role="tab" class="on" data-k="bull">Bull case</button>
+      <button type="button" role="tab" data-k="bear">Bear case</button>
+      <button type="button" role="tab" data-k="judge">Research manager</button>
+      <button type="button" role="tab" data-k="plan"><svg class="lk" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="7" width="10" height="7" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 015 0v2"/></svg>Analyst reports</button>
+      <button type="button" role="tab" data-k="risk"><svg class="lk" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="7" width="10" height="7" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 015 0v2"/></svg>Risk desk</button>
+      <button type="button" role="tab" data-k="full"><svg class="lk" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3" y="7" width="10" height="7" rx="1.5"/><path d="M5.5 7V5a2.5 2.5 0 015 0v2"/></svg>Full transcript</button>
+    </div>
+    <section class="tp on" id="tp-bull" role="tabpanel"><div class="rc" id="cBull"><span class="skl"></span><span class="skl" style="width:80%"></span><span class="skl" style="width:66%"></span></div></section>
+    <section class="tp" id="tp-bear" role="tabpanel"><div class="rc" id="cBear"></div></section>
+    <section class="tp" id="tp-judge" role="tabpanel"><div class="rc" id="cJudge"></div></section>
+    <section class="tp" id="tp-plan" role="tabpanel"><div class="lock"><div class="ghost"><div class="g2"><div></div><div></div><div></div></div><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="ov2"><div><svg class="lkicon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="7" y="14" width="18" height="13" rx="3"/><path d="M11 14v-3.5a5 5 0 0110 0V14"/><circle cx="16" cy="20.5" r="1.6" fill="currentColor"/></svg><h4>The four analyst reports</h4><p>The full technicals, sentiment, news and fundamentals write-ups the debate was built on. Included in Pro.</p><div class="row"><a class="btn btn-pri" href="https://buy.stripe.com/9B6cN70K9gSJgv14Er4AU06" data-pro>Unlock with Pro · $39/mo</a><a class="btn btn-ghost" href="/start">Try 3 debates free first</a></div></div></div></div></section>
+    <section class="tp" id="tp-risk" role="tabpanel"><div class="lock"><div class="ghost"><div class="g2"><div></div><div></div><div></div></div><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="ov2"><div><svg class="lkicon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="7" y="14" width="18" height="13" rx="3"/><path d="M11 14v-3.5a5 5 0 0110 0V14"/><circle cx="16" cy="20.5" r="1.6" fill="currentColor"/></svg><h4>The risk desk and position size</h4><p>Aggressive, neutral and conservative risk analysts argue over how much to put on, and the portfolio manager sets the size. Included in Pro.</p><div class="row"><a class="btn btn-pri" href="https://buy.stripe.com/9B6cN70K9gSJgv14Er4AU06" data-pro>Unlock with Pro · $39/mo</a><a class="btn btn-ghost" href="/start">Try 3 debates free first</a></div></div></div></div></section>
+    <section class="tp" id="tp-full" role="tabpanel"><div class="lock"><div class="ghost"><div class="g2"><div></div><div></div><div></div></div><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="ov2"><div><svg class="lkicon" viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="7" y="14" width="18" height="13" rx="3"/><path d="M11 14v-3.5a5 5 0 0110 0V14"/><circle cx="16" cy="20.5" r="1.6" fill="currentColor"/></svg><h4>The full transcript</h4><p>Every round of the bull–bear debate, word for word, plus the downloadable PDF with your own branding on Trader.</p><div class="row"><a class="btn btn-pri" href="https://buy.stripe.com/9B6cN70K9gSJgv14Er4AU06" data-pro>Unlock with Pro · $39/mo</a><a class="btn btn-ghost" href="/start">Try 3 debates free first</a></div></div></div></div></section>
+    <div class="pdf"><p><b>Every report also arrives as a PDF</b> in your inbox, so you can read it later or share it.</p><a href="/sample-report-ko.pdf" target="_blank" rel="noopener">Open a sample PDF (Coca-Cola) →</a></div>
+    <section class="pk" aria-labelledby="pkH">
+      <div class="pk-h"><h3 id="pkH">This morning’s screener picks</h3><p id="pkD">Every weekday, before the open</p></div>
+      <div class="pkl" id="pkl"><div class="pkr"><b>—</b><span class="s">Loading</span><span class="px"></span><span class="sc"></span></div></div>
+    </section>
+    <section class="fc">
+      <div><h3>Your turn. Pick a stock.</h3><p>Three free debates, no card, no password. Your report lands right here in about 15 minutes.</p></div>
+      <form id="fcf" action="/start"><label class="sr" for="fcT">Ticker</label><input class="inp" id="fcT" name="t" placeholder="Ticker" autocomplete="off" maxlength="10"><button class="btn btn-pri" type="submit">Debate it free</button></form>
+    </section>
+  </div>
+  <aside class="side" aria-label="Dashboard sidebar">
+    <div class="pn">
+      <div class="pn-k">New debate</div>
+      <form class="nd" action="/start"><label class="sr" for="ndT">Ticker</label><input class="inp" id="ndT" name="t" placeholder="Any ticker" autocomplete="off" maxlength="10"><button class="btn btn-pri" type="submit">Run</button></form>
+      <div class="use"><span>Free debates</span><span><b>0</b> of 3 used</span></div>
+      <div class="bar"><i></i></div>
+    </div>
+    <div class="pn">
+      <div class="pn-k">Your debates</div>
+      <ul class="hist"><li class="on"><b id="hTk">—</b><span class="vb" id="hV">—</span></li><li class="slot"><span>Your first stock</span><a href="/start">Add →</a></li><li class="slot"><span>Your second stock</span><a href="/start">Add →</a></li></ul>
+    </div>
+    <div class="pn">
+      <div class="pn-k">What’s included</div>
+      <ul class="pl"><li class="y"><span>Bull, bear and ruling</span><span>Free</span></li><li class="y"><span>Entry, stop and target</span><span>Free</span></li><li class="y"><span>Your own thesis tested</span><span>Free</span></li><li class="y"><span>Today’s top screener pick</span><span>Free</span></li><li class="n"><span>Full transcript and risk desk</span><span>Pro</span></li><li class="n"><span>All 10 picks every morning</span><span>Pro</span></li><li class="n"><span>5 debates a day</span><span>Pro</span></li></ul>
+    </div>
+  </aside>
+</main>
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft-in">
+      <div>
+        <a href="/" class="brand" aria-label="HedgePick home"><svg viewBox="0 0 28 28" fill="none" aria-hidden="true"><rect width="28" height="28" rx="6" fill="#0d0f13"/><rect x=".5" y=".5" width="27" height="27" rx="5.5" stroke="rgba(91,147,245,.35)"/><path class="ln" d="M6 20L11 13L15 16.5L19 10L22 13" stroke="#5b93f5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="22" cy="13" r="2" fill="#e3a83a"/></svg><span>HEDGE<em>PICK</em></span></a>
+        <p class="ft-tag">Adversarial AI research for US stocks. Hear the case against it before you buy.</p>
+      </div>
+      <div class="ft-cols">
+        <div><h4>Product</h4><a href="/#how">How it works</a><a href="/analysis">Daily debates</a><a href="/sample">Sample dashboard</a><a href="/start">Test a stock free</a><a href="/#pricing">Pricing</a><a href="/dashboard">Dashboard</a></div>
+        <div><h4>Company</h4><a href="/system">Methodology</a><a href="/partners">Partners</a><a href="mailto:joseph@hedgepick.com">Contact</a></div>
+        <div><h4>Legal</h4><a href="/terms">Terms</a><a href="/privacy">Privacy</a><a href="/terms#disclaimer">Disclaimer</a></div>
+      </div>
+      <div class="ft-d"><p>Not financial advice. For educational and informational purposes only. AI-generated research can be wrong. Past performance does not guarantee future results.</p><span>© 2026 HedgePick</span></div>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/engine.js?v=4"></script>
+<script>
+(function(){
+  var API='https://web-production-45241.up.railway.app',$=function(i){return document.getElementById(i)};
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+  function clip(s,n){s=String(s||'').replace(/\*\*/g,'').replace(/\s+/g,' ').trim();return s.length>n?s.slice(0,n).replace(/\s+\S*$/,'')+'…':s}
+  function ev(n,p){if(window.gtag)gtag('event',n,p||{})}
+  var eng=HPEngine.mount($('engS'),{mode:'manual'});eng.setStage(6);
+  document.querySelectorAll('.tabs button').forEach(function(b){b.addEventListener('click',function(){
+    document.querySelectorAll('.tabs button').forEach(function(x){x.classList.toggle('on',x===b)});
+    document.querySelectorAll('.tp').forEach(function(p){p.classList.toggle('on',p.id==='tp-'+b.dataset.k)});
+    ev('sample_tab',{tab:b.dataset.k});
+  })});
+  ['ndT','fcT'].forEach(function(id){$(id).addEventListener('input',function(e){e.target.value=e.target.value.toUpperCase()})});
+  function more(t){return '<div class="more"><span><b>The debate continues for several more rounds.</b> Pro unlocks the full transcript.</span><a class="btn btn-ghost" href="/start?t='+encodeURIComponent(t)+'">Get your own free</a></div>'}
+  function fill(a){
+    document.title=a.ticker+' sample report — HedgePick';
+    $('rTk').textContent=a.ticker;$('rNm').textContent=a.name||'';$('rDate').textContent='Debated '+(a.nice_date||a.date);
+    $('rMeta').innerHTML=(a.sector?'<span class="chip">'+esc(a.sector)+'</span>':'')+'<span class="chip">12 agents</span><span class="chip">Public data</span>';
+    $('rV').textContent=a.verdict;$('rV').className='rv-v '+a.verdict;$('rPx').textContent=a.price?'$'+Number(a.price).toFixed(2)+' at analysis':'';
+    $('hTk').textContent=a.ticker;$('hV').textContent=a.verdict;$('hV').className='vb '+a.verdict;
+    $('rRul').textContent=clip(a.judge_excerpt,320);eng.verdict(a.verdict);
+    $('cBull').innerHTML='<p>'+esc(clip(a.bull_excerpt,600))+'</p>';$('cBear').innerHTML='<p>'+esc(clip(a.bear_excerpt,600))+'</p>';$('cJudge').innerHTML='<p>'+esc(clip(a.judge_excerpt,600))+'</p>';
+    fetch(API+a.url).then(function(r){return r.ok?r.text():''}).then(function(h){
+      if(!h)return;var d=new DOMParser().parseFromString(h,'text/html');
+      d.querySelectorAll('.more,script,style').forEach(function(x){x.remove()});
+      function card(sel,id){var c=d.querySelector(sel);if(c)$(id).innerHTML='<div class="fade">'+c.innerHTML+'</div>'+more(a.ticker)}
+      card('.card.bull','cBull');card('.card.bear','cBear');
+      var j=d.querySelector('.card.judge');if(j)$('cJudge').innerHTML=j.innerHTML;
+      var h2=[].slice.call(d.querySelectorAll('h2')).filter(function(x){return /flagged/i.test(x.textContent)})[0];
+      var ul=h2&&h2.nextElementSibling;if(ul&&ul.tagName==='UL')$('rSig').innerHTML=[].slice.call(ul.querySelectorAll('li')).slice(0,6).map(function(li){return '<li>'+esc(li.textContent)+'</li>'}).join('');
+      else{$('sigW').style.display='none';$('rulH').style.marginTop='0'}
+    }).catch(function(){});
+  }
+  fetch(API+'/api/public-analyses').then(function(r){return r.ok?r.json():null}).then(function(d){
+    var L=(d&&d.analyses||[]).filter(function(a){return a.bull_excerpt&&a.bear_excerpt&&a.judge_excerpt});if(!L.length)return;
+    var want=(new URLSearchParams(location.search).get('t')||'').toUpperCase(),pref=(want?[want]:[]).concat(['GOOGL','JPM','LLY','BLK','CRWD','COIN','KO']),a=L[0];
+    for(var i=0;i<pref.length;i++){var f=L.filter(function(x){return x.ticker===pref[i]})[0];if(f){a=f;break}}
+    fill(a);
+  }).catch(function(){});
+  fetch(API+'/api/screener/results').then(function(r){return r.ok?r.json():null}).then(function(d){
+    if(!d)return;var c=d.candidates||[],n=d.locked||0,h='';
+    if(d.date)$('pkD').textContent='Screened '+new Date(d.date+'T12:00:00').toLocaleDateString('en-US',{month:'long',day:'numeric'})+', before the open';
+    c.slice(0,1).forEach(function(p){h+='<div class="pkr"><b>'+esc(p.ticker)+'</b><span class="s">'+esc(p.name||'')+(p.sector?' · '+esc(p.sector):'')+'</span><span class="px">'+(p.price?'$'+Number(p.price).toFixed(2):'')+'</span><span class="sc">'+(p.score?'Score '+Math.round(+p.score):'')+'</span></div>'});
+    for(var i=0;i<Math.min(n,4);i++)h+='<div class="pkr lk" aria-hidden="true"><i></i><i></i><i></i><i></i></div>';
+    if(n)h+='<div class="pk-cta"><span><b>'+n+' more picks</b> are on the list this morning.</span><a href="https://buy.stripe.com/9B6cN70K9gSJgv14Er4AU06" data-pro>See all of them with Pro →</a></div>';
+    if(h)$('pkl').innerHTML=h;
+  }).catch(function(){});
+  document.querySelectorAll('[data-pro]').forEach(function(a){a.addEventListener('click',function(){ev('sample_pro_click')})});
+})();
+</script>
+<script src="/ref.js" defer></script>
+</body>
+</html>

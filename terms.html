@@ -27,8 +27,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/hp.css?v=3">
-<script src="/assets/hp.js?v=3"></script>
+<link rel="stylesheet" href="/assets/hp.css?v=4">
+<script src="/assets/hp.js?v=4"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W2VWCNQC6T"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-W2VWCNQC6T');</script>
 </head>
@@ -40,14 +40,13 @@
     <nav class="nav" aria-label="Primary">
       <a href="/#how">How it works</a>
       <a href="/analysis">Debates</a>
-      <a href="/system">Methodology</a>
+      <a href="/sample">Sample dashboard</a>
       <a href="/#pricing">Pricing</a>
-      <a href="/partners">Partners</a>
+      <a href="/system">Methodology</a>
     </nav>
     <div class="hdr-act">
       <button type="button" class="btn btn-ghost" data-out onclick="showSignIn()">Sign in</button>
-      <a href="/dashboard" class="btn btn-ghost" data-in style="display:none">Dashboard</a>
-      <a href="/#try" class="btn btn-pri" data-out>Test a stock free</a>
+      <a href="/start" class="btn btn-pri" data-out>Test a stock free</a>
       <a href="/dashboard" class="btn btn-pri" data-in style="display:none">Open dashboard</a>
       <button class="ham" id="ham" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
     </div>
@@ -56,12 +55,14 @@
 <nav class="mmenu" id="mmenu" aria-label="Mobile">
   <a href="/#how" onclick="closeMenu()">How it works</a>
   <a href="/analysis">Debates</a>
-  <a href="/system">Methodology</a>
+  <a href="/sample">Sample dashboard</a>
   <a href="/#pricing" onclick="closeMenu()">Pricing</a>
+  <a href="/system">Methodology</a>
   <a href="/partners">Partners</a>
   <a href="#" data-out onclick="closeMenu();showSignIn();return false;">Sign in</a>
   <a href="/dashboard" data-in style="display:none">Dashboard</a>
-  <a href="/#try" class="btn btn-pri" onclick="closeMenu()">Test a stock free</a>
+  <a href="/start" class="btn btn-pri" data-out>Test a stock free</a>
+  <a href="/dashboard" class="btn btn-pri" data-in style="display:none">Open dashboard</a>
 </nav>
 
 <main id="main">
@@ -155,7 +156,7 @@
         <p class="ft-tag">Adversarial AI research for US stocks. Hear the case against it before you buy.</p>
       </div>
       <div class="ft-cols">
-        <div><h4>Product</h4><a href="/#how">How it works</a><a href="/analysis">Daily debates</a><a href="/#pricing">Pricing</a><a href="/dashboard">Dashboard</a></div>
+        <div><h4>Product</h4><a href="/#how">How it works</a><a href="/analysis">Daily debates</a><a href="/sample">Sample dashboard</a><a href="/start">Test a stock free</a><a href="/#pricing">Pricing</a><a href="/dashboard">Dashboard</a></div>
         <div><h4>Company</h4><a href="/system">Methodology</a><a href="/partners">Partners</a><a href="mailto:joseph@hedgepick.com">Contact</a></div>
         <div><h4>Legal</h4><a href="/terms">Terms</a><a href="/privacy">Privacy</a><a href="/terms#disclaimer">Disclaimer</a></div>
       </div>

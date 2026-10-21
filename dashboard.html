@@ -469,6 +469,12 @@ async function initDashboard() {
   // First, check URL for a fresh session token (just arrived from /auth)
   const params = new URLSearchParams(window.location.search);
   const urlSession = params.get('session');
+  // The sign-in link can also carry the stock (t) and thesis (th), so it works when the email is opened on another device.
+  const _qt = (params.get('t') || '').toUpperCase().replace(/[^A-Z.\-]/g, '').slice(0, 10);
+  if (_qt) {
+    localStorage.setItem('hp_pending_ticker', _qt);
+    if (params.get('th')) localStorage.setItem('hp_pending_thesis', params.get('th').slice(0, 600));
+  }
   if(urlSession) {
     localStorage.setItem('hp_session', urlSession);
     // Clean the session out of the URL
@@ -481,7 +487,7 @@ async function initDashboard() {
     if(params.get('upgraded')) {
       window.location.href = '/?upgraded=' + encodeURIComponent(params.get('upgraded'));
     } else {
-      window.location.href = '/';
+      window.location.href = '/start?signin=1';
     }
     return;
   }

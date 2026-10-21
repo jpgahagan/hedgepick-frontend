@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Test a stock free — HedgePick</title>
+<meta name="description" content="Pick a stock and twelve AI agents debate it: bull, bear, research manager and risk desk. Three free debates, no card, no password.">
+<link rel="canonical" href="https://hedgepick.com/start">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon-180.png">
+<meta name="theme-color" content="#07080a">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="HedgePick">
+<meta property="og:title" content="Test a stock free — HedgePick">
+<meta property="og:description" content="Pick a stock and twelve AI agents debate it: bull, bear, research manager and risk desk. Three free debates, no card, no password.">
+<meta property="og:url" content="https://hedgepick.com/start">
+<meta property="og:image" content="https://hedgepick.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Test a stock free — HedgePick">
+<meta name="twitter:description" content="Pick a stock and twelve AI agents debate it: bull, bear, research manager and risk desk. Three free debates, no card, no password.">
+<meta name="twitter:image" content="https://hedgepick.com/og-image.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/hp.css?v=4">
+<script src="/assets/hp.js?v=4"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-W2VWCNQC6T"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-W2VWCNQC6T');</script>
+<style>
+.stp{padding:clamp(40px,6vw,84px) 0 110px}
+.st-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(32px,5vw,72px);align-items:start}
+.stp h1{font-size:clamp(2.3rem,1.3rem + 3.2vw,4rem);letter-spacing:-.045em;line-height:1;margin-top:16px;text-wrap:balance}
+.stp h1 em{font-style:normal;color:var(--blue)}
+.stp .lead{color:var(--t2);font-size:1.08rem;max-width:46ch;margin-top:18px}
+.prog{display:flex;gap:8px;margin-top:34px;font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--t4)}
+.prog span{flex:1;padding-top:10px;border-top:2px solid var(--line-2);transition:color .3s,border-color .3s}
+.prog span.on{color:var(--t1);border-color:var(--blue)}
+.prog span.done{color:var(--t3);border-color:var(--blue-bd)}
+.box{margin-top:18px;background:linear-gradient(180deg,var(--bg-1),var(--bg));border:1px solid var(--line-2);border-radius:var(--r4);padding:clamp(20px,3vw,30px)}
+.step{display:none;animation:stIn .5s var(--ease)}
+.step.on{display:block}
+@keyframes stIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.step h2{font-size:1.45rem;letter-spacing:-.03em}
+.step .sub{color:var(--t3);font-size:var(--sm);margin-top:6px}
+.lbl{display:block;font-size:var(--sm);font-weight:500;color:var(--t2);margin:20px 0 8px}
+.inp{width:100%;background:var(--bg);border:1px solid var(--line-2);border-radius:var(--r2);padding:14px 16px;font:inherit;font-size:1.05rem;color:var(--t1);transition:border-color .2s,box-shadow .2s}
+.inp::placeholder{color:var(--t4)}
+.inp:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px rgba(91,147,245,.12)}
+.inp.tk{font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;font-size:1.25rem;font-weight:600}
+.inp.tk::placeholder{text-transform:none;letter-spacing:0;font-family:var(--sans);font-weight:400;font-size:1.05rem}
+textarea.inp{min-height:84px;resize:vertical;font-size:.95rem;line-height:1.5}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chips button{font-family:var(--mono);font-size:.74rem;padding:6px 11px;border-radius:999px;border:1px solid var(--line-2);color:var(--t2);transition:all .2s}
+.chips button:hover{color:var(--t1);border-color:var(--blue-bd);background:var(--blue-dim)}
+.tog{margin-top:16px;font-size:var(--sm);color:var(--blue-2);display:inline-flex;gap:6px;align-items:center}
+.tog:hover{color:var(--t1)}
+.thw{display:none}.thw.on{display:block}
+.hint{font-size:.78rem;color:var(--t3);margin-top:8px;line-height:1.5}
+.go{width:100%;margin-top:22px;min-height:52px;font-size:1rem;border-radius:var(--r2)}
+.go[disabled]{opacity:.55;pointer-events:none}
+.fine{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:14px;font-size:.78rem;color:var(--t3)}
+.fine span::before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--green);margin-right:7px;vertical-align:middle}
+.err{display:none;margin-top:12px;font-size:var(--sm);color:var(--red);background:var(--red-dim);border:1px solid var(--red-bd);border-radius:var(--r2);padding:10px 12px}
+.err.on{display:block}
+.found{display:none;margin-top:14px;border:1px solid var(--blue-bd);background:var(--blue-dim);border-radius:var(--r2);padding:12px 14px;font-size:var(--sm);color:var(--t2)}
+.found.on{display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+.found b{color:var(--t1)}
+.found a{color:var(--t1);font-weight:500;white-space:nowrap;border-bottom:1px solid var(--line-3);text-decoration:none}
+.pick{display:flex;align-items:center;gap:10px;margin-top:4px;font-size:var(--sm);color:var(--t3)}
+.pick .tkp{font-family:var(--mono);font-weight:600;color:var(--t1);background:var(--bg-3);border:1px solid var(--line-2);border-radius:var(--r1);padding:3px 9px}
+.pick button{color:var(--blue-2);font-size:var(--sm)}
+.mail{display:grid;place-items:center;width:56px;height:56px;border-radius:16px;background:var(--blue-dim);border:1px solid var(--blue-bd);margin-bottom:18px}
+.mail svg{width:26px;height:26px;color:var(--blue)}
+.mail{animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-4px)}}
+.sent b{color:var(--t1);overflow-wrap:anywhere}
+.tl{list-style:none;margin-top:22px;border-left:1px solid var(--line-2);padding-left:18px}
+.tl li{position:relative;font-size:var(--sm);color:var(--t3);padding:0 0 14px}
+.tl li::before{content:"";position:absolute;left:-23px;top:6px;width:9px;height:9px;border-radius:50%;background:var(--bg);border:1px solid var(--line-3)}
+.tl li.ok{color:var(--t2)}.tl li.ok::before{background:var(--green);border-color:var(--green)}
+.tl li.now{color:var(--t1);font-weight:500}.tl li.now::before{background:var(--blue);border-color:var(--blue);box-shadow:0 0 0 4px rgba(91,147,245,.18)}
+.row2{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px}
+.row2 .btn{border-radius:var(--r2)}
+.lnk2{font-size:var(--sm);color:var(--t3);margin-top:16px}
+.lnk2 button,.lnk2 a{color:var(--blue-2);font-size:var(--sm);text-decoration:none}
+/* Preview */
+.pv{position:sticky;top:96px}
+.pv-k{font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);display:flex;justify-content:space-between;gap:12px}
+.pv-k a{color:var(--blue-2);text-decoration:none;letter-spacing:.06em}
+.rep{margin-top:12px;background:var(--bg-1);border:1px solid var(--line-2);border-radius:var(--r4);overflow:hidden;box-shadow:0 40px 80px -40px rgba(0,0,0,.8)}
+.rep-h{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:20px 22px;border-bottom:1px solid var(--line)}
+.rep-tk{font-family:var(--display);font-size:2rem;font-weight:600;letter-spacing:-.04em;line-height:1}
+.rep-nm{font-size:.8rem;color:var(--t3);margin-top:6px}
+.rep-r{text-align:right}
+.rep-px{font-family:var(--mono);font-size:.9rem;color:var(--t2);display:block;margin-top:8px}
+.rep-s{padding:16px 22px;border-bottom:1px solid var(--line)}
+.rep-s h4{font-family:var(--mono);font-size:.64rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase}
+.rep-s p{font-size:.88rem;color:var(--t2);margin-top:6px;line-height:1.55;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.rep-s.b h4{color:var(--green)}.rep-s.r h4{color:var(--red)}.rep-s.m h4{color:var(--blue)}
+.rep-lock{padding:16px 22px;display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:.8rem;color:var(--t3)}
+.rep-lock .bars{flex:1;display:grid;gap:6px}
+.rep-lock .bars i{display:block;height:8px;border-radius:4px;background:linear-gradient(90deg,var(--bg-3),var(--bg-4),var(--bg-3));background-size:200% 100%;animation:sh 2.4s linear infinite}
+.rep-lock .bars i:nth-child(2){width:72%}.rep-lock .bars i:nth-child(3){width:48%}
+@keyframes sh{to{background-position:-200% 0}}
+.rep-lock .lk{font-family:var(--mono);font-size:.64rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gold-bd);background:var(--gold-dim);border-radius:999px;padding:4px 9px;white-space:nowrap}
+.trust{list-style:none;margin-top:22px;display:grid;gap:12px}
+.trust li{display:flex;gap:12px;font-size:var(--sm);color:var(--t2)}
+.trust li b{color:var(--t1);font-weight:500}
+.trust svg{width:18px;height:18px;flex-shrink:0;color:var(--blue);margin-top:2px}
+.sk{display:block;height:10px;border-radius:5px;background:var(--bg-3);margin-top:8px}
+@media(max-width:960px){.st-grid{grid-template-columns:1fr}.pv{position:static}}
+@media(max-width:560px){.prog{font-size:.58rem;gap:6px}.rep-tk{font-size:1.6rem}}
+@media(prefers-reduced-motion:reduce){.step,.mail,.rep-lock .bars i{animation:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="hdr" id="hdr">
+  <div class="hdr-in">
+    <a href="/" class="brand" aria-label="HedgePick home"><svg viewBox="0 0 28 28" fill="none" aria-hidden="true"><rect width="28" height="28" rx="6" fill="#0d0f13"/><rect x=".5" y=".5" width="27" height="27" rx="5.5" stroke="rgba(91,147,245,.35)"/><path class="ln" d="M6 20L11 13L15 16.5L19 10L22 13" stroke="#5b93f5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="22" cy="13" r="2" fill="#e3a83a"/></svg><span>HEDGE<em>PICK</em></span></a>
+    <nav class="nav" aria-label="Primary">
+      <a href="/#how">How it works</a>
+      <a href="/analysis">Debates</a>
+      <a href="/sample">Sample dashboard</a>
+      <a href="/#pricing">Pricing</a>
+      <a href="/system">Methodology</a>
+    </nav>
+    <div class="hdr-act">
+      <button type="button" class="btn btn-ghost" data-out onclick="showSignIn()">Sign in</button>
+      <a href="/start" class="btn btn-pri" data-out>Test a stock free</a>
+      <a href="/dashboard" class="btn btn-pri" data-in style="display:none">Open dashboard</a>
+      <button class="ham" id="ham" onclick="toggleMenu()" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</header>
+<nav class="mmenu" id="mmenu" aria-label="Mobile">
+  <a href="/#how" onclick="closeMenu()">How it works</a>
+  <a href="/analysis">Debates</a>
+  <a href="/sample">Sample dashboard</a>
+  <a href="/#pricing" onclick="closeMenu()">Pricing</a>
+  <a href="/system">Methodology</a>
+  <a href="/partners">Partners</a>
+  <a href="#" data-out onclick="closeMenu();showSignIn();return false;">Sign in</a>
+  <a href="/dashboard" data-in style="display:none">Dashboard</a>
+  <a href="/start" class="btn btn-pri" data-out>Test a stock free</a>
+  <a href="/dashboard" class="btn btn-pri" data-in style="display:none">Open dashboard</a>
+</nav>
+
+<main id="main" class="stp">
+  <div class="wrap st-grid">
+    <div>
+      <div class="kick"><b id="kk">Free</b> <span id="kk2">3 debates · No card · No password</span></div>
+      <h1 id="h1">Put your next trade in front of <em>twelve AI analysts</em>.</h1>
+      <p class="lead" id="lead">Pick a stock. A bull and a bear argue it with real market data, a research manager rules, and a risk desk sizes the trade. You get every argument, not just a score.</p>
+      <div class="prog" id="prog" aria-hidden="true"><span class="on">1 · Stock</span><span>2 · Email</span><span>3 · Inbox</span></div>
+      <div class="box">
+        <form class="step on" id="s1" novalidate>
+          <h2>Which stock are you thinking about?</h2>
+          <p class="sub">Any US-listed ticker. Something you own, or something you’re about to buy.</p>
+          <label class="lbl" for="tk">Ticker</label>
+          <input class="inp tk" id="tk" name="ticker" placeholder="e.g. NVDA" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="10" inputmode="text">
+          <div class="chips" aria-label="Popular tickers"><button type="button">NVDA</button><button type="button">TSLA</button><button type="button">AAPL</button><button type="button">PLTR</button><button type="button">AMD</button><button type="button">KO</button></div>
+          <div class="found" id="found"></div>
+          <button type="button" class="tog" id="tog" aria-expanded="false">+ Add why you want to buy it <span style="color:var(--t3)">(optional)</span></button>
+          <div class="thw" id="thw">
+            <label class="lbl" for="th">Your reason, in a sentence or two</label>
+            <textarea class="inp" id="th" maxlength="600" placeholder="e.g. AI data-center demand keeps growing and they’re the only supplier at scale."></textarea>
+            <p class="hint">The bear researcher attacks your exact reasoning, and the report names your weakest assumption.</p>
+          </div>
+          <div class="err" id="e1" role="alert"></div>
+          <button class="btn btn-pri go" id="b1" type="submit">Continue</button>
+          <div class="fine"><span>3 free debates</span><span>No credit card</span><span>About 15 minutes</span></div>
+        </form>
+        <form class="step" id="s2" novalidate>
+          <div class="pick" id="pickRow"><span>Debating</span><span class="tkp" id="pk">—</span><button type="button" id="chg">Change</button></div>
+          <h2 id="s2h" style="margin-top:16px">Where should we send it?</h2>
+          <p class="sub" id="s2p">We’ll email you a one-click link. Click it and your debate starts. No password to create.</p>
+          <label class="lbl" for="em">Email</label>
+          <input class="inp" id="em" type="email" name="email" placeholder="you@example.com" autocomplete="email" inputmode="email" spellcheck="false">
+          <div class="err" id="e2" role="alert"></div>
+          <button class="btn btn-pri go" id="b2" type="submit">Start my free debate</button>
+          <p class="hint" style="margin-top:12px">By continuing you agree to the <a href="/terms" style="color:var(--t2)">Terms</a> and <a href="/privacy" style="color:var(--t2)">Privacy Policy</a>. We only email you about your account and reports.</p>
+        </form>
+        <div class="step" id="s3" aria-live="polite">
+          <div class="mail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M3.5 6.5l8.5 6.5 8.5-6.5"/></svg></div>
+          <h2>Check your inbox.</h2>
+          <p class="sub sent" id="sentTo" style="font-size:var(--base);color:var(--t2);margin-top:10px"></p>
+          <ol class="tl" id="tl"></ol>
+          <div class="row2"><a class="btn btn-pri" id="openMail" href="#" target="_blank" rel="noopener" style="display:none">Open Gmail</a><a class="btn btn-ghost" href="/analysis">Read today’s debates while you wait</a></div>
+          <p class="lnk2">Nothing after a minute? Check spam or Promotions, or <button type="button" id="resend" disabled>resend in 30s</button>. Wrong address? <button type="button" id="back">Change it</button>.</p>
+        </div>
+      </div>
+    </div>
+    <aside class="pv" aria-label="What you get">
+      <div class="pv-k"><span>What lands in your dashboard</span><a href="/sample">Open the full sample →</a></div>
+      <div class="rep" id="rep">
+        <div class="rep-h"><div><div class="rep-tk" id="rTk">—</div><div class="rep-nm" id="rNm">Loading a real published debate</div></div><div class="rep-r"><span class="vb" id="rV">—</span><span class="rep-px" id="rPx"></span></div></div>
+        <div class="rep-s b"><h4>Bull researcher</h4><p id="rB"><span class="sk"></span><span class="sk" style="width:80%"></span></p></div>
+        <div class="rep-s r"><h4>Bear researcher</h4><p id="rR"><span class="sk"></span><span class="sk" style="width:70%"></span></p></div>
+        <div class="rep-s m"><h4>Research manager</h4><p id="rM"><span class="sk"></span><span class="sk" style="width:60%"></span></p></div>
+        <div class="rep-lock"><div class="bars"><i></i><i></i><i></i></div><span class="lk">Risk desk · Pro</span></div>
+      </div>
+      <ul class="trust">
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 10.5l3.5 3.5L16 6"/></svg><span><b>Both sides, in full.</b> The bull, the bear, the ruling and the trade levels are free. Pro adds the full transcript and the risk desk.</span></li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 10.5l3.5 3.5L16 6"/></svg><span><b>Nothing to cancel.</b> Free means free. No card is ever taken on this page.</span></li>
+        <li><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 10.5l3.5 3.5L16 6"/></svg><span><b>Research, not advice.</b> AI can be wrong. HedgePick shows its reasoning so you can check it.</span></li>
+      </ul>
+    </aside>
+  </div>
+</main>
+<footer class="ft">
+  <div class="wrap">
+    <div class="ft-in">
+      <div>
+        <a href="/" class="brand" aria-label="HedgePick home"><svg viewBox="0 0 28 28" fill="none" aria-hidden="true"><rect width="28" height="28" rx="6" fill="#0d0f13"/><rect x=".5" y=".5" width="27" height="27" rx="5.5" stroke="rgba(91,147,245,.35)"/><path class="ln" d="M6 20L11 13L15 16.5L19 10L22 13" stroke="#5b93f5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="22" cy="13" r="2" fill="#e3a83a"/></svg><span>HEDGE<em>PICK</em></span></a>
+        <p class="ft-tag">Adversarial AI research for US stocks. Hear the case against it before you buy.</p>
+      </div>
+      <div class="ft-cols">
+        <div><h4>Product</h4><a href="/#how">How it works</a><a href="/analysis">Daily debates</a><a href="/sample">Sample dashboard</a><a href="/start">Test a stock free</a><a href="/#pricing">Pricing</a><a href="/dashboard">Dashboard</a></div>
+        <div><h4>Company</h4><a href="/system">Methodology</a><a href="/partners">Partners</a><a href="mailto:joseph@hedgepick.com">Contact</a></div>
+        <div><h4>Legal</h4><a href="/terms">Terms</a><a href="/privacy">Privacy</a><a href="/terms#disclaimer">Disclaimer</a></div>
+      </div>
+      <div class="ft-d"><p>Not financial advice. For educational and informational purposes only. AI-generated research can be wrong. Past performance does not guarantee future results.</p><span>© 2026 HedgePick</span></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var API='https://web-production-45241.up.railway.app',$=function(i){return document.getElementById(i)};
+  var Q=new URLSearchParams(location.search),SIGNIN=Q.get('signin')==='1',session=null;
+  try{session=localStorage.getItem('hp_session')}catch(e){}
+  function ev(n,p){if(window.gtag)gtag('event',n,p||{})}
+  function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+  function clip(s,n){s=String(s||'').replace(/\*\*/g,'').replace(/\s+/g,' ').trim();return s.length>n?s.slice(0,n).replace(/\s+\S*$/,'')+'…':s}
+  var ticker='',thesis='',email='';
+  function prog(n){var s=$('prog').children;for(var i=0;i<3;i++){s[i].className=i+1<n?'done':(i+1===n?'on':'')}}
+  function go(n){['s1','s2','s3'].forEach(function(id,i){$(id).classList.toggle('on',i+1===n)});prog(n);
+    var f=n===1?$('tk'):n===2?$('em'):null;if(f&&window.innerWidth>700)setTimeout(function(){f.focus()},60)}
+  function err(id,m){var e=$(id);e.textContent=m||'';e.classList.toggle('on',!!m)}
+  // Archive: if we already published a debate on this ticker, offer it instantly.
+  var ARCH={};
+  fetch(API+'/analysis').then(function(r){return r.ok?r.text():''}).then(function(t){
+    var re=/<a href="(\/analysis\/([A-Z.\-]+)\/([\d-]+))"><b>[A-Z.\-]+ — (.*?)<\/b><span>(.*?) · (BUY|HOLD|SELL)<\/span>/g,m;
+    while((m=re.exec(t))){if(!ARCH[m[2]])ARCH[m[2]]={url:m[1],date:m[5],v:m[6]}}
+    check();
+  }).catch(function(){});
+  function check(){
+    var t=$('tk').value.trim().toUpperCase(),a=ARCH[t],f=$('found');
+    if(a){f.innerHTML='<span>We already published a debate on <b>'+esc(t)+'</b> ('+esc(a.date)+', ruled <b>'+a.v+'</b>). Read it free now, or get a fresh one below.</span><a href="'+esc(a.url)+'">Read it →</a>';f.classList.add('on')}
+    else f.classList.remove('on');
+  }
+  $('tk').addEventListener('input',function(){err('e1');check()});
+  document.querySelectorAll('.chips button').forEach(function(b){b.addEventListener('click',function(){$('tk').value=b.textContent;check();ev('start_chip',{ticker:b.textContent})})});
+  $('tog').addEventListener('click',function(){var o=$('thw').classList.toggle('on');$('tog').setAttribute('aria-expanded',o);$('tog').style.display=o?'none':'';if(o)$('th').focus()});
+  $('s1').addEventListener('submit',function(e){
+    e.preventDefault();
+    var t=$('tk').value.trim().toUpperCase().replace(/^\$/,'');
+    if(!/^[A-Z][A-Z.\-]{0,9}$/.test(t)){err('e1','Enter a ticker symbol, like NVDA or KO.');$('tk').focus();return}
+    ticker=t;thesis=($('th').value||'').trim().slice(0,600);
+    try{localStorage.setItem('hp_pending_ticker',ticker);if(thesis)localStorage.setItem('hp_pending_thesis',thesis);else localStorage.removeItem('hp_pending_thesis')}catch(x){}
+    ev('start_ticker',{ticker:ticker});
+    if(session){location.href='/dashboard';return}
+    $('pk').textContent=ticker;go(2);
+  });
+  $('chg').addEventListener('click',function(){go(1)});
+  $('back').addEventListener('click',function(){go(2)});
+  var cool=0,ct=null;
+  function cooldown(){cool=30;var b=$('resend');b.disabled=true;clearInterval(ct);ct=setInterval(function(){cool--;b.textContent=cool>0?'resend in '+cool+'s':'resend the link';if(cool<=0){b.disabled=false;clearInterval(ct)}},1000)}
+  function inbox(){
+    var d=email.split('@')[1]||'',a=$('openMail'),u='',l='';
+    if(/^(gmail|googlemail)\.com$/.test(d)){u='https://mail.google.com/mail/u/0/#search/from%3Ahedgepick';l='Open Gmail'}
+    else if(/^(outlook|hotmail|live|msn)\./.test(d)){u='https://outlook.live.com/mail/0/';l='Open Outlook'}
+    else if(/^(yahoo|ymail)\./.test(d)){u='https://mail.yahoo.com/';l='Open Yahoo Mail'}
+    else if(/^(icloud|me|mac)\.com$/.test(d)){u='https://www.icloud.com/mail';l='Open iCloud Mail'}
+    else if(/^proton(mail)?\.(me|com)$/.test(d)){u='https://mail.proton.me/';l='Open Proton Mail'}
+    if(u){a.href=u;a.textContent=l;a.style.display=''}else a.style.display='none';
+  }
+  async function send(){
+    var b=$('b2');b.disabled=true;b.textContent='Sending your link…';err('e2');
+    try{
+      var ep=SIGNIN?'/api/magic-link-direct':'/api/magic-link';
+      var r=await fetch(API+ep,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,ticker:SIGNIN?'':ticker,thesis:SIGNIN?'':thesis})});
+      var d={};try{d=await r.json()}catch(x){}
+      if(!r.ok){err('e2',d.error||'We couldn’t send the link. Try again in a minute.');return false}
+      ev(SIGNIN?'signin_link':'sign_up_start',{ticker:ticker});
+      $('sentTo').innerHTML='We sent a sign-in link to <b>'+esc(email)+'</b>.';
+      $('tl').innerHTML=SIGNIN?'<li class="ok">Link sent</li><li class="now">Click the button in the email</li><li>You land in your dashboard</li>'
+        :'<li class="ok">'+esc(ticker)+' selected'+(thesis?' with your thesis':'')+'</li><li class="ok">Link sent</li><li class="now">Click the button in the email. It expires in 15 minutes.</li><li>Your '+esc(ticker)+' debate starts automatically and takes about 15 minutes</li><li>The report appears in your dashboard, and the PDF comes by email</li>';
+      inbox();go(3);cooldown();return true;
+    }catch(x){err('e2','We couldn’t reach the server. Check your connection and try again.');return false}
+    finally{b.disabled=false;b.textContent=SIGNIN?'Email me a sign-in link':'Start my free debate'}
+  }
+  $('s2').addEventListener('submit',function(e){
+    e.preventDefault();email=($('em').value||'').trim().toLowerCase();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){err('e2','That email doesn’t look right.');$('em').focus();return}
+    send();
+  });
+  $('resend').addEventListener('click',function(){send();ev('link_resend')});
+  // Sign-in mode: skip the ticker.
+  if(SIGNIN){
+    document.title='Sign in — HedgePick';$('kk').textContent='Sign in';$('kk2').textContent='No password needed';
+    $('h1').innerHTML='Welcome back.';$('lead').textContent='Enter the email you signed up with and we’ll send a one-click sign-in link.';
+    $('prog').style.display='none';$('pickRow').style.display='none';$('s2h').textContent='Your email';$('s2p').textContent='The link expires in 15 minutes and works once.';
+    $('b2').textContent='Email me a sign-in link';go(2);
+  }else{
+    var t0=(Q.get('t')||'').toUpperCase().replace(/[^A-Z.\-]/g,'').slice(0,10);
+    if(t0){$('tk').value=t0;check()}
+    if(session){$('b1').textContent='Start the debate';$('kk2').textContent='You’re signed in';document.querySelector('.fine').style.display='none'}
+    go(1);
+  }
+  // Preview: a real published debate.
+  fetch(API+'/api/public-analyses').then(function(r){return r.ok?r.json():null}).then(function(d){
+    var L=(d&&d.analyses||[]).filter(function(a){return a.bull_excerpt&&a.bear_excerpt&&a.judge_excerpt});if(!L.length)return;
+    var pref=['GOOGL','JPM','LLY','BLK','CRWD','COIN','KO'],a=L[0];
+    for(var i=0;i<pref.length;i++){var f=L.filter(function(x){return x.ticker===pref[i]})[0];if(f){a=f;break}}
+    $('rTk').textContent=a.ticker;$('rNm').textContent=(a.name||'')+' · '+(a.nice_date||a.date);
+    $('rV').textContent=a.verdict;$('rV').className='vb '+a.verdict;$('rPx').textContent=a.price?'$'+Number(a.price).toFixed(2):'';
+    $('rB').textContent='“'+clip(a.bull_excerpt,200)+'”';$('rR').textContent='“'+clip(a.bear_excerpt,200)+'”';$('rM').textContent=clip(a.judge_excerpt,200);
+  }).catch(function(){});
+})();
+</script>
+<script src="/ref.js" defer></script>
+</body>
+</html>

@@ -53,7 +53,7 @@
     var edges={},nodes={};
     E.forEach(function(x){edges[x[0]]=el('path',{d:x[1],class:'eng-e'},gE)});
     N.forEach(function(n){
-      var g=el('g',{class:'eng-n g-'+n[6]},gN);
+      var g=el('g',{class:'eng-n g-'+n[6],'data-g':n[6]},gN);
       el('rect',{x:n[2],y:n[3],width:n[4],height:n[5],rx:8},g);
       var t=el('text',{x:n[2]+n[4]/2,y:n[3]+n[5]/2+4,'text-anchor':'middle'},g);t.textContent=n[1];
       nodes[n[0]]=g;
@@ -112,52 +112,80 @@
   function autoplay(api,host,opts){
     var $=function(s){return host.querySelector(s)};
     var cap=$('.eng-cap'),capK=$('.eng-cap-k'),capT=$('.eng-cap-t');
-    var DATA=opts.data&&opts.data.length?opts.data:[],idx=0,timers=[],paused=false,running=false;
+    var DATA=opts.data&&opts.data.length?opts.data:[],idx=0,step=0,steps=[],timers=[],paused=false,running=false,held=false;
     function T(fn,ms){timers.push(setTimeout(fn,ms))}
     function clearT(){timers.forEach(clearTimeout);timers=[]}
-    function caption(k,t,cls,typed,done){
-      capK.textContent=k;cap.className='eng-cap '+(cls||'');
-      if(!typed||RM){capT.textContent=t;capT.classList.remove('typing');done&&T(done,RM?3200:2400);return}
-      var i=0;capT.textContent='';capT.classList.add('typing');
-      (function tk(){i+=3;capT.textContent=t.slice(0,i);if(i<t.length)timers.push(setTimeout(tk,22));else{capT.classList.remove('typing');done&&T(done,1100)}})();
+    function words(t){return String(t||'').split(/\s+/).filter(Boolean).length}
+    // Reading time: ~230 words a minute, never less than 4.5s, never more than 13s.
+    function dwell(t){return Math.max(4500,Math.min(13000,1600+words(t)*260))}
+    function build(a){
+      var fin=a.verdict==='HOLD'?'Neither side carried it decisively. The portfolio manager holds.':(a.verdict==='BUY'?'The bull case carried it. The portfolio manager rules BUY.':'The bear case carried it. The portfolio manager rules SELL.');
+      return [
+        {st:1,k:S[1].k,t:S[1].t},
+        {st:2,k:S[2].k,t:'“'+clip(a.bull_excerpt,230)+'”',cls:'v-BUY',typed:1},
+        {st:3,k:S[3].k,t:'“'+clip(a.bear_excerpt,230)+'”',cls:'v-SELL',typed:1},
+        {st:4,k:S[4].k,t:clip(a.judge_excerpt,230),typed:1},
+        {st:5,k:S[5].k,t:S[5].t},
+        {st:6,k:'Final ruling · '+a.verdict,t:fin,cls:'v-'+a.verdict,v:a.verdict,hold:2500}
+      ];
     }
+    function show(s,typed,done){
+      api.setStage(s.st);api.verdict(s.v||'');
+      capK.textContent=s.k;cap.className='eng-cap '+(s.cls||'');
+      if(!typed||RM){capT.textContent=s.t;capT.classList.remove('typing');done&&done();return}
+      var i=0;capT.textContent='';capT.classList.add('typing');
+      (function tk(){i+=2;capT.textContent=s.t.slice(0,i);if(i<s.t.length)timers.push(setTimeout(tk,24));else{capT.classList.remove('typing');done&&done()}})();
+    }
+    function run(j){
+      clearT();step=j;var s=steps[j];running=true;
+      show(s,s.typed,function(){T(advance,dwell(s.t)+(s.hold||0))});
+    }
+    function advance(){if(held||paused)return;if(step<steps.length-1)run(step+1);else play(idx+1)}
     function header(a){
       $('.eng-tk').textContent=a.ticker;$('.eng-nm').textContent=a.name||a.ticker;
       $('.eng-px').textContent=money(a.price);$('.eng-dt').textContent=sd(a.date);
       var l=$('.eng-link');if(l)l.href=a.url;
       var d=$('.eng-dots');if(d)d.innerHTML=DATA.map(function(x,i){return '<button type="button" aria-label="Show '+x.ticker+'"'+(i===idx?' class="on"':'')+' data-i="'+i+'"></button>'}).join('');
     }
-    function final(a){
-      clearT();running=false;api.setStage(6);api.verdict(a.verdict);
-      caption('Final ruling · '+a.verdict,clip(a.judge_excerpt,210),'v-'+a.verdict,false);
-    }
+    function final(){if(!steps.length)return;clearT();running=false;step=steps.length-1;show(steps[step],false)}
     function play(i){
       if(!DATA.length)return;
-      clearT();idx=(i+DATA.length)%DATA.length;var a=DATA[idx];running=true;header(a);api.verdict('');
-      api.setStage(1);caption(S[1].k,S[1].t,'',false);
-      T(function(){
-        api.setStage(2);
-        caption(S[2].k,'“'+clip(a.bull_excerpt,210)+'”','v-BUY',true,function(){
-          api.setStage(3);
-          caption(S[3].k,'“'+clip(a.bear_excerpt,210)+'”','v-SELL',true,function(){
-            api.setStage(4);
-            caption(S[4].k,clip(a.judge_excerpt,210),'',true,function(){
-              api.setStage(5);caption(S[5].k,S[5].t,'',false,function(){
-                api.setStage(6);api.verdict(a.verdict);
-                caption('Final ruling · '+a.verdict,a.verdict==='HOLD'?'Neither side carried it decisively. The portfolio manager holds.':(a.verdict==='BUY'?'The bull case carried it. The portfolio manager rules BUY.':'The bear case carried it. The portfolio manager rules SELL.'),'v-'+a.verdict,false);
-                T(function(){running=false;if(!paused)play(idx+1)},6500);
-              });
-            });
-          });
-        });
-      },RM?3000:2600);
+      clearT();idx=(i+DATA.length)%DATA.length;steps=build(DATA[idx]);header(DATA[idx]);run(0);
     }
+    // Press and hold any stage to pause on it; let go and the loop carries on.
+    var hint=document.createElement('span');hint.className='eng-hint';
+    var HINT=('ontouchstart' in window)?'Hold a step to pause':'Hold any step to pause';
+    hint.textContent=HINT;var foot=$('.eng-foot');if(foot)foot.insertBefore(hint,$('.eng-dots'));
+    var pend=0,downAt=0,target=null;
+    function stageOf(e){
+      var n=e.target.closest&&e.target.closest('.eng-n');if(n)return GROUP_STAGE[n.getAttribute('data-g')];
+      if(e.target.closest&&e.target.closest('.eng-cap,.eng-v'))return step+1;
+      return 0;
+    }
+    function beginHold(st){
+      held=true;clearT();host.classList.add('held');hint.textContent='Paused · let go to continue';
+      if(steps.length){step=Math.max(0,Math.min(steps.length-1,st-1));show(steps[step],false)}
+      if(window.gtag)gtag('event','engine_hold',{stage:st});
+    }
+    function endHold(){
+      if(!held)return;held=false;host.classList.remove('held');hint.textContent=HINT;
+      var quick=Date.now()-downAt<700;
+      if(!paused&&steps.length)T(advance,quick?dwell(steps[step].t):1800);
+    }
+    host.addEventListener('pointerdown',function(e){
+      if(e.button>0)return;var st=stageOf(e);if(!st||!DATA.length)return;
+      downAt=Date.now();target=st;clearTimeout(pend);
+      if(e.pointerType==='mouse'){e.preventDefault();beginHold(st)}else pend=setTimeout(function(){beginHold(st)},140);
+    });
+    function up(e){if(pend){clearTimeout(pend);pend=0;if(e.type==='pointerup'&&!held&&target){beginHold(target);}}target=null;endHold()}
+    window.addEventListener('pointerup',up);window.addEventListener('pointercancel',function(){clearTimeout(pend);pend=0;target=null;endHold()});
+    host.addEventListener('contextmenu',function(e){if(e.target.closest('.eng-stage,.eng-cap'))e.preventDefault()});
     var pb=$('.eng-pause'),nx=$('.eng-next'),dt=$('.eng-dots');
     if(nx)nx.addEventListener('click',function(){paused=false;if(pb){pb.textContent='Pause';pb.setAttribute('aria-pressed','false')}play(idx+1);if(window.gtag)gtag('event','engine_next')});
     if(dt)dt.addEventListener('click',function(e){var b=e.target.closest('button');if(b)play(+b.dataset.i)});
-    if(pb)pb.addEventListener('click',function(){paused=!paused;pb.textContent=paused?'Play':'Pause';pb.setAttribute('aria-pressed',paused);if(paused)final(DATA[idx]);else play(idx+1)});
-    api.onVis=function(v,was){if(!v&&running){final(DATA[idx])}else if(v&&!was&&!paused&&!running&&DATA.length){play(idx+1)}};
-    document.addEventListener('visibilitychange',function(){if(document.hidden&&running)final(DATA[idx])});
+    if(pb)pb.addEventListener('click',function(){paused=!paused;pb.textContent=paused?'Play':'Pause';pb.setAttribute('aria-pressed',paused);if(paused)clearT();else advance()});
+    api.onVis=function(v,was){if(held)return;if(!v&&running){final()}else if(v&&!was&&!paused&&DATA.length){play(idx+1)}};
+    document.addEventListener('visibilitychange',function(){if(document.hidden&&running&&!held)final()});
     api.load=function(list){
       var ok=(list||[]).filter(function(a){return a.bull_excerpt&&a.bear_excerpt&&a.verdict});
       if(!ok.length)return;var seen={},lead=[],rest=[];

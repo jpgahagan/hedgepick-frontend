@@ -215,3 +215,13 @@ h1,h2,h3,h4{font-family:var(--display);font-weight:600;letter-spacing:-.035em;li
 .eng.flat::before{display:none}
 @media(max-width:560px){.eng{padding:14px;border-radius:var(--r3)}.eng-tk{font-size:1.8rem}.eng-cap-t{font-size:.9rem}}
 @media(prefers-reduced-motion:reduce){.eng-e.on{animation:none}.eng-v.on{animation:none}}
+/* Engine: press-and-hold */
+.eng-svg{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+.eng[data-stage] .eng-n{cursor:pointer}
+.eng-n:hover rect{stroke:rgba(255,255,255,.32)}
+.eng-cap{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;cursor:default}
+.eng-hint{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--t4);margin-left:auto;margin-right:10px;transition:color .2s}
+.eng.held .eng-hint{color:var(--gold)}
+.eng.held{border-color:rgba(227,168,58,.35)}
+.eng.held .eng-top .dot{animation:none;background:var(--gold);box-shadow:0 0 0 3px rgba(227,168,58,.18)}
+@media(max-width:560px){.eng-hint{font-size:.56rem;margin-right:6px}}
