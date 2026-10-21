@@ -27,8 +27,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/hp.css?v=4">
-<script src="/assets/hp.js?v=4"></script>
+<link rel="stylesheet" href="/assets/hp.css?v=5">
+<script src="/assets/hp.js?v=5"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W2VWCNQC6T"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-W2VWCNQC6T');</script>
 <style>/* Home */
@@ -416,6 +416,7 @@ textarea.inp{resize:vertical;min-height:70px;margin-top:8px;line-height:1.45}
           <input class="inp" id="temail" type="email" placeholder="Your email. We send a sign-in link and your PDF report">
           <button class="btn btn-blue" onclick="go()">Send link</button>
         </div>
+        <div class="g-wrap" id="tgW" hidden><div class="g-or">or skip the email</div><div class="g-btn" id="tgBtn" style="margin-top:12px"></div></div>
         <div class="chips">
           <span class="lbl">Try one:</span>
           <button type="button" class="chip" onclick="fillSample('NVDA','Hyperscaler AI spending keeps accelerating through 2027, so the forward P/E is cheap relative to earnings growth.')">NVDA · AI spending</button>
@@ -896,7 +897,12 @@ async function go(){
   var session=localStorage.getItem('hp_session');
   if(!session){
     var row=document.getElementById('temailRow'),emIn=document.getElementById('temail');
-    if(row.style.display!=='flex'){row.style.display='flex';emIn.focus();return;}
+    if(row.style.display!=='flex'){row.style.display='flex';emIn.focus();
+      if(window.hpGoogle)hpGoogle({wrap:'tgW',btn:'tgBtn',before:function(){
+        var tk=document.getElementById('tin').value.trim().toUpperCase(),th=(document.getElementById('tthesis').value||'').trim().slice(0,600);
+        if(tk)localStorage.setItem('hp_pending_ticker',tk);if(th)localStorage.setItem('hp_pending_thesis',th);else localStorage.removeItem('hp_pending_thesis');
+      },err:function(m){state('ERROR','err',m)}});
+      return;}
     var email=(emIn.value||'').trim();
     if(!email||email.indexOf('@')<0){emIn.focus();return;}
     state('CHECK EMAIL','info','Sending a sign-in link to '+email+'…');
@@ -1025,7 +1031,7 @@ async function sendSignIn(){
 }
 </script>
 <script>fetch("https://web-production-45241.up.railway.app/api/founding-seats").then(r=>r.json()).then(d=>{var el=document.getElementById("fdSeatsLeft");if(el&&d&&typeof d.remaining==="number")el.textContent=d.remaining;}).catch(()=>{});</script>
-<script src="/assets/engine.js?v=4"></script>
+<script src="/assets/engine.js?v=5"></script>
 <script>
 (function(){
   var RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;

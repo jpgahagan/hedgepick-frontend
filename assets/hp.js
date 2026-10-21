@@ -36,3 +36,30 @@
   }
   if(d.readyState!=='loading')ready();else d.addEventListener('DOMContentLoaded',ready);
 })();
+
+/* Continue with Google. Hidden unless the backend reports a client id. */
+(function(){
+  var API='https://web-production-45241.up.railway.app',cfgP=null,gisP=null;
+  function cfg(){if(!cfgP)cfgP=fetch(API+'/api/auth/config').then(function(r){return r.ok?r.json():{}}).then(function(j){return j&&j.google_client_id||null}).catch(function(){return null});return cfgP}
+  function gis(){if(!gisP)gisP=new Promise(function(ok,no){if(window.google&&google.accounts&&google.accounts.id)return ok();var s=document.createElement('script');s.src='https://accounts.google.com/gsi/client';s.async=true;s.onload=function(){ok()};s.onerror=no;document.head.appendChild(s)});return gisP}
+  window.hpGoogle=function(o){
+    // o: {wrap, btn, before(), err(msg), width}
+    var wrap=document.getElementById(o.wrap),btn=document.getElementById(o.btn);if(!wrap||!btn)return;
+    cfg().then(function(id){if(!id)return;return gis().then(function(){
+      google.accounts.id.initialize({client_id:id,ux_mode:'popup',auto_select:false,cancel_on_tap_outside:true,callback:function(res){
+        if(o.before)try{o.before()}catch(e){}
+        fetch(API+'/api/auth/google',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({credential:res.credential})})
+        .then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j}})})
+        .then(function(x){
+          if(!x.ok||!x.j.session){if(o.err)o.err(x.j.error||'Google sign-in failed. Please use email instead.');return}
+          localStorage.setItem('hp_session',x.j.session);
+          try{if(window.gtag)gtag('event',x.j.new?'sign_up':'login',{method:'Google'})}catch(e){}
+          location.href='/dashboard'+(x.j.new?'?new=1':'');
+        }).catch(function(){if(o.err)o.err('Could not reach the server. Please try again.')});
+      }});
+      var w=Math.round(btn.getBoundingClientRect().width||wrap.getBoundingClientRect().width||Math.min(360,window.innerWidth-72));w=Math.min(400,Math.max(200,w));
+      google.accounts.id.renderButton(btn,{type:'standard',theme:'filled_black',size:'large',shape:'pill',text:o.text||'continue_with',logo_alignment:'center',width:w});
+      wrap.hidden=false;wrap.style.display='';
+    })}).catch(function(){});
+  };
+})();

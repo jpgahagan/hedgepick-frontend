@@ -27,8 +27,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Inter+Tight:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/hp.css?v=4">
-<script src="/assets/hp.js?v=4"></script>
+<link rel="stylesheet" href="/assets/hp.css?v=5">
+<script src="/assets/hp.js?v=5"></script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W2VWCNQC6T"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-W2VWCNQC6T');</script>
 <style>
@@ -180,6 +180,7 @@ textarea.inp{min-height:84px;resize:vertical;font-size:.95rem;line-height:1.5}
           <div class="pick" id="pickRow"><span>Debating</span><span class="tkp" id="pk">—</span><button type="button" id="chg">Change</button></div>
           <h2 id="s2h" style="margin-top:16px">Where should we send it?</h2>
           <p class="sub" id="s2p">We’ll email you a one-click link. Click it and your debate starts. No password to create.</p>
+          <div class="g-wrap" id="gW" hidden><div class="g-btn" id="gBtn"></div><div class="g-or">or use email</div></div>
           <label class="lbl" for="em">Email</label>
           <input class="inp" id="em" type="email" name="email" placeholder="you@example.com" autocomplete="email" inputmode="email" spellcheck="false">
           <div class="err" id="e2" role="alert"></div>
@@ -314,6 +315,10 @@ textarea.inp{min-height:84px;resize:vertical;font-size:.95rem;line-height:1.5}
     if(session){$('b1').textContent='Start the debate';$('kk2').textContent='You’re signed in';document.querySelector('.fine').style.display='none'}
     go(1);
   }
+  // Continue with Google (shown only once it is configured on the backend).
+  (function gw(n){if(window.hpGoogle){hpGoogle({wrap:'gW',btn:'gBtn',text:SIGNIN?'signin_with':'continue_with',
+    before:function(){if(!SIGNIN&&ticker){try{localStorage.setItem('hp_pending_ticker',ticker);if(thesis)localStorage.setItem('hp_pending_thesis',thesis);else localStorage.removeItem('hp_pending_thesis')}catch(x){}}},
+    err:function(m){err('e2',m)}})}else if(n<60)setTimeout(function(){gw(n+1)},100)})(0);
   // Preview: a real published debate.
   fetch(API+'/api/public-analyses').then(function(r){return r.ok?r.json():null}).then(function(d){
     var L=(d&&d.analyses||[]).filter(function(a){return a.bull_excerpt&&a.bear_excerpt&&a.judge_excerpt});if(!L.length)return;

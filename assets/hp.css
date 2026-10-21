@@ -225,3 +225,9 @@ h1,h2,h3,h4{font-family:var(--display);font-weight:600;letter-spacing:-.035em;li
 .eng.held{border-color:rgba(227,168,58,.35)}
 .eng.held .eng-top .dot{animation:none;background:var(--gold);box-shadow:0 0 0 3px rgba(227,168,58,.18)}
 @media(max-width:560px){.eng-hint{font-size:.56rem;margin-right:6px}}
+
+/* Continue with Google */
+.g-wrap{margin:18px 0 4px}.g-wrap[hidden]{display:none!important}
+.g-btn{min-height:44px;display:flex;justify-content:center;color-scheme:light}
+.g-or{display:flex;align-items:center;gap:12px;margin:16px 0 2px;font-family:var(--mono);font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--t3)}
+.g-or:before,.g-or:after{content:"";flex:1;height:1px;background:var(--line-2)}
