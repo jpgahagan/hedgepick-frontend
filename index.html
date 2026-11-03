@@ -333,6 +333,17 @@ textarea.inp{resize:vertical;min-height:70px;margin-top:8px;line-height:1.45}
   .ht .x::after{transform:scaleX(1);animation:none}
   .tape-in{animation:none}.tape{overflow-x:auto}
 }
+
+/* track-record proof strip */
+.tr-strip{display:grid;grid-template-columns:auto 1fr auto;gap:6px 18px;align-items:center;margin:0 0 28px;padding:16px 20px;border:1px solid var(--line,rgba(127,127,127,.25));border-radius:12px;text-decoration:none;color:inherit;background:var(--paper,transparent)}
+.tr-strip[hidden]{display:none}
+.tr-strip:hover{border-color:var(--gold,#C9A84C)}
+.tr-k{font:600 11px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--gold,#C9A84C)}
+.tr-t{font-size:15px;line-height:1.45}
+.tr-t b{font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:600}
+.tr-l{font-size:14px;font-weight:600;white-space:nowrap}
+.tr-n{grid-column:1/-1;font-size:11.5px;opacity:.6}
+@media(max-width:720px){.tr-strip{grid-template-columns:1fr}.tr-l{white-space:normal}}
 </style>
 </head>
 <body>
@@ -620,6 +631,7 @@ textarea.inp{resize:vertical;min-height:70px;margin-top:8px;line-height:1.45}
           <tr><td>Challenges your idea</td><td>No</td><td>Usually agrees with how you asked</td><td class="us">The bear researcher's whole job</td></tr>
           <tr><td>Which stocks</td><td>Their coverage list</td><td>Any, without live data</td><td class="us">Any US-listed stock, using current data</td></tr>
           <tr><td>Risk levels</td><td>Rarely</td><td>Generic</td><td class="us">Stop loss, target and sizing (Pro and Trader)</td></tr>
+          <tr><td>Track record</td><td>Rarely published in full</td><td>None</td><td class="us">Every pick scored against the S&amp;P 500, publicly, <a href="/track-record">updated daily</a></td></tr>
           <tr><td>Cost</td><td>Often $40–100+/mo</td><td>Varies</td><td class="us">Free to start, then $39 or $99 a month (20% less billed yearly)</td></tr>
         </tbody>
       </table>
@@ -640,6 +652,12 @@ textarea.inp{resize:vertical;min-height:70px;margin-top:8px;line-height:1.45}
         <div class="bill" style="margin-top:24px"><button type="button" class="on" data-bill="m" onclick="setBill('m')">Monthly</button><button type="button" data-bill="a" onclick="setBill('a')">Yearly <span class="sv">2 months free</span></button></div>
       </div>
     </div>
+    <a class="tr-strip rv" id="trStrip" href="/track-record" hidden>
+      <span class="tr-k">Track record</span>
+      <span class="tr-t">Model portfolio of the screener's top 5 daily picks, each held one month: <b id="trHp">–</b> vs <b id="trSpy">–</b> for the S&amp;P 500 on the same days, since June 2026.</span>
+      <span class="tr-l">Every pick, scored →</span>
+      <small class="tr-n">Hypothetical results before fees and slippage. Past performance does not predict future returns.</small>
+    </a>
     <div class="plans">
       <div class="plan rv">
         <div class="p-top"><span class="p-name">Free</span><span class="p-tag">No card</span></div>
@@ -1030,6 +1048,14 @@ async function sendSignIn(){
     else{msg.style.color='var(--red)';msg.textContent=data.error||'Could not send a sign-in link.'}
   }catch(e){msg.style.color='var(--red)';msg.textContent='Network error. Please try again.'}
 }
+
+// Track-record strip: live numbers from the public scorecard; stays hidden if unavailable.
+(function(){var el=document.getElementById('trStrip');if(!el||!window.fetch)return;
+fetch(API+'/api/track-record').then(function(r){return r.ok?r.json():null}).then(function(d){
+ if(!d||!d.portfolio||!d.portfolio.hedgepick||!d.portfolio.hedgepick.length)return;
+ var h=d.portfolio.hedgepick,s=d.portfolio.spy,f=function(x){var p=(x-1)*100;return(p>=0?'+':'')+p.toFixed(1)+'%'};
+ document.getElementById('trHp').textContent=f(h[h.length-1]);document.getElementById('trSpy').textContent=f(s[s.length-1]);el.hidden=false;
+}).catch(function(){});})();
 </script>
 <script>fetch("https://web-production-45241.up.railway.app/api/founding-seats").then(r=>r.json()).then(d=>{var el=document.getElementById("fdSeatsLeft");if(el&&d&&typeof d.remaining==="number")el.textContent=d.remaining;}).catch(()=>{});</script>
 <script src="/assets/engine.js?v=5"></script>
