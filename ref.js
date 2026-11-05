@@ -73,7 +73,8 @@
     if (fromPH) localStorage.setItem(KEY, String(Date.now()));
     else fromPH = !!localStorage.getItem(KEY);
   } catch (e) {}
-  if (!fromPH) return;
+  // Launch week: the offer is open to every visitor until it ends (Nov 10).
+  fromPH = true;
 
   function tagLinks(el) {
     var list = el ? [el] : document.querySelectorAll('a[href^="https://buy.stripe.com/"]');
@@ -97,7 +98,7 @@
     var b = document.createElement('div');
     b.setAttribute('role', 'note');
     b.style.cssText = 'position:relative;z-index:60;background:#111318;border-bottom:1px solid #2a2d35;color:#e8e6e1;font:500 13px/1.4 Switzer,Arial,sans-serif;padding:9px 44px 9px 16px;text-align:center';
-    b.innerHTML = 'Product Hunt offer: <strong style="color:#e3b04b">40% off your first 3 months</strong> of Pro or Trader (monthly) with code <strong style="letter-spacing:.04em;color:#fff">PRODUCTHUNT</strong>, applied automatically at checkout. Ends Nov 10. <a href="/#pricing" style="color:#7aa2ff;margin-left:6px">See plans</a>';
+    b.innerHTML = 'Launch offer: <strong style="color:#e3b04b">40% off your first 3 months</strong> of Pro or Trader (monthly) with code <strong style="letter-spacing:.04em;color:#fff">PRODUCTHUNT</strong>, applied automatically at checkout. Ends Nov 10. <a href="/#pricing" style="color:#7aa2ff;margin-left:6px">See plans</a>';
     var x = document.createElement('button');
     x.type = 'button'; x.setAttribute('aria-label', 'Dismiss offer'); x.textContent = '\u00d7';
     x.style.cssText = 'position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:0;color:#9a9ca3;font-size:18px;cursor:pointer;padding:4px 8px';
