@@ -99,6 +99,7 @@ h1,h2,h3,h4{font-family:var(--display);font-weight:600;letter-spacing:-.035em;li
 .mmenu.open{opacity:1;pointer-events:auto;transform:none}
 .mmenu a{font-family:var(--display);font-size:1.7rem;font-weight:600;letter-spacing:-.03em;text-decoration:none;padding:12px 0;border-bottom:1px solid var(--line);color:var(--t1)}
 .mmenu .btn{font-family:var(--sans);font-size:var(--base);margin-top:20px;border-bottom:0;letter-spacing:0;font-weight:500}
+.mmenu a.btn-pri{color:#07080a;text-align:center}
 
 /* Sections */
 .sec{padding:clamp(80px,10vw,140px) 0;position:relative}
