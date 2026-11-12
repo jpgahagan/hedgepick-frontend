@@ -243,6 +243,25 @@ html,body{max-width:100%;overflow-x:hidden;touch-action:pan-y;-webkit-text-size-
   .tr-sum{grid-template-columns:1fr 1fr 1fr;gap:6px}.tr-sum b{font-size:14px}.tr-sum>div{padding:10px}
   .tr-card{padding:14px}
 }
+.tr-rv-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+.tr-rv-back{background:none;border:1px solid var(--b2);color:var(--t2);border-radius:8px;padding:7px 12px;font-size:12px;cursor:pointer;font-family:'Space Mono',monospace}
+.tr-rv-back:hover{color:var(--t1);border-color:rgba(232,169,48,.4)}
+.tr-rv-pdf{background:var(--gold);color:#000;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;text-decoration:none;white-space:nowrap}
+.tr-rv-h{font-family:'Space Mono',monospace;font-size:22px;font-weight:700;color:var(--t1);margin:0 0 4px}
+.tr-rv-meta{font-size:13px;color:var(--t2);margin-bottom:14px}
+.tr-rv-chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:20px}
+.tr-rv-chip{font-family:'Space Mono',monospace;font-size:11px;padding:4px 9px;border-radius:6px;border:1px solid var(--b2);color:var(--t2)}
+.tr-rv-chip.BUY{color:var(--green);border-color:rgba(34,197,94,.4)}
+.tr-rv-chip.SELL{color:var(--red);border-color:rgba(248,113,113,.4)}
+.tr-rv-chip.HOLD{color:var(--gold);border-color:rgba(232,169,48,.4)}
+.tr-rv-sec{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--t3);margin:22px 0 8px;font-family:'Space Mono',monospace}
+.tr-rv-card{background:var(--s2);border:1px solid var(--b1);border-left:3px solid var(--b2);border-radius:10px;padding:16px 18px;font-size:14px;line-height:1.65;color:var(--t1);overflow-wrap:anywhere}
+.tr-rv-card.bull{border-left-color:var(--green)}.tr-rv-card.bear{border-left-color:var(--red)}.tr-rv-card.judge{border-left-color:var(--gold)}
+.tr-rv-card h3{font-size:14px;margin:14px 0 6px;color:var(--t1)}.tr-rv-card p{margin:0 0 10px}.tr-rv-card ul{margin:0 0 10px;padding-left:20px}
+.tr-rv-card table{width:100%;border-collapse:collapse;font-size:12px;margin:8px 0;display:block;overflow-x:auto}.tr-rv-card td,.tr-rv-card th{border:1px solid var(--b1);padding:5px 8px;text-align:left}
+.tr-rv-up{margin-top:20px;padding:16px 18px;border:1px solid rgba(232,169,48,.35);border-radius:10px;font-size:13px;color:var(--t2)}
+.tr-rv-up a{color:var(--gold);font-weight:700;text-decoration:none}
+@media(max-width:560px){.pk-box{padding:20px;margin:16px auto;width:calc(100% - 20px)}.tr-rv-h{font-size:19px}}
 </style>
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-W2VWCNQC6T"></script>
@@ -1146,7 +1165,7 @@ function renderPicksModal(data) {
       </div>
       <div class="pk-name">${c.name||''}</div>
       <div class="pk-chips">${fired}</div>
-      <a href="/go/tradingview?ticker=${encodeURIComponent(c.ticker)}&ref=picks" target="_blank" rel="noopener" style="font-size:11px;color:var(--t2);text-decoration:none;font-family:'Space Mono',monospace;margin-right:10px">TradingView Chart ↗</a><button class="pk-btn" onclick="closePicksModal();loadTicker('${c.ticker}','${data.date}')" style="background:${i < 5 ? 'var(--gold)' : 'var(--blue)'};color:${i < 5 ? '#000' : '#fff'}">${i < 5 ? 'View Report →' : 'Run Analysis →'}</button>
+      <a href="/go/tradingview?ticker=${encodeURIComponent(c.ticker)}&ref=picks" target="_blank" rel="noopener" style="font-size:11px;color:var(--t2);text-decoration:none;font-family:'Space Mono',monospace;margin-right:10px">TradingView Chart ↗</a><button class="pk-btn" onclick="${i < 5 ? `openPickReport('${c.ticker}','${data.date}')` : `closePicksModal();loadTicker('${c.ticker}','${data.date}')`}" style="background:${i < 5 ? 'var(--gold)' : 'var(--blue)'};color:${i < 5 ? '#000' : '#fff'}">${i < 5 ? 'View Report →' : 'Run Analysis →'}</button>
     </div>`;
   });
 
@@ -1159,6 +1178,43 @@ function renderPicksModal(data) {
   }
 
   container.innerHTML = html;
+}
+
+// Top picks are analyzed before the market opens. Show the finished debate inside the
+// dashboard instead of opening the PDF (which phones download).
+function _rvEsc(t){return String(t==null?'':t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
+async function openPickReport(ticker, date) {
+  const box = document.getElementById('picksModalContainer');
+  const modal = document.getElementById('picksModal');
+  modal.style.display = 'block'; document.body.style.overflow = 'hidden';
+  const back = '<button class="tr-rv-back" onclick="renderPicksModal(picksData)">&larr; All picks</button>';
+  box.innerHTML = '<div class="tr-rv-top">' + back + '</div><div style="text-align:center;padding:32px;color:var(--t2)"><div class="loading-spinner" style="margin:0 auto 12px"></div>Opening ' + _rvEsc(ticker) + ' report…</div>';
+  modal.scrollTop = 0;
+  let d = null;
+  try {
+    const r = await fetch(BACKEND + '/api/screener/report-view?ticker=' + encodeURIComponent(ticker) + '&date=' + encodeURIComponent(date),
+      {headers: {'Authorization': 'Bearer ' + (localStorage.getItem('hp_session') || '')}});
+    d = await r.json();
+  } catch (e) {}
+  if (!d || !d.ready) {
+    box.innerHTML = '<div class="tr-rv-top">' + back + '</div><div style="padding:24px 4px;color:var(--t2);font-size:14px;line-height:1.6">' +
+      (d ? 'The panel is still debating <b style="color:var(--t1)">' + _rvEsc(ticker) + '</b>. Daily reports finish by about 10:30 AM ET. Check back shortly.'
+         : 'Could not load the report. Check your connection and try again.') + '</div>';
+    return;
+  }
+  const pdf = d.pdf_url ? '<a class="tr-rv-pdf" href="' + _rvEsc(d.pdf_url) + '" target="_blank" rel="noopener">Full PDF: trade plan &amp; risk &darr;</a>' : '';
+  let chips = '<span class="tr-rv-chip ' + _rvEsc(d.verdict) + '">AI panel: ' + _rvEsc(d.verdict) + '</span>';
+  if (d.price) chips += '<span class="tr-rv-chip">$' + Number(d.price).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}) + ' at analysis</span>';
+  if (d.sector) chips += '<span class="tr-rv-chip">' + _rvEsc(d.sector) + '</span>';
+  const up = (!d.paid && d.truncated) ? '<div class="tr-rv-up">This is the free excerpt. Pro unlocks the full debate, trade levels, position sizing and the risk team\'s review for every daily pick. <a href="https://buy.stripe.com/9B6cN70K9gSJgv14Er4AU06" target="_blank" rel="noopener">Get Pro: $39/mo &rarr;</a></div>' : '';
+  box.innerHTML = '<div class="tr-rv-top">' + back + pdf + '</div>' +
+    '<h2 class="tr-rv-h">' + _rvEsc(d.ticker) + '</h2>' +
+    '<div class="tr-rv-meta">' + _rvEsc(d.name) + ' · analyzed ' + _rvEsc(d.date) + ' by the twelve-agent panel</div>' +
+    '<div class="tr-rv-chips">' + chips + '</div>' +
+    '<div class="tr-rv-sec">The research manager\'s call</div><div class="tr-rv-card judge">' + d.judge + '</div>' +
+    '<div class="tr-rv-sec">The bull case</div><div class="tr-rv-card bull">' + d.bull + '</div>' +
+    '<div class="tr-rv-sec">The bear case</div><div class="tr-rv-card bear">' + d.bear + '</div>' + up;
+  modal.scrollTop = 0;
 }
 
 async function loadTicker(ticker, date) {
