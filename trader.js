@@ -45,7 +45,7 @@
         <div class="tr-form tr-inline"><select id="trMyBroker" style="min-width:200px"></select><span class="tr-meta" id="trMyBrokerMsg"></span></div>
         <div class="tr-sub">Send orders from HedgePick &middot; Alpaca paper account</div>
         <div id="trBroker"><div class="tr-empty">Loading&hellip;</div></div>
-        <div class="tr-fine">Robinhood, Fidelity, Schwab, E*TRADE, Public and Webull don't let outside apps place orders for individual customers, so those open on the broker's own site. HedgePick isn't a broker and isn't paid for these links.</div>
+        <div class="tr-fine">HedgePick can send orders only to Alpaca paper accounts for now. Other brokers open on their own site, where you place the trade yourself. HedgePick isn't a broker and isn't paid for these links.</div>
       </div>
 `;
   const TICKET_HTML = `
@@ -69,7 +69,7 @@
             </div>
             <div class="tr-preview" id="trOrderPreview"></div>
             <label class="tr-check"><input type="checkbox" name="confirm"> <span id="trConfirmTxt">I've reviewed this order.</span></label>
-            <button class="tr-btn" type="submit">Send order</button>
+            <button class="tr-btn" type="submit" id="trSubmit">Send order</button>
           </form>
         </div>
       </div>
@@ -85,6 +85,7 @@
     const hp = f.dest.value === 'hp';
     document.querySelectorAll('#trOrderForm .tr-adv').forEach((el) => (el.style.display = hp ? 'none' : ''));
     if (hp) f.type.value = 'market';
+    $('trSubmit').textContent = hp ? 'Place paper trade' : 'Send to Alpaca';
     $('trConfirmTxt').textContent = hp ? "I've reviewed this simulated order. No real money is used." : "I've reviewed this order and want to send it to my Alpaca paper account.";
     $('trDestNote').innerHTML = hp
       ? 'Fills right away at the latest price HedgePick has, which can be delayed or the last close when the market is shut. Buy and sell only (no short selling). ' + (alpacaConnected ? '' : '<a href="#brokerage" onclick="document.getElementById(\'trTicket\').style.display=\'none\'">Connect your brokerage</a> to send orders to Alpaca instead.')
@@ -136,7 +137,7 @@
         <div class="tr-sum in">
           <div><span>Value</span><b>${money(d.equity, 0)}</b></div>
           <div><span>Cash</span><b>${money(d.cash, 0)}</b></div>
-          <div><span>Return vs S&amp;P</span><b class="${cls(d.return_pct)}">${pct(d.return_pct)}</b><small class="tr-meta">S&amp;P ${pct(d.spy_return_pct)}</small></div>
+          <div><span>Return vs S&amp;P</span><b class="${cls(d.return_pct)}">${pct(d.return_pct)}</b><small class="tr-meta" style="display:block">S&amp;P ${pct(d.spy_return_pct)}</small></div>
         </div>
         <div class="tr-acts left"><button class="tr-btn sm" onclick="trOpenTicket('','buy','', '', '', 'hp')">New paper trade</button>
           <button class="tr-link dim" onclick="trPaperReset()">Start over with $100,000</button></div>
@@ -165,7 +166,7 @@
     const cell = (k, v, ok) => `<div class="bb-c"><span>${k}</span><b class="${ok ? 'ok' : ''}">${v}</b></div>`;
     el.innerHTML = `<div class="bb">
       <div class="bb-h"><div class="bb-t">Paper trading &amp; your brokerage</div>
-        <div class="bb-s">${paid ? 'Practise on any pick with $100,000 of simulated money, or connect your brokerage.' : 'Paper trade any pick with $100,000 of simulated money and connect your brokerage. Included in Pro.'}</div></div>
+        <div class="bb-s">${paid ? 'Practice on any pick with $100,000 of simulated money, or connect your brokerage.' : 'Paper trade any pick with $100,000 of simulated money and connect your brokerage. Included in Pro.'}</div></div>
       <div class="bb-cells">
         ${cell('Paper portfolio', paid ? (paperState ? money(paperState.equity, 0) : 'Ready') : 'Pro', paid)}
         ${cell('Alpaca', paid ? (alpacaConnected ? 'Connected' : 'Not connected') : 'Pro', paid && alpacaConnected)}
