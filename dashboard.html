@@ -183,6 +183,18 @@ html,body{max-width:100%;overflow-x:hidden;touch-action:pan-y;-webkit-text-size-
 .pk-tkr{font-family:'Space Mono',monospace;font-size:16px;font-weight:700;color:var(--t1)}
 .pk-price{font-family:'Space Mono',monospace;font-size:13px;color:var(--t2);margin-left:auto}
 .pk-score{font-family:'Space Mono',monospace;font-size:16px;font-weight:700;white-space:nowrap}
+.pk-acts{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-top:2px}
+.pk-brk{font-size:11px;font-family:'Space Mono',monospace}
+.pk-brk summary{cursor:pointer;color:var(--t2);list-style:none;display:inline-block}
+.pk-brk summary::-webkit-details-marker{display:none}
+.pk-brk summary:hover{color:var(--t1)}
+.pk-brk[open] summary{color:var(--t1)}
+.pk-brk-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.pk-brk-list a{color:var(--t1);text-decoration:none;border:1px solid var(--b2);border-radius:5px;padding:4px 9px;background:rgba(255,255,255,.02)}
+.pk-brk-list a:hover{border-color:var(--gold);color:var(--gold)}
+.pk-brk-note{flex-basis:100%;font-size:10px;color:var(--t2);font-family:'Space Grotesk',sans-serif;margin-top:2px}
+.pk-paper{font-size:11px;font-family:'Space Mono',monospace;background:none;border:1px solid rgba(79,142,247,.35);color:var(--blue);border-radius:5px;padding:4px 9px;cursor:pointer}
+.pk-paper:hover{background:rgba(79,142,247,.08)}
 .pk-v{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.06em;padding:3px 8px;border-radius:4px;border:1px solid;white-space:nowrap;align-self:center}
 .pk-v.BUY{color:#22C55E;border-color:rgba(34,197,94,.35);background:rgba(34,197,94,.08)}
 .pk-v.SELL{color:#F87171;border-color:rgba(248,113,113,.35);background:rgba(248,113,113,.08)}
@@ -1145,6 +1157,28 @@ function closePicksModal() {
   document.body.style.overflow = '';
 }
 
+// Outbound links to the stock's page at major brokers. HedgePick does not place real
+// orders and is not paid for these links; the user trades on the broker's own site.
+const PK_BROKERS = [
+  ['Robinhood', t => 'https://robinhood.com/us/en/stocks/' + t + '/'],
+  ['Fidelity',  t => 'https://digital.fidelity.com/prgw/digital/research/quote/dashboard/summary?symbol=' + t],
+  ['Schwab',    t => 'https://www.schwab.com/research/stocks/quotes/summary/' + t.toLowerCase()],
+  ['E*TRADE',   t => 'https://us.etrade.com/etx/mkt/quotes?symbol=' + t],
+  ['Public',    t => 'https://public.com/stocks/' + t.toLowerCase()],
+];
+function pkBrokerMenu(ticker) {
+  const t = String(ticker || '').toUpperCase().replace(/[^A-Z0-9.\-]/g, '');
+  if (!t) return '';
+  const links = PK_BROKERS.map(([n, f]) => `<a href="${f(t)}" target="_blank" rel="noopener nofollow">${n} ↗</a>`).join('');
+  return `<details class="pk-brk"><summary>Open ${t} in your broker ▾</summary><div class="pk-brk-list">${links}<div class="pk-brk-note">Opens ${t} on the broker's site, where you place any trade yourself. HedgePick isn't a broker and isn't paid for these links. Not investment advice.</div></div></details>`;
+}
+function pkPaperBtn(c) {
+  if (typeof PLAN === 'undefined' || !['trader', 'lifetime'].includes(PLAN.tier) || !window.trOpenTicket) return '';
+  const side = c.verdict === 'SELL' ? 'sell' : 'buy';
+  const t = String(c.ticker || '').toUpperCase().replace(/[^A-Z0-9.\-]/g, '');
+  return `<button class="pk-paper" onclick="closePicksModal();trOpenTicket('${t}','${side}')" title="Opens your Alpaca paper trading ticket (simulated money)">Paper trade ${t}</button>`;
+}
+
 function renderPicksModal(data) {
   const container = document.getElementById('picksModalContainer');
   const dateEl = document.getElementById('picksModalDate');
@@ -1173,7 +1207,12 @@ function renderPicksModal(data) {
       </div>
       <div class="pk-name">${c.name||''}</div>
       <div class="pk-chips">${fired}</div>
-      <a href="/go/tradingview?ticker=${encodeURIComponent(c.ticker)}&ref=picks" target="_blank" rel="noopener" style="font-size:11px;color:var(--t2);text-decoration:none;font-family:'Space Mono',monospace;margin-right:10px">TradingView Chart ↗</a><button class="pk-btn" onclick="${i < 5 ? `openPickReport('${c.ticker}','${data.date}')` : `closePicksModal();loadTicker('${c.ticker}','${data.date}')`}" style="background:${i < 5 ? 'var(--gold)' : 'var(--blue)'};color:${i < 5 ? '#000' : '#fff'}">${i < 5 ? 'View Report →' : 'Run Analysis →'}</button>
+      <button class="pk-btn" onclick="${i < 5 ? `openPickReport('${c.ticker}','${data.date}')` : `closePicksModal();loadTicker('${c.ticker}','${data.date}')`}" style="background:${i < 5 ? 'var(--gold)' : 'var(--blue)'};color:${i < 5 ? '#000' : '#fff'}">${i < 5 ? 'View Report →' : 'Run Analysis →'}</button>
+      <div class="pk-acts">
+        <a href="/go/tradingview?ticker=${encodeURIComponent(c.ticker)}&ref=picks" target="_blank" rel="noopener" style="font-size:11px;color:var(--t2);text-decoration:none;font-family:'Space Mono',monospace">TradingView Chart ↗</a>
+        ${pkBrokerMenu(c.ticker)}
+        ${pkPaperBtn(c)}
+      </div>
     </div>`;
   });
 
