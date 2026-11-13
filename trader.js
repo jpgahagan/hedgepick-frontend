@@ -1,6 +1,7 @@
 /* HedgePick Trader dashboard panel. Loaded by dashboard.html. */
 (function () {
   const TRADER_TIERS = ['trader', 'lifetime'];
+  const PAPER_TIERS = ['pro', 'trader', 'lifetime'];
   const TRADER_LINK = 'https://buy.stripe.com/dRmcN79gF7i9emTfj54AU08';
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -30,8 +31,53 @@
     t._h = setTimeout(() => (t.className = 'tr-toast'), 4200);
   }
 
-  function teaser() {
-    $('traderSection').innerHTML = `
+  const BROKER_CARD = `
+      <div class="tr-card">
+        <div class="tr-card-h"><span>Brokerage &middot; Alpaca paper trading</span><span class="tr-tag">Paper</span></div>
+        <div id="trBroker"><div class="tr-empty">Loading&hellip;</div></div>
+      </div>
+`;
+  const TICKET_HTML = `
+      <div class="tr-modal" id="trTicket" style="display:none">
+        <div class="tr-modal-box">
+          <div class="tr-card-h"><span id="trTicketTitle">Order ticket</span><button class="tr-x" type="button" onclick="document.getElementById('trTicket').style.display='none'">&#10005;</button></div>
+          <form class="tr-form" id="trOrderForm" autocomplete="off">
+            <div class="tr-grid">
+              <label>Ticker<input name="ticker" required maxlength="10"></label>
+              <label>Side<select name="side"><option value="buy">Buy</option><option value="sell">Sell</option></select></label>
+              <label>Shares<input name="qty" required type="number" step="any" min="0" inputmode="decimal"></label>
+              <label>Type<select name="type"><option value="market">Market</option><option value="limit">Limit</option></select></label>
+              <label>Limit price<input name="limit_price" type="number" step="any" min="0" inputmode="decimal" placeholder="$"></label>
+              <label>Stop-loss<input name="stop_loss" type="number" step="any" min="0" inputmode="decimal" placeholder="$"></label>
+              <label>Take-profit<input name="take_profit" type="number" step="any" min="0" inputmode="decimal" placeholder="$"></label>
+            </div>
+            <div class="tr-preview" id="trOrderPreview"></div>
+            <label class="tr-check"><input type="checkbox" name="confirm"> I've reviewed this order and want to send it to my Alpaca paper account.</label>
+            <button class="tr-btn" type="submit">Send order</button>
+          </form>
+        </div>
+      </div>
+      <div class="tr-toast" id="trToast"></div>`;
+
+  function wireTicket() {
+    $('trOrderForm').oninput = previewOrder;
+    $('trOrderForm').onsubmit = async (e) => {
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      const f = Object.fromEntries(fd.entries());
+      f.confirm = fd.get('confirm') === 'on';
+      f.ticker = (f.ticker || '').trim().toUpperCase();
+      if (!f.confirm) { toast('Tick the box to confirm the order.', true); return; }
+      try {
+        const r = await api('/api/trader/order', { method: 'POST', body: f });
+        $('trTicket').style.display = 'none';
+        toast('Order sent to Alpaca: ' + r.status + '.'); loadBroker();
+      } catch (err) { toast(err.message, true); }
+    };
+  }
+
+  function teaser(prefix, pro) {
+    $('traderSection').innerHTML = (prefix || '') + `
       <div class="tr-teaser">
         <div class="tr-eyebrow">Trader &middot; $99/mo ($949/yr)</div>
         <div class="tr-h">Turn the analysis into a plan you can act on.</div>
@@ -39,7 +85,7 @@
           <li><b>Positions</b> with live profit and loss, and how each one is doing against the S&amp;P 500 since you added it</li>
           <li><b>Price alerts</b> by email, including your stop and target levels</li>
           <li><b>Weekly thesis re-check</b>: every Monday the AI panel re-tests your reason for owning each position</li>
-          <li><b>Order ticket</b>: send market or limit orders with a stop-loss and take-profit to your own Alpaca paper trading account</li>
+          ${pro ? '' : '<li><b>Order ticket</b>: send market or limit orders with a stop-loss and take-profit to your own Alpaca paper trading account (also included in Pro)</li>'}
           <li><b>10 analyses a day</b>, and you go first in the queue</li>
           <li><b>White-label PDF header</b>: print your own firm, fund, or newsletter name at the top of every 4-page PDF report</li>
         </ul>
@@ -79,10 +125,7 @@
         <div id="trAlerts"></div>
         <div class="tr-fine">Checked every 5 minutes while the US market is open. Alerts are sent by email.</div>
       </div>
-      <div class="tr-card">
-        <div class="tr-card-h"><span>Brokerage &middot; Alpaca paper trading</span><span class="tr-tag">Paper</span></div>
-        <div id="trBroker"><div class="tr-empty">Loading&hellip;</div></div>
-      </div>
+      ${BROKER_CARD}
       <div class="tr-card">
         <div class="tr-card-h"><span>White-label PDF report header</span><span class="tr-tag">Advisor / Desk</span></div>
         <p class="tr-p">Print your firm, fund, or newsletter name in the top banner of every 4-page PDF report you generate (leave blank for standard HedgePick branding).</p>
@@ -91,26 +134,7 @@
           <button class="tr-btn sm" type="submit">Save header</button>
         </form>
       </div>
-      <div class="tr-modal" id="trTicket" style="display:none">
-        <div class="tr-modal-box">
-          <div class="tr-card-h"><span id="trTicketTitle">Order ticket</span><button class="tr-x" type="button" onclick="document.getElementById('trTicket').style.display='none'">&#10005;</button></div>
-          <form class="tr-form" id="trOrderForm" autocomplete="off">
-            <div class="tr-grid">
-              <label>Ticker<input name="ticker" required maxlength="10"></label>
-              <label>Side<select name="side"><option value="buy">Buy</option><option value="sell">Sell</option></select></label>
-              <label>Shares<input name="qty" required type="number" step="any" min="0" inputmode="decimal"></label>
-              <label>Type<select name="type"><option value="market">Market</option><option value="limit">Limit</option></select></label>
-              <label>Limit price<input name="limit_price" type="number" step="any" min="0" inputmode="decimal" placeholder="$"></label>
-              <label>Stop-loss<input name="stop_loss" type="number" step="any" min="0" inputmode="decimal" placeholder="$"></label>
-              <label>Take-profit<input name="take_profit" type="number" step="any" min="0" inputmode="decimal" placeholder="$"></label>
-            </div>
-            <div class="tr-preview" id="trOrderPreview"></div>
-            <label class="tr-check"><input type="checkbox" name="confirm"> I've reviewed this order and want to send it to my Alpaca paper account.</label>
-            <button class="tr-btn" type="submit">Send order</button>
-          </form>
-        </div>
-      </div>
-      <div class="tr-toast" id="trToast"></div>`;
+      ${TICKET_HTML}`;
 
     $('trAddToggle').onclick = () => { const f = $('trAddForm'); f.style.display = f.style.display === 'none' ? 'block' : 'none'; };
     $('trAddForm').onsubmit = async (e) => {
@@ -139,20 +163,7 @@
       } catch (err) { toast(err.message, true); }
     };
     api('/api/user').then((u) => { if ($('trBrandInput') && u.custom_brand) $('trBrandInput').value = u.custom_brand; }).catch(() => {});
-    $('trOrderForm').oninput = previewOrder;
-    $('trOrderForm').onsubmit = async (e) => {
-      e.preventDefault();
-      const fd = new FormData(e.target);
-      const f = Object.fromEntries(fd.entries());
-      f.confirm = fd.get('confirm') === 'on';
-      f.ticker = (f.ticker || '').trim().toUpperCase();
-      if (!f.confirm) { toast('Tick the box to confirm the order.', true); return; }
-      try {
-        const r = await api('/api/trader/order', { method: 'POST', body: f });
-        $('trTicket').style.display = 'none';
-        toast('Order sent to Alpaca: ' + r.status + '.'); loadBroker();
-      } catch (err) { toast(err.message, true); }
-    };
+    wireTicket();
   }
 
   let lastPrice = {};
@@ -269,6 +280,12 @@
 
   window.initTrader = function (tier) {
     if (!$('traderSection')) return;
+    if (PAPER_TIERS.includes(tier) && !TRADER_TIERS.includes(tier)) {
+      // Pro: Alpaca paper trading (broker card + order ticket), plus the Trader upsell
+      teaser(`<div class="section-label" style="margin-top:0" id="paper">Paper trading</div>${BROKER_CARD}${TICKET_HTML}`, true);
+      wireTicket(); loadBroker();
+      return;
+    }
     if (!TRADER_TIERS.includes(tier)) { teaser(); return; }
     shell(); loadPositions(); loadAlerts(); loadBroker();
     clearInterval(window._trTimer);

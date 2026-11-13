@@ -1063,6 +1063,7 @@ document.addEventListener('DOMContentLoaded',function(){
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Bull/bear debate</div>
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Stop loss levels</div>
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Position sizing</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Paper trading order ticket (Alpaca)</div>
         </div>
         <a id="proBuy" href="https://buy.stripe.com/9B6cN70K9gSJgv14Er4AU06" style="display:block;text-align:center;padding:11px;border-radius:8px;font-size:13px;font-weight:500;color:#fff;border:none;background:#4F8EF7;text-decoration:none;transition:background .2s;font-family:'Space Grotesk',sans-serif">Get Pro — $39/mo →</a>
         <a id="proBuyA" href="https://buy.stripe.com/aFaeVffF31XPemT0ob4AU07" style="display:block;text-align:center;margin-top:8px;font-size:12px;color:#4F8EF7;text-decoration:none">or $379/year &mdash; 2 months free</a>
@@ -1078,8 +1079,7 @@ document.addEventListener('DOMContentLoaded',function(){
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Positions with P&amp;L vs the S&amp;P</div>
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Price, stop and target alerts</div>
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Weekly AI thesis re-check</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Order ticket for your Alpaca paper account</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> White-label PDF header (firm or newsletter name)</div>
+                    <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> White-label PDF header (firm or newsletter name)</div>
         </div>
         <a id="traderBuy" href="https://buy.stripe.com/dRmcN79gF7i9emTfj54AU08" style="display:block;text-align:center;padding:11px;border-radius:8px;font-size:13px;font-weight:600;color:#fff;border:none;background:#4F8EF7;text-decoration:none;font-family:'Space Grotesk',sans-serif">Get Trader — $99/mo &rarr;</a>
         <a id="traderBuyA" href="https://buy.stripe.com/eVq14pcsRbyp3If5Iv4AU09" style="display:block;text-align:center;margin-top:8px;font-size:12px;color:#4F8EF7;text-decoration:none">or $949/year &mdash; 2 months free</a>
@@ -1165,6 +1165,7 @@ const PK_BROKERS = [
   ['Schwab',    t => 'https://www.schwab.com/research/stocks/quotes/summary/' + t.toLowerCase()],
   ['E*TRADE',   t => 'https://us.etrade.com/etx/mkt/quotes?symbol=' + t],
   ['Public',    t => 'https://public.com/stocks/' + t.toLowerCase()],
+  ['Webull',    t => '/go/webull?ticker=' + encodeURIComponent(t) + '&ref=picks'],
 ];
 function pkBrokerMenu(ticker) {
   const t = String(ticker || '').toUpperCase().replace(/[^A-Z0-9.\-]/g, '');
@@ -1173,7 +1174,7 @@ function pkBrokerMenu(ticker) {
   return `<details class="pk-brk"><summary>Open ${t} in your broker ▾</summary><div class="pk-brk-list">${links}<div class="pk-brk-note">Opens ${t} on the broker's site, where you place any trade yourself. HedgePick isn't a broker and isn't paid for these links. Not investment advice.</div></div></details>`;
 }
 function pkPaperBtn(c) {
-  if (typeof PLAN === 'undefined' || !['trader', 'lifetime'].includes(PLAN.tier) || !window.trOpenTicket) return '';
+  if (typeof PLAN === 'undefined' || !['pro', 'trader', 'lifetime'].includes(PLAN.tier) || !window.trOpenTicket) return '';
   const side = c.verdict === 'SELL' ? 'sell' : 'buy';
   const t = String(c.ticker || '').toUpperCase().replace(/[^A-Z0-9.\-]/g, '');
   return `<button class="pk-paper" onclick="closePicksModal();trOpenTicket('${t}','${side}')" title="Opens your Alpaca paper trading ticket (simulated money)">Paper trade ${t}</button>`;
@@ -1346,6 +1347,6 @@ document.getElementById('picksModal').addEventListener('click', function(e) {
 });
 
 </script>
-<script src="/trader.js?v=2"></script>
+<script src="/trader.js?v=3"></script>
 <script src="/ref.js" defer></script>
 </body>
