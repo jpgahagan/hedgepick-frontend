@@ -195,6 +195,19 @@ html,body{max-width:100%;overflow-x:hidden;touch-action:pan-y;-webkit-text-size-
 .pk-brk-note{flex-basis:100%;font-size:10px;color:var(--t2);font-family:'Space Grotesk',sans-serif;margin-top:2px}
 .pk-paper{font-size:11px;font-family:'Space Mono',monospace;background:none;border:1px solid rgba(79,142,247,.35);color:var(--blue);border-radius:5px;padding:4px 9px;cursor:pointer}
 .pk-paper:hover{background:rgba(79,142,247,.08)}
+.pk-mine{font-size:11px;font-family:'Space Mono',monospace;color:var(--t1);text-decoration:none;border:1px solid var(--b2);border-radius:5px;padding:4px 9px}
+.pk-mine:hover{border-color:var(--gold);color:var(--gold)}
+#brkBar .bb{background:linear-gradient(135deg,rgba(79,142,247,.08),rgba(232,169,48,.04));border:1px solid rgba(79,142,247,.28);border-radius:12px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+#brkBar .bb-h{flex:1 1 240px;min-width:0}
+#brkBar .bb-t{font-size:15px;font-weight:600;color:var(--t1);margin-bottom:3px}
+#brkBar .bb-s{font-size:12px;color:var(--t2);font-weight:300;line-height:1.5}
+#brkBar .bb-cells{display:flex;gap:8px;flex-wrap:wrap}
+#brkBar .bb-c{background:rgba(255,255,255,.03);border:1px solid var(--b1);border-radius:8px;padding:6px 10px;min-width:96px}
+#brkBar .bb-c span{display:block;font-size:10px;font-family:'Space Mono',monospace;color:var(--t2);text-transform:uppercase;letter-spacing:.06em}
+#brkBar .bb-c b{font-size:13px;color:var(--t1);font-weight:600}
+#brkBar .bb-c b.ok{color:var(--green)}
+#brkBar .bb-b{white-space:nowrap;flex-shrink:0}
+@media(max-width:640px){#brkBar .bb-b{width:100%;text-align:center}}
 .pk-v{font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.06em;padding:3px 8px;border-radius:4px;border:1px solid;white-space:nowrap;align-self:center}
 .pk-v.BUY{color:#22C55E;border-color:rgba(34,197,94,.35);background:rgba(34,197,94,.08)}
 .pk-v.SELL{color:#F87171;border-color:rgba(248,113,113,.35);background:rgba(248,113,113,.08)}
@@ -336,6 +349,9 @@ gtag('config','G-W2VWCNQC6T');
     <div style="background:var(--gold);color:#000;border:none;border-radius:8px;padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:'Space Grotesk',sans-serif;white-space:nowrap;flex-shrink:0">See today's picks →</div>
   </div>
 
+
+  <!-- Paper trading & brokerage strip (filled by trader.js) -->
+  <div id="brkBar"></div>
 
   <!-- Settings -->
   <div id="settingsSection" style="display:none;background:var(--s1);border:1px solid var(--b1);border-radius:12px;padding:18px 24px;margin-bottom:20px;align-items:center;justify-content:space-between;gap:24px">
@@ -862,6 +878,7 @@ initDashboard();
 const modalMessages = {
   usage:{eyebrow:'Upgrade your plan',title:'See why, deeper.',sub:"Free users see the verdict. Paid users see the full debate — every agent's reasoning, bull/bear confrontation, stop loss levels, and position sizing."},
   nudge:{eyebrow:'Upgrade your plan',title:'The full picture costs less than you think.',sub:'$39 a month, or $379 a year. 5 analyses per day, full agent reasoning, bull/bear debate, stop loss, position sizing. Cancel anytime.'},
+  paper:{eyebrow:'Pro feature',title:'Paper trade every pick.',sub:'Pro ($39/mo) gives you a $100,000 simulated portfolio: press Paper trade on any pick and track how it does against the S&P 500. No brokerage account needed. You can also connect an Alpaca paper account. Cancel anytime.'},
   limit:{eyebrow:'Limit reached',title:'Keep testing your theses.',sub:'Upgrade to Pro ($39/mo, 5 analyses/day) or Trader ($99/mo, 10 analyses/day + live position tracking, alerts, and weekly Monday AI thesis re-checks). Cancel anytime.'}
 };
 function openUpgradeModal(source){
@@ -1063,7 +1080,7 @@ document.addEventListener('DOMContentLoaded',function(){
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Bull/bear debate</div>
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;border-bottom:1px solid rgba(255,255,255,0.06);display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Stop loss levels</div>
           <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Position sizing</div>
-          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Paper trading order ticket (Alpaca)</div>
+          <div style="font-size:12px;color:rgba(236,234,228,0.7);padding:6px 0;display:flex;align-items:center;gap:7px"><span style="color:#22C55E;font-size:10px">&#10003;</span> Paper trading: $100,000 simulated portfolio, plus Alpaca orders</div>
         </div>
         <a id="proBuy" href="https://buy.stripe.com/9B6cN70K9gSJgv14Er4AU06" style="display:block;text-align:center;padding:11px;border-radius:8px;font-size:13px;font-weight:500;color:#fff;border:none;background:#4F8EF7;text-decoration:none;transition:background .2s;font-family:'Space Grotesk',sans-serif">Get Pro — $39/mo →</a>
         <a id="proBuyA" href="https://buy.stripe.com/aFaeVffF31XPemT0ob4AU07" style="display:block;text-align:center;margin-top:8px;font-size:12px;color:#4F8EF7;text-decoration:none">or $379/year &mdash; 2 months free</a>
@@ -1170,14 +1187,17 @@ const PK_BROKERS = [
 function pkBrokerMenu(ticker) {
   const t = String(ticker || '').toUpperCase().replace(/[^A-Z0-9.\-]/g, '');
   if (!t) return '';
+  const mine = PK_BROKERS.find(([n]) => n === localStorage.getItem('hp_broker'));
   const links = PK_BROKERS.map(([n, f]) => `<a href="${f(t)}" target="_blank" rel="noopener nofollow">${n} ↗</a>`).join('');
-  return `<details class="pk-brk"><summary>Open ${t} in your broker ▾</summary><div class="pk-brk-list">${links}<div class="pk-brk-note">Opens ${t} on the broker's site, where you place any trade yourself. HedgePick isn't a broker and isn't paid for these links. Not investment advice.</div></div></details>`;
+  const direct = mine ? `<a class="pk-mine" href="${mine[1](t)}" target="_blank" rel="noopener nofollow" title="Opens ${t} on ${mine[0]}'s site. You place any trade yourself.">Open in ${mine[0]} ↗</a>` : '';
+  return `${direct}<details class="pk-brk"><summary>${mine ? 'Other brokers ▾' : 'Open ' + t + ' in your broker ▾'}</summary><div class="pk-brk-list">${links}<div class="pk-brk-note">Opens ${t} on the broker's site, where you place any trade yourself. HedgePick isn't a broker and isn't paid for these links. Not investment advice. <a href="#brokerage" onclick="closePicksModal()" style="border:none;padding:0;background:none;color:var(--blue)">Set your broker</a></div></div></details>`;
 }
 function pkPaperBtn(c) {
-  if (typeof PLAN === 'undefined' || !['pro', 'trader', 'lifetime'].includes(PLAN.tier) || !window.trOpenTicket) return '';
   const side = c.verdict === 'SELL' ? 'sell' : 'buy';
   const t = String(c.ticker || '').toUpperCase().replace(/[^A-Z0-9.\-]/g, '');
-  return `<button class="pk-paper" onclick="closePicksModal();trOpenTicket('${t}','${side}')" title="Opens your Alpaca paper trading ticket (simulated money)">Paper trade ${t}</button>`;
+  const paid = typeof PLAN !== 'undefined' && ['pro', 'trader', 'lifetime'].includes(PLAN.tier) && window.trOpenTicket;
+  if (!paid) return `<button class="pk-paper" onclick="closePicksModal();openUpgradeModal('paper')" title="Paper trading with $100,000 of simulated money is included in Pro">Paper trade ${t}</button>`;
+  return `<button class="pk-paper" onclick="closePicksModal();trOpenTicket('${t}','${side}')" title="Practise this trade with simulated money. No brokerage account needed.">Paper trade ${t}</button>`;
 }
 
 function renderPicksModal(data) {
@@ -1347,6 +1367,6 @@ document.getElementById('picksModal').addEventListener('click', function(e) {
 });
 
 </script>
-<script src="/trader.js?v=3"></script>
+<script src="/trader.js?v=4"></script>
 <script src="/ref.js" defer></script>
 </body>

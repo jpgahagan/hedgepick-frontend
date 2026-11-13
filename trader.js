@@ -31,10 +31,21 @@
     t._h = setTimeout(() => (t.className = 'tr-toast'), 4200);
   }
 
+  const PAPER_CARD = `
+      <div class="tr-card" id="paperPortfolio">
+        <div class="tr-card-h"><span>HedgePick paper portfolio</span><span class="tr-tag">Simulated</span></div>
+        <div id="trPaper"><div class="tr-empty">Loading&hellip;</div></div>
+      </div>
+`;
   const BROKER_CARD = `
-      <div class="tr-card">
-        <div class="tr-card-h"><span>Brokerage &middot; Alpaca paper trading</span><span class="tr-tag">Paper</span></div>
+      <div class="tr-card" id="brokerage">
+        <div class="tr-card-h"><span>Connect your brokerage</span><span class="tr-tag">Optional</span></div>
+        <div class="tr-sub" style="margin-top:0">Your broker</div>
+        <p class="tr-p">Pick the broker you use. Each of today's picks then gets a one-click link that opens that stock on your broker's site, where you place the trade yourself.</p>
+        <div class="tr-form tr-inline"><select id="trMyBroker" style="min-width:200px"></select><span class="tr-meta" id="trMyBrokerMsg"></span></div>
+        <div class="tr-sub">Send orders from HedgePick &middot; Alpaca paper account</div>
         <div id="trBroker"><div class="tr-empty">Loading&hellip;</div></div>
+        <div class="tr-fine">Robinhood, Fidelity, Schwab, E*TRADE, Public and Webull don't let outside apps place orders for individual customers, so those open on the broker's own site. HedgePick isn't a broker and isn't paid for these links.</div>
       </div>
 `;
   const TICKET_HTML = `
@@ -42,25 +53,47 @@
         <div class="tr-modal-box">
           <div class="tr-card-h"><span id="trTicketTitle">Order ticket</span><button class="tr-x" type="button" onclick="document.getElementById('trTicket').style.display='none'">&#10005;</button></div>
           <form class="tr-form" id="trOrderForm" autocomplete="off">
+            <label class="tr-full">Place this order in<select name="dest" id="trDest">
+              <option value="hp">HedgePick paper portfolio ($100,000 simulated, no account needed)</option>
+              <option value="alpaca">My Alpaca paper account</option>
+            </select></label>
+            <div class="tr-fine" id="trDestNote" style="margin:-4px 0 10px"></div>
             <div class="tr-grid">
               <label>Ticker<input name="ticker" required maxlength="10"></label>
               <label>Side<select name="side"><option value="buy">Buy</option><option value="sell">Sell</option></select></label>
               <label>Shares<input name="qty" required type="number" step="any" min="0" inputmode="decimal"></label>
-              <label>Type<select name="type"><option value="market">Market</option><option value="limit">Limit</option></select></label>
-              <label>Limit price<input name="limit_price" type="number" step="any" min="0" inputmode="decimal" placeholder="$"></label>
-              <label>Stop-loss<input name="stop_loss" type="number" step="any" min="0" inputmode="decimal" placeholder="$"></label>
-              <label>Take-profit<input name="take_profit" type="number" step="any" min="0" inputmode="decimal" placeholder="$"></label>
+              <label class="tr-adv">Type<select name="type"><option value="market">Market</option><option value="limit">Limit</option></select></label>
+              <label class="tr-adv">Limit price<input name="limit_price" type="number" step="any" min="0" inputmode="decimal" placeholder="$"></label>
+              <label class="tr-adv">Stop-loss<input name="stop_loss" type="number" step="any" min="0" inputmode="decimal" placeholder="$"></label>
+              <label class="tr-adv">Take-profit<input name="take_profit" type="number" step="any" min="0" inputmode="decimal" placeholder="$"></label>
             </div>
             <div class="tr-preview" id="trOrderPreview"></div>
-            <label class="tr-check"><input type="checkbox" name="confirm"> I've reviewed this order and want to send it to my Alpaca paper account.</label>
+            <label class="tr-check"><input type="checkbox" name="confirm"> <span id="trConfirmTxt">I've reviewed this order.</span></label>
             <button class="tr-btn" type="submit">Send order</button>
           </form>
         </div>
       </div>
       <div class="tr-toast" id="trToast"></div>`;
 
+  let alpacaConnected = false;
+  function destUpdate() {
+    const f = $('trOrderForm'); if (!f) return;
+    const opt = f.dest.querySelector('option[value=alpaca]');
+    opt.textContent = alpacaConnected ? 'My Alpaca paper account' : 'My Alpaca paper account (connect it first)';
+    opt.disabled = !alpacaConnected;
+    if (!alpacaConnected && f.dest.value === 'alpaca') f.dest.value = 'hp';
+    const hp = f.dest.value === 'hp';
+    document.querySelectorAll('#trOrderForm .tr-adv').forEach((el) => (el.style.display = hp ? 'none' : ''));
+    if (hp) f.type.value = 'market';
+    $('trConfirmTxt').textContent = hp ? "I've reviewed this simulated order. No real money is used." : "I've reviewed this order and want to send it to my Alpaca paper account.";
+    $('trDestNote').innerHTML = hp
+      ? 'Fills right away at the latest price HedgePick has, which can be delayed or the last close when the market is shut. Buy and sell only (no short selling). ' + (alpacaConnected ? '' : '<a href="#brokerage" onclick="document.getElementById(\'trTicket\').style.display=\'none\'">Connect your brokerage</a> to send orders to Alpaca instead.')
+      : 'Goes to your own Alpaca paper account. Supports limit orders, stop-loss and take-profit.';
+    previewOrder();
+  }
   function wireTicket() {
     $('trOrderForm').oninput = previewOrder;
+    $('trDest').onchange = () => { localStorage.setItem('hp_dest', $('trDest').value); destUpdate(); };
     $('trOrderForm').onsubmit = async (e) => {
       e.preventDefault();
       const fd = new FormData(e.target);
@@ -69,11 +102,77 @@
       f.ticker = (f.ticker || '').trim().toUpperCase();
       if (!f.confirm) { toast('Tick the box to confirm the order.', true); return; }
       try {
-        const r = await api('/api/trader/order', { method: 'POST', body: f });
-        $('trTicket').style.display = 'none';
-        toast('Order sent to Alpaca: ' + r.status + '.'); loadBroker();
+        if (f.dest === 'hp') {
+          const r = await api('/api/paper/order', { method: 'POST', body: { ticker: f.ticker, side: f.side, qty: f.qty } });
+          $('trTicket').style.display = 'none';
+          toast(`Paper ${r.side === 'buy' ? 'bought' : 'sold'} ${r.qty} ${r.ticker} at ${money(r.price)}.`); loadPaper();
+        } else {
+          const r = await api('/api/trader/order', { method: 'POST', body: f });
+          $('trTicket').style.display = 'none';
+          toast('Order sent to Alpaca: ' + r.status + '.'); loadBroker();
+        }
       } catch (err) { toast(err.message, true); }
     };
+    wireMyBroker();
+  }
+
+  function wireMyBroker() {
+    const sel = $('trMyBroker'); if (!sel || typeof PK_BROKERS === 'undefined') return;
+    const cur = localStorage.getItem('hp_broker') || '';
+    sel.innerHTML = '<option value="">Choose your broker&hellip;</option>' + PK_BROKERS.map(([n]) => `<option${n === cur ? ' selected' : ''}>${esc(n)}</option>`).join('');
+    sel.onchange = () => {
+      if (sel.value) localStorage.setItem('hp_broker', sel.value); else localStorage.removeItem('hp_broker');
+      $('trMyBrokerMsg').textContent = sel.value ? 'Saved. Picks now show "Open in ' + sel.value + '".' : '';
+      renderBar();
+    };
+  }
+
+  async function loadPaper() {
+    const box = $('trPaper'); if (!box) return;
+    try {
+      const d = await api('/api/paper');
+      paperState = d; renderBar();
+      box.innerHTML = `
+        <div class="tr-sum in">
+          <div><span>Value</span><b>${money(d.equity, 0)}</b></div>
+          <div><span>Cash</span><b>${money(d.cash, 0)}</b></div>
+          <div><span>Return vs S&amp;P</span><b class="${cls(d.return_pct)}">${pct(d.return_pct)}</b><small class="tr-meta">S&amp;P ${pct(d.spy_return_pct)}</small></div>
+        </div>
+        <div class="tr-acts left"><button class="tr-btn sm" onclick="trOpenTicket('','buy','', '', '', 'hp')">New paper trade</button>
+          <button class="tr-link dim" onclick="trPaperReset()">Start over with $100,000</button></div>
+        ${d.holdings.length ? '<div class="tr-sub">Holdings</div>' + d.holdings.map((h) => `
+          <div class="tr-al"><span><b>${esc(h.ticker)}</b> ${h.verdict ? `<span class="tr-v ${esc(h.verdict)}">${esc(h.verdict)}</span> ` : ''}${+h.shares.toFixed(4)} sh @ ${money(h.avg_cost)} &middot; now ${money(h.price)}</span>
+          <span><span class="${cls(h.pnl)}">${money(h.pnl, 0)} <small>${pct(h.pnl_pct)}</small></span> <button class="tr-link" onclick="trOpenTicket('${esc(h.ticker)}','sell',${h.shares},'','','hp')">Sell</button></span></div>`).join('')
+          : '<div class="tr-empty">No paper trades yet. Open today\'s picks and press "Paper trade" on any stock, or start a new trade here.</div>'}
+        ${d.fills.length ? '<div class="tr-sub">Recent paper trades</div>' + d.fills.slice(0, 8).map((f) => `
+          <div class="tr-al"><span><b>${esc(f.ticker)}</b> ${f.side === 'buy' ? 'bought' : 'sold'} ${+f.qty.toFixed(4)} @ ${money(f.price)}</span>
+          <span class="tr-meta">${f.realized != null ? `<span class="${cls(f.realized)}">${money(f.realized, 0)}</span> &middot; ` : ''}${f.at ? new Date(f.at + 'Z').toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : ''}</span></div>`).join('') : ''}
+        <div class="tr-fine">Simulated trades with pretend money, tracked since ${esc(d.since || 'today')}. Prices can be delayed. Not investment advice.</div>`;
+    } catch (err) { box.innerHTML = `<div class="tr-empty">${esc(err.message)}</div>`; }
+  }
+  let paperState = null;
+  window.trPaperReset = async () => {
+    if (!confirm('Clear your paper portfolio and start over with $100,000?')) return;
+    try { await api('/api/paper/reset', { method: 'POST' }); toast('Paper portfolio reset to $100,000.'); loadPaper(); } catch (e) { toast(e.message, true); }
+  };
+
+  // Always-visible strip near the top of the dashboard.
+  let barTier = 'free';
+  function renderBar() {
+    const el = $('brkBar'); if (!el) return;
+    const paid = PAPER_TIERS.includes(barTier);
+    const mine = localStorage.getItem('hp_broker');
+    const cell = (k, v, ok) => `<div class="bb-c"><span>${k}</span><b class="${ok ? 'ok' : ''}">${v}</b></div>`;
+    el.innerHTML = `<div class="bb">
+      <div class="bb-h"><div class="bb-t">Paper trading &amp; your brokerage</div>
+        <div class="bb-s">${paid ? 'Practise on any pick with $100,000 of simulated money, or connect your brokerage.' : 'Paper trade any pick with $100,000 of simulated money and connect your brokerage. Included in Pro.'}</div></div>
+      <div class="bb-cells">
+        ${cell('Paper portfolio', paid ? (paperState ? money(paperState.equity, 0) : 'Ready') : 'Pro', paid)}
+        ${cell('Alpaca', paid ? (alpacaConnected ? 'Connected' : 'Not connected') : 'Pro', paid && alpacaConnected)}
+        ${cell('Your broker', mine ? esc(mine) : 'Not set', !!mine)}
+      </div>
+      ${paid ? `<a class="tr-btn sm bb-b" href="#brokerage">Connect your brokerage &rarr;</a>` : `<button class="tr-btn sm bb-b" type="button" onclick="openUpgradeModal('paper')">Get Pro to paper trade &rarr;</button>`}
+    </div>`;
   }
 
   function teaser(prefix, pro) {
@@ -85,7 +184,7 @@
           <li><b>Positions</b> with live profit and loss, and how each one is doing against the S&amp;P 500 since you added it</li>
           <li><b>Price alerts</b> by email, including your stop and target levels</li>
           <li><b>Weekly thesis re-check</b>: every Monday the AI panel re-tests your reason for owning each position</li>
-          ${pro ? '' : '<li><b>Order ticket</b>: send market or limit orders with a stop-loss and take-profit to your own Alpaca paper trading account (also included in Pro)</li>'}
+          ${pro ? '' : '<li><b>Paper trading</b>: a $100,000 simulated portfolio, plus orders to your own Alpaca paper account (also included in Pro)</li>'}
           <li><b>10 analyses a day</b>, and you go first in the queue</li>
           <li><b>White-label PDF header</b>: print your own firm, fund, or newsletter name at the top of every 4-page PDF report</li>
         </ul>
@@ -125,6 +224,7 @@
         <div id="trAlerts"></div>
         <div class="tr-fine">Checked every 5 minutes while the US market is open. Alerts are sent by email.</div>
       </div>
+      ${PAPER_CARD}
       ${BROKER_CARD}
       <div class="tr-card">
         <div class="tr-card-h"><span>White-label PDF report header</span><span class="tr-tag">Advisor / Desk</span></div>
@@ -183,14 +283,15 @@
     $('trOrderPreview').innerHTML = s || 'Fill in the order to see its size, risk and reward.';
   }
 
-  window.trOpenTicket = function (ticker, side, qty, stop, target) {
+  window.trOpenTicket = function (ticker, side, qty, stop, target, dest) {
     const f = $('trOrderForm');
     f.reset();
+    f.dest.value = dest || (alpacaConnected && localStorage.getItem('hp_dest') === 'alpaca' ? 'alpaca' : 'hp');
     f.ticker.value = ticker || ''; f.side.value = side || 'buy'; f.qty.value = qty || '';
     if (stop) f.stop_loss.value = stop; if (target) f.take_profit.value = target;
     $('trTicketTitle').textContent = 'Order ticket' + (ticker ? ' · ' + ticker : '');
     $('trTicket').style.display = 'flex';
-    previewOrder();
+    destUpdate();
     if (ticker && !lastPrice[ticker]) api('/api/trader/quote?ticker=' + encodeURIComponent(ticker)).then((q) => { lastPrice[ticker] = q.price; previewOrder(); }).catch(() => {});
   };
 
@@ -238,10 +339,11 @@
   async function loadBroker() {
     try {
       const d = await api('/api/trader/broker');
+      alpacaConnected = !!(d.connected && !d.error); renderBar();
       if (!d.connected || d.error) {
         $('trBroker').innerHTML = `
           ${d.error ? `<div class="tr-empty tr-neg">${esc(d.error)}</div>` : ''}
-          <p class="tr-p">Connect a free <a href="https://app.alpaca.markets/signup" target="_blank" rel="noopener">Alpaca</a> paper trading account to send orders straight from HedgePick. In Alpaca, switch to <b>Paper Trading</b>, open <b>API Keys</b> on the right, click <b>Generate New Keys</b>, then paste both keys here. They are encrypted before they're saved.</p>
+          <p class="tr-p">Want limit orders, stop-losses and take-profits on a real brokerage's paper system? Connect a free <a href="https://app.alpaca.markets/signup" target="_blank" rel="noopener">Alpaca</a> paper trading account and send orders straight from HedgePick. In Alpaca, switch to <b>Paper Trading</b>, open <b>API Keys</b> on the right, click <b>Generate New Keys</b>, then paste both keys here. They are encrypted before they're saved.</p>
           <form class="tr-form tr-inline" id="trBrokerForm" autocomplete="off">
             <input name="key_id" required placeholder="API key ID (starts with PK)">
             <input name="secret" required type="password" placeholder="Secret key">
@@ -261,7 +363,7 @@
           <div><span>Cash</span><b>${money(+a.cash, 0)}</b></div>
           <div><span>Buying power</span><b>${money(+a.buying_power, 0)}</b></div>
         </div>
-        <div class="tr-acts left"><button class="tr-btn sm" onclick="trOpenTicket('','buy')">New order</button>
+        <div class="tr-acts left"><button class="tr-btn sm" onclick="trOpenTicket('','buy','','','','alpaca')">New Alpaca order</button>
           <button class="tr-link dim" onclick="trDisconnect()">Disconnect</button></div>
         ${(d.positions || []).length ? '<div class="tr-sub">Alpaca positions</div>' + d.positions.map((p) => `
           <div class="tr-al"><span><b>${esc(p.symbol)}</b> ${esc(p.qty)} sh @ ${money(+p.avg_entry_price)}</span>
@@ -280,14 +382,15 @@
 
   window.initTrader = function (tier) {
     if (!$('traderSection')) return;
+    barTier = tier || 'free'; renderBar();
     if (PAPER_TIERS.includes(tier) && !TRADER_TIERS.includes(tier)) {
-      // Pro: Alpaca paper trading (broker card + order ticket), plus the Trader upsell
-      teaser(`<div class="section-label" style="margin-top:0" id="paper">Paper trading</div>${BROKER_CARD}${TICKET_HTML}`, true);
-      wireTicket(); loadBroker();
+      // Pro: HedgePick paper portfolio + optional brokerage connection, plus the Trader upsell
+      teaser(`<div class="section-label" style="margin-top:0" id="paper">Paper trading</div>${PAPER_CARD}${BROKER_CARD}${TICKET_HTML}`, true);
+      wireTicket(); loadPaper(); loadBroker();
       return;
     }
     if (!TRADER_TIERS.includes(tier)) { teaser(); return; }
-    shell(); loadPositions(); loadAlerts(); loadBroker();
+    shell(); loadPositions(); loadAlerts(); loadPaper(); loadBroker();
     clearInterval(window._trTimer);
     window._trTimer = setInterval(() => { if (!document.hidden) loadPositions(); }, 60000);
   };
