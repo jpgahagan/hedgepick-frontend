@@ -1,0 +1,30 @@
+name: Record published picks
+on:
+  schedule:
+    - cron: "30 22 * * 1-5"   # 5:30 pm ET (6:30 pm in summer), after the US close
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - id: run
+        working-directory: ledger
+        run: python3 ledger.py && python3 verify.py
+      - if: steps.run.outputs.added != '0'
+        run: |
+          git config user.name "hedgepick-ledger"
+          git config user.email "ledger@hedgepick.com"
+          git add ledger
+          git commit -m "Ledger: record picks through $(tail -1 ledger/ledger.csv | cut -d, -f1)"
+          git push
+      - if: steps.run.outputs.added != '0'
+        continue-on-error: true
+        run: |
+          for u in "https://github.com/${GITHUB_REPOSITORY}/blob/main/ledger/ledger.csv" \
+                   "https://hedgepick.com/ledger/ledger.csv" \
+                   "https://hedgepick.com/proof" "https://hedgepick.com/track-record.csv"; do
+            curl -s -o /dev/null -w "%{http_code} $u\n" -m 60 "https://web.archive.org/save/$u" || true
+          done
