@@ -14,5 +14,6 @@
 /track-record            https://web-production-45241.up.railway.app/track-record            200
 /track-record.csv        https://web-production-45241.up.railway.app/track-record.csv        200
 /proof                   https://web-production-45241.up.railway.app/proof                   200
+/proof/research          https://web-production-45241.up.railway.app/proof/research          200
 /api/track-record/ledger https://web-production-45241.up.railway.app/api/track-record/ledger 200
 /go/*                    https://web-production-45241.up.railway.app/go/:splat              200
