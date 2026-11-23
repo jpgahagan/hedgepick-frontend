@@ -341,9 +341,9 @@ textarea.inp{resize:vertical;min-height:70px;margin-top:8px;line-height:1.45}
 .tr-k{font:600 11px/1 'JetBrains Mono',ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--gold,#C9A84C)}
 .tr-t{font-size:15px;line-height:1.45}
 .tr-t b{font-family:'JetBrains Mono',ui-monospace,monospace;font-weight:600}
-.tr-l{font-size:14px;font-weight:600;white-space:nowrap}
+.tr-l{font-size:14px;font-weight:600;white-space:nowrap;display:flex;flex-direction:column;gap:6px;align-items:flex-end}.tr-l a{color:inherit;text-decoration:none}.tr-l a:hover{color:var(--gold,#C9A84C)}.tr-l a+a{font-weight:500;font-size:13px;opacity:.8}
 .tr-n{grid-column:1/-1;font-size:11.5px;opacity:.6}
-@media(max-width:720px){.tr-strip{grid-template-columns:1fr}.tr-l{white-space:normal}}
+@media(max-width:720px){.tr-strip{grid-template-columns:1fr}.tr-l{white-space:normal;align-items:flex-start}}
 </style>
 </head>
 <body>
@@ -653,12 +653,12 @@ textarea.inp{resize:vertical;min-height:70px;margin-top:8px;line-height:1.45}
         <div class="bill" style="margin-top:24px"><button type="button" class="on" data-bill="m" onclick="setBill('m')">Monthly</button><button type="button" data-bill="a" onclick="setBill('a')">Yearly <span class="sv">2 months free</span></button></div>
       </div>
     </div>
-    <a class="tr-strip rv" id="trStrip" href="/proof" hidden>
+    <div class="tr-strip rv" id="trStrip" hidden>
       <span class="tr-k">Track record</span>
       <span class="tr-t">Model portfolio of the screener's top 5 daily picks, each held one month: <b id="trHp">–</b> vs <b id="trSpy">–</b> for the S&amp;P 500 on the same days, since June 2026.</span>
-      <span class="tr-l">See the proof →</span>
+      <span class="tr-l"><a href="/proof">See the proof →</a><a href="/proof/research">What the record taught us →</a></span>
       <small class="tr-n">Hypothetical results before fees and slippage. Past performance does not predict future returns.</small>
-    </a>
+    </div>
     <div class="plans">
       <div class="plan rv">
         <div class="p-top"><span class="p-name">Free</span><span class="p-tag">No card</span></div>
